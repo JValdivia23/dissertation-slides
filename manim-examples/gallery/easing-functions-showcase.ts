@@ -1,0 +1,101 @@
+import {
+  Scene,
+  Dot,
+  Text,
+  Line,
+  Shift,
+  AnimationGroup,
+  RIGHT,
+  LEFT,
+  BLACK,
+  BLUE,
+  RED,
+  GREEN,
+  YELLOW,
+  PURPLE,
+  ORANGE,
+  WHITE,
+  smooth,
+  easeInOutSine,
+  easeInOutBack,
+  easeOutElastic,
+  easeOutBounce,
+  easeInOutCirc,
+  smoothstep,
+  easeInOutExpo,
+  scaleVec,
+} from 'manim-web';
+
+const scene = new Scene(document.getElementById('container'), {
+  width: 800,
+  height: 450,
+  backgroundColor: BLACK,
+});
+
+// Rate functions to compare, each with a label and color
+const rateFunctions: Array<{
+  name: string;
+  rateFunc: (t: number) => number;
+  color: string;
+}> = [
+  { name: 'smooth', rateFunc: smooth, color: BLUE },
+  { name: 'easeInOutSine', rateFunc: easeInOutSine, color: RED },
+  { name: 'easeInOutBack', rateFunc: easeInOutBack, color: GREEN },
+  { name: 'easeOutElastic', rateFunc: easeOutElastic, color: YELLOW },
+  { name: 'easeOutBounce', rateFunc: easeOutBounce, color: PURPLE },
+  { name: 'easeInOutCirc', rateFunc: easeInOutCirc, color: ORANGE },
+  { name: 'smoothstep', rateFunc: smoothstep, color: '#ff69b4' },
+  { name: 'easeInOutExpo', rateFunc: easeInOutExpo, color: '#00ced1' },
+];
+
+const ROW_COUNT = rateFunctions.length;
+const TOP_Y = 3.0;
+const ROW_SPACING = 0.75;
+const START_X = -1.2;
+const SHIFT_DISTANCE = 5.5;
+
+const dots: Dot[] = [];
+const shiftDirection = scaleVec(SHIFT_DISTANCE, RIGHT) as [number, number, number];
+
+for (let i = 0; i < ROW_COUNT; i++) {
+  const y = TOP_Y - i * ROW_SPACING;
+  const { name, color } = rateFunctions[i];
+
+  // Track line (faint guide)
+  const trackLine = new Line({
+    start: [START_X, y, 0],
+    end: [START_X + SHIFT_DISTANCE, y, 0],
+    color: '#333333',
+    strokeWidth: 1,
+  });
+
+  // Label on the left, right-edge aligned just before track start
+  const label = new Text({
+    text: name,
+    fontSize: 26,
+    color: WHITE,
+  });
+  label.nextTo(trackLine, LEFT, 0.2);
+
+  // Dot at the start position
+  const dot = new Dot({
+    point: [START_X, y, 0],
+    radius: 0.1,
+    color,
+  });
+
+  scene.add(label, trackLine, dot);
+  dots.push(dot);
+}
+
+// Build simultaneous shift animations with different rate functions
+const animations = dots.map(
+  (dot, i) =>
+    new Shift(dot, {
+      direction: shiftDirection,
+      duration: 3,
+      rateFunc: rateFunctions[i].rateFunc,
+    }),
+);
+
+await scene.play(new AnimationGroup(animations));

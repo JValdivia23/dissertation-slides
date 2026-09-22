@@ -1,0 +1,31 @@
+import { Scene, Axes, Tex, BLACK } from 'manim-web';
+
+const scene = new Scene(document.getElementById('container'), {
+  width: 800,
+  height: 450,
+  backgroundColor: BLACK,
+});
+
+const ax = new Axes({
+  xRange: [0, 40, 5],
+  yRange: [-8, 32, 5],
+  xLength: 9,
+  yLength: 6,
+  xAxisConfig: { numbersToInclude: [0, 5, 10, 15, 20, 25, 30, 35] },
+  yAxisConfig: { numbersToInclude: [-5, 0, 5, 10, 15, 20, 25, 30] },
+  tips: false,
+});
+
+// Create Tex labels and wait for rendering
+const xLabel = new Tex({ latex: '$\\Delta Q$', fontSize: 0.4 });
+const yLabel = new Tex({ latex: 'T[$^\\circ C$]', fontSize: 0.4 });
+await xLabel.waitForRender();
+await yLabel.waitForRender();
+
+const labels = ax.getAxisLabels({ xLabel, yLabel });
+
+const xVals = [0, 8, 38, 39];
+const yVals = [20, 0, 0, -5];
+const graph = ax.plotLineGraph({ xValues: xVals, yValues: yVals });
+
+scene.add(ax, labels, graph);
