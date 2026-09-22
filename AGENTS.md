@@ -6,6 +6,18 @@ This repository is the source for a dissertation presentation built with Slidev.
 Work in this local checkout, not in OneDrive. Keep the presentation separate from
 the CU Boulder theme and its experimental Manim integration.
 
+## Thesis manuscript
+
+The dissertation text lives outside this repository:
+
+`/Users/java1127/Library/CloudStorage/OneDrive-UCB-O365/Papers/phd_thesis/manuscript`
+
+Use it as the source of scientific content for the slides. Read `AGENTS.md`,
+`SOURCE_MANIFEST.md`, and the chapter files there when checking claims, figure
+captions, or chapter order. Do not edit, commit, or build the manuscript from
+this repository unless you are explicitly asked to. Keep presentation source,
+dependencies, and build output in this local checkout.
+
 ## Repositories and dependencies
 
 - Presentation source belongs here: slides, figures, notes, configuration, and
