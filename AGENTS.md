@@ -18,6 +18,8 @@ captions, or chapter order. Do not edit, commit, or build the manuscript from
 this repository unless you are explicitly asked to. Keep presentation source,
 dependencies, and build output in this local checkout.
 
+We cannot use mysterious creative titles, this is not ted talks. Neutral/professional language is preferred.
+
 ## Repositories and dependencies
 
 - Presentation source belongs here: slides, figures, notes, configuration, and
