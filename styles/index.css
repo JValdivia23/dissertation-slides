@@ -165,7 +165,7 @@
 
 .slidev-layout.observation-limits .geom-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.25rem;
   align-items: start;
   padding-top: 0.35rem;

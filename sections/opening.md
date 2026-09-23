@@ -52,16 +52,12 @@ class: observation-limits
 <div class="limit-card">
   <div class="geom-row" aria-hidden="true">
     <div>
-      <svg viewBox="0 0 72 52"><path d="M6 16 H66 M14 16 L24 40 H54 L66 16" fill="none" stroke="currentColor" stroke-width="1.8" /></svg>
+      <svg viewBox="0 0 72 52"><g transform="translate(16,6) scale(1.667)"><g transform="rotate(90 12 12)"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor" stroke="none" /></g></g></svg>
       <span>Aircraft</span>
     </div>
     <div>
-      <svg viewBox="0 0 72 52"><path d="M12 44 L36 8 L60 28" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="44" r="2.4" fill="currentColor" /></svg>
-      <span>RHI</span>
-    </div>
-    <div>
       <svg viewBox="0 0 72 52"><path d="M14 44 L34 12 A28 28 0 0 1 58 30 L14 44" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="14" cy="44" r="2.4" fill="currentColor" /></svg>
-      <span>PPI</span>
+      <span>PPI/RHI</span>
     </div>
     <div>
       <svg viewBox="0 0 72 52"><path d="M36 4 V48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2.5" /><rect x="18" y="18" width="36" height="16" fill="none" stroke="currentColor" stroke-width="1.8" /></svg>
@@ -69,7 +65,7 @@ class: observation-limits
     </div>
   </div>
   <h3>Incidental snapshots</h3>
-  <p>Most published views are a single aircraft pass, RHI, PPI, or vertically pointing profile, often collected while the study focused on the broader storm.</p>
+  <p>Most published views are a single aircraft pass, RHI/PPI scan, or vertically pointing profile, often collected while the study focused on the broader storm.</p>
 </div>
 
 <div class="limit-card">
@@ -100,7 +96,7 @@ class: observation-limits
 </div>
 
 <!--
-Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI, a PPI, or a vertically pointing radar. Kumjian et al. (2014, J. Appl. Meteor. Climatol.) distinguished this kind of snapshot from a sequence intended to follow evolution. FROST, PLOWS, SNOWIE, and SOCRATES were not designed specifically to follow these cells.
+Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI or PPI scan, or a vertically pointing radar. Kumjian et al. (2014, J. Appl. Meteor. Climatol.) distinguished this kind of snapshot from a sequence intended to follow evolution. FROST, PLOWS, SNOWIE, and SOCRATES were not designed specifically to follow these cells.
 
 The cells move with the flow. A fixed scan samples a 1–2 km cell only while it crosses the beam. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
 
