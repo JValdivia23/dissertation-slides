@@ -12,11 +12,7 @@ imageCaption: DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et 
 - A fall streak: ice leaving the cell
 
 <!--
-This is the object. Do not teach the whole Kumjian model.
 
-The inset is a sketch, not a retrieval. Green shroud: more pristine, oriented crystals. Yellow core: aggregates or rimed particles. Blue arrows: larger particles falling out.
-
-The bright band near 2 km is the melting layer. The question for the talk is how cells like this change with time, and what happens to the ice as it descends into cloud that is already precipitating.
 -->
 
 ---

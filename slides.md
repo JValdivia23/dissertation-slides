@@ -23,13 +23,8 @@ Advisor: Katja Friedrich
 Committee: Andrew Winters · Troy Zaremba · Sarah Tessendorf · Christopher Williams
 
 <!--
-Open with the science, not the methods.
+About 40 minutes.
 
-One sentence if you need it: in one WINTRE-MIX storm, a cloud-top generating-cell population organized over about 1.7 hours, and one tracked cell's fall streak reached below the melting layer into precipitation that was already there.
-
-About 40 minutes. Stop at Questions. Backup follows.
-
-Do not say the local-statistics paper is published, or that the GRL manuscript is accepted.
 -->
 
 ---
