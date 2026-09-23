@@ -1,44 +1,114 @@
 ---
-layout: image-right
-image: ./figures/ctgc-concept.png
-imageAlt: DOW6 range-height scan on 23 February 2022 at 02:28 UTC, with a conceptual cloud-top generating cell inset
-imageCaption: DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et al. (2014).
+layout: default
+class: ctgc-intro
 ---
 
 # Cloud-Top Generating Cells
 
-<v-clicks>
+<div class="ctgc-figure">
+  <img src="../figures/ctgc-concept.png" alt="DOW6 range-height scan on 23 February 2022 at 02:28 UTC, with a conceptual cloud-top generating cell inset" />
+</div>
 
-- Small convective regions near cloud top (~1–2 km)
-- Ice particles seed the cloud below and descend in **fall streaks**
-- Their small scale challenges prediction and observation
+<p class="fine">DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et al. (2014).</p>
 
-</v-clicks>
+<div class="ctgc-points">
+
+<div v-click>
+
+Small convective regions near cloud top (~1–2 km)
+
+</div>
+<div v-click>
+
+Ice particles seed the cloud below and descend in **fall streaks**
+
+</div>
+<div v-click>
+
+Their small scale challenges prediction and observation
+
+</div>
+
+</div>
 
 <!--
 [click] Point to the boxed feature in the radar cross section. This is a vertical view through a winter storm. These small convective regions near cloud top are cloud-top generating cells, typically about one to two kilometers across.
 
 [click] Point to the conceptual inset, then follow the trail downward. Ice particles form and grow in the cells and fall in trails called fall streaks. As they descend through the underlying cloud, they can continue to grow and enhance precipitation. The cells seed ice into a cloud that provides conditions for further growth—a seeder–feeder interaction.
 
-[click] Despite their possible importance to winter precipitation, these small, high-altitude features are poorly resolved by many operational weather prediction models. They are also difficult to observe repeatedly at enough detail while they move and evolve. We know more about their structure at individual moments than about how they evolve and how precipitation develops below them.
+[click] Despite their possible importance to winter precipitation, these small, high-altitude features are poorly resolved by many operational weather prediction models. Their size and altitude also make repeated observations difficult.
 
-That leads to the observational gaps I will address in this dissertation.
+The next slide describes those observational limitations. Do not discuss fall-streak overlap or the range-dependent radar window here.
 -->
 
 ---
+class: observation-limits
+---
 
-# Observational Gaps
+# Observational Limitations
 
-- **Time:** snapshots do not describe how a population organizes or how long an individual cell persists
-- **Depth:** a moving cell's fall streak overlaps precipitation already present below it
-- **Measurement:** radar geometry, missing observations, and large data volumes complicate consistent analysis
+<div class="limit-row">
+
+<div class="limit-card">
+  <div class="geom-row" aria-hidden="true">
+    <div>
+      <svg viewBox="0 0 72 52"><path d="M6 16 H66 M14 16 L24 40 H54 L66 16" fill="none" stroke="currentColor" stroke-width="1.8" /></svg>
+      <span>Aircraft</span>
+    </div>
+    <div>
+      <svg viewBox="0 0 72 52"><path d="M12 44 L36 8 L60 28" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="44" r="2.4" fill="currentColor" /></svg>
+      <span>RHI</span>
+    </div>
+    <div>
+      <svg viewBox="0 0 72 52"><path d="M14 44 L34 12 A28 28 0 0 1 58 30 L14 44" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="14" cy="44" r="2.4" fill="currentColor" /></svg>
+      <span>PPI</span>
+    </div>
+    <div>
+      <svg viewBox="0 0 72 52"><path d="M36 4 V48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 2.5" /><rect x="18" y="18" width="36" height="16" fill="none" stroke="currentColor" stroke-width="1.8" /></svg>
+      <span>Vertical</span>
+    </div>
+  </div>
+  <h3>Incidental snapshots</h3>
+  <p>Most published views are a single aircraft pass, RHI, PPI, or vertically pointing profile, often collected while the study focused on the broader storm.</p>
+</div>
+
+<div class="limit-card">
+  <div class="advect" aria-hidden="true">
+    <div class="advect-motion"><span>Motion</span><i></i></div>
+    <div class="advect-scene">
+      <b></b>
+      <b class="on"></b>
+      <b></b>
+      <span>Fixed scan</span>
+    </div>
+  </div>
+  <h3>Advection through a fixed scan</h3>
+  <p>A 1–2 km cell is observed only while it crosses the beam. A fixed scan does not remain with the cell.</p>
+</div>
+
+<div class="limit-card">
+  <div class="duration" aria-hidden="true">
+    <p>Tracked cell, at least 10 min</p>
+    <div class="bar short"></div>
+    <p>Population duration</p>
+    <div class="bar long"></div>
+  </div>
+  <h3>Cell lifetime and population duration</h3>
+  <p>One continuously tracked cell lasted at least ~10 min (Kumjian et al. 2014). Populations are common in winter storms sampled at sufficient resolution.</p>
+</div>
+
+</div>
 
 <!--
-Previous work describes structure at individual times more fully than temporal evolution. Kumjian et al. followed one cell for about 10 minutes. A population can persist while individual cells turn over, so the group's duration is not a cell lifetime.
+Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI, a PPI, or a vertically pointing radar. Kumjian et al. (2014, J. Appl. Meteor. Climatol.) distinguished this kind of snapshot from a sequence intended to follow evolution. FROST, PLOWS, SNOWIE, and SOCRATES were not designed specifically to follow these cells.
 
-The underlying cloud may already be producing precipitation before the cell seeds it. A fall streak overlapping other echoes is not, by itself, evidence that one cell produced the precipitation below it. Following the cell and its surroundings requires repeated volumetric observations.
+The cells move with the flow. A fixed scan samples a 1–2 km cell only while it crosses the beam. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
 
-The measurement issue motivates the first two studies. A fixed range–azimuth window covers more area farther from the radar, and missing values are not observed zeros.
+Kumjian et al. followed one vigorous cell for about 10 minutes and reported lifetimes of at least 10 minutes. Say “at least,” and do not say this is the only lifetime ever estimated. An older scanning-radar study inferred lifetimes of several hours; that was not a continuous track of one cell.
+
+Populations are common in winter storms sampled closely enough to resolve them. Kumjian et al. found generating cells in every FROST case and described them as very common, if not ubiquitous. Rosenow et al. (2014) described them as ubiquitous in the PLOWS dataset. Tessendorf et al. (2024) described them as fairly ubiquitous in winter orographic clouds. Do not say every winter storm.
+
+Do not discuss fall-streak overlap or the range-dependent radar window here. Overlap belongs with the fall-streak question. Radar geometry opens the methods.
 -->
 
 ---
