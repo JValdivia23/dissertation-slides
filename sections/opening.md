@@ -5,11 +5,11 @@ imageAlt: DOW6 range-height scan on 23 February 2022 at 02:28 UTC, with a concep
 imageCaption: DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et al. (2014).
 ---
 
-# A cell near cloud top, and a trail beneath it
+# Cloud-Top Generating Cells
 
-- About 1–2 km across, near the top of a winter storm
-- A local reflectivity enhancement
-- A fall streak: ice leaving the cell
+- Small convective regions near the tops of winter storms, typically about 1–2 km in extent
+- Ice produced near cloud top descends in **fall streaks**
+- The underlying cloud may already be producing precipitation
 
 <!--
 
@@ -17,50 +17,76 @@ imageCaption: DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et 
 
 ---
 
-# Two things are still hard to see
+# Observational Gaps
 
-- How a **population** changes as cells form, merge, and decay
-- How **one moving cell** connects to precipitation already below it
-- Radar geometry, missing data, and data volume get in the way of both
+- **Time:** snapshots do not describe how a population organizes or how long an individual cell persists
+- **Depth:** a moving cell's fall streak overlaps precipitation already present below it
+- **Measurement:** radar geometry, missing observations, and large data volumes complicate consistent analysis
 
 <!--
-Snapshots are ahead of time evolution. Kumjian et al. followed one cell for about 10 minutes. A population can persist while individual cells turn over, so the group's duration is not a cell lifetime.
+Previous work describes structure at individual times more fully than temporal evolution. Kumjian et al. followed one cell for about 10 minutes. A population can persist while individual cells turn over, so the group's duration is not a cell lifetime.
 
-A fall streak that overlaps other echoes is not, by itself, one seeder–feeder path.
+A fall streak overlapping other echoes is not, by itself, evidence that one cell produced the precipitation below it. Following the cell and its surroundings requires repeated volumetric observations.
 
-The third bullet is why the methods exist. A fixed range–azimuth window covers more area farther from the radar. Missing values are not zeros. Say that, then move on.
+The measurement issue motivates the first two studies. A fixed range–azimuth window covers more area farther from the radar, and missing values are not observed zeros.
 -->
 
 ---
 
-# Three objectives
+# Physical and Microphysical Questions
 
-<v-clicks>
-
-1. **Methods.** Physical scale, boundaries, and missing data — fast enough to use
-2. **Population.** How organization and polarimetric signatures change
-3. **One cell.** A moving frame, against the precipitation around it
-
-</v-clicks>
+1. What processes govern the formation and organization of cloud-top generating cells?
+2. How do ice particles change within the cells and as they descend through underlying cloud?
+3. How much does ice supplied by the cells change precipitation in those clouds?
 
 <!--
-[click] Objective 1 is the tool. It is not a separate thesis.
-[click] Objective 2 is one event: initiation, mature, dissipation, and what ZDR suggests about particles.
-[click] Objective 3 is one cell from that population, not a second case study.
-
-The observational conclusions describe this storm and this cell. They are not a climatology.
+These are broader motivating questions, not three causal claims made by this dissertation. The observations describe organization and radar signatures, but do not establish the circulation that forms the cells or directly measure particle growth along the entire streak. Overlapping sources and precipitation already present below the cells prevent quantification of one cell's precipitation contribution.
 -->
 
 ---
 
-# Four studies, one storm
+# Dissertation Research Questions
 
-- **Smoothing** — published, *Atmospheric Measurement Techniques* (2026)
-- **Local statistics** — under review, *Computers & Geosciences*
-- **Population life cycle** — published, *J. Atmospheric Sciences* (2026)
-- **One cell in three dimensions** — submitted, *Geophysical Research Letters*
+1. How can radar fields be analyzed efficiently at a consistent physical scale, including where observations are missing?
+2. How did one observed cell population evolve in organization and polarimetric signatures?
+3. How did a selected cell's fall streak relate to precipitation already present below it?
+
+<p class="fine">The observational analyses concern one winter storm and one selected cell.</p>
 
 <!--
+The first question is addressed by two methodological studies. The second concerns the population in one WINTRE-MIX event; the third concerns a cell selected from that population. The fall-streak analysis examines structure and precipitation contrasts, not the cell's individual contribution to precipitation.
+-->
+
+---
+class: dissertation-map
+---
+
+# Dissertation Organization
+
+<p class="map-frame">Chapter 1 · Introduction and motivation</p>
+
+<div class="map-group">
+  <div class="map-group-title">Radar-analysis methods</div>
+  <div class="map-row">
+    <div class="map-item"><span>Chapter 2</span><strong>Radar smoothing at a consistent physical scale</strong></div>
+    <div class="map-item"><span>Chapter 3</span><strong>Local statistics with missing-data support</strong></div>
+  </div>
+</div>
+
+<div class="map-group">
+  <div class="map-group-title">Observational studies</div>
+  <div class="map-row">
+    <div class="map-item"><span>Chapter 4</span><strong>Temporal evolution of a cell population</strong></div>
+    <div class="map-item"><span>Chapter 5</span><strong>Three-dimensional structure of one cell and associated precipitation</strong></div>
+  </div>
+</div>
+
+<p class="map-integration">Chapter 5 integrates the radar methods with the cell track from Chapter 4.</p>
+<p class="map-frame">Chapter 6 · Synthesis and outlook</p>
+
+<!--
+The four core chapters are the four studies. Chapters 2 and 3 address radar-analysis methods. Chapter 4 follows the CTGC population; do not imply that the new methods in Chapters 2 and 3 produced its results. Chapter 5 explicitly combines those methods with the track identified in Chapter 4 to examine one cell and its precipitation.
+
 Status, if asked:
 
 - Valdivia, Chapman, and Friedrich, AMT, 2026. doi:10.5194/amt-19-5211-2026
@@ -68,26 +94,5 @@ Status, if asked:
 - Valdivia, Friedrich, Zaremba, and Tessendorf, JAS, 2026. doi:10.1175/JAS-D-25-0088.1
 - Same author team, GRL manuscript 2026GL126989, submitted 16 September 2026. Not accepted.
 
-The order of the talk is the order of the dissertation: methods, then the storm. Chapter 5 uses the Chapter 4 track.
--->
-
----
-layout: image-right
-image: ./figures/wintremix-map.png
-imageAlt: Topographic map of the St. Lawrence valley with DOW6, ECCC, and the Sorel sounding site
-imageCaption: WINTRE-MIX IOP05. DOW6 range 75 km; ECCC range 180 km.
----
-
-# 23 February 2022, near Montreal
-
-- WINTRE-MIX IOP05, St. Lawrence valley
-- DOW6 X-band volumes, 02:00–04:00 UTC
-- Generating cells in a layer near **5.5–8 km**
-
-<!--
-Name what is on the map: DOW6, the ECCC S-band radar at Blainville, the Sorel sounding, and the DOW6 RHI azimuth.
-
-The C-band radar on wheels (COW) is the third radar in the 3D analysis. It is not marked here. Introduce it when the moving frame appears.
-
-One synoptic sentence if needed: a winter storm, with the cells organized along low-level precipitation bands. The synoptic figure and soundings are backup. Do not tour the environment unless asked.
+Transition: begin Chapter 2 with the change in physical area covered by a fixed radar window.
 -->

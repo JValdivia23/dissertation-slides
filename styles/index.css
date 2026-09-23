@@ -37,3 +37,56 @@
 .slidev-layout.image-right li {
   margin-bottom: 0.35rem;
 }
+
+.slidev-layout.dissertation-map h1 {
+  margin-bottom: 0.5rem;
+}
+
+.slidev-layout.dissertation-map .map-frame {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 0.86rem;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.dissertation-map .map-integration {
+  margin: 0 0 0.4rem;
+  font-size: 0.86rem;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.dissertation-map .map-group {
+  margin-bottom: 0.65rem;
+}
+
+.slidev-layout.dissertation-map .map-group-title {
+  margin-bottom: 0.3rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.slidev-layout.dissertation-map .map-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.slidev-layout.dissertation-map .map-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 5.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.dissertation-map .map-item span {
+  font-size: 0.78rem;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.dissertation-map .map-item strong {
+  font-size: 1.05rem;
+  line-height: 1.3;
+  font-weight: 600;
+}

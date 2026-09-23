@@ -1,4 +1,25 @@
 ---
+layout: image-right
+image: ./figures/wintremix-map.png
+imageAlt: Topographic map of the St. Lawrence valley with DOW6, ECCC, and the Sorel sounding site
+imageCaption: WINTRE-MIX IOP05. DOW6 range 75 km; ECCC range 180 km.
+---
+
+# 23 February 2022, near Montreal
+
+- WINTRE-MIX IOP05, St. Lawrence valley
+- DOW6 X-band volumes, 02:00–04:00 UTC
+- Generating cells in a layer near **5.5–8 km**
+
+<!--
+Name what is on the map: DOW6, the ECCC S-band radar at Blainville, the Sorel sounding, and the DOW6 RHI azimuth.
+
+The C-band radar on wheels (COW) is the third radar in the 3D analysis. It is not marked here. Introduce it when the moving frame appears.
+
+One synoptic sentence if needed: a winter storm, with the cells organized along low-level precipitation bands. The synoptic figure and soundings are backup. Do not tour the environment unless asked.
+-->
+
+---
 class: figure-slide
 ---
 
