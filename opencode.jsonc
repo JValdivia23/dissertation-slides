@@ -6,6 +6,18 @@
         "type": "local",
         "command": ["npm", "exec", "--", "slidev", "mcp", "slides.md"],
         "cwd": "."
+      },
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@0.0.82",
+          "--browser",
+          "chrome",
+          "--viewport-size",
+          "1280x720"
+        ]
       }
     }
   }

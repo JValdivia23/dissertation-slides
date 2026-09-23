@@ -1,4 +1,5 @@
 node_modules/
 dist/
 .slidev/
+.playwright-mcp/
 .DS_Store

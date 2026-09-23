@@ -21,6 +21,22 @@ dev-server MCP endpoint. For a live preview, run `npm run dev` and connect a
 separate MCP client to `http://localhost:3030/__mcp` while the server is up.
 The configured stdio server is sufficient for file-based slide work.
 
+## Browser verification from OpenCode CLI
+
+The project-local `playwright` MCP server in [`opencode.jsonc`](../opencode.jsonc)
+launches the installed Chrome browser at a 1280×720 viewport. It is pinned to
+`@playwright/mcp@0.0.82` and is available in OpenCode sessions for this project,
+without requiring OpenCode Desktop's experimental browser connection. Check
+both MCP connections with `opencode mcp list`.
+
+With `npm run dev` running, use Playwright MCP to navigate to
+`http://localhost:3030/<slide-number>`, step through Slidev with `ArrowRight`
+and `ArrowLeft`, inspect screenshots and console errors, and revisit slides to
+check entry and exit behavior. Follow the additional click and lifecycle checks
+in [`manim-web-guide.md`](manim-web-guide.md) for `<CuManim>` slides. Playwright
+stores temporary snapshots and screenshots in `.playwright-mcp/`, which is
+ignored by Git.
+
 PDF/PNG export is separate from the web build and requires the optional
 `playwright-chromium` dependency and browser, which are not installed here.
 
