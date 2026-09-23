@@ -7,12 +7,22 @@ imageCaption: DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et 
 
 # Cloud-Top Generating Cells
 
-- Small convective regions near the tops of winter storms, typically about 1–2 km in extent
-- Ice produced near cloud top descends in **fall streaks**
-- The underlying cloud may already be producing precipitation
+<v-clicks>
+
+- Small convective regions near cloud top (~1–2 km)
+- Ice particles seed the cloud below and descend in **fall streaks**
+- Their small scale challenges prediction and observation
+
+</v-clicks>
 
 <!--
+[click] Point to the boxed feature in the radar cross section. This is a vertical view through a winter storm. These small convective regions near cloud top are cloud-top generating cells, typically about one to two kilometers across.
 
+[click] Point to the conceptual inset, then follow the trail downward. Ice particles form and grow in the cells and fall in trails called fall streaks. As they descend through the underlying cloud, they can continue to grow and enhance precipitation. The cells seed ice into a cloud that provides conditions for further growth—a seeder–feeder interaction.
+
+[click] Despite their possible importance to winter precipitation, these small, high-altitude features are poorly resolved by many operational weather prediction models. They are also difficult to observe repeatedly at enough detail while they move and evolve. We know more about their structure at individual moments than about how they evolve and how precipitation develops below them.
+
+That leads to the observational gaps I will address in this dissertation.
 -->
 
 ---
@@ -26,7 +36,7 @@ imageCaption: DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et 
 <!--
 Previous work describes structure at individual times more fully than temporal evolution. Kumjian et al. followed one cell for about 10 minutes. A population can persist while individual cells turn over, so the group's duration is not a cell lifetime.
 
-A fall streak overlapping other echoes is not, by itself, evidence that one cell produced the precipitation below it. Following the cell and its surroundings requires repeated volumetric observations.
+The underlying cloud may already be producing precipitation before the cell seeds it. A fall streak overlapping other echoes is not, by itself, evidence that one cell produced the precipitation below it. Following the cell and its surroundings requires repeated volumetric observations.
 
 The measurement issue motivates the first two studies. A fixed range–azimuth window covers more area farther from the radar, and missing values are not observed zeros.
 -->

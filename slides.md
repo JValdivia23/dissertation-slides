@@ -24,7 +24,7 @@ Committee: Andrew Winters · Troy Zaremba · Sarah Tessendorf · Christopher Wil
 
 <!--
 About 40 minutes.
-
+Let me start by showing you what a cloud-top generating cell is, and why these small features matter for winter precipitation.
 -->
 
 ---
