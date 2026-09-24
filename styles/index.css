@@ -127,11 +127,13 @@
   margin: 0;
 }
 
-.slidev-layout.observation-limits h1 {
+.slidev-layout.observation-limits h1,
+.slidev-layout.physical-questions h1 {
   margin-bottom: 0.55rem;
 }
 
-.slidev-layout.observation-limits .limit-row {
+.slidev-layout.observation-limits .limit-row,
+.slidev-layout.physical-questions .limit-row {
   display: grid;
   flex: 1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -139,7 +141,8 @@
   min-height: 0;
 }
 
-.slidev-layout.observation-limits .limit-card {
+.slidev-layout.observation-limits .limit-card,
+.slidev-layout.physical-questions .limit-card {
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -278,16 +281,30 @@
     );
 }
 
-.slidev-layout.observation-limits .limit-card h3 {
+.slidev-layout.observation-limits .limit-card h3,
+.slidev-layout.physical-questions .limit-card h3 {
   margin: 0.55rem 0 0.35rem;
   color: var(--cu-heading);
   font-size: 1.02rem;
   line-height: 1.25;
 }
 
-.slidev-layout.observation-limits .limit-card p {
+.slidev-layout.observation-limits .limit-card p,
+.slidev-layout.physical-questions .limit-card p {
   margin: 0;
   color: var(--cu-text);
   font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.physical-questions .limit-card h3 {
+  margin-top: 0.15rem;
+}
+
+.slidev-layout.physical-questions .limit-card .ask {
+  margin: 0 0 0.7rem;
+  color: var(--cu-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
   line-height: 1.35;
 }

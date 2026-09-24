@@ -25,7 +25,7 @@ Ice particles seed the cloud below and descend in **fall streaks**
 </div>
 <div v-click>
 
-Their small scale challenges prediction and observation
+Their small scale is poorly resolved by many weather prediction models
 
 </div>
 
@@ -36,9 +36,49 @@ Their small scale challenges prediction and observation
 
 [click] Point to the conceptual inset, then follow the trail downward. Ice particles form and grow in the cells and fall in trails called fall streaks. As they descend through the underlying cloud, they can continue to grow and enhance precipitation. The cells seed ice into a cloud that provides conditions for further growth—a seeder–feeder interaction.
 
-[click] Despite their possible importance to winter precipitation, these small, high-altitude features are poorly resolved by many operational weather prediction models. Their size and altitude also make repeated observations difficult.
+[click] Despite their possible importance to winter precipitation, these small, high-altitude circulations are poorly resolved by many operational weather prediction models. That leaves three physical questions.
 
-The next slide describes those observational limitations. Do not discuss fall-streak overlap or the range-dependent radar window here.
+Do not yet discuss the sampling limits. Those come after the questions, as the reason the questions remain open.
+-->
+
+---
+class: physical-questions
+---
+
+# Physical and Microphysical Questions
+
+<div class="limit-row">
+
+<div class="limit-card">
+  <h3>Formation and organization</h3>
+  <p class="ask">What processes govern how the cells form and become organized?</p>
+  <p>Cooling, instability, and shear are candidate mechanisms. Their role through a population's evolution is not established.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Particle evolution</h3>
+  <p class="ask">How do ice particles change in the cells and during descent?</p>
+  <p>Growth can occur near cloud top and in the cloud below. The change through a cell's life and along the fall streak remains unresolved.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Precipitation contribution</h3>
+  <p class="ask">How much does ice supplied by the cells change precipitation?</p>
+  <p>The lower cloud may already be precipitating. Overlapping fall streaks prevent attribution to one cell.</p>
+</div>
+
+</div>
+
+<!--
+These are broader motivating questions, not results of this dissertation. Do not explain the sampling limits yet.
+
+Formation and organization: cloud-top potential instability and lifting can initiate the updrafts. Longwave cooling helps sustain them; in the Keeler simulations, latent heating alone was not sufficient. Shear can organize the cells, including into linear, roll-like structures in simulations. A snapshot does not show how a population forms, merges, and dissipates, and it does not establish the circulation. Kumjian et al. (2014), Rauber et al. (2014), Keeler et al. (2016, 2017).
+
+Particle evolution: the cells are strongly ice-supersaturated, so depositional growth near cloud top is rapid. Kumjian et al. (2014) described pristine plates or dendrites around a core of aggregates or rimed particles. That is one time, not a life cycle. Plummer et al. (2015) summarize earlier studies as finding most ice-mass growth below the cells, mainly by deposition and aggregation. Riming is possible where supercooled liquid is present. Do not put a percentage on the slide.
+
+Precipitation contribution: the cells seed ice into a cloud that may already be precipitating. The open quantity is the change relative to what that lower cloud would have produced alone. Do not say the cells are responsible for 20–30% of precipitation.
+
+These questions have stayed open because of how the cells are observed.
 -->
 
 ---
@@ -79,7 +119,7 @@ class: observation-limits
     </div>
   </div>
   <h3>Advection through a fixed scan</h3>
-  <p>A 1–2 km cell is observed only while it crosses the beam. A fixed scan does not remain with the cell.</p>
+  <p>A 1–2 km cell is observed only while it crosses the beam. A fixed scan does not remain with the cell or the snow falling below it.</p>
 </div>
 
 <div class="limit-card">
@@ -96,27 +136,17 @@ class: observation-limits
 </div>
 
 <!--
+These questions have stayed open because of how the cells are observed.
+
 Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI or PPI scan, or a vertically pointing radar. Kumjian et al. (2014, J. Appl. Meteor. Climatol.) distinguished this kind of snapshot from a sequence intended to follow evolution. FROST, PLOWS, SNOWIE, and SOCRATES were not designed specifically to follow these cells.
 
-The cells move with the flow. A fixed scan samples a 1–2 km cell only while it crosses the beam. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
+The cells move with the flow. A fixed scan samples a 1–2 km cell only while it crosses the beam, and it does not stay with both the cell and the snow falling below it. That is one reason the precipitation question is difficult. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
 
 Kumjian et al. followed one vigorous cell for about 10 minutes and reported lifetimes of at least 10 minutes. Say “at least,” and do not say this is the only lifetime ever estimated. An older scanning-radar study inferred lifetimes of several hours; that was not a continuous track of one cell.
 
 Populations are common in winter storms sampled closely enough to resolve them. Kumjian et al. found generating cells in every FROST case and described them as very common, if not ubiquitous. Rosenow et al. (2014) described them as ubiquitous in the PLOWS dataset. Tessendorf et al. (2024) described them as fairly ubiquitous in winter orographic clouds. Do not say every winter storm.
 
-Do not discuss fall-streak overlap or the range-dependent radar window here. Overlap belongs with the fall-streak question. Radar geometry opens the methods.
--->
-
----
-
-# Physical and Microphysical Questions
-
-1. What processes govern the formation and organization of cloud-top generating cells?
-2. How do ice particles change within the cells and as they descend through underlying cloud?
-3. How much does ice supplied by the cells change precipitation in those clouds?
-
-<!--
-These are broader motivating questions, not three causal claims made by this dissertation. The observations describe organization and radar signatures, but do not establish the circulation that forms the cells or directly measure particle growth along the entire streak. Overlapping sources and precipitation already present below the cells prevent quantification of one cell's precipitation contribution.
+This dissertation does not try to close those three questions for winter storms in general. For one observed storm, it asks what the radar observations can show. Do not open the range-dependent radar window here; that begins the methods.
 -->
 
 ---
@@ -130,7 +160,7 @@ These are broader motivating questions, not three causal claims made by this dis
 <p class="fine">The observational analyses concern one winter storm and one selected cell.</p>
 
 <!--
-The first question is addressed by two methodological studies. The second concerns the population in one WINTRE-MIX event; the third concerns a cell selected from that population. The fall-streak analysis examines structure and precipitation contrasts, not the cell's individual contribution to precipitation.
+These are the questions this dissertation addresses, not the three broader questions. The first is addressed by two methodological studies. The second concerns the population in one WINTRE-MIX event; the third concerns a cell selected from that population. The fall-streak analysis examines structure and precipitation contrasts, not the cell's individual contribution to precipitation.
 -->
 
 ---
