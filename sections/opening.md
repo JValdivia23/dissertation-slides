@@ -50,6 +50,7 @@ class: physical-questions
 <div class="limit-row">
 
 <div class="limit-card">
+  <h3>Formation and organization</h3>
   <div class="question-figure mechanism-row" aria-hidden="true">
     <div>
       <svg viewBox="0 0 72 48"><path d="M8 12 H64 M36 18 V36 M30 30 L36 38 L42 30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
@@ -64,12 +65,12 @@ class: physical-questions
       <span>Shear</span>
     </div>
   </div>
-  <h3>Formation and organization</h3>
   <p class="ask">What processes govern how the cells form and become organized?</p>
   <p>Cooling, instability, and shear are candidate mechanisms. Their role through a population's evolution is not established.</p>
 </div>
 
 <div class="limit-card">
+  <h3>Particle evolution</h3>
   <div class="question-figure descent" aria-hidden="true">
     <svg viewBox="0 0 220 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
       <rect x="30" y="48" width="160" height="24" fill="currentColor" fill-opacity="0.08" />
@@ -78,12 +79,12 @@ class: physical-questions
       <path d="M52 84 V94 M72 84 V94 M132 84 V94 M152 84 V94 M172 84 V94" />
     </g></svg>
   </div>
-  <h3>Particle evolution</h3>
   <p class="ask">How do ice particles change in the cells and during descent?</p>
   <p>Growth can occur near cloud top and in the cloud below. The change through a cell's life and along the fall streak remains unresolved.</p>
 </div>
 
 <div class="limit-card">
+  <h3>Precipitation contribution</h3>
   <div class="question-figure compare" aria-hidden="true">
     <div>
       <svg viewBox="0 0 100 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
@@ -102,7 +103,6 @@ class: physical-questions
       <span>Seeded</span>
     </div>
   </div>
-  <h3>Precipitation contribution</h3>
   <p class="ask">How much does ice supplied by the cells change precipitation?</p>
   <p>The lower cloud may already be precipitating. Overlapping fall streaks prevent attribution to one cell.</p>
 </div>

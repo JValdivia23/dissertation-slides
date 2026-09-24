@@ -298,11 +298,13 @@
 }
 
 .slidev-layout.physical-questions .limit-card h3 {
-  margin-top: 0.35rem;
+  margin-top: 0;
+  margin-bottom: 0.45rem;
 }
 
 .slidev-layout.physical-questions .question-figure {
   min-height: 6.2rem;
+  margin-bottom: 0.55rem;
   color: var(--cu-dark-gray);
   font-size: 0.72rem;
 }
@@ -311,8 +313,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.2rem;
-  align-items: end;
-  padding-top: 0.2rem;
+  align-items: center;
 }
 
 .slidev-layout.physical-questions .mechanism-row div {
