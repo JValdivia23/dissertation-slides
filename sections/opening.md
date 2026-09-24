@@ -84,11 +84,23 @@ class: physical-questions
 </div>
 
 <div class="limit-card">
-  <div class="question-figure contrib" aria-hidden="true">
-    <div class="contrib-cells"><b></b><b></b><b></b></div>
-    <svg viewBox="0 0 220 34"><path d="M24 0 L98 34 M110 0 L110 34 M196 0 L122 34" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
-    <div class="contrib-layer"><em></em></div>
-    <span>Already precipitating</span>
+  <div class="question-figure compare" aria-hidden="true">
+    <div>
+      <svg viewBox="0 0 100 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="10" y="44" width="80" height="22" fill="currentColor" fill-opacity="0.08" />
+        <path d="M24 78 V90 M50 78 V90 M76 78 V90" />
+      </g></svg>
+      <span>Unseeded</span>
+    </div>
+    <div>
+      <svg viewBox="0 0 100 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="10" y="44" width="80" height="22" fill="currentColor" fill-opacity="0.08" />
+        <rect x="30" y="18" width="40" height="26" />
+        <path d="M50 40 L40 66 V94" />
+        <path d="M24 78 V90 M50 78 V90 M76 78 V90" />
+      </g></svg>
+      <span>Seeded</span>
+    </div>
   </div>
   <h3>Precipitation contribution</h3>
   <p class="ask">How much does ice supplied by the cells change precipitation?</p>
@@ -106,7 +118,7 @@ Formation and organization: cloud-top potential instability and lifting can init
 
 Trace the diagram: the cell box sits flush on the cloud, one diagonal streak runs to the cloud base, then falls vertically as rain. Particle evolution: the cells are strongly ice-supersaturated, so depositional growth near cloud top is rapid. Kumjian et al. (2014) described pristine plates or dendrites around a core of aggregates or rimed particles. That is one time, not a life cycle. Plummer et al. (2015) summarize earlier studies as finding most ice-mass growth below the cells, mainly by deposition and aggregation. Riming is possible where supercooled liquid is present. Do not put a percentage on the slide.
 
-Precipitation contribution: the cells seed ice into a cloud that may already be precipitating. The open quantity is the change relative to what that lower cloud would have produced alone. Do not say the cells are responsible for 20–30% of precipitation.
+Precipitation contribution: the two panels show the same precipitating cloud unseeded and seeded. The extra line marks the open question, not a measured increase. The open quantity is the change relative to what that lower cloud would have produced alone. Do not say the cells are responsible for 20–30% of precipitation.
 
 These questions have stayed open because of how the cells are observed.
 -->
