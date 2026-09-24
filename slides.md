@@ -11,6 +11,17 @@ duration: 40min
 themeConfig:
   showLogo: true
   department: Department of Atmospheric & Oceanic Sciences
+  footerNav:
+    sections:
+      - { label: Introduction, start: 1, end: 6 }
+      - { label: Smoothing, start: 7, end: 8 }
+      - { label: Local statistics, start: 9, end: 10 }
+      - { label: CTGC population life cycle, start: 11, end: 16 }
+      - { label: CTGC fall streak, start: 17, end: 20 }
+      - { label: Conclusions, start: 21, end: 24 }
+    outsideLabel: Backup
+    pageNumberOnly: true
+    hideOnCover: true
 layout: cover
 ---
 

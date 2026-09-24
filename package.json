@@ -3,11 +3,11 @@
   "private": true,
   "scripts": {
     "dev": "slidev slides.md --open",
-    "build": "slidev build slides.md --base ./"
+    "build": "slidev build slides.md --base /dissertation-slides/"
   },
   "dependencies": {
     "manim-web": "0.3.24",
-    "slidev-theme-cu-boulder": "git+https://github.com/JValdivia23/slidev-theme-cu-boulder.git#89514b7f8a6cc0e680d337d8110d73d12a4d0cf5"
+    "slidev-theme-cu-boulder": "git+https://github.com/JValdivia23/slidev-theme-cu-boulder.git#38afcafcf3c8446de800075b842ae91e9c889f9a"
   },
   "devDependencies": {
     "@slidev/cli": "53.0.0"

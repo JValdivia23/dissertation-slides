@@ -248,34 +248,41 @@ Transition from the limits: those sampling limits define what can be claimed. Th
 -->
 
 ---
-class: dissertation-map
+class: presentation-roadmap
 ---
 
-# Dissertation Organization
+# Presentation Roadmap
 
-<p class="map-frame">Chapter 1 · Introduction and motivation</p>
-
-<div class="map-group">
-  <div class="map-group-title">Radar-analysis methods</div>
-  <div class="map-row">
-    <div class="map-item"><span>Chapter 2</span><strong>Radar smoothing at a consistent physical scale</strong></div>
-    <div class="map-item"><span>Chapter 3</span><strong>Local statistics with missing-data support</strong></div>
+<div class="roadmap">
+  <div class="roadmap-sources">
+    <section class="roadmap-stage">
+      <h2><span class="roadmap-number">1</span>Radar-analysis methods</h2>
+      <div class="roadmap-projects">
+        <div><span>Project A</span>Physical-scale smoothing</div>
+        <div><span>Project B</span>Local statistics with missing data</div>
+      </div>
+    </section>
+    <section class="roadmap-stage">
+      <h2><span class="roadmap-number">2</span>Cell population in one storm</h2>
+      <p>Organization and evolution<br>Track a persistent cell</p>
+    </section>
   </div>
-</div>
 
-<div class="map-group">
-  <div class="map-group-title">Observational studies</div>
-  <div class="map-row">
-    <div class="map-item"><span>Chapter 4</span><strong>Temporal evolution of a cell population</strong></div>
-    <div class="map-item"><span>Chapter 5</span><strong>Three-dimensional structure of one cell and associated precipitation</strong></div>
-  </div>
-</div>
+  <svg class="roadmap-links" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M250 0 L500 65 M750 0 L500 65 M500 65 V94" />
+    <path d="M490 82 L500 94 L510 82" />
+  </svg>
 
-<p class="map-integration">Chapter 5 integrates the radar methods with the cell track from Chapter 4.</p>
-<p class="map-frame">Chapter 6 · Synthesis and outlook</p>
+  <section class="roadmap-stage roadmap-destination">
+    <h2><span class="roadmap-number">3</span>One cell and associated precipitation</h2>
+    <p>Three-dimensional structure · fall streak · precipitation contrasts</p>
+  </section>
+</div>
 
 <!--
-The four core chapters are the four studies. Chapters 2 and 3 address radar-analysis methods. Chapter 4 follows the CTGC population; do not imply that the new methods in Chapters 2 and 3 produced its results. Chapter 5 explicitly combines those methods with the track identified in Chapter 4 to examine one cell and its precipitation.
+The numbers are the order of the talk; the converging lines show what informs the final analysis. The first part consists of two distinct radar-analysis projects: physical-scale smoothing and local statistics with missing data. Then I will follow a population of cells in one storm and identify a persistent cell. Finally I will use the methods and that cell track to examine its three-dimensional structure, fall streak, and precipitation context. I will close with a synthesis and limitations.
+
+The methods studies are Chapters 2 and 3, the population study is Chapter 4, and the selected-cell study is Chapter 5. Do not imply that the methods in Chapters 2 and 3 produced the Chapter 4 results. Chapter 5 combines those methods with the track identified in Chapter 4. The precipitation contrasts do not attribute an individual contribution to the selected cell.
 
 Status, if asked:
 
@@ -284,5 +291,5 @@ Status, if asked:
 - Valdivia, Friedrich, Zaremba, and Tessendorf, JAS, 2026. doi:10.1175/JAS-D-25-0088.1
 - Same author team, GRL manuscript 2026GL126989, submitted 16 September 2026. Not accepted.
 
-Transition: begin Chapter 2 with the change in physical area covered by a fixed radar window.
+Transition: begin the methods with the change in physical area covered by a fixed radar window.
 -->
