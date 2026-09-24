@@ -50,18 +50,46 @@ class: physical-questions
 <div class="limit-row">
 
 <div class="limit-card">
+  <div class="question-figure mechanism-row" aria-hidden="true">
+    <div>
+      <svg viewBox="0 0 72 48"><path d="M8 12 H64 M36 18 V36 M30 30 L36 38 L42 30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+      <span>Cooling</span>
+    </div>
+    <div>
+      <svg viewBox="0 0 72 48"><path d="M8 10 L12 4 L16 10 M12 4 V44 H64 M58 40 L64 44 L58 48 M50 44 L26 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+      <span>Instability</span>
+    </div>
+    <div>
+      <svg viewBox="0 0 72 48"><path d="M8 14 H54 M48 8 L58 14 L48 20 M8 34 H34 M28 28 L38 34 L28 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+      <span>Shear</span>
+    </div>
+  </div>
   <h3>Formation and organization</h3>
   <p class="ask">What processes govern how the cells form and become organized?</p>
   <p>Cooling, instability, and shear are candidate mechanisms. Their role through a population's evolution is not established.</p>
 </div>
 
 <div class="limit-card">
+  <div class="question-figure descent" aria-hidden="true">
+    <svg viewBox="0 0 220 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="30" y="48" width="160" height="24" fill="currentColor" fill-opacity="0.08" />
+      <rect x="136" y="24" width="42" height="24" />
+      <path d="M157 44 L110 72 V94" />
+      <path d="M52 84 V94 M72 84 V94 M132 84 V94 M152 84 V94 M172 84 V94" />
+    </g></svg>
+  </div>
   <h3>Particle evolution</h3>
   <p class="ask">How do ice particles change in the cells and during descent?</p>
   <p>Growth can occur near cloud top and in the cloud below. The change through a cell's life and along the fall streak remains unresolved.</p>
 </div>
 
 <div class="limit-card">
+  <div class="question-figure contrib" aria-hidden="true">
+    <div class="contrib-cells"><b></b><b></b><b></b></div>
+    <svg viewBox="0 0 220 34"><path d="M24 0 L98 34 M110 0 L110 34 M196 0 L122 34" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+    <div class="contrib-layer"><em></em></div>
+    <span>Already precipitating</span>
+  </div>
   <h3>Precipitation contribution</h3>
   <p class="ask">How much does ice supplied by the cells change precipitation?</p>
   <p>The lower cloud may already be precipitating. Overlapping fall streaks prevent attribution to one cell.</p>
@@ -72,9 +100,11 @@ class: physical-questions
 <!--
 These are broader motivating questions, not results of this dissertation. Do not explain the sampling limits yet.
 
+Point to the three marks separately. The middle mark is a temperature profile that cools steeply with height. Do not draw a circulation that connects cooling, instability, and shear.
+
 Formation and organization: cloud-top potential instability and lifting can initiate the updrafts. Longwave cooling helps sustain them; in the Keeler simulations, latent heating alone was not sufficient. Shear can organize the cells, including into linear, roll-like structures in simulations. A snapshot does not show how a population forms, merges, and dissipates, and it does not establish the circulation. Kumjian et al. (2014), Rauber et al. (2014), Keeler et al. (2016, 2017).
 
-Particle evolution: the cells are strongly ice-supersaturated, so depositional growth near cloud top is rapid. Kumjian et al. (2014) described pristine plates or dendrites around a core of aggregates or rimed particles. That is one time, not a life cycle. Plummer et al. (2015) summarize earlier studies as finding most ice-mass growth below the cells, mainly by deposition and aggregation. Riming is possible where supercooled liquid is present. Do not put a percentage on the slide.
+Trace the diagram: the cell box sits flush on the cloud, one diagonal streak runs to the cloud base, then falls vertically as rain. Particle evolution: the cells are strongly ice-supersaturated, so depositional growth near cloud top is rapid. Kumjian et al. (2014) described pristine plates or dendrites around a core of aggregates or rimed particles. That is one time, not a life cycle. Plummer et al. (2015) summarize earlier studies as finding most ice-mass growth below the cells, mainly by deposition and aggregation. Riming is possible where supercooled liquid is present. Do not put a percentage on the slide.
 
 Precipitation contribution: the cells seed ice into a cloud that may already be precipitating. The open quantity is the change relative to what that lower cloud would have produced alone. Do not say the cells are responsible for 20–30% of precipitation.
 

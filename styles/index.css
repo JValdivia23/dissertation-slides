@@ -298,7 +298,97 @@
 }
 
 .slidev-layout.physical-questions .limit-card h3 {
-  margin-top: 0.15rem;
+  margin-top: 0.35rem;
+}
+
+.slidev-layout.physical-questions .question-figure {
+  min-height: 6.2rem;
+  color: var(--cu-dark-gray);
+  font-size: 0.72rem;
+}
+
+.slidev-layout.physical-questions .mechanism-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.2rem;
+  align-items: end;
+  padding-top: 0.2rem;
+}
+
+.slidev-layout.physical-questions .mechanism-row div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.slidev-layout.physical-questions .mechanism-row svg {
+  width: 100%;
+  height: 2.5rem;
+}
+
+.slidev-layout.physical-questions .mechanism-row span,
+.slidev-layout.physical-questions .contrib-layer span {
+  line-height: 1.1;
+  text-align: center;
+}
+
+.slidev-layout.physical-questions .descent svg {
+  width: 100%;
+  height: 6.8rem;
+}
+
+.slidev-layout.physical-questions .contrib-cells b {
+  width: 1.35rem;
+  height: 0.85rem;
+  border: 1.5px solid currentColor;
+}
+
+.slidev-layout.physical-questions .contrib-layer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 1.7rem;
+  border: 1.5px solid currentColor;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.slidev-layout.physical-questions .contrib {
+  display: grid;
+  grid-template-rows: auto 1.6rem auto auto;
+  align-items: center;
+}
+
+.slidev-layout.physical-questions .contrib-cells {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.35rem;
+}
+
+.slidev-layout.physical-questions .contrib svg {
+  width: 100%;
+  height: 1.6rem;
+}
+
+.slidev-layout.physical-questions .contrib-layer {
+  position: relative;
+}
+
+.slidev-layout.physical-questions .contrib-layer em {
+  position: absolute;
+  left: 50%;
+  width: 22%;
+  height: 0.7rem;
+  transform: translateX(-50%);
+  background: color-mix(in srgb, currentColor 28%, transparent);
+  border: 1.5px solid currentColor;
+}
+
+.slidev-layout.physical-questions .contrib > span {
+  margin-top: 0.2rem;
+  line-height: 1.1;
+  text-align: center;
 }
 
 .slidev-layout.physical-questions .limit-card .ask {
