@@ -182,9 +182,9 @@ These questions have stayed open because of how the cells are observed.
 
 Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI or PPI scan, or a vertically pointing radar. Kumjian et al. (2014, J. Appl. Meteor. Climatol.) distinguished this kind of snapshot from a sequence intended to follow evolution. FROST, PLOWS, SNOWIE, and SOCRATES were not designed specifically to follow these cells.
 
-The cells move with the flow. A fixed scan samples a 1–2 km cell only while it crosses the beam, and it does not stay with both the cell and the snow falling below it. That is one reason the precipitation question is difficult. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
+The cells move with the flow. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
 
-Kumjian et al. followed one vigorous cell for about 10 minutes and reported lifetimes of at least 10 minutes. Say “at least,” and do not say this is the only lifetime ever estimated. An older scanning-radar study inferred lifetimes of several hours; that was not a continuous track of one cell.
+Kumjian et al. followed one vigorous cell for about 10 minutes and reported lifetimes of at least 10 minutes. An older scanning-radar study inferred lifetimes of several hours; that was not a continuous track of one cell.
 
 Populations are common in winter storms sampled closely enough to resolve them. Kumjian et al. found generating cells in every FROST case and described them as very common, if not ubiquitous. Rosenow et al. (2014) described them as ubiquitous in the PLOWS dataset. Tessendorf et al. (2024) described them as fairly ubiquitous in winter orographic clouds. Do not say every winter storm.
 
@@ -192,17 +192,62 @@ This dissertation does not try to close those three questions for winter storms 
 -->
 
 ---
+class: dissertation-objectives
+---
 
-# Dissertation Research Questions
+# Dissertation Objectives
 
-1. How can radar fields be analyzed efficiently at a consistent physical scale, including where observations are missing?
-2. How did one observed cell population evolve in organization and polarimetric signatures?
-3. How did a selected cell's fall streak relate to precipitation already present below it?
+<div class="limit-row">
 
-<p class="fine">The observational analyses concern one winter storm and one selected cell.</p>
+<div class="limit-card">
+  <h3>Radar analysis</h3>
+  <div class="question-figure objective-methods" aria-hidden="true">
+    <svg viewBox="0 0 220 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="70" y="20" width="72" height="72" />
+      <path d="M94 20 V92 M118 20 V92 M70 44 H142 M70 68 H142" />
+      <rect x="97" y="47" width="18" height="18" stroke-dasharray="4 3" />
+      <circle cx="106" cy="56" r="30" />
+    </g></svg>
+  </div>
+  <p class="ask">Develop and evaluate efficient smoothing and local statistics for radar fields with changing sampling geometry and missing data.</p>
+  <p>Chapters 2–3. Synthetic fields and radar volumes.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Population evolution</h3>
+  <div class="question-figure objective-population" aria-hidden="true">
+    <svg viewBox="0 0 220 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M20 92 H200 M60 86 V92 M110 86 V92 M160 86 V92" />
+      <rect x="42" y="35" width="12" height="9" /><rect x="62" y="45" width="12" height="9" /><rect x="48" y="58" width="12" height="9" />
+      <rect x="100" y="38" width="14" height="10" /><rect x="116" y="48" width="14" height="10" /><rect x="104" y="60" width="14" height="10" />
+      <rect x="153" y="40" width="34" height="26" /><path d="M170 40 V66" stroke-dasharray="4 3" />
+    </g></svg>
+  </div>
+  <p class="ask">Characterize changes in the organization and polarimetric signatures of one observed cell population.</p>
+  <p>Chapter 4. One WINTRE-MIX storm, initiation to dissipation.</p>
+</div>
+
+<div class="limit-card">
+  <h3>One cell and its precipitation</h3>
+  <div class="question-figure objective-cell" aria-hidden="true">
+    <svg viewBox="0 0 220 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="30" y="48" width="160" height="24" fill="currentColor" fill-opacity="0.08" />
+      <rect x="136" y="24" width="42" height="24" />
+      <path d="M157 44 L110 72 V94" />
+      <path d="M52 84 V94 M72 84 V94 M132 84 V94 M152 84 V94 M172 84 V94" />
+      <rect x="95" y="48" width="30" height="46" stroke-dasharray="4 3" />
+    </g></svg>
+  </div>
+  <p class="ask">Examine a selected cell's three-dimensional structure and fall streak relative to the surrounding precipitation.</p>
+  <p>Chapter 5. One cell in a moving frame; contrasts, not attribution to one cell.</p>
+</div>
+
+</div>
 
 <!--
-These are the questions this dissertation addresses, not the three broader questions. The first is addressed by two methodological studies. The second concerns the population in one WINTRE-MIX event; the third concerns a cell selected from that population. The fall-streak analysis examines structure and precipitation contrasts, not the cell's individual contribution to precipitation.
+These are the objectives this dissertation addresses, not the three broader questions. The first is addressed by two methodological studies. The second concerns the population in one WINTRE-MIX event; the third concerns a cell selected from that population. The fall-streak analysis examines structure and precipitation contrasts, not the cell's individual contribution to precipitation.
+
+Transition from the limits: those sampling limits define what can be claimed. This dissertation develops tools to analyze the available radar data, then uses one observed storm to study a population and one selected cell. Do not imply that the methods in Chapters 2 and 3 produced the Chapter 4 results; Chapter 5 combines those methods with the track from Chapter 4.
 -->
 
 ---
