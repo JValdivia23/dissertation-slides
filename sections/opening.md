@@ -210,7 +210,6 @@ class: dissertation-objectives
     </g></svg>
   </div>
   <p class="ask">Develop and evaluate efficient smoothing and local statistics for radar fields with changing sampling geometry and missing data.</p>
-  <p>Chapters 2–3. Synthetic fields and radar volumes.</p>
 </div>
 
 <div class="limit-card">
@@ -224,7 +223,6 @@ class: dissertation-objectives
     </g></svg>
   </div>
   <p class="ask">Characterize changes in the organization and polarimetric signatures of one observed cell population.</p>
-  <p>Chapter 4. One WINTRE-MIX storm, initiation to dissipation.</p>
 </div>
 
 <div class="limit-card">
@@ -239,7 +237,6 @@ class: dissertation-objectives
     </g></svg>
   </div>
   <p class="ask">Examine a selected cell's three-dimensional structure and fall streak relative to the surrounding precipitation.</p>
-  <p>Chapter 5. One cell in a moving frame; contrasts, not attribution to one cell.</p>
 </div>
 
 </div>
