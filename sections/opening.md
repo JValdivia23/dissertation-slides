@@ -305,5 +305,5 @@ Status, if asked:
 - Valdivia, Friedrich, Zaremba, and Tessendorf, JAS, 2026. doi:10.1175/JAS-D-25-0088.1
 - Same author team, GRL manuscript 2026GL126989, submitted 16 September 2026. Not accepted.
 
-Transition: begin the methods with the change in physical area covered by a fixed radar window.
+Transition: I will begin with the radar-analysis problem: smoothing at a consistent physical scale without repeatedly applying an expensive, range-dependent spatial window. Advance to Paper 1's title slide, then begin its independent introduction.
 -->

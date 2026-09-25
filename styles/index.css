@@ -28,6 +28,302 @@
   text-align: center;
 }
 
+.slidev-layout.paper-title .paper-title-content {
+  max-width: 58rem;
+}
+
+.slidev-layout.paper-title .paper-kicker {
+  margin: 0 0 1rem;
+  color: var(--cu-gold);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.slidev-layout.paper-title h1 {
+  max-width: 54rem;
+  margin-bottom: 0.8rem;
+  font-size: 2.35rem;
+  line-height: 1.13;
+}
+
+.slidev-layout.paper-title h2 {
+  color: var(--cu-hero-text);
+  font-size: 1.45rem;
+  font-weight: 400;
+}
+
+.slidev-layout.paper-title .paper-authors {
+  margin-top: 2.2rem;
+  font-size: 1.08rem;
+}
+
+.slidev-layout.paper-title .paper-authors p {
+  margin: 0.25rem 0;
+  color: var(--cu-hero-text);
+}
+
+.slidev-layout.paper-title .paper-affiliation {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.slidev-layout.paper-title .paper-citation {
+  max-width: 53rem;
+  margin-top: 2.2rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.slidev-layout.smoothing-problem .smoothing-problem-figure {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.slidev-layout.smoothing-problem .smoothing-problem-figure img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.slidev-layout.smoothing-problem .smoothing-problem-takeaway {
+  margin: 0.25rem 0;
+  padding: 0.45rem 0.9rem;
+  border-left: 4px solid var(--cu-gold);
+  font-size: 1.03rem;
+}
+
+.slidev-layout .smoothing-cards,
+.slidev-layout .smoothing-range-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.slidev-layout .smoothing-cards {
+  flex: 1;
+  align-items: center;
+}
+
+.slidev-layout .smoothing-cards section,
+.slidev-layout .smoothing-range-pair section,
+.slidev-layout .spectral-steps section,
+.slidev-layout .smoothing-limitation-flow section {
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+  padding: 1.1rem 1.25rem;
+}
+
+.slidev-layout .smoothing-cards section {
+  min-height: 10rem;
+}
+
+.slidev-layout .smoothing-cards h2,
+.slidev-layout .smoothing-range-pair h2,
+.slidev-layout .spectral-steps h2,
+.slidev-layout .smoothing-limitation-flow h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.2rem;
+}
+
+.slidev-layout .smoothing-cards p,
+.slidev-layout .smoothing-range-pair p,
+.slidev-layout .spectral-steps p,
+.slidev-layout .smoothing-limitation-flow p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.slidev-layout .smoothing-test,
+.slidev-layout .spectral-summary,
+.slidev-layout .smoothing-next {
+  margin: 0.6rem 0 0;
+  padding: 0.8rem 1rem;
+  border-left: 4px solid var(--cu-gold);
+  font-size: 1.05rem;
+}
+
+.slidev-layout .smoothing-geometry-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
+  min-height: 0;
+}
+
+.slidev-layout .smoothing-equation {
+  text-align: center;
+}
+
+.slidev-layout .smoothing-equation p {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+}
+
+.slidev-layout .smoothing-equation > div {
+  margin: 0.35rem 0;
+  font-size: 1.9rem;
+}
+
+.slidev-layout .smoothing-range-pair section {
+  min-height: 9rem;
+}
+
+.slidev-layout .smoothing-samples {
+  width: 100%;
+  height: 2.1rem;
+  margin: 0.5rem 0 0.6rem;
+  border: 2px solid var(--cu-gold);
+}
+
+.slidev-layout .smoothing-samples-near {
+  background: repeating-linear-gradient(to right, transparent 0 1.15rem, var(--cu-text-muted) 1.15rem calc(1.15rem + 1px));
+}
+
+.slidev-layout .smoothing-samples-far {
+  background: repeating-linear-gradient(to right, transparent 0 3.5rem, var(--cu-text-muted) 3.5rem calc(3.5rem + 1px));
+}
+
+.slidev-layout .spectral-steps {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 1rem;
+}
+
+.slidev-layout .spectral-steps section {
+  position: relative;
+  min-height: 10.5rem;
+}
+
+.slidev-layout .spectral-steps section:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  top: 50%;
+  right: -0.9rem;
+  z-index: 1;
+  transform: translateY(-50%);
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout .spectral-steps span {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--cu-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.slidev-layout.smoothing-comparison .smoothing-comparison-figures {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.slidev-layout.smoothing-comparison .smoothing-comparison-figures img {
+  max-width: 49%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.slidev-layout.smoothing-comparison .smoothing-comparison-scale {
+  align-self: center;
+  width: 22rem;
+  max-height: 3rem;
+  object-fit: contain;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 0;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-body img {
+  width: 100%;
+  max-height: 21rem;
+  object-fit: contain;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-result {
+  border-left: 4px solid var(--cu-gold);
+  padding: 0.5rem 1.25rem;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-result > p {
+  margin: 0 0 1.3rem;
+  color: var(--cu-text-muted);
+  font-size: 0.9rem;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-result div {
+  margin: 0.8rem 0;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-result strong {
+  display: block;
+  color: var(--cu-heading);
+  font-size: 2.4rem;
+  line-height: 1.15;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-result span {
+  color: var(--cu-text-muted);
+  font-size: 0.9rem;
+}
+
+.slidev-layout.smoothing-limitation .smoothing-limitation-flow {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.slidev-layout.smoothing-limitation .smoothing-limitation-flow section {
+  min-height: 9rem;
+}
+
+.slidev-layout.smoothing-limitation .smoothing-limitation-flow > span {
+  color: var(--cu-text-muted);
+  font-size: 2rem;
+}
+
+.slidev-layout.smoothing-limitation .smoothing-caution {
+  margin: 0.5rem 0 0;
+  padding: 0.8rem 1rem;
+  border-left: 4px solid var(--cu-gold);
+  font-size: 1.05rem;
+}
+
+.slidev-layout.smoothing-conclusions .smoothing-conclusion-list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.slidev-layout.smoothing-conclusions .smoothing-conclusion-list p {
+  margin: 0;
+  border-left: 4px solid var(--cu-gold);
+  padding: 0.8rem 1rem;
+  font-size: 1.05rem;
+}
+
 .slidev-layout.default ul,
 .slidev-layout.image-right ul {
   margin-top: 0.4rem;

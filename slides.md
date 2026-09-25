@@ -8,17 +8,20 @@ author: Jairo M. Valdivia-Prado
 coverAuthor: Jairo M. Valdivia-Prado
 coverDate: 15 October 2026
 duration: 40min
+# Slidev 53's preloader resolves raw relative image paths outside the Pages base;
+# rendered images are still bundled and loaded normally by Vite.
+preloadImages: false
 themeConfig:
   showLogo: true
   department: Department of Atmospheric & Oceanic Sciences
   footerNav:
     sections:
       - { label: Introduction, start: 1, end: 6 }
-      - { label: Smoothing, start: 7, end: 8 }
-      - { label: Local statistics, start: 9, end: 10 }
-      - { label: CTGC population life cycle, start: 11, end: 16 }
-      - { label: CTGC fall streak, start: 17, end: 20 }
-      - { label: Conclusions, start: 21, end: 24 }
+      - { label: Smoothing, start: 7, end: 15 }
+      - { label: Local statistics, start: 16, end: 17 }
+      - { label: CTGC population life cycle, start: 18, end: 23 }
+      - { label: CTGC fall streak, start: 24, end: 27 }
+      - { label: Conclusions, start: 28, end: 31 }
     outsideLabel: Backup
     pageNumberOnly: true
     hideOnCover: true
@@ -40,6 +43,10 @@ Let me start by showing you what a cloud-top generating cell is, and why these s
 
 ---
 src: ./sections/opening.md
+---
+
+---
+src: ./sections/smoothing.md
 ---
 
 ---
