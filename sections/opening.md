@@ -258,20 +258,26 @@ class: presentation-roadmap
     <div class="roadmap-methods">
       <section class="roadmap-stage">
         <span class="roadmap-paper">Paper 1</span>
-        <h2>Physical-scale smoothing</h2>
+        <div class="roadmap-method-content">
+          <h2>Radar data smoothing using the DCT</h2>
+          <p>Fast noise removal</p>
+        </div>
       </section>
       <svg class="roadmap-method-link" viewBox="0 0 20 32" aria-hidden="true">
         <path d="M10 0 V26 M4 20 L10 26 L16 20" />
       </svg>
       <section class="roadmap-stage">
         <span class="roadmap-paper">Paper 2</span>
-        <h2>Local statistics with missing data</h2>
+        <div class="roadmap-method-content">
+          <h2>Spectral-domain local statistics</h2>
+          <p>Spectral operation for cartesian and polar grids</p>
+        </div>
       </section>
     </div>
     <section class="roadmap-stage roadmap-population">
       <span class="roadmap-paper">Paper 3</span>
-      <h2>Cell population in one storm</h2>
-      <p>Organization and evolution<br>Track a persistent cell</p>
+      <h2>Temporal evolution of cloud-top generating cells</h2>
+      <p>CTGC population life cycle and organization</p>
     </section>
   </div>
 
@@ -282,8 +288,8 @@ class: presentation-roadmap
 
   <section class="roadmap-stage roadmap-destination">
     <span class="roadmap-paper">Paper 4</span>
-    <h2>One cell and associated precipitation</h2>
-    <p>Three-dimensional structure · fall streak · precipitation contrasts</p>
+    <h2>Tracking 3D CTGC structure and associated precipitation</h2>
+    <p>CTGC fall streak and precipitation</p>
   </section>
 </div>
 
