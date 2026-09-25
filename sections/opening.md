@@ -255,34 +255,42 @@ class: presentation-roadmap
 
 <div class="roadmap">
   <div class="roadmap-sources">
-    <section class="roadmap-stage">
-      <h2><span class="roadmap-number">1</span>Radar-analysis methods</h2>
-      <div class="roadmap-projects">
-        <div><span>Project A</span>Physical-scale smoothing</div>
-        <div><span>Project B</span>Local statistics with missing data</div>
-      </div>
-    </section>
-    <section class="roadmap-stage">
-      <h2><span class="roadmap-number">2</span>Cell population in one storm</h2>
+    <div class="roadmap-methods">
+      <section class="roadmap-stage">
+        <span class="roadmap-paper">Paper 1</span>
+        <h2>Physical-scale smoothing</h2>
+      </section>
+      <svg class="roadmap-method-link" viewBox="0 0 20 32" aria-hidden="true">
+        <path d="M10 0 V26 M4 20 L10 26 L16 20" />
+      </svg>
+      <section class="roadmap-stage">
+        <span class="roadmap-paper">Paper 2</span>
+        <h2>Local statistics with missing data</h2>
+      </section>
+    </div>
+    <section class="roadmap-stage roadmap-population">
+      <span class="roadmap-paper">Paper 3</span>
+      <h2>Cell population in one storm</h2>
       <p>Organization and evolution<br>Track a persistent cell</p>
     </section>
   </div>
 
   <svg class="roadmap-links" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M250 0 L500 65 M750 0 L500 65 M500 65 V94" />
+    <path d="M245 0 L500 65 M755 0 L500 65 M500 65 V94" />
     <path d="M490 82 L500 94 L510 82" />
   </svg>
 
   <section class="roadmap-stage roadmap-destination">
-    <h2><span class="roadmap-number">3</span>One cell and associated precipitation</h2>
+    <span class="roadmap-paper">Paper 4</span>
+    <h2>One cell and associated precipitation</h2>
     <p>Three-dimensional structure · fall streak · precipitation contrasts</p>
   </section>
 </div>
 
 <!--
-The numbers are the order of the talk; the converging lines show what informs the final analysis. The first part consists of two distinct radar-analysis projects: physical-scale smoothing and local statistics with missing data. Then I will follow a population of cells in one storm and identify a persistent cell. Finally I will use the methods and that cell track to examine its three-dimensional structure, fall streak, and precipitation context. I will close with a synthesis and limitations.
+These four boxes represent the four papers in talk order. Paper 1 develops physical-scale smoothing for radar data; Paper 2 extends that spectral framework to local statistics with missing data. Paper 3 follows a population of cells in one storm and identifies a persistent cell. Paper 4 brings the methods from Papers 1 and 2 together with that cell track to examine three-dimensional structure, the fall streak, and precipitation context. I will close with a synthesis and limitations.
 
-The methods studies are Chapters 2 and 3, the population study is Chapter 4, and the selected-cell study is Chapter 5. Do not imply that the methods in Chapters 2 and 3 produced the Chapter 4 results. Chapter 5 combines those methods with the track identified in Chapter 4. The precipitation contrasts do not attribute an individual contribution to the selected cell.
+The arrows summarize the narrative, not every direct methodological input: Paper 1 leads to Paper 2, while Papers 2 and 3 connect to Paper 4. Paper 4 also draws directly on Paper 1's smoothing. The methods studies are Chapters 2 and 3, the population study is Chapter 4, and the selected-cell study is Chapter 5. Do not imply that the methods in Chapters 2 and 3 produced the Chapter 4 results. The precipitation contrasts do not attribute an individual contribution to the selected cell.
 
 Status, if asked:
 

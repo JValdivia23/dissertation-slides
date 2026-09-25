@@ -56,68 +56,79 @@
   gap: 1.2rem;
 }
 
+.slidev-layout.presentation-roadmap .roadmap-methods {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
 .slidev-layout.presentation-roadmap .roadmap-stage {
   min-height: 7rem;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   border: 1px solid var(--cu-border);
   border-left: 4px solid var(--cu-gold);
   color: var(--cu-text);
 }
 
-.slidev-layout.presentation-roadmap .roadmap-stage h2 {
+.slidev-layout.presentation-roadmap .roadmap-methods .roadmap-stage {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  margin: 0 0 0.45rem;
+  gap: 0.85rem;
+  min-height: 0;
+  padding-block: 0.5rem;
+}
+
+.slidev-layout.presentation-roadmap .roadmap-methods .roadmap-stage h2 {
+  margin: 0;
+}
+
+.slidev-layout.presentation-roadmap .roadmap-paper {
+  color: var(--cu-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.slidev-layout.presentation-roadmap .roadmap-methods .roadmap-paper {
+  flex: none;
+}
+
+.slidev-layout.presentation-roadmap .roadmap-stage h2 {
+  margin: 0.25rem 0 0.4rem;
   color: var(--cu-heading);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 600;
   line-height: 1.25;
 }
 
-.slidev-layout.presentation-roadmap .roadmap-number {
-  display: inline-grid;
-  flex: 0 0 1.5rem;
-  place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: var(--cu-gold);
-  color: var(--cu-heading);
-  font-size: 0.85rem;
-}
-
 .slidev-layout.presentation-roadmap .roadmap-stage p {
-  margin: 0 0 0 2.15rem;
-  font-size: 0.92rem;
+  margin: 0;
+  font-size: 0.88rem;
   line-height: 1.45;
 }
 
-.slidev-layout.presentation-roadmap .roadmap-projects {
-  display: grid;
-  gap: 0.3rem;
-  margin-left: 2.15rem;
-  font-size: 0.88rem;
-  line-height: 1.35;
-}
-
-.slidev-layout.presentation-roadmap .roadmap-projects div {
-  display: flex;
-  gap: 0.55rem;
-}
-
-.slidev-layout.presentation-roadmap .roadmap-projects span {
-  flex: 0 0 3.9rem;
+.slidev-layout.presentation-roadmap .roadmap-method-link {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1.4rem;
+  transform: translate(-50%, -50%);
   color: var(--cu-text-muted);
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .slidev-layout.presentation-roadmap .roadmap-links {
   width: 100%;
-  height: 3.7rem;
-  color: var(--cu-dark-gray);
+  height: 2.8rem;
+  color: var(--cu-text-muted);
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
