@@ -41,46 +41,74 @@ About 45 seconds. This is a COW1high range–height scan on 23 February 2022 at 
 -->
 
 ---
-class: smoothing-problem
+class: convolution-cartesian
 ---
 
-# A fixed radar-grid window changes physical size
+# Convolution on a Cartesian grid
 
-<div class="smoothing-problem-figure">
-  <img src="../figures/polar-scale.png" alt="A fixed angular-index window covers a larger physical area farther from the radar" />
+<div class="convolution-demo">
+  <div class="convolution-demo-labels"><span>Noisy input</span><span>Smoothed output</span></div>
+  <div class="convolution-canvas" role="img" aria-label="Animated synthetic Cartesian grid: a boxcar kernel scans row by row from the upper-left to lower-right cell, revealing each average as it reaches that cell; a Gaussian kernel then repeats the scan.">
+    <CuManim :steps="5" :width="1080" :height="320" :construct="cartesianConvolution" />
+    <div v-if="clicks === 0" class="convolution-first-frame" aria-hidden="true">
+      <div class="convolution-preview-grid">
+        <span v-for="(color, index) in cartesianPreviewColors" :key="index" :style="{ backgroundColor: color }" />
+        <div class="convolution-preview-kernel" />
+      </div>
+      <span class="convolution-preview-arrow">→</span>
+      <div class="convolution-preview-grid convolution-preview-output">
+        <span v-for="index in 49" :key="index" />
+      </div>
+    </div>
+  </div>
+  <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>{{ clicks >= 4 ? 'Gaussian: center-weighted mean' : 'Boxcar: equal-weight mean' }}</strong></p>
 </div>
 
-<p class="smoothing-problem-takeaway">For 1–2 km cloud-top generating cells, the smoothing width must be specified in physical distance, not gate count.</p>
+<script setup>
+import { useNav } from '@slidev/client'
+import { cartesianConvolution, cartesianPreviewColors } from '../scenes/convolution'
 
-<p class="fine">A fixed number of angular gates spans a larger transverse distance at far range. Figure 1 from the AMT paper.</p>
+const { clicks } = useNav()
+</script>
 
 <!--
-About 1 minute 10 seconds. Introduce the problem independently of the dissertation opening. Radar data are sampled in range and angle; a fixed grid-space smoothing window changes its physical footprint with range. The cells of interest are small, so the smoothing scale must be tied to distance rather than a constant number of angle bins. The source figure is Figure 1 of the AMT paper.
-
-Do not say that range gates themselves widen with range; it is the transverse angular spacing that grows. The cost of a spatial kernel that changes with range motivates the next slide.
+About 1 minute. After slide 8, explain that we want to reduce gate-to-gate variability while preserving coherent structure. Convolution applies the same local operation at each position. Click 1: on this synthetic, evenly spaced grid, identify the three-by-three boxcar kernel at the upper-left cell. Click 2: all nine kernel weights are equal, so the first output is their average. Edge values are extended with nearest-value padding in this illustration; this is not Paper 1's DCT boundary treatment. Click 3: the kernel scans successive rows, alternately left-to-right and right-to-left, revealing each output value exactly as it reaches that cell, and ends at the lower right. Click 4: change to a discrete Gaussian kernel (truncated to three-by-three samples and normalized); its nearer samples have more weight. Click 5: repeat the same row-by-row scan for the Gaussian output. These are illustrative, complete data, not a measured radar field or a comparison of method performance. The kernels are symmetric, so the sliding weighted average is the convolution used here. Transition: a fixed pixel window has a fixed physical footprint on an evenly spaced Cartesian grid, but radar is sampled in range and angle.
 -->
 
 ---
-class: smoothing-objective
+class: convolution-polar
 ---
 
-# Objective: consistent smoothing at lower cost
+# A fixed polar-grid window changes physical size
 
-<div class="smoothing-cards">
-  <section>
-    <h2>Physical scale</h2>
-    <p>Adjust the angular window with range so the intended smoothing width remains approximately constant.</p>
-  </section>
-  <section>
-    <h2>Computation</h2>
-    <p>Avoid applying a different spatial window at every range and angle.</p>
-  </section>
+<p class="convolution-polar-context">The same three-by-three sample window in range and elevation angle</p>
+
+<div class="convolution-demo">
+  <div class="convolution-canvas" role="img" aria-label="Animated range–elevation radar grid: an identical three-by-three sample window covers a larger transverse physical width at far range, then its angular width is reduced.">
+    <CuManim :steps="3" :width="1080" :height="320" :construct="polarConvolution" />
+    <svg v-if="clicks === 0" class="convolution-first-frame" viewBox="0 0 1080 390" aria-hidden="true">
+      <path v-for="(ray, index) in polarPreview.rays" :key="`ray-${index}`" :d="ray" class="convolution-preview-line" />
+      <path v-for="(arc, index) in polarPreview.arcs" :key="`arc-${index}`" :d="arc" class="convolution-preview-line" />
+      <path :d="polarPreview.near" class="convolution-preview-footprint" />
+      <path :d="polarPreview.chord" class="convolution-preview-chord" />
+      <rect :x="polarPreview.radar.x - 8" :y="polarPreview.radar.y - 8" width="16" height="16" fill="#cfb87c" />
+    </svg>
+  </div>
+  <div class="convolution-polar-takeaway">
+    <p>Angular sample spacing grows with range: <strong>r Δθ</strong>. Range-gate spacing stays fixed.</p>
+    <p>To keep a fixed physical smoothing width, <strong>adjust the angular window with range.</strong></p>
+  </div>
 </div>
 
-<p class="smoothing-test">Test against a spatial dynamic kernel: <strong>compare the resulting radar fields and processing times.</strong></p>
+<script setup>
+import { useNav } from '@slidev/client'
+import { polarConvolution, polarPreview } from '../scenes/convolution'
+
+const { clicks } = useNav()
+</script>
 
 <!--
-About 45 seconds. The paper addresses a tradeoff: a range-dependent spatial kernel can maintain the physical smoothing scale, but repeatedly evaluating it on large data is expensive. The alternative is spectral-domain filtering with the Discrete Cosine Transform (DCT). Its test is not just speed: the smoothed field must also be compared with the spatial reference.
+About 1 minute 10 seconds. Click 1: show the range–elevation grid and a three-by-three sample window near the radar. Click 2: move an identical index-space window outward, leaving the near example visible. Adjacent rays diverge, so its transverse footprint is larger at far range even though the number of angular samples and the range-direction width are unchanged. Click 3: show how a narrower angular window at far range gives approximately the near window's physical transverse width. This is a schematic of footprint changes, not a distortion of the measurements. For 1–2 km cloud-top generating cells, the smoothing scale needs to be specified in distance, not gate count. A spatial kernel that changes with range is computationally costly; the paper tests a spectral alternative against the spatial method for both field structure and processing time. The next slide quantifies the angular-width adjustment. Do not say range gates themselves widen with range.
 -->
 
 ---
