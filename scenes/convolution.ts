@@ -1,4 +1,5 @@
 import {
+  Arrow,
   Circle,
   FadeIn,
   FadeOut,
@@ -63,7 +64,114 @@ function fieldColor(value: number) {
   return `rgb(${low.map((channel, i) => Math.round(channel + (high[i] - channel) * value)).join(',')})`
 }
 
-export const cartesianPreviewColors = sampleField().flat().map(fieldColor)
+export interface PreviewRect {
+  x: number
+  y: number
+  w: number
+  h: number
+  fill: string
+  fillOpacity?: number
+  stroke?: string
+  strokeWidth?: number
+}
+
+export interface PreviewLine {
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+}
+
+export interface PreviewTip {
+  x: number
+  y: number
+}
+
+// Standard Manim-style arrow geometry shared by the scene and the preview:
+// a shaft ending at the tip base plus a filled triangular tip.
+export const ARROW_START: [number, number, number] = [-0.9, 0, 0]
+export const ARROW_END: [number, number, number] = [0.9, 0, 0]
+const ARROW_STROKE_WIDTH = 6
+const ARROW_TIP_LENGTH = 0.35
+const ARROW_TIP_WIDTH = 0.2
+
+// First-frame overlay geometry in 1080x390 display pixels, derived from the
+// same parameters as the Manim scene so the static frame matches click 1.
+const DISPLAY_W = 1080
+const DISPLAY_H = 390
+const FRAME_W = 14
+const FRAME_H = 5.05
+
+function previewX(x: number) {
+  return (x + FRAME_W / 2) * DISPLAY_W / FRAME_W
+}
+
+function previewY(y: number) {
+  return (FRAME_H / 2 - y) * DISPLAY_H / FRAME_H
+}
+
+function previewRect(cx: number, cy: number, w: number, h: number, rect: Omit<PreviewRect, 'x' | 'y' | 'w' | 'h'>): PreviewRect {
+  const round = (value: number) => Math.round(value * 10) / 10
+  return {
+    x: round(previewX(cx) - w * DISPLAY_W / FRAME_W / 2),
+    y: round(previewY(cy) - h * DISPLAY_H / FRAME_H / 2),
+    w: round(w * DISPLAY_W / FRAME_W),
+    h: round(h * DISPLAY_H / FRAME_H),
+    ...rect,
+  }
+}
+
+function buildCartesianPreview() {
+  const input = sampleField()
+  const center = cellPosition(3, 3, -3.7)
+  const span = 3 * CELL_SIZE
+  const thick = 0.075
+  const ext = 0.06
+  const previewInput: PreviewRect[] = []
+  const backing: PreviewRect[] = []
+  for (let row = 0; row < GRID_SIZE; row++) {
+    for (let col = 0; col < GRID_SIZE; col++) {
+      const [ix, iy] = cellPosition(row, col, -3.7)
+      previewInput.push(previewRect(ix, iy, CELL_SIZE - 0.025, CELL_SIZE - 0.025, {
+        fill: fieldColor(input[row][col]),
+        stroke: '#243548',
+        strokeWidth: 1.2,
+      }))
+      const [ox, oy] = cellPosition(row, col, 3.7)
+      backing.push(previewRect(ox, oy, CELL_SIZE - 0.025, CELL_SIZE - 0.025, {
+        fill: '#1c2d40',
+        stroke: '#364a5f',
+        strokeWidth: 1.2,
+      }))
+    }
+  }
+  const tint = Array.from({ length: 3 }, (_, i) => Array.from({ length: 3 }, (_, j) => {
+    const [cx, cy] = [center[0] + (j - 1) * CELL_SIZE, center[1] + (1 - i) * CELL_SIZE]
+    return previewRect(cx, cy, CELL_SIZE - 0.035, CELL_SIZE - 0.035, { fill: GOLD, fillOpacity: 0.25 })
+  })).flat()
+  const bars = [
+    previewRect(center[0], center[1] + span / 2, span + 2 * ext, thick, { fill: GOLD }),
+    previewRect(center[0], center[1] - span / 2, span + 2 * ext, thick, { fill: GOLD }),
+    previewRect(center[0] - span / 2, center[1], thick, span + 2 * ext, { fill: GOLD }),
+    previewRect(center[0] + span / 2, center[1], thick, span + 2 * ext, { fill: GOLD }),
+  ]
+  const roundCoord = (value: number) => Math.round(value * 10) / 10
+  const tipBaseX = ARROW_END[0] - ARROW_TIP_LENGTH
+  const arrowShaft: PreviewLine = {
+    x1: roundCoord(previewX(ARROW_START[0])),
+    y1: roundCoord(previewY(ARROW_START[1])),
+    x2: roundCoord(previewX(tipBaseX)),
+    y2: roundCoord(previewY(ARROW_END[1])),
+  }
+  const arrowTip: PreviewTip[] = [
+    { x: roundCoord(previewX(ARROW_END[0])), y: roundCoord(previewY(ARROW_END[1])) },
+    { x: roundCoord(previewX(tipBaseX)), y: roundCoord(previewY(ARROW_TIP_WIDTH)) },
+    { x: roundCoord(previewX(tipBaseX)), y: roundCoord(previewY(-ARROW_TIP_WIDTH)) },
+  ]
+  return { input: previewInput, tint, bars, backing, arrowShaft, arrowTip }
+}
+
+export const cartesianPreview = buildCartesianPreview()
 
 function cellPosition(row: number, col: number, centerX: number): [number, number, number] {
   return [centerX + (col - 3) * CELL_SIZE, (3 - row) * CELL_SIZE, 0]
@@ -224,11 +332,14 @@ export async function cartesianConvolution() {
       fillOpacity: 0.8,
       strokeWidth: 0,
     }))))
-  const arrow = new VGroup(
-    new Line({ start: [-0.9, 0, 0], end: [0.9, 0, 0], color: GOLD, strokeWidth: 5 }),
-    new Line({ start: [0.55, 0.25, 0], end: [0.9, 0, 0], color: GOLD, strokeWidth: 5 }),
-    new Line({ start: [0.55, -0.25, 0], end: [0.9, 0, 0], color: GOLD, strokeWidth: 5 }),
-  )
+  const arrow = new Arrow({
+    start: ARROW_START,
+    end: ARROW_END,
+    color: GOLD,
+    strokeWidth: ARROW_STROKE_WIDTH,
+    tipLength: ARROW_TIP_LENGTH,
+    tipWidth: ARROW_TIP_WIDTH,
+  })
 
   const boxcarExample = fieldCell(3, 3, 3.7, smooth(input, boxcar, 3, 3))
   const gaussianExample = fieldCell(3, 3, 3.7, smooth(input, GAUSSIAN_WEIGHTS, 3, 3))

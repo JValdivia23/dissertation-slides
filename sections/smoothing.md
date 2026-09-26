@@ -50,23 +50,21 @@ class: convolution-cartesian
   <div class="convolution-demo-labels"><span>Noisy input</span><span>Smoothed output</span></div>
   <div class="convolution-canvas" role="img" aria-label="Animated synthetic Cartesian grid: a boxcar kernel begins at the center and reveals its average on the first click, then scans row by row from upper left to lower right, revealing each average as it reaches that cell; a Gaussian kernel then repeats the example and scan.">
     <CuManim :steps="4" :width="1080" :height="320" :construct="cartesianConvolution" />
-    <div v-if="clicks === 0" class="convolution-first-frame" aria-hidden="true">
-      <div class="convolution-preview-grid">
-        <span v-for="(color, index) in cartesianPreviewColors" :key="index" :style="{ backgroundColor: color }" />
-        <div class="convolution-preview-kernel" />
-      </div>
-      <span class="convolution-preview-arrow">→</span>
-      <div class="convolution-preview-grid convolution-preview-output">
-        <span v-for="index in 49" :key="index" />
-      </div>
-    </div>
+    <svg v-if="clicks === 0" class="convolution-first-frame" viewBox="0 0 1080 390" aria-hidden="true">
+      <rect v-for="(cell, index) in cartesianPreview.input" :key="`in-${index}`" :x="cell.x" :y="cell.y" :width="cell.w" :height="cell.h" :fill="cell.fill" stroke="#243548" stroke-width="1.2" />
+      <rect v-for="(cell, index) in cartesianPreview.backing" :key="`back-${index}`" :x="cell.x" :y="cell.y" :width="cell.w" :height="cell.h" :fill="cell.fill" stroke="#364a5f" stroke-width="1.2" />
+      <rect v-for="(tile, index) in cartesianPreview.tint" :key="`tint-${index}`" :x="tile.x" :y="tile.y" :width="tile.w" :height="tile.h" fill="#cfb87c" fill-opacity="0.25" />
+      <rect v-for="(bar, index) in cartesianPreview.bars" :key="`bar-${index}`" :x="bar.x" :y="bar.y" :width="bar.w" :height="bar.h" fill="#cfb87c" />
+      <path :d="`M${cartesianPreview.arrowShaft.x1},${cartesianPreview.arrowShaft.y1} L${cartesianPreview.arrowShaft.x2},${cartesianPreview.arrowShaft.y2}`" stroke="#cfb87c" stroke-width="6" stroke-linecap="round" fill="none" />
+      <polygon :points="cartesianPreview.arrowTip.map(point => `${point.x},${point.y}`).join(' ')" fill="#cfb87c" />
+    </svg>
   </div>
   <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>{{ clicks >= 3 ? 'Gaussian: center-weighted mean' : 'Boxcar: equal-weight mean' }}</strong></p>
 </div>
 
 <script setup>
 import { useNav } from '@slidev/client'
-import { cartesianConvolution, cartesianPreviewColors } from '../scenes/convolution'
+import { cartesianConvolution, cartesianPreview } from '../scenes/convolution'
 
 const { clicks } = useNav()
 </script>
