@@ -21,6 +21,26 @@ About 20 seconds. This is the first of four paper talks. The journal article use
 -->
 
 ---
+class: radar-data-intro
+---
+
+# The nature of radar data
+
+<div class="radar-data-points">
+  <p>Radar is natively collected in <strong>polar coordinates</strong>.</p>
+  <p>Raw radar observations are <strong>noisy</strong>.</p>
+</div>
+
+<div class="radar-data-figure">
+  <img v-click.hide="1" src="../extras/raw_zh_rhi.png" alt="Unsmoothed C-band radar reflectivity cross-section and a close-up of cloud-top cells" />
+  <img v-click="1" src="../extras/raw_zdr_rhi.png" alt="Unsmoothed differential reflectivity from the same radar scan and close-up" />
+</div>
+
+<!--
+About 45 seconds. This is a COW1high range–height scan on 23 February 2022 at 02:28:53–02:29:05 UTC. In this vertical scan, the native coordinates are range and elevation angle. First show unsmoothed horizontal reflectivity; one click replaces it with differential reflectivity from the same scan and with the same spatial bounds. The right panels enlarge 17–23 km range and 4.5–7.5 km altitude. Gate-to-gate variability and missing observations motivate smoothing, but not every small-scale change is random noise; coherent cloud-top structures remain visible. The ZDRC field is calibration-corrected but not smoothed. The reflectivity view corresponds to panels (a) and (e) of Figure 4 in the AMT paper; the ZDR view is newly plotted from the same RHI file. Transition to the polar-grid geometry problem.
+-->
+
+---
 class: smoothing-problem
 ---
 
