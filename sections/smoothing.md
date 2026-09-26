@@ -9,7 +9,7 @@ title: Radar Data Smoothing using the Discrete Cosine Transform
   <h1>Radar Data Smoothing using the Discrete Cosine Transform</h1>
   <h2>A Fast Spectral Domain Algorithm</h2>
   <div class="paper-authors">
-    <p>Presenter: <strong>Jairo M. Valdivia-Prado</strong></p>
+    <p><strong>Jairo M. Valdivia-Prado</strong></p>
     <p>Coauthors: Will Chapman · Katja Friedrich</p>
   </div>
   <p class="paper-affiliation">Department of Atmospheric and Oceanic Sciences · University of Colorado Boulder</p>
