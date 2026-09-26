@@ -17,6 +17,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize
 from matplotlib.patches import Rectangle
+from matplotlib import patheffects
 import numpy as np
 import xarray as xr
 
@@ -101,12 +102,17 @@ def render_rhi(
         ax.set_ylabel("Altitude (km)", fontsize=19, labelpad=9)
         ax.tick_params(labelsize=16, length=5, width=1.1)
 
-    full.add_patch(Rectangle(
+    zoom_box = Rectangle(
         (DETAIL_EXTENT[0], DETAIL_EXTENT[2]),
         DETAIL_EXTENT[1] - DETAIL_EXTENT[0],
         DETAIL_EXTENT[3] - DETAIL_EXTENT[2],
         fill=False, edgecolor="#D32F2F", linewidth=2.8, linestyle="--",
-    ))
+    )
+    zoom_box.set_path_effects([
+        patheffects.Stroke(linewidth=5.5, foreground="white"),
+        patheffects.Normal(),
+    ])
+    full.add_patch(zoom_box)
 
     colorbar_ax = fig.add_axes((0.27, 0.16, 0.46, 0.033))
     bar = fig.colorbar(image, cax=colorbar_ax, orientation="horizontal",

@@ -26,14 +26,14 @@ class: radar-data-intro
 
 # The nature of radar data
 
-<div class="radar-data-points">
-  <p>Radar is natively collected in <strong>polar coordinates</strong>.</p>
-  <p>Raw radar observations are <strong>noisy</strong>.</p>
-</div>
-
 <div class="radar-data-figure">
   <img v-click.hide="1" src="../extras/raw_zh_rhi.png" alt="Unsmoothed C-band radar reflectivity cross-section and a close-up of cloud-top cells" />
   <img v-click="1" src="../extras/raw_zdr_rhi.png" alt="Unsmoothed differential reflectivity from the same radar scan and close-up" />
+</div>
+
+<div class="radar-data-points">
+  <p>Radar is natively collected in <strong>polar coordinates</strong>.</p>
+  <p>Raw radar observations are <strong>noisy</strong>.</p>
 </div>
 
 <!--
