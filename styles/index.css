@@ -164,8 +164,8 @@
 
 .slidev-layout .convolution-preview-kernel {
   position: absolute;
-  top: -14.285%;
-  left: -14.285%;
+  top: 28.571%;
+  left: 28.571%;
   width: 42.857%;
   height: 42.857%;
   box-sizing: border-box;

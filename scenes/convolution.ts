@@ -4,6 +4,7 @@ import {
   FadeOut,
   Line,
   Polygon,
+  Rectangle,
   Scene,
   Square,
   Transform,
@@ -87,24 +88,57 @@ function kernel(center: [number, number, number], gaussian = false) {
   const weights = gaussian
     ? GAUSSIAN_WEIGHTS
     : [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+  // NOTE: fill meshes multiply stroke opacity (_opacity) with fillOpacity,
+  // so never set strokeOpacity: 0 here -- it would erase the fill as well.
+  // strokeWidth: 0 skips stroke geometry while keeping fills visible.
   const tiles = weights.flatMap((row, i) => row.map((weight, j) => new Square({
     sideLength: CELL_SIZE - 0.035,
     center: [center[0] + (j - 1) * CELL_SIZE, center[1] + (1 - i) * CELL_SIZE, 0],
     color: GOLD,
     fillOpacity: gaussian ? 0.07 + 0.55 * weight : 0.25,
+    strokeWidth: 0,
   }).setStyle({
-    fillColor: GOLD,
-    fillOpacity: gaussian ? 0.07 + 0.55 * weight : 0.25,
     strokeColor: GOLD,
-    strokeOpacity: 0,
-  })))
-  const border = new Square({
-    sideLength: 3 * CELL_SIZE,
-    center,
+    strokeWidth: 0,
+  }).setFill(GOLD, gaussian ? 0.07 + 0.55 * weight : 0.25)))
+  // Stroked outlines lose their vertical edges over bright cells in this
+  // renderer, so the reticle is built from filled bars (standard mesh path).
+  const span = 3 * CELL_SIZE
+  const thick = 0.075
+  const ext = 0.06
+  const [cx, cy, cz] = center
+  const bar = (width: number, height: number, x: number, y: number) => new Rectangle({
+    width,
+    height,
+    center: [x, y, cz],
     color: GOLD,
-    strokeWidth: 5,
-  })
-  return new VGroup(...tiles, border)
+    fillOpacity: 1,
+    strokeWidth: 0,
+  }).setStyle({
+    strokeColor: GOLD,
+    strokeWidth: 0,
+  }).setFill(GOLD, 1)
+  const bars = [
+    bar(span + 2 * ext, thick, cx, cy + span / 2),
+    bar(span + 2 * ext, thick, cx, cy - span / 2),
+    bar(thick, span + 2 * ext, cx - span / 2, cy),
+    bar(thick, span + 2 * ext, cx + span / 2, cy),
+  ]
+  return new VGroup(...tiles, ...bars)
+}
+
+// The grid cells and the kernel are created lazily and can end up tied in
+// draw order, which lets bright cells cover the kernel outline mid-sweep.
+// Pinning render orders keeps the kernel (then its weight markers) on top.
+function pinToFront(window: VGroup, markers?: VGroup) {
+  const layers: Array<[VGroup, number]> = markers
+    ? [[window, 9999], [markers, 10000]]
+    : [[window, 9999]]
+  for (const [group, order] of layers) {
+    const host = group.getThreeObject()
+    host.renderOrder = order
+    host.traverse((object: { renderOrder: number }) => { object.renderOrder = order })
+  }
 }
 
 function scan(window: VGroup, outputCells: Square[], alpha: number, markers?: VGroup) {
@@ -122,12 +156,32 @@ function scan(window: VGroup, outputCells: Square[], alpha: number, markers?: VG
   ]
   window.moveTo(position)
   markers?.moveTo(position)
+  pinToFront(window, markers)
 
   // The next value appears only when the window reaches that cell.
-  for (let index = 1; index <= reached; index++) {
+  for (let index = 0; index <= reached; index++) {
     const [outputRow, outputCol] = SCAN_ORDER[index]
     outputCells[outputRow * GRID_SIZE + outputCol].setStrokeOpacity(1)
   }
+}
+
+function sweepFromCenter(window: VGroup, outputCells: Square[], alpha: number, markers?: VGroup) {
+  const resetFraction = 0.08
+  if (alpha < resetFraction) {
+    const center = cellPosition(3, 3, -3.7)
+    const upperLeft = cellPosition(0, 0, -3.7)
+    const progress = alpha / resetFraction
+    const position: [number, number, number] = [
+      center[0] + (upperLeft[0] - center[0]) * progress,
+      center[1] + (upperLeft[1] - center[1]) * progress,
+      0,
+    ]
+    window.moveTo(position)
+    markers?.moveTo(position)
+    pinToFront(window, markers)
+    return
+  }
+  scan(window, outputCells, (alpha - resetFraction) / (1 - resetFraction), markers)
 }
 
 // This is a deliberately synthetic, complete field. Missing-data handling is
@@ -160,12 +214,12 @@ export async function cartesianConvolution() {
     }
   }
 
-  const firstPosition = cellPosition(0, 0, -3.7)
-  const window = kernel(firstPosition)
+  const centerPosition = cellPosition(3, 3, -3.7)
+  const window = kernel(centerPosition)
   const gaussianMarkers = new VGroup(...GAUSSIAN_WEIGHTS.flatMap((row, i) =>
     row.map((weight, j) => new Circle({
       radius: 0.04 + 0.18 * weight,
-      center: cellPosition(i - 1, j - 1, -3.7),
+      center: cellPosition(i + 2, j + 2, -3.7),
       color: '#fff1c4',
       fillOpacity: 0.8,
       strokeWidth: 0,
@@ -176,41 +230,45 @@ export async function cartesianConvolution() {
     new Line({ start: [0.55, -0.25, 0], end: [0.9, 0, 0], color: GOLD, strokeWidth: 5 }),
   )
 
-  // One scene.play() is exactly one Slidev click through CuManim.
+  const boxcarExample = fieldCell(3, 3, 3.7, smooth(input, boxcar, 3, 3))
+  const gaussianExample = fieldCell(3, 3, 3.7, smooth(input, GAUSSIAN_WEIGHTS, 3, 3))
+
+  // The static preview matches this initial state. One play() is one Slidev click.
+  scene.add(new VGroup(...inputCells), new VGroup(...outputBacking), window, arrow)
+  await scene.play(new FadeIn(boxcarExample, { duration: 0.5 }))
+  pinToFront(window)
+
+  const boxcarOutput = new VGroup(...outputCells)
+  outputCells.forEach(cell => cell.setStrokeOpacity(0))
+  scene.add(boxcarOutput)
   await scene.play(
-    new FadeIn(new VGroup(...inputCells), { duration: 0.65 }),
-    new FadeIn(new VGroup(...outputBacking), { duration: 0.65 }),
-    new FadeIn(window, { duration: 0.65 }),
-    new FadeIn(arrow, { duration: 0.65 }),
+    new FadeOut(boxcarExample, { duration: 0.25 }),
+    new UpdateFromAlphaFunc(
+      window,
+      (_, alpha) => sweepFromCenter(window, outputCells, alpha),
+      { duration: 5.7, rateFunc: linear },
+    ),
   )
 
-  await scene.play(new FadeIn(outputCells[0], { duration: 0.5 }))
-
-  const remainingOutput = new VGroup(...outputCells.slice(1))
-  outputCells.slice(1).forEach(cell => cell.setStrokeOpacity(0))
-  scene.add(remainingOutput)
-  await scene.play(new UpdateFromAlphaFunc(
-    window,
-    (_, alpha) => scan(window, outputCells, alpha),
-    { duration: 5.2, rateFunc: linear },
-  ))
-
   await scene.play(
-    new Transform(window, kernel(firstPosition, true), { duration: 0.85 }),
-    new FadeOut(outputCells[0], { duration: 0.85 }),
-    new FadeOut(remainingOutput, { duration: 0.85 }),
-    new FadeIn(gaussianCells[0], { duration: 0.85 }),
+    new Transform(window, kernel(centerPosition, true), { duration: 0.85 }),
+    new FadeOut(boxcarOutput, { duration: 0.85 }),
+    new FadeIn(gaussianExample, { duration: 0.85 }),
     new FadeIn(gaussianMarkers, { duration: 0.85 }),
   )
+  pinToFront(window, gaussianMarkers)
 
-  const remainingGaussian = new VGroup(...gaussianCells.slice(1))
-  gaussianCells.slice(1).forEach(cell => cell.setStrokeOpacity(0))
-  scene.add(remainingGaussian)
-  await scene.play(new UpdateFromAlphaFunc(
-    window,
-    (_, alpha) => scan(window, gaussianCells, alpha, gaussianMarkers),
-    { duration: 5.2, rateFunc: linear },
-  ))
+  const gaussianOutput = new VGroup(...gaussianCells)
+  gaussianCells.forEach(cell => cell.setStrokeOpacity(0))
+  scene.add(gaussianOutput)
+  await scene.play(
+    new FadeOut(gaussianExample, { duration: 0.25 }),
+    new UpdateFromAlphaFunc(
+      window,
+      (_, alpha) => sweepFromCenter(window, gaussianCells, alpha, gaussianMarkers),
+      { duration: 5.7, rateFunc: linear },
+    ),
+  )
 }
 
 const RADAR: [number, number, number] = [-5.45, 0, 0]

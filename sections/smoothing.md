@@ -48,8 +48,8 @@ class: convolution-cartesian
 
 <div class="convolution-demo">
   <div class="convolution-demo-labels"><span>Noisy input</span><span>Smoothed output</span></div>
-  <div class="convolution-canvas" role="img" aria-label="Animated synthetic Cartesian grid: a boxcar kernel scans row by row from the upper-left to lower-right cell, revealing each average as it reaches that cell; a Gaussian kernel then repeats the scan.">
-    <CuManim :steps="5" :width="1080" :height="320" :construct="cartesianConvolution" />
+  <div class="convolution-canvas" role="img" aria-label="Animated synthetic Cartesian grid: a boxcar kernel begins at the center and reveals its average on the first click, then scans row by row from upper left to lower right, revealing each average as it reaches that cell; a Gaussian kernel then repeats the example and scan.">
+    <CuManim :steps="4" :width="1080" :height="320" :construct="cartesianConvolution" />
     <div v-if="clicks === 0" class="convolution-first-frame" aria-hidden="true">
       <div class="convolution-preview-grid">
         <span v-for="(color, index) in cartesianPreviewColors" :key="index" :style="{ backgroundColor: color }" />
@@ -61,7 +61,7 @@ class: convolution-cartesian
       </div>
     </div>
   </div>
-  <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>{{ clicks >= 4 ? 'Gaussian: center-weighted mean' : 'Boxcar: equal-weight mean' }}</strong></p>
+  <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>{{ clicks >= 3 ? 'Gaussian: center-weighted mean' : 'Boxcar: equal-weight mean' }}</strong></p>
 </div>
 
 <script setup>
@@ -72,7 +72,7 @@ const { clicks } = useNav()
 </script>
 
 <!--
-About 1 minute. After slide 8, explain that we want to reduce gate-to-gate variability while preserving coherent structure. Convolution applies the same local operation at each position. Click 1: on this synthetic, evenly spaced grid, identify the three-by-three boxcar kernel at the upper-left cell. Click 2: all nine kernel weights are equal, so the first output is their average. Edge values are extended with nearest-value padding in this illustration; this is not Paper 1's DCT boundary treatment. Click 3: the kernel scans successive rows, alternately left-to-right and right-to-left, revealing each output value exactly as it reaches that cell, and ends at the lower right. Click 4: change to a discrete Gaussian kernel (truncated to three-by-three samples and normalized); its nearer samples have more weight. Click 5: repeat the same row-by-row scan for the Gaussian output. These are illustrative, complete data, not a measured radar field or a comparison of method performance. The kernels are symmetric, so the sliding weighted average is the convolution used here. Transition: a fixed pixel window has a fixed physical footprint on an evenly spaced Cartesian grid, but radar is sampled in range and angle.
+About 1 minute. After slide 8, explain that we want to reduce gate-to-gate variability while preserving coherent structure. Convolution applies the same local operation at each position. The three-by-three boxcar kernel starts over the center of this synthetic, evenly spaced grid. Click 1: all nine kernel weights are equal, so their average appears at the corresponding output cell. Click 2: clear that example, then scan successive rows from the upper-left cell, alternately left-to-right and right-to-left, revealing each output value as the kernel reaches it; finish at the lower right. Edge values are extended with nearest-value padding in this illustration; this is not Paper 1's DCT boundary treatment. Click 3: return to the center and change to a discrete Gaussian kernel (truncated to three-by-three samples and normalized); its nearer samples have more weight, and the center-weighted output appears. Click 4: repeat the same row-by-row scan for the Gaussian output. These are illustrative, complete data, not a measured radar field or a comparison of method performance. The kernels are symmetric, so the sliding weighted average is the convolution used here. Transition: a fixed pixel window has a fixed physical footprint on an evenly spaced Cartesian grid, but radar is sampled in range and angle.
 -->
 
 ---
