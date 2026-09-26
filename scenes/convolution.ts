@@ -126,7 +126,6 @@ function buildCartesianPreview() {
   const center = cellPosition(3, 3, -3.7)
   const span = 3 * CELL_SIZE
   const thick = 0.075
-  const ext = 0.06
   const previewInput: PreviewRect[] = []
   const backing: PreviewRect[] = []
   for (let row = 0; row < GRID_SIZE; row++) {
@@ -150,10 +149,10 @@ function buildCartesianPreview() {
     return previewRect(cx, cy, CELL_SIZE - 0.035, CELL_SIZE - 0.035, { fill: GOLD, fillOpacity: 0.25 })
   })).flat()
   const bars = [
-    previewRect(center[0], center[1] + span / 2, span + 2 * ext, thick, { fill: GOLD }),
-    previewRect(center[0], center[1] - span / 2, span + 2 * ext, thick, { fill: GOLD }),
-    previewRect(center[0] - span / 2, center[1], thick, span + 2 * ext, { fill: GOLD }),
-    previewRect(center[0] + span / 2, center[1], thick, span + 2 * ext, { fill: GOLD }),
+    previewRect(center[0], center[1] + span / 2, span + thick, thick, { fill: GOLD }),
+    previewRect(center[0], center[1] - span / 2, span + thick, thick, { fill: GOLD }),
+    previewRect(center[0] - span / 2, center[1], thick, span - thick, { fill: GOLD }),
+    previewRect(center[0] + span / 2, center[1], thick, span - thick, { fill: GOLD }),
   ]
   const roundCoord = (value: number) => Math.round(value * 10) / 10
   const tipBaseX = ARROW_END[0] - ARROW_TIP_LENGTH
@@ -212,9 +211,10 @@ function kernel(center: [number, number, number], gaussian = false) {
   }).setFill(GOLD, gaussian ? 0.07 + 0.55 * weight : 0.25)))
   // Stroked outlines lose their vertical edges over bright cells in this
   // renderer, so the reticle is built from filled bars (standard mesh path).
+  // Horizontals run the full outer width; verticals fit exactly between
+  // them so the corners join flush with no overhang tabs.
   const span = 3 * CELL_SIZE
   const thick = 0.075
-  const ext = 0.06
   const [cx, cy, cz] = center
   const bar = (width: number, height: number, x: number, y: number) => new Rectangle({
     width,
@@ -228,10 +228,10 @@ function kernel(center: [number, number, number], gaussian = false) {
     strokeWidth: 0,
   }).setFill(GOLD, 1)
   const bars = [
-    bar(span + 2 * ext, thick, cx, cy + span / 2),
-    bar(span + 2 * ext, thick, cx, cy - span / 2),
-    bar(thick, span + 2 * ext, cx - span / 2, cy),
-    bar(thick, span + 2 * ext, cx + span / 2, cy),
+    bar(span + thick, thick, cx, cy + span / 2),
+    bar(span + thick, thick, cx, cy - span / 2),
+    bar(thick, span - thick, cx - span / 2, cy),
+    bar(thick, span - thick, cx + span / 2, cy),
   ]
   return new VGroup(...tiles, ...bars)
 }
