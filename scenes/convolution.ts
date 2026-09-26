@@ -183,11 +183,10 @@ function fieldCell(row: number, col: number, centerX: number, value: number) {
     center: cellPosition(row, col, centerX),
     color: '#243548',
     fillOpacity: 1,
-    strokeWidth: 1.2,
+    strokeWidth: 0,
   })
     .setStyle({
-      strokeColor: '#243548',
-      strokeWidth: 1.2,
+      strokeWidth: 0,
     })
     .setFill(fieldColor(value), 1)
 }
@@ -199,6 +198,8 @@ function kernel(center: [number, number, number], gaussian = false) {
   // NOTE: fill meshes multiply stroke opacity (_opacity) with fillOpacity,
   // so never set strokeOpacity: 0 here -- it would erase the fill as well.
   // strokeWidth: 0 skips stroke geometry while keeping fills visible.
+  // Also, setStyle({ strokeColor }) assigns this.color, whose setter
+  // overwrites _style.fillColor too -- always follow it with setFill().
   const tiles = weights.flatMap((row, i) => row.map((weight, j) => new Square({
     sideLength: CELL_SIZE - 0.035,
     center: [center[0] + (j - 1) * CELL_SIZE, center[1] + (1 - i) * CELL_SIZE, 0],
@@ -267,6 +268,8 @@ function scan(window: VGroup, outputCells: Square[], alpha: number, markers?: VG
   pinToFront(window, markers)
 
   // The next value appears only when the window reaches that cell.
+  // (Toggled via stroke opacity: fill meshes key off _opacity, so this
+  // keeps their geometry alive while hidden. See fillOpacity note above.)
   for (let index = 0; index <= reached; index++) {
     const [outputRow, outputCol] = SCAN_ORDER[index]
     outputCells[outputRow * GRID_SIZE + outputCol].setStrokeOpacity(1)
@@ -316,7 +319,8 @@ export async function cartesianConvolution() {
         center: cellPosition(row, col, 3.7),
         color: '#1c2d40',
         fillOpacity: 1,
-      }).setStyle({ fillColor: '#1c2d40', fillOpacity: 1, strokeColor: '#364a5f', strokeWidth: 1.2 }))
+        strokeWidth: 0,
+      }).setStyle({ strokeWidth: 0 }).setFill('#1c2d40', 1))
       outputCells.push(fieldCell(row, col, 3.7, smooth(input, boxcar, row, col)))
       gaussianCells.push(fieldCell(row, col, 3.7, smooth(input, GAUSSIAN_WEIGHTS, row, col)))
     }
