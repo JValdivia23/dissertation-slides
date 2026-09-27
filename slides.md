@@ -19,9 +19,9 @@ themeConfig:
       - { label: Introduction, start: 1, end: 6 }
       - { label: Smoothing, start: 7, end: 20 }
       - { label: Local statistics, start: 21, end: 37 }
-      - { label: CTGC population life cycle, start: 38, end: 43 }
-      - { label: CTGC fall streak, start: 44, end: 47 }
-      - { label: Conclusions, start: 48, end: 51 }
+      - { label: CTGC population life cycle, start: 38, end: 47 }
+      - { label: CTGC fall streak, start: 48, end: 51 }
+      - { label: Conclusions, start: 52, end: 55 }
     outsideLabel: Backup
     pageNumberOnly: true
     hideOnCover: true
