@@ -337,6 +337,25 @@ About 1 minute. We have now selected the angle-dependent response H_theta and fi
 -->
 
 ---
+class: smoothing-synthetic
+---
+
+# Synthetic validation of DCT smoothing
+
+<div class="synthetic-comparison-figure">
+  <img src="../figures/dct-synthetic-input-row.png" alt="Paper Figure 2(a–c): synthetic ground truth, the same field with added noise of standard deviation 2, and the added noise pattern" />
+  <img v-click="1" src="../figures/dct-synthetic-result-row.png" alt="Paper Figure 2(d–f): DCT-smoothed field with RMSE 0.263, spatial dynamic-kernel result with RMSE 0.241, and their small but nonzero difference on its own color scale" />
+</div>
+
+<img class="synthetic-field-scale" src="../figures/dct-synthetic-field-scale.png" alt="Shared field-value color scale for the synthetic truth, noisy data, and two smoothed fields" />
+
+<p class="fine">Synthetic reflectivity-like field · Paper Figure 2(a–f). Noise and difference panels have separate scales.</p>
+
+<!--
+About 1 minute. First show the synthetic ground truth, noisy observation with added noise of standard deviation 2, and the noise pattern. This is an artificial reflectivity-like field, not the measured C-band RHI on the next slide. Click 1: reveal the paper's DCT-smoothed result, spatial dynamic-kernel result, and DCT-minus-dynamic-kernel difference. Both remove much of the speckle and preserve the broad structures. The DCT and spatial outputs are visually nearly indistinguishable, but not numerically identical: their RMSEs against the known truth are 0.263 and 0.241, respectively. The difference panel uses a separate narrow scale and shows small structured discrepancies, especially near edges; do not call the outputs exactly equal or confuse this with an error-to-truth panel. These are the boxcar comparisons from panels (a)–(f) of the paper's Figure 2. The shared field-value scale is shown below, while the noise and difference panels retain their own colorbars. Next move from controlled synthetic data to the real C-band radar comparison.
+-->
+
+---
 class: smoothing-comparison
 ---
 
@@ -352,7 +371,7 @@ class: smoothing-comparison
 <p class="fine">C-band radar, 23 Feb 2022, 02:28 UTC; 5-pixel window. Cropped panels (b) and (c) from the paper's Figure 4.</p>
 
 <!--
-About 1 minute 30 seconds. Point to the cloud-top features near 5–7 km. The DCT and spatial dynamic boxcar produce closely matching structures, but are not identical; the original paper includes a difference panel. The spatial method skips missing values whereas Paper 1 linearly interpolates gaps before the DCT. These crops preserve the source panels and common color scale; the full eight-panel comparison remains in backup. Do not attribute all differences to algorithmic error.
+About 1 minute 30 seconds. Move from the synthetic test with known ground truth to measured C-band radar. Point to the cloud-top features near 5–7 km. The DCT and spatial dynamic boxcar produce closely matching structures, but are not identical; the original paper includes a difference panel. The spatial method skips missing values whereas Paper 1 linearly interpolates gaps before the DCT. These crops preserve the source panels and common color scale; the full eight-panel comparison remains in backup. Do not attribute all differences to algorithmic error.
 -->
 
 ---

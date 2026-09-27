@@ -354,6 +354,46 @@
   font-size: 0.96rem;
 }
 
+.slidev-layout.smoothing-synthetic h1 {
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.75rem;
+}
+
+.slidev-layout.smoothing-synthetic {
+  --synthetic-figure-width: 43.3rem;
+}
+
+.slidev-layout.smoothing-synthetic .synthetic-comparison-figure {
+  display: grid;
+  flex: 1;
+  grid-template-rows: repeat(2, max-content);
+  justify-items: center;
+  align-content: end;
+  gap: 0;
+  min-height: 0;
+}
+
+.slidev-layout.smoothing-synthetic .synthetic-comparison-figure img {
+  display: block;
+  width: min(100%, var(--synthetic-figure-width));
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.slidev-layout.smoothing-synthetic .synthetic-field-scale {
+  align-self: center;
+  width: min(100%, var(--synthetic-figure-width));
+  height: auto;
+  object-fit: contain;
+}
+
+.slidev-layout.smoothing-synthetic .fine {
+  margin-top: 0.15rem;
+  font-size: 0.68rem;
+}
+
 .slidev-layout.smoothing-cost .smoothing-cost-body {
   display: grid;
   flex: 1;
