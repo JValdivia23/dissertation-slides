@@ -538,18 +538,41 @@
   font-weight: 700;
 }
 
+.slidev-layout.smoothing-comparison .smoothing-comparison-view {
+  display: grid;
+  align-items: center;
+  min-height: 2rem;
+  text-align: center;
+}
+
+.slidev-layout.smoothing-comparison .smoothing-comparison-view p {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
 .slidev-layout.smoothing-comparison .smoothing-comparison-figures {
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0;
   min-height: 0;
 }
 
-.slidev-layout.smoothing-comparison .smoothing-comparison-figures img {
-  max-width: 49%;
-  max-height: 100%;
+.slidev-layout.smoothing-comparison .smoothing-comparison-frame {
+  position: relative;
+  flex: none;
+  align-self: stretch;
+  aspect-ratio: 830 / 575;
+  min-width: 0;
+}
+
+.slidev-layout.smoothing-comparison .smoothing-comparison-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -563,15 +586,29 @@
 .slidev-layout.smoothing-benchmark .smoothing-benchmark-body {
   display: grid;
   flex: 1;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   align-items: center;
   gap: 1.5rem;
   min-height: 0;
 }
 
-.slidev-layout.smoothing-benchmark .smoothing-benchmark-body img {
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-results,
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-figures,
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-source {
+  display: grid;
+  align-items: center;
+  min-width: 0;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-results > *,
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-figures > *,
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-source > * {
+  grid-area: 1 / 1;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-figures img {
   width: 100%;
-  max-height: 21rem;
+  max-height: 22rem;
   object-fit: contain;
 }
 
@@ -602,24 +639,43 @@
   font-size: 0.9rem;
 }
 
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-result > .smoothing-benchmark-takeaway {
+  margin: 1.2rem 0 0;
+  color: var(--cu-heading);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.slidev-layout.smoothing-benchmark .smoothing-benchmark-source p {
+  margin: 0;
+}
+
 .slidev-layout.smoothing-limitation .smoothing-limitation-flow {
   display: grid;
   flex: 1;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .slidev-layout.smoothing-limitation .smoothing-limitation-flow section {
-  min-height: 9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 13rem;
+  gap: 0.8rem;
 }
 
-.slidev-layout.smoothing-limitation .smoothing-limitation-flow > span {
-  color: var(--cu-text-muted);
-  font-size: 2rem;
+.slidev-layout.smoothing-limitation .smoothing-limitation-flow h2 {
+  margin-bottom: 0.2rem;
 }
 
-.slidev-layout.smoothing-limitation .smoothing-caution {
+.slidev-layout.smoothing-limitation .smoothing-limitation-flow .smoothing-limitation-effect {
+  color: var(--cu-heading);
+  font-weight: 600;
+}
+
+.slidev-layout.smoothing-limitation .smoothing-limitation-next {
   margin: 0.5rem 0 0;
   padding: 0.8rem 1rem;
   border-left: 4px solid var(--cu-gold);

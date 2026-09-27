@@ -359,58 +359,90 @@ About 1 minute. First show the synthetic ground truth, noisy observation with ad
 class: smoothing-comparison
 ---
 
-# DCT and spatial smoothing retain similar structure
+# Spatial and DCT smoothing on a C-band scan
+
+<div class="smoothing-comparison-view">
+  <p v-click.hide="1">Full RHI: the red boxes locate the cloud-top zoom.</p>
+  <p v-click="1">17–23 km zoom: the three cloud-top features remain distinct in both outputs.</p>
+</div>
 
 <div class="smoothing-comparison-figures">
-  <img src="../figures/dct-spatial-panel.png" alt="C-band reflectivity smoothed with a spatial dynamic boxcar kernel, panel b of the paper's comparison" />
-  <img src="../figures/dct-spectral-panel.png" alt="The same C-band scan smoothed using a DCT boxcar, panel c of the paper's comparison" />
+  <div class="smoothing-comparison-frame">
+    <img v-click.hide="1" src="../figures/dct-spatial-panel.png" alt="Full C-band RHI smoothed with a spatial dynamic boxcar, paper Figure 4(b); red box marks the cloud-top zoom" />
+    <img v-click="1" src="../figures/dct-real-spatial-zoom-panel.png" alt="Spatial dynamic-boxcar zoom from paper Figure 4(f), showing three cloud-top features at 17–23 km range" />
+  </div>
+  <div class="smoothing-comparison-frame">
+    <img v-click.hide="1" src="../figures/dct-spectral-panel.png" alt="Full C-band RHI smoothed with an analytical DCT boxcar, paper Figure 4(c); red box marks the cloud-top zoom" />
+    <img v-click="1" src="../figures/dct-real-spectral-zoom-panel.png" alt="Analytical DCT-boxcar zoom from paper Figure 4(g), showing the same three cloud-top features at 17–23 km range" />
+  </div>
 </div>
 
 <img class="smoothing-comparison-scale" src="../figures/dct-comparison-scale.png" alt="Shared reflectivity scale in dBZ" />
 
-<p class="fine">C-band radar, 23 Feb 2022, 02:28 UTC; 5-pixel window. Cropped panels (b) and (c) from the paper's Figure 4.</p>
+<p class="fine">C-band radar, 23 Feb 2022, 02:28 UTC · 5-pixel boxcar · Paper Figure 4(b, c, f, g). Spatial skips missing gates; DCT input is interpolated.</p>
 
 <!--
-About 1 minute 30 seconds. Move from the synthetic test with known ground truth to measured C-band radar. Point to the cloud-top features near 5–7 km. The DCT and spatial dynamic boxcar produce closely matching structures, but are not identical; the original paper includes a difference panel. The spatial method skips missing values whereas Paper 1 linearly interpolates gaps before the DCT. These crops preserve the source panels and common color scale; the full eight-panel comparison remains in backup. Do not attribute all differences to algorithmic error.
+About 1 minute 30 seconds. Move from the synthetic test with known ground truth to measured C-band radar. Initially show the matched full-RHI spatial dynamic-boxcar and analytical DCT-boxcar outputs, panels (b) and (c) of Figure 4. Point to the red boxes at 17–23 km. Click 1: replace both panels with their matched cloud-top zooms (f) and (g). The three roughly 1–2 km structures at about 5–7 km altitude remain distinguishable in both outputs. They are closely matching, not numerically identical; the original paper also includes difference panels. The spatial method skips missing values whereas Paper 1 linearly interpolates gaps before the DCT, so do not attribute every discrepancy to the filter itself. Both views retain the source axes and shared reflectivity color scale. The full eight-panel comparison remains in backup.
 -->
 
 ---
 class: smoothing-benchmark
 ---
 
-# The spectral method reduces processing time
+# DCT benchmark: window width and data size
 
 <div class="smoothing-benchmark-body">
-  <div class="smoothing-benchmark-result">
-    <p>About 180 million pixels</p>
-    <div><strong>42 min</strong><span>spatial dynamic kernel</span></div>
-    <div><strong>&lt;12 s</strong><span>Gaussian DCT</span></div>
+  <div class="smoothing-benchmark-results">
+    <div v-click.hide="1" class="smoothing-benchmark-result">
+      <p>Fixed RHI: 474 × 1180 pixels · window 5–101 pixels</p>
+      <div><strong>≈60 ms</strong><span>analytical Gaussian and boxcar across tested widths</span></div>
+      <div><strong>8.5 to &gt;44 s</strong><span>tested spatial dynamic kernel</span></div>
+      <p class="smoothing-benchmark-takeaway">At 101 pixels: Gaussian &gt;800×; analytical boxcar &gt;700× faster.</p>
+    </div>
+    <div v-click="1" class="smoothing-benchmark-result">
+      <p>Random-noise arrays · fixed 5-pixel window</p>
+      <div><strong>42 min</strong><span>spatial dynamic kernel · 2518 s</span></div>
+      <div><strong>&lt;12 s</strong><span>Gaussian DCT · 180 million pixels</span></div>
+    </div>
   </div>
-  <img src="../figures/dct-volume-benchmark.png" alt="Execution time versus number of pixels, comparing the spatial dynamic kernel and DCT smoothing variants" />
+  <div class="smoothing-benchmark-figures">
+    <img v-click.hide="1" src="../figures/dct-window-benchmark.png" alt="Paper Figure 5(a): execution time versus window size on a fixed 474-by-1180-pixel RHI; analytical Gaussian and boxcar timings stay near 60 milliseconds while the tested spatial method rises" />
+    <img v-click="1" src="../figures/dct-volume-benchmark.png" alt="Paper Figure 5(c): execution time versus number of pixels for a fixed five-pixel window on random-noise benchmark arrays" />
+  </div>
 </div>
 
-<p class="fine">Random-noise benchmark arrays, 5-pixel window. Cropped panel (c) from the paper's Figure 5.</p>
+<div class="smoothing-benchmark-source fine">
+  <p v-click.hide="1">Paper Figure 5(a): fixed data size, varying window width. Filter response changes with width; analytical-kernel runtime changes little.</p>
+  <p v-click="1">Paper Figure 5(c): fixed window width, varying data size. These timings are separate from the 101-pixel speedups.</p>
+</div>
 
 <!--
-About 1 minute 30 seconds. This is a controlled computation benchmark on arrays of increasing size, not a measured processing time for the displayed C-band scan. At 180 million pixels, the spatial baseline takes 2518 seconds (about 42 minutes); the analytical Gaussian DCT takes less than 12 seconds. At a different fixed data size, the Gaussian method also exceeds 800× speedup for the largest tested window. Keep those two comparisons separate. The crop foregrounds the data-size result.
+About 1 minute 45 seconds. This paper benchmark tests two different scaling questions, not the personal volume timing on slide 11. First, Figure 5(a) holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. The analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent; their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup, not over 800-fold for both. Other discrete DCT responses in the plot are faster than this spatial baseline but their cost increases with window width. Click 1: switch to Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels, the spatial implementation takes 2518 seconds, about 42 minutes, and Gaussian DCT takes less than 12 seconds. This is a controlled array benchmark, not a measured processing time for the displayed C-band RHI or the 20-sweep personal example. Do not attach the 800-fold window-size speedup to the 180-million-pixel result, and do not claim all possible spatial algorithms scale this way.
 -->
 
 ---
 class: smoothing-limitation
 ---
 
-# Limitation: the DCT needs a complete field
+# Limitations:
 
 <div class="smoothing-limitation-flow">
-  <section><h2>Radar gaps</h2><p>Blocked or filtered gates have no valid observation.</p></section>
-  <span aria-hidden="true">→</span>
-  <section><h2>Paper 1 treatment</h2><p>Interpolate those gaps before transforming the field.</p></section>
+  <section>
+    <h2>Missing data</h2>
+    <p>On these experiments we interpolate gaps before the DCT.</p>
+    <p class="smoothing-limitation-effect">Broad gaps can bias estimates within and near the missing region.</p>
+  </section>
+  <section>
+    <h2>Boundary conditions</h2>
+    <p>DCT-II reflects angle and range: a reasonable model for a finite RHI.</p>
+    <p class="smoothing-limitation-effect">Ideally, full-circle PPI should connect across 0°/360°.</p>
+  </section>
 </div>
 
-<p class="smoothing-caution">Broad gaps can bias the smoothed estimate within or near the missing region.</p>
+<p class="smoothing-limitation-next">Paper 2: support-aware local statistics and explicit reflective/periodic boundary modes.</p>
 
 <!--
-About 55 seconds. A spectral transform requires defined input values; this paper uses linear interpolation before smoothing. A short gap may be less consequential than a wide blocked sector, where interpolation can introduce a low-frequency bridge and kinks at the edges. These filled values are not observations. This is a limitation of the first method, not a claim that the paper's real-data comparison is invalid. The next paper extends the spectral framework to explicit valid-data support.
+About 1 minute 10 seconds. Two assumptions qualify Paper 1. First, its DCT needs defined input values, so the paper linearly interpolates missing gates before smoothing. A short gap may be less consequential than a wide blocked sector: interpolation can introduce a low-frequency bridge and kinks at its edges. Filled values are not observations. Second, DCT-II in the angular and range passes assumes reflected boundaries. This is a reasonable model for the finite elevation and range limits of an RHI, not a universal radar boundary rule. For a full-circle PPI, the azimuth rays at 0 and 360 degrees are neighbors, so a periodic angular transform is more appropriate while range remains reflective. A partial-sector scan need not wrap in azimuth. There is also a scale-versus-noise trade-off: keeping physical smoothing width approximately fixed means fewer angular samples at longer ranges, where signal-to-noise ratio may be poorer, so the method does not guarantee equal noise reduction everywhere. The real-data demonstration here is reflectivity; Doppler velocity must be de-aliased before smoothing. Paper 2 extends the framework to support-aware local statistics and explicit periodic azimuth versus reflective range modes. Do not imply that it automatically solves the range-dependent noise trade-off.
 -->
 
 ---
@@ -420,13 +452,14 @@ class: smoothing-conclusions
 # Paper 1: conclusions
 
 <div class="smoothing-conclusion-list">
-  <p><strong>Physical scale:</strong> the angular window adapts to radar range.</p>
-  <p><strong>Field comparison:</strong> DCT and spatial smoothing give closely matching structures in the example.</p>
-  <p><strong>Computation:</strong> the DCT is much faster on the large-array benchmark.</p>
+  <p><strong>Physical scale:</strong> continuous-width angular responses adapt to radar range.</p>
+  <p><strong>Kernel choice:</strong> analytical Gaussian is the general-purpose default; analytical boxcar enables comparison with a spatial moving average.</p>
+  <p><strong>Field comparison:</strong> synthetic results are visually nearly indistinguishable; cloud-top features remain distinct in the real example.</p>
+  <p><strong>Computation:</strong> analytical runtimes change little across tested widths and remain fast on large arrays.</p>
 </div>
 
 <p class="smoothing-next">Next: local statistics with missing-data support.</p>
 
 <!--
-About 55 seconds. Summarize the method, quality comparison, and computational result, then pause. The main qualification is that Paper 1 interpolates missing gates. Paper 2 addresses incomplete grids using support-aware local statistics; it is a separate methodological study. Do not imply either methods paper produced the Chapter 4 population results. The paper is published in AMT (2026).
+About 1 minute. Summarize the method, kernel choice, quality comparison, and the two distinct computational scaling tests, then pause. The analytical continuous Gaussian is the paper's recommended general-purpose choice because of its smooth spectral taper and fractional-width support; analytical boxcar is useful for comparing with a spatial moving average. A smooth Gaussian taper avoids the ringing associated with a hard spectral cutoff, but do not claim every DCT kernel is artifact-free. The main qualification is that Paper 1 interpolates missing gates. Paper 2 addresses incomplete grids using support-aware local statistics; it is a separate methodological study. Do not imply either methods paper produced the Chapter 4 population results. The paper is published in AMT (2026).
 -->
