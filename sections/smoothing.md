@@ -479,19 +479,20 @@ About 1 minute 10 seconds. These minimal polar sketches are illustrative, not me
 class: smoothing-conclusions
 ---
 
-# Paper 1: conclusions
+# Project 1: Conclusions
 
 <div class="smoothing-conclusion-list">
-  <p><strong>Physical scale:</strong> continuous-width angular responses adapt to radar range — the method works on both synthetic and real fields.</p>
-  <p><strong>Kernel choice:</strong> analytical Gaussian is the general-purpose default; analytical boxcar enables comparison with a spatial moving average.</p>
-  <p><strong>Field comparison:</strong> synthetic outputs are visually nearly indistinguishable; cloud-top features remain distinct in the real C-band example.</p>
-  <p><strong>Computation:</strong> 42 min → &lt;12 s on a full volume; runtime stays near 60 ms across all tested window widths.</p>
+  <section>
+    <p>Spectral domain smoothing makes radar processing practical for large datasets.</p>
+  </section>
+  <section>
+    <p>DCT gives nearly identical results to convolution while being orders of magnitudes faster.</p>
+  </section>
+  <section>
+    <p>Missing data and boundary conditions still need explicit handling.</p>
+  </section>
 </div>
 
-<p class="smoothing-conclusion-summary">Paper 1 establishes spectral smoothing as a practical alternative to spatial kernels — with two stated assumptions.</p>
-
-<p class="smoothing-next">Next: local statistics with missing-data support.</p>
-
 <!--
-About 1 minute. Summarize the method, kernel choice, quality comparison, and the two distinct computational scaling tests, then pause. The analytical continuous Gaussian is the paper's recommended general-purpose choice because of its smooth spectral taper and fractional-width support; analytical boxcar is useful for comparing with a spatial moving average. A smooth Gaussian taper avoids the ringing associated with a hard spectral cutoff, but do not claim every DCT kernel is artifact-free. The main qualification is that Paper 1 interpolates missing gates. Paper 2 addresses incomplete grids using support-aware local statistics; it is a separate methodological study. Do not imply either methods paper produced the Chapter 4 population results. The paper is published in AMT (2026).
+About 45 seconds. These statements are conclusions; the benchmark timings are supporting results already shown on slide 18. Suggested delivery: “So, in this work, we developed a fast DCT-based method for reducing noise in polar radar data. It gives results visually very close to spatial convolution while accounting for radar geometry. In our large-array benchmark, processing fell from about 42 minutes to under 12 seconds. But gaps still need to be interpolated, and the boundary assumption must suit the scan. Those limitations motivated my next project.” The 180-million-pixel data-size test uses random-noise arrays at a fixed five-pixel width: 2518 s for the tested spatial dynamic-kernel implementation versus less than 12 s for Gaussian DCT. It is not a measured full-volume processing time. Separately, on a fixed RHI, analytical Gaussian and boxcar runtimes stay near 60 ms across tested widths of 5–101 pixels; the filter response does change with width. The analytical Gaussian is the recommended general-purpose kernel, and analytical boxcar allows comparison with a spatial moving average. The synthetic outputs are visually nearly indistinguishable, not numerically identical; the real C-band cloud-top features remain distinct in both outputs. Slide 19 introduced the missing-data and boundary assumptions, so there is no need to repeat its details here. Do not imply that all spatial methods scale like the tested implementation. This paper is published in AMT (2026).
 -->

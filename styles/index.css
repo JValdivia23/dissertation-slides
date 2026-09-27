@@ -755,27 +755,30 @@
 }
 
 .slidev-layout.smoothing-conclusions .smoothing-conclusion-list {
-  display: flex;
+  display: grid;
   flex: 1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  min-height: 0;
+  margin-top: 0.8rem;
+}
+
+.slidev-layout.smoothing-conclusions .smoothing-conclusion-list section {
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.7rem;
+  min-width: 0;
+  padding: 1.3rem;
+  border: 1px solid var(--cu-border);
+  border-top: 4px solid var(--cu-gold);
 }
 
 .slidev-layout.smoothing-conclusions .smoothing-conclusion-list p {
   margin: 0;
-  border-left: 4px solid var(--cu-gold);
-  padding: 0.8rem 1rem;
-  font-size: 1.05rem;
-}
-
-.slidev-layout.smoothing-conclusions .smoothing-conclusion-summary {
-  margin: 0.8rem 0 0;
-  padding: 0.8rem 1rem;
-  border-left: 4px solid var(--cu-gold);
-  font-size: 1.05rem;
-  font-weight: 600;
   color: var(--cu-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .slidev-layout.default ul,
