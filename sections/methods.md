@@ -17,7 +17,7 @@ title: Spectral-Domain Local Statistics with Missing-Data Support
 </div>
 
 <!--
-About 20 seconds. This is the second of four paper talks. Name the paper and its status once: under review at Computers and Geosciences, with an arXiv preprint. Do not call it published. Credit Will Chapman and Katja Friedrich. Start the paper's own problem on the next slide.
+About 20 seconds. This is the second of four paper talks. Name the paper and its status once: under review at Computers and Geosciences, with an arXiv preprint. Do not call it published. Credit Will Chapman and Katja Friedrich. Handoff from Paper 1: Paper 1 gave a fast way to smooth radar data with a kernel average, but gaps were filled before filtering and those filled values then entered the average. Paper 2 asks whether that average can use valid observations directly and account for missing data.
 -->
 
 ---
@@ -26,74 +26,145 @@ class: local-math
 
 # Local statistics on incomplete grids
 
-<p class="local-math-lead">Background and data coverage change across the field.</p>
+<p class="local-math-lead">Smoothing uses a kernel average, but filled gaps contribute to that average.</p>
 
-<svg class="local-problem-svg" viewBox="0 0 320 118" role="img" aria-label="Illustrative field with varying background, one unusual observation, and two missing patches">
-  <rect x="8" y="8" width="100" height="102" fill="currentColor" fill-opacity="0.16" stroke="currentColor" stroke-width="1" opacity="0.9" />
-  <rect x="108" y="8" width="104" height="102" fill="currentColor" fill-opacity="0.26" stroke="currentColor" stroke-width="1" opacity="0.9" />
-  <rect x="212" y="8" width="100" height="102" fill="currentColor" fill-opacity="0.36" stroke="currentColor" stroke-width="1" opacity="0.9" />
-  <rect x="24" y="20" width="44" height="28" fill="var(--cu-bg)" stroke="var(--cu-gold-accessible)" stroke-width="2" stroke-dasharray="5 3" />
-  <rect x="232" y="62" width="52" height="30" fill="var(--cu-bg)" stroke="var(--cu-gold-accessible)" stroke-width="2" stroke-dasharray="5 3" />
-  <circle cx="162" cy="60" r="12" fill="none" stroke="var(--cu-gold)" stroke-width="2.6" />
-  <circle cx="162" cy="60" r="3.4" fill="var(--cu-gold)" />
-  <circle cx="128" cy="34" r="2.8" fill="currentColor" opacity="0.7" />
-  <circle cx="188" cy="86" r="2.8" fill="currentColor" opacity="0.7" />
-  <circle cx="262" cy="34" r="2.8" fill="currentColor" opacity="0.7" />
-  <circle cx="60" cy="84" r="2.8" fill="currentColor" opacity="0.7" />
+<div class="local-kernel-row">
+<svg class="local-kernel-svg" viewBox="0 0 140 132" role="img" aria-label="Illustrative kernel neighborhood with valid, missing, and excluded observations">
+  <rect x="14" y="10" width="112" height="112" rx="4" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
+  <g>
+    <rect x="22" y="18" width="18" height="18" class="k-valid" />
+    <rect x="42" y="18" width="18" height="18" class="k-valid" />
+    <rect x="62" y="18" width="18" height="18" class="k-missing" />
+    <rect x="82" y="18" width="18" height="18" class="k-valid" />
+    <rect x="102" y="18" width="18" height="18" class="k-valid" />
+    <rect x="22" y="38" width="18" height="18" class="k-valid" />
+    <rect x="42" y="38" width="18" height="18" class="k-excluded" />
+    <rect x="62" y="38" width="18" height="18" class="k-valid" />
+    <rect x="82" y="38" width="18" height="18" class="k-valid" />
+    <rect x="102" y="38" width="18" height="18" class="k-missing" />
+    <rect x="22" y="58" width="18" height="18" class="k-valid" />
+    <rect x="42" y="58" width="18" height="18" class="k-valid" />
+    <rect x="62" y="58" width="18" height="18" class="k-center" />
+    <rect x="82" y="58" width="18" height="18" class="k-valid" />
+    <rect x="102" y="58" width="18" height="18" class="k-valid" />
+    <rect x="22" y="78" width="18" height="18" class="k-missing" />
+    <rect x="42" y="78" width="18" height="18" class="k-valid" />
+    <rect x="62" y="78" width="18" height="18" class="k-valid" />
+    <rect x="82" y="78" width="18" height="18" class="k-excluded" />
+    <rect x="102" y="78" width="18" height="18" class="k-valid" />
+    <rect x="22" y="98" width="18" height="18" class="k-valid" />
+    <rect x="42" y="98" width="18" height="18" class="k-valid" />
+    <rect x="62" y="98" width="18" height="18" class="k-valid" />
+    <rect x="82" y="98" width="18" height="18" class="k-valid" />
+    <rect x="102" y="98" width="18" height="18" class="k-valid" />
+    <line x1="46" y1="42" x2="56" y2="52" class="k-cross" />
+    <line x1="56" y1="42" x2="46" y2="52" class="k-cross" />
+    <line x1="86" y1="82" x2="96" y2="92" class="k-cross" />
+    <line x1="96" y1="82" x2="86" y2="92" class="k-cross" />
+  </g>
+  <circle cx="71" cy="67" r="3.2" class="k-target" />
 </svg>
+<ul class="local-kernel-legend">
+  <li><span class="sw k-valid" aria-hidden="true"></span>Valid observation</li>
+  <li><span class="sw k-missing" aria-hidden="true"></span>Missing gate</li>
+  <li><span class="sw k-excluded" aria-hidden="true"></span>Excluded value</li>
+  <li><span class="sw k-cross-sw" aria-hidden="true">×</span>Suspicious, masked</li>
+</ul>
+</div>
 
 <div class="local-math-grid cols-3">
 <section class="local-math-card">
-<h2>Background changes</h2>
-<p>An observation is evaluated against its neighborhood, not a domain constant.</p>
+<h2>Use valid observations</h2>
+<p>Missing gates and excluded values carry zero weight inside the kernel.</p>
 </section>
 <section class="local-math-card">
-<h2>Variability changes</h2>
-<p>Neighborhood spread sets what counts as unusual at that location.</p>
+<h2>Estimate mean and spread</h2>
+<p>Local average plus variance, standard deviation, and available support.</p>
 </section>
 <section class="local-math-card">
-<h2>Coverage changes</h2>
-<p>Missing gates change how much information supports each neighborhood.</p>
+<h2>Generalize the grid</h2>
+<p>Polar and Cartesian forms, extended to N-dimensional arrays.</p>
 </section>
 </div>
 
-<p class="local-math-lead">How can local mean and variability be estimated on incomplete grids while accounting for data support and boundary conditions?</p>
+<p class="local-math-lead">How can the kernel average use retained values only, while also reporting variability, support, and suitable boundaries?</p>
 
 <!--
-About 50 seconds. Real grids have beam blockage, clutter filtering, and masked gates. The background varies across the field, so one domain-wide average is not the right reference. Variability also varies: the same deviation can be routine in one neighborhood and unusual in another. Missing observations change the comparison further because two otherwise identical neighborhoods can rest on different amounts of valid data. The question for this paper is how to estimate local mean and variability efficiently on incomplete grids while tracking support and using boundary conditions suited to the grid. Paper 1 interpolates gaps before smoothing and reports a smoothed field; this paper weights valid observations and also reports variability and support.
+About 55 seconds. Paper 1 smooths with a kernel-weighted average, but gaps are filled before filtering and those filled values then contribute to the average. Once we are computing a local average, we can also compute variance and standard deviation to describe spread within the same neighborhood, and extend the method beyond a two-dimensional polar scan to Cartesian and N-dimensional grids. The problem is that inside the kernel some locations are missing and others were excluded by quality control as suspicious. We want local statistics from retained values, a measure of available support, and boundary handling suited to each grid. Normalized convolution is the established foundation; the spectral integration and safeguards are the extension.
 -->
 
 ---
-class: local-math local-contrib
+class: local-math local-mask
 ---
 
-# From smoothing to support-aware statistics
+# Normalized spectral convolution
 
-<p class="local-math-lead">Normalized convolution extends the spectral smoother to incomplete data.</p>
+<p class="local-math-lead">Retain the spectral filter; normalize by available support.</p>
 
-<div class="local-pipeline-fig">
-  <img src="../figures/local-stats-pipeline.png" alt="Spectral normalized-convolution pipeline on a 2D field with missing values, producing local mean, standard deviation, and effective sample count" />
+<div class="local-flow-grid">
+<section class="local-flow-box">
+<h2>Masked values</h2>
+<p>Keep retained values, zero elsewhere.</p>
+
+$$
+x \cdot m
+$$
+</section>
+<span aria-hidden="true">+</span>
+<section class="local-flow-box">
+<h2>Mask</h2>
+<p>Record where data contribute.</p>
+
+$$
+m
+$$
+</section>
+<span aria-hidden="true">→</span>
+<section class="local-flow-box">
+<h2>Filter both, then divide</h2>
+<p>Same spectral operator throughout.</p>
+
+$$
+\mu = \mathcal{S}_g\{x \cdot m\} / \mathcal{S}_g\{m\}
+$$
+</section>
 </div>
 
 <div class="local-math-grid cols-3">
 <section class="local-math-card">
-<h2>Beyond the mean</h2>
-<p>Local mean, variance, standard deviation, and effective support.</p>
+<h2>Beyond the average</h2>
+<p>Repeat for squared values to obtain the second moment, variance, and standard deviation.</p>
 </section>
 <section class="local-math-card">
-<h2>Mask-weighted</h2>
-<p>Filter data and mask, then normalize by local support.</p>
+<h2>Explicit boundaries</h2>
+<p>DCT for reflective axes; RFFT for periodic axes such as full-circle azimuth.</p>
 </section>
 <section class="local-math-card">
-<h2>Geometry and stability</h2>
-<p>Cartesian and polar operators with explicit boundaries and low-support rules.</p>
+<h2>Low-support fallback</h2>
+<p>Fill with the same convolution where neighbors suffice, iterate, and keep the original mask as the support record.</p>
 </section>
 </div>
 
-<p class="fine">2D illustration with missing values in gray; inset shows μ, σ, and N<sub>eff</sub>. Normalized convolution is the foundation; spectral operators and safeguards are the extension.</p>
+<!--
+About 55 seconds. We use the same spectral convolution. To exclude missing or suspicious values we build a mask and perform normalized convolution: filter the masked data and the mask, then divide by the filtered mask so excluded locations carry zero weight. Applying the same procedure to squared values gives the second moment, hence variance and standard deviation. For boundaries we use RFFT where periodic behavior is wanted and DCT where reflective behavior is wanted; this distinction is particularly useful on Cartesian grids. Where support is insufficient we fill using the same convolution: gaps are filled as long as enough neighbors give a meaningful average, and filled points then help fill remaining values iteratively. Filling does not create observations: the original mask still records support. Details and stability rules follow.
+-->
+
+---
+class: local-math local-workflow
+---
+
+# Spectral local-statistics workflow
+
+<p class="local-math-lead">One operator applied to values, squared values, and mask.</p>
+
+<div class="local-pipeline-fig">
+  <img src="../figures/local-stats-pipeline.png" alt="Reflective Cartesian spectral filtering example on a 2D field with missing values, producing local mean, standard deviation, and effective sample count" />
+</div>
+
+<p class="fine">Reflective Cartesian (DCT-II) 2D example with missing values in gray; zoomed inset shows μ, σ, and N<sub>eff</sub>. The same spectral operator filters masked values, squared values, and mask before normalization. N-dimensional Cartesian and polar forms follow.</p>
 
 <!--
-About 50 seconds. The pipeline figure is from the manuscript: a 2D field with missing values, spectral filtering with DCT-II and a Gaussian response, and the resulting local mean, standard deviation, and effective sample count in the zoomed inset. Relative to the prior DCT smoothing work, this paper generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Normalized convolution itself is the established foundation; the spectral integration and the stated safeguards are the extension. Next: the central estimator.
+About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Next: the central estimator.
 -->
 
 ---

@@ -932,9 +932,178 @@
   color: var(--cu-text-muted);
 }
 
+.slidev-layout.local-math .local-kernel-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0.1rem auto 0.45rem;
+}
+
+.slidev-layout.local-math .local-kernel-svg {
+  display: block;
+  width: min(42%, 15rem);
+  height: 7rem;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.local-math .local-kernel-svg .k-valid {
+  fill: currentColor;
+  fill-opacity: 0.28;
+  stroke: currentColor;
+  stroke-width: 0.8;
+}
+
+.slidev-layout.local-math .local-kernel-svg .k-missing {
+  fill: var(--cu-bg);
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 2;
+}
+
+.slidev-layout.local-math .local-kernel-svg .k-excluded {
+  fill: currentColor;
+  fill-opacity: 0.08;
+  stroke: currentColor;
+  stroke-width: 0.8;
+}
+
+.slidev-layout.local-math .local-kernel-svg .k-center {
+  fill: var(--cu-gold);
+  fill-opacity: 0.35;
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 1.2;
+}
+
+.slidev-layout.local-math .local-kernel-svg .k-cross {
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.slidev-layout.local-math .local-kernel-svg .k-target {
+  fill: none;
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 1.4;
+}
+
+.slidev-layout.local-math .local-kernel-legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.87rem;
+  line-height: 1.5;
+}
+
+.slidev-layout.local-math .local-kernel-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.15rem 0;
+}
+
+.slidev-layout.local-math .local-kernel-legend .sw {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: none;
+  border: 1px solid currentColor;
+  text-align: center;
+  line-height: 0.9rem;
+}
+
+.slidev-layout.local-math .local-kernel-legend .sw.k-valid {
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.slidev-layout.local-math .local-kernel-legend .sw.k-missing {
+  background: var(--cu-bg);
+  border: 1.5px dashed var(--cu-gold-accessible);
+}
+
+.dark .slidev-layout.local-math .local-kernel-legend .sw.k-missing {
+  border-color: var(--cu-gold);
+}
+
+.slidev-layout.local-math .local-kernel-legend .sw.k-excluded {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.slidev-layout.local-math .local-kernel-legend .sw.k-cross-sw {
+  border: none;
+  color: var(--cu-gold-accessible);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.dark .slidev-layout.local-math .local-kernel-legend .sw.k-cross-sw {
+  color: var(--cu-gold);
+}
+
+.dark .slidev-layout.local-math .local-kernel-svg .k-center,
+.dark .slidev-layout.local-math .local-kernel-svg .k-cross,
+.dark .slidev-layout.local-math .local-kernel-svg .k-target,
+.dark .slidev-layout.local-math .local-kernel-svg .k-missing {
+  stroke: var(--cu-gold);
+}
+
+.slidev-layout.local-math .local-flow-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.6rem minmax(0, 1fr) 1.6rem minmax(0, 1.3fr);
+  align-items: stretch;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.slidev-layout.local-math .local-flow-grid > span {
+  align-self: center;
+  color: var(--cu-text-muted);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.slidev-layout.local-math .local-flow-box {
+  min-width: 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+  text-align: center;
+}
+
+.slidev-layout.local-math .local-flow-box h2 {
+  margin: 0 0 0.2rem;
+  font-size: 0.95rem;
+}
+
+.slidev-layout.local-math .local-flow-box p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.slidev-layout.local-math .local-flow-box .katex-display {
+  margin: 0.3rem 0 0.1rem;
+  font-size: 0.95rem;
+}
+
+.slidev-layout.local-math.local-mask .local-math-grid {
+  flex: none;
+  margin-top: 0.45rem;
+}
+
+.slidev-layout.local-math.local-mask .local-math-card {
+  padding: 0.5rem 0.7rem;
+}
+
+.slidev-layout.local-math.local-mask .local-math-card p {
+  font-size: 0.8rem;
+}
+
 .slidev-layout.local-math .local-pipeline-fig {
   display: flex;
   justify-content: center;
+  flex: 1;
   min-height: 0;
   margin: 0.15rem 0 0.1rem;
 }
@@ -943,6 +1112,10 @@
   max-width: 100%;
   max-height: 30vh;
   object-fit: contain;
+}
+
+.slidev-layout.local-math.local-workflow .local-pipeline-fig img {
+  max-height: 52vh;
 }
 
 .slidev-layout.local-math.local-contrib .local-pipeline-fig img {
