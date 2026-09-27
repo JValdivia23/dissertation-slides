@@ -505,14 +505,14 @@ export async function polarConvolution() {
   // Click 2 starts the identical index-space window at the first gates by the
   // radar and glides it out to far range, leaving the near example visible.
   const traveling = new VGroup(footprint(ARC_START, ARC_START + 3 * ARC_STEP, 0.15, GOLD), widthArc(ARC_START + 1.5 * ARC_STEP, 0.15))
-  const far = new VGroup(footprint(8, 9.2, 0.15, GOLD), widthArc(8.6, 0.15))
+  const far = new VGroup(footprint(8.4, 9.6, 0.15, GOLD), widthArc(9.0, 0.15))
   // At far range a narrower angular span covers approximately the near-window width.
-  const adaptedAngle = 0.15 * 3.8 / 8.6
+  const adaptedAngle = 0.15 * 3.8 / 9.0
   const adapted = new VGroup(
-    footprint(8, 9.2, adaptedAngle, '#6fd0aa', 0.26),
-    widthArc(8.6, adaptedAngle),
+    footprint(8.4, 9.6, adaptedAngle, '#6fd0aa', 0.26),
+    widthArc(9.0, adaptedAngle),
   )
-  const farOutline = footprint(8, 9.2, 0.15, '#74bed5', 0)
+  const farOutline = footprint(8.4, 9.6, 0.15, '#74bed5', 0)
   farOutline.setStrokeOpacity(0.65).setStrokeWidth(2)
 
   // Click 1 launches the sweep with a single box: the grid and the near
@@ -525,6 +525,9 @@ export async function polarConvolution() {
     new Transform(traveling, far, { duration: 1.4 }),
   )
   await scene.play(
+    // The near example returns so the middle gold box can be compared
+    // directly against the narrowed far window.
+    new FadeIn(near, { duration: 0.75 }),
     new FadeIn(farOutline, { duration: 0.75 }),
     new Transform(traveling, adapted, { duration: 0.75 }),
   )
