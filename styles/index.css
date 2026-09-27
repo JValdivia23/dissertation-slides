@@ -697,6 +697,15 @@
   font-size: 1.05rem;
 }
 
+.slidev-layout.smoothing-conclusions .smoothing-conclusion-summary {
+  margin: 0.8rem 0 0;
+  padding: 0.8rem 1rem;
+  border-left: 4px solid var(--cu-gold);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cu-heading);
+}
+
 .slidev-layout.default ul,
 .slidev-layout.image-right ul {
   margin-top: 0.4rem;

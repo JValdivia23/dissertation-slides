@@ -394,52 +394,52 @@ class: smoothing-benchmark
 <div class="smoothing-benchmark-body">
   <div class="smoothing-benchmark-results">
     <div v-click.hide="1" class="smoothing-benchmark-result">
-      <p>Fixed RHI: 474 × 1180 pixels · window 5–101 pixels</p>
-      <div><strong>≈60 ms</strong><span>analytical Gaussian and boxcar across tested widths</span></div>
-      <div><strong>8.5 to &gt;44 s</strong><span>tested spatial dynamic kernel</span></div>
-      <p class="smoothing-benchmark-takeaway">At 101 pixels: Gaussian &gt;800×; analytical boxcar &gt;700× faster.</p>
-    </div>
-    <div v-click="1" class="smoothing-benchmark-result">
       <p>Random-noise arrays · fixed 5-pixel window</p>
       <div><strong>42 min</strong><span>spatial dynamic kernel · 2518 s</span></div>
       <div><strong>&lt;12 s</strong><span>Gaussian DCT · 180 million pixels</span></div>
+      <p class="smoothing-benchmark-takeaway">A full radar volume: overnight → between volume scans.</p>
+    </div>
+    <div v-click="1" class="smoothing-benchmark-result">
+      <p>Fixed RHI: 474 × 1180 pixels · window 5–101 pixels</p>
+      <div><strong>≈60 ms</strong><span>analytical Gaussian and boxcar across tested widths</span></div>
+      <div><strong>8.5 to &gt;44 s</strong><span>tested spatial dynamic kernel</span></div>
+      <p class="smoothing-benchmark-takeaway">Runtime is window-size agnostic: choose any width for free.</p>
     </div>
   </div>
   <div class="smoothing-benchmark-figures">
-    <img v-click.hide="1" src="../figures/dct-window-benchmark.png" alt="Paper Figure 5(a): execution time versus window size on a fixed 474-by-1180-pixel RHI; analytical Gaussian and boxcar timings stay near 60 milliseconds while the tested spatial method rises" />
-    <img v-click="1" src="../figures/dct-volume-benchmark.png" alt="Paper Figure 5(c): execution time versus number of pixels for a fixed five-pixel window on random-noise benchmark arrays" />
+    <img v-click.hide="1" src="../figures/dct-volume-benchmark.png" alt="Paper Figure 5(c): execution time versus number of pixels for a fixed five-pixel window on random-noise benchmark arrays" />
+    <img v-click="1" src="../figures/dct-window-benchmark.png" alt="Paper Figure 5(a): execution time versus window size on a fixed 474-by-1180-pixel RHI; analytical Gaussian and boxcar timings stay near 60 milliseconds while the tested spatial method rises" />
   </div>
 </div>
 
 <div class="smoothing-benchmark-source fine">
-  <p v-click.hide="1">Paper Figure 5(a): fixed data size, varying window width. Filter response changes with width; analytical-kernel runtime changes little.</p>
-  <p v-click="1">Paper Figure 5(c): fixed window width, varying data size. These timings are separate from the 101-pixel speedups.</p>
+  <p v-click.hide="1">Paper Figure 5(c): fixed window width, varying data size. A full volume at the spatial method's 42-minute runtime becomes a task measured in seconds.</p>
+  <p v-click="1">Paper Figure 5(a): fixed data size, varying window width. The filter response changes with width, but analytical-kernel runtime does not — a separate finding from the volume benchmark.</p>
 </div>
 
 <!--
-About 1 minute 45 seconds. This paper benchmark tests two different scaling questions, not the personal volume timing on slide 11. First, Figure 5(a) holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. The analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent; their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup, not over 800-fold for both. Other discrete DCT responses in the plot are faster than this spatial baseline but their cost increases with window width. Click 1: switch to Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels, the spatial implementation takes 2518 seconds, about 42 minutes, and Gaussian DCT takes less than 12 seconds. This is a controlled array benchmark, not a measured processing time for the displayed C-band RHI or the 20-sweep personal example. Do not attach the 800-fold window-size speedup to the 180-million-pixel result, and do not claim all possible spatial algorithms scale this way.
+About 1 minute 45 seconds. This paper benchmarks two different scaling questions. Open with the practical question: what does smoothing a full radar volume cost? Click 0 shows Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels — a full radar volume — the spatial dynamic-kernel implementation takes 2518 seconds, about 42 minutes. Gaussian DCT takes less than 12 seconds. That is the difference between a job you run overnight and one you run between volume scans. This is a controlled array benchmark, not the C-band RHI on slide 17 or the 20-sweep example on slide 11. Click 1: switch to Figure 5(a), which holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. Here the story changes: the analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent, but their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup. Other discrete DCT responses are faster than this spatial baseline but their cost increases with window width. Two separate findings: the volume speedup does not transfer to the window-width test, and the window-width speedup does not transfer to the volume test. Do not claim all possible spatial algorithms scale this way.
 -->
 
 ---
 class: smoothing-limitation
 ---
 
-# Limitations:
+# Limitations: two assumptions
 
 <div class="smoothing-limitation-flow">
   <section>
     <h2>Missing data</h2>
-    <p>On these experiments we interpolate gaps before the DCT.</p>
-    <p class="smoothing-limitation-effect">Broad gaps can bias estimates within and near the missing region.</p>
+    <p>Paper 1 interpolates gaps before the DCT. Broad gaps can bias estimates near the missing region.</p>
   </section>
   <section>
     <h2>Boundary conditions</h2>
-    <p>DCT-II reflects angle and range: a reasonable model for a finite RHI.</p>
-    <p class="smoothing-limitation-effect">Ideally, full-circle PPI should connect across 0°/360°.</p>
+    <p>DCT-II reflects angle and range — reasonable for a finite RHI.</p>
+    <p>A full-circle PPI wraps: rays at 0° and 360° are neighbors.</p>
   </section>
 </div>
 
-<p class="smoothing-limitation-next">Paper 2: support-aware local statistics and explicit reflective/periodic boundary modes.</p>
+<p class="smoothing-limitation-next">Paper 2 asks: what if we don't interpolate, and what if the boundary wraps?</p>
 
 <!--
 About 1 minute 10 seconds. Two assumptions qualify Paper 1. First, its DCT needs defined input values, so the paper linearly interpolates missing gates before smoothing. A short gap may be less consequential than a wide blocked sector: interpolation can introduce a low-frequency bridge and kinks at its edges. Filled values are not observations. Second, DCT-II in the angular and range passes assumes reflected boundaries. This is a reasonable model for the finite elevation and range limits of an RHI, not a universal radar boundary rule. For a full-circle PPI, the azimuth rays at 0 and 360 degrees are neighbors, so a periodic angular transform is more appropriate while range remains reflective. A partial-sector scan need not wrap in azimuth. There is also a scale-versus-noise trade-off: keeping physical smoothing width approximately fixed means fewer angular samples at longer ranges, where signal-to-noise ratio may be poorer, so the method does not guarantee equal noise reduction everywhere. The real-data demonstration here is reflectivity; Doppler velocity must be de-aliased before smoothing. Paper 2 extends the framework to support-aware local statistics and explicit periodic azimuth versus reflective range modes. Do not imply that it automatically solves the range-dependent noise trade-off.
@@ -452,11 +452,13 @@ class: smoothing-conclusions
 # Paper 1: conclusions
 
 <div class="smoothing-conclusion-list">
-  <p><strong>Physical scale:</strong> continuous-width angular responses adapt to radar range.</p>
+  <p><strong>Physical scale:</strong> continuous-width angular responses adapt to radar range — the method works on both synthetic and real fields.</p>
   <p><strong>Kernel choice:</strong> analytical Gaussian is the general-purpose default; analytical boxcar enables comparison with a spatial moving average.</p>
-  <p><strong>Field comparison:</strong> synthetic results are visually nearly indistinguishable; cloud-top features remain distinct in the real example.</p>
-  <p><strong>Computation:</strong> analytical runtimes change little across tested widths and remain fast on large arrays.</p>
+  <p><strong>Field comparison:</strong> synthetic outputs are visually nearly indistinguishable; cloud-top features remain distinct in the real C-band example.</p>
+  <p><strong>Computation:</strong> 42 min → &lt;12 s on a full volume; runtime stays near 60 ms across all tested window widths.</p>
 </div>
+
+<p class="smoothing-conclusion-summary">Paper 1 establishes spectral smoothing as a practical alternative to spatial kernels — with two stated assumptions.</p>
 
 <p class="smoothing-next">Next: local statistics with missing-data support.</p>
 
