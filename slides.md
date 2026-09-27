@@ -17,11 +17,11 @@ themeConfig:
   footerNav:
     sections:
       - { label: Introduction, start: 1, end: 6 }
-      - { label: Smoothing, start: 7, end: 16 }
-      - { label: Local statistics, start: 17, end: 18 }
-      - { label: CTGC population life cycle, start: 19, end: 24 }
-      - { label: CTGC fall streak, start: 25, end: 28 }
-      - { label: Conclusions, start: 29, end: 32 }
+      - { label: Smoothing, start: 7, end: 17 }
+      - { label: Local statistics, start: 18, end: 19 }
+      - { label: CTGC population life cycle, start: 20, end: 25 }
+      - { label: CTGC fall streak, start: 26, end: 29 }
+      - { label: Conclusions, start: 30, end: 33 }
     outsideLabel: Backup
     pageNumberOnly: true
     hideOnCover: true

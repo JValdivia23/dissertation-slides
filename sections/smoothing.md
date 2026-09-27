@@ -145,33 +145,83 @@ class: smoothing-cost
 </div>
 
 <!--
-About 1 minute 20 seconds. We saw that maintaining a physical smoothing width requires the angular window to change with range. Point to the top image: the unsmoothed reflectivity zoom from the 23 February 2022 C-band RHI varies from gate to gate. The lower image shows the paper's 5-pixel spatial dynamic boxcar: the three cloud-top structures remain while much of the gate-to-gate variability is reduced. These matched zooms are panels (e) and (f) of the paper's Figure 4, with the same bounds and color scale. Click 1: replace both zooms in place with the full original and spatially smoothed RHI panels (a) and (b); the red boxes indicate the zoom region. In my separate radar-data test, spatial smoothing alone took about 20 minutes for an entire 20-sweep volume and four fields: Z_H, Z_DR, rho_HV, and K_DP. That is not 20 minutes for the pictured sweep or zoom, and does not include reading or other processing. With one volume every 6 minutes, two hours contains roughly 20 volumes; at the same per-volume rate, serial smoothing would take about 400 minutes, or 6 hours 40 minutes. This total is extrapolated, not a measured two-hour run, and my personal timing is distinct from the controlled paper benchmark shown later. We need a faster way to compute the smoothing operation: the convolution theorem.
+About 1 minute 20 seconds. We saw that maintaining a physical smoothing width requires the angular window to change with range. Point to the top image: the unsmoothed reflectivity zoom from the 23 February 2022 C-band RHI varies from gate to gate. The lower image shows the paper's 5-pixel spatial dynamic boxcar: the three cloud-top structures remain while much of the gate-to-gate variability is reduced. These matched zooms are panels (e) and (f) of the paper's Figure 4, with the same bounds and color scale. Click 1: replace both zooms in place with the full original and spatially smoothed RHI panels (a) and (b); the red boxes indicate the zoom region. In my separate radar-data test, spatial smoothing alone took about 20 minutes for an entire 20-sweep volume and four fields: Z_H, Z_DR, rho_HV, and K_DP. That is not 20 minutes for the pictured sweep or zoom, and does not include reading or other processing. With one volume every 6 minutes, two hours contains roughly 20 volumes; at the same per-volume rate, serial smoothing would take about 400 minutes, or 6 hours 40 minutes. This total is extrapolated, not a measured two-hour run, and my personal timing is distinct from the controlled paper benchmark shown later. I propose using a fast transform to compute the smoothing more efficiently.
+-->
+
+---
+class: smoothing-dct-intro
+---
+
+# Discrete cosine transform (DCT)
+
+<div class="dct-intro-body">
+  <p class="dct-intro-lead">A DCT represents samples along a chosen dimension—space or time—as cosine components.</p>
+  <div class="dct-intro-flow">
+    <section>
+      <h2>Samples along one axis</h2>
+      <svg viewBox="0 0 320 130" aria-hidden="true">
+        <line class="dct-intro-axis" x1="14" y1="110" x2="306" y2="110" />
+        <polyline class="dct-intro-profile" points="18,87 44,70 70,77 96,43 122,54 148,82 174,68 200,38 226,58 252,75 278,59 304,84" />
+        <g class="dct-intro-samples">
+          <circle cx="18" cy="87" r="3.5" /><circle cx="44" cy="70" r="3.5" />
+          <circle cx="70" cy="77" r="3.5" /><circle cx="96" cy="43" r="3.5" />
+          <circle cx="122" cy="54" r="3.5" /><circle cx="148" cy="82" r="3.5" />
+          <circle cx="174" cy="68" r="3.5" /><circle cx="200" cy="38" r="3.5" />
+          <circle cx="226" cy="58" r="3.5" /><circle cx="252" cy="75" r="3.5" />
+          <circle cx="278" cy="59" r="3.5" /><circle cx="304" cy="84" r="3.5" />
+        </g>
+      </svg>
+      <p>Schematic 1D profile · x(n)</p>
+    </section>
+    <div class="dct-intro-arrows" aria-hidden="true"><span>DCT →</span><span>← inverse DCT</span></div>
+    <section>
+      <h2>Cosine coefficients</h2>
+      <svg viewBox="0 0 320 130" aria-hidden="true">
+        <line class="dct-intro-axis" x1="14" y1="105" x2="306" y2="105" />
+        <g class="dct-intro-bars">
+          <rect x="20" y="27" width="16" height="78" /><rect x="50" y="48" width="16" height="57" />
+          <rect x="80" y="73" width="16" height="32" /><rect x="110" y="88" width="16" height="17" />
+          <rect x="140" y="105" width="16" height="17" /><rect x="170" y="80" width="16" height="25" />
+          <rect x="200" y="94" width="16" height="11" /><rect x="230" y="99" width="16" height="6" />
+          <rect x="260" y="102" width="16" height="3" /><rect x="290" y="103" width="16" height="2" />
+        </g>
+      </svg>
+      <p>Low to high frequency · X(k)</p>
+    </section>
+  </div>
+  <p class="dct-intro-note">Unchanged coefficients reconstruct the original samples—no smoothing yet. Our radar method filters along both angle and range.</p>
+</div>
+
+<p class="spectral-summary">JPEG also uses the DCT for image compression; here we use it to filter radar data, not to compress it.</p>
+
+<!--
+About 55 seconds. The proposed way around repeated spatial windows begins with a fast discrete cosine transform. This is a general transform of sampled data along a chosen dimension, spatial or temporal: it expresses the samples as coefficients of cosine components ordered from low to high frequency. The drawing illustrates one 1D slice, not a measured spectrum from the RHI or the full 2D operation. Applying the inverse DCT with coefficients unchanged reconstructs the original samples; the transform alone has not smoothed anything. The DCT is familiar from JPEG, where it is applied to image blocks as part of compression; here we filter a 2D polar radar field by applying DCT-based smoothing along angle and along range in separate passes, without JPEG quantization or encoding. The cosine basis corresponds to reflecting data at the boundaries rather than wrapping opposite edges together. The next slide shows how the convolution theorem supplies the weighting in each pass. The angular response changes with range; the range response has fixed width.
 -->
 
 ---
 class: smoothing-spectral
 ---
 
-# Convolution becomes spectral multiplication
+# Convolution theorem
 
-<div class="smoothing-theorem-body">
-  <div class="smoothing-theorem-statement">
-    <p>Convolution theorem, along the angle direction at each range <strong>r</strong></p>
-    <div>DCT<sub>θ</sub>{x<sub>r</sub> * h<sub>r</sub>}(k) = X<sub>r</sub>(k) · H<sub>r</sub>(k)</div>
-    <p>Sliding a spatial kernel ↔ multiplying spectral coefficients</p>
-  </div>
-  <div class="spectral-steps">
-    <section><span>1</span><h2>Transform</h2><p>DCT along angle</p></section>
-    <section><span>2</span><h2>Multiply</h2><p>Use the range-specific response H<sub>r</sub>(k)</p></section>
-    <section><span>3</span><h2>Invert</h2><p>Return to the smoothed angular profile</p></section>
-    <section><span>4</span><h2>Along range</h2><p>Repeat DCT → multiply → invert with a fixed width</p></section>
-  </div>
+<p class="smoothing-theorem-lead">There is an equivalent operation in the spectral domain for any convolution in the spatial/time domain.</p>
+
+$$
+\mathcal{T}\{\vec{f} * \vec{g}\} = \mathcal{T}\{\vec{f}\} \cdot \mathcal{T}\{\vec{g}\}
+$$
+
+<p class="smoothing-theorem-terms"><strong>f</strong> = sampled data · <strong>g</strong> = smoothing kernel · <strong>T</strong> = suitable transform</p>
+
+<div class="smoothing-theorem-explanation">
+  <section><h2>Spatial domain · convolution (*)</h2><p>Slide the kernel across the data; calculate a weighted sum at each location.</p></section>
+  <span aria-hidden="true">↔</span>
+  <section><h2>Transform domain · multiplication (·)</h2><p>Transform the data and kernel, multiply corresponding coefficients, then invert.</p></section>
 </div>
 
-<p class="spectral-summary">The DCT uses reflected boundaries; the angular response varies with range, not one global 2D filter.</p>
+<p class="spectral-summary">For radar: DCT convolution along angle (range-varying width), then along range (fixed width).</p>
 
 <!--
-About 1 minute 25 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. The convolution theorem says that, for a matched kernel and boundary treatment, the same filtering operation can instead be obtained by transforming the data, multiplying matching frequency coefficients by the kernel's transfer response, and transforming back. Here x_r is an angular profile at range r, h_r is its symmetric smoothing kernel, and H_r(k) is the corresponding DCT transfer response; k indexes frequency. We choose the DCT because its symmetric extension reflects the data at the boundaries rather than wrapping the far edge back onto the near edge. Transform along angle, multiply by H_r(k), which changes with range to maintain the physical width illustrated on slide 10, then invert. Next transform along range, multiply by a fixed-width response, and invert again. These are sequential separable one-dimensional operations, not one global 2D transfer function; the range-dependent step avoids repeated spatial neighborhood calculations. Do not equate the personal spatial-smoothing time on slide 11 with a measured DCT runtime. The main field comparison uses boxcar smoothing; the large-array timing callout later uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
+About 1 minute 20 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. In our radar application T is the DCT with reflected boundaries; we derive the kernel's DCT response rather than simply transforming an arbitrary finite window. For the 2D polar field, first DCT along angle, multiply by a response whose angular width changes with range to maintain physical width, then inverse DCT. Repeat along range with a fixed-width response. These are two sequential one-dimensional filtering passes, not one global 2D transfer function. Exact equivalence requires matching the kernel and boundary treatment; the spatial baseline in the paper also handles missing pixels differently. Do not equate the personal spatial-smoothing time on slide 11 with a measured DCT runtime. The main field comparison uses boxcar smoothing; the large-array timing callout later uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
 
 This first method needs a complete field: gaps are interpolated before the DCT. Discuss that limitation after the results.
 -->

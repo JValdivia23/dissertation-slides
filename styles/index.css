@@ -197,7 +197,7 @@
 }
 
 .slidev-layout .smoothing-cost-story section,
-.slidev-layout .spectral-steps section,
+.slidev-layout .smoothing-theorem-explanation section,
 .slidev-layout .smoothing-limitation-flow section {
   border: 1px solid var(--cu-border);
   border-left: 4px solid var(--cu-gold);
@@ -205,14 +205,14 @@
 }
 
 .slidev-layout .smoothing-cost-story h2,
-.slidev-layout .spectral-steps h2,
+.slidev-layout .smoothing-theorem-explanation h2,
 .slidev-layout .smoothing-limitation-flow h2 {
   margin: 0 0 0.6rem;
   font-size: 1.2rem;
 }
 
 .slidev-layout .smoothing-cost-story p,
-.slidev-layout .spectral-steps p,
+.slidev-layout .smoothing-theorem-explanation p,
 .slidev-layout .smoothing-limitation-flow p {
   margin: 0;
   font-size: 0.95rem;
@@ -227,27 +227,35 @@
   font-size: 1.05rem;
 }
 
-.slidev-layout .smoothing-theorem-body {
-  display: flex;
+.slidev-layout.smoothing-spectral .smoothing-theorem-lead,
+.slidev-layout.smoothing-spectral .smoothing-theorem-terms {
+  margin: 0.5rem 0;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.slidev-layout.smoothing-spectral .katex-display {
+  margin: 1.4rem 0 0.8rem;
+  font-size: 1.55rem;
+}
+
+.slidev-layout.smoothing-spectral .smoothing-theorem-explanation {
+  display: grid;
   flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.7rem;
+  grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
   min-height: 0;
 }
 
-.slidev-layout .smoothing-theorem-statement {
+.slidev-layout.smoothing-spectral .smoothing-theorem-explanation section {
+  min-height: 9.5rem;
+}
+
+.slidev-layout.smoothing-spectral .smoothing-theorem-explanation > span {
+  color: var(--cu-text-muted);
+  font-size: 1.5rem;
   text-align: center;
-}
-
-.slidev-layout .smoothing-theorem-statement p {
-  margin: 0.35rem 0;
-  font-size: 1rem;
-}
-
-.slidev-layout .smoothing-theorem-statement > div {
-  margin: 0.45rem 0;
-  font-size: 2rem;
 }
 
 .slidev-layout.smoothing-cost .smoothing-cost-body {
@@ -320,33 +328,77 @@
   object-fit: contain;
 }
 
-.slidev-layout .spectral-steps {
+.slidev-layout .dct-intro-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
+  min-height: 0;
+}
+
+.slidev-layout .dct-intro-lead,
+.slidev-layout .dct-intro-note {
+  margin: 0;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.slidev-layout .dct-intro-flow {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) 9rem minmax(0, 1fr);
   align-items: center;
   gap: 1rem;
 }
 
-.slidev-layout .spectral-steps section {
-  position: relative;
-  min-height: 10.5rem;
+.slidev-layout .dct-intro-flow section {
+  min-width: 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
 }
 
-.slidev-layout .spectral-steps section:not(:last-child)::after {
-  content: '→';
-  position: absolute;
-  top: 50%;
-  right: -0.9rem;
-  z-index: 1;
-  transform: translateY(-50%);
-  color: var(--cu-text-muted);
+.slidev-layout .dct-intro-flow h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
 }
 
-.slidev-layout .spectral-steps span {
+.slidev-layout .dct-intro-flow svg {
   display: block;
-  margin-bottom: 0.7rem;
+  width: 100%;
+  height: 8rem;
+}
+
+.slidev-layout .dct-intro-flow section p {
+  margin: 0.3rem 0 0;
+  font-size: 0.95rem;
+}
+
+.slidev-layout .dct-intro-axis {
+  stroke: var(--cu-text-muted);
+  stroke-width: 1.5;
+}
+
+.slidev-layout .dct-intro-profile {
+  fill: none;
+  stroke: var(--cu-gold);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.slidev-layout .dct-intro-samples,
+.slidev-layout .dct-intro-bars {
+  fill: var(--cu-gold);
+}
+
+.slidev-layout .dct-intro-arrows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   color: var(--cu-text-muted);
-  font-size: 0.8rem;
+  font-size: 1.05rem;
   font-weight: 700;
 }
 
