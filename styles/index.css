@@ -197,23 +197,20 @@
 }
 
 .slidev-layout .smoothing-cost-story section,
-.slidev-layout .smoothing-theorem-explanation section,
-.slidev-layout .smoothing-limitation-flow section {
+.slidev-layout .smoothing-theorem-explanation section {
   border: 1px solid var(--cu-border);
   border-left: 4px solid var(--cu-gold);
   padding: 1.1rem 1.25rem;
 }
 
 .slidev-layout .smoothing-cost-story h2,
-.slidev-layout .smoothing-theorem-explanation h2,
-.slidev-layout .smoothing-limitation-flow h2 {
+.slidev-layout .smoothing-theorem-explanation h2 {
   margin: 0 0 0.6rem;
   font-size: 1.2rem;
 }
 
 .slidev-layout .smoothing-cost-story p,
-.slidev-layout .smoothing-theorem-explanation p,
-.slidev-layout .smoothing-limitation-flow p {
+.slidev-layout .smoothing-theorem-explanation p {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.4;
@@ -673,32 +670,88 @@
   display: grid;
   flex: 1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: center;
-  gap: 1.5rem;
+  align-items: stretch;
+  gap: 1rem;
+  min-height: 0;
 }
 
 .slidev-layout.smoothing-limitation .smoothing-limitation-flow section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 13rem;
-  gap: 0.8rem;
+  justify-content: flex-start;
+  min-height: 0;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cu-border);
+  border-top: 4px solid var(--cu-gold);
 }
 
 .slidev-layout.smoothing-limitation .smoothing-limitation-flow h2 {
-  margin-bottom: 0.2rem;
+  margin: 0;
+  font-size: 1.2rem;
 }
 
-.slidev-layout.smoothing-limitation .smoothing-limitation-flow .smoothing-limitation-effect {
+.slidev-layout.smoothing-limitation .smoothing-limitation-diagram {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  color: var(--cu-text-muted);
+  --limitation-accent: var(--cu-gold-accessible);
+}
+
+.dark .slidev-layout.smoothing-limitation .smoothing-limitation-diagram {
+  --limitation-accent: var(--cu-gold);
+}
+
+.slidev-layout.smoothing-limitation .scan-field {
+  fill: currentColor;
+  fill-opacity: 0.1;
+}
+
+.slidev-layout.smoothing-limitation .scan-grid,
+.slidev-layout.smoothing-limitation .scan-outline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.slidev-layout.smoothing-limitation .scan-grid {
+  opacity: 0.65;
+}
+
+.slidev-layout.smoothing-limitation .missing-gates {
+  fill: var(--cu-bg);
+  stroke: var(--limitation-accent);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.smoothing-limitation .scan-origin {
+  fill: var(--limitation-accent);
+}
+
+.slidev-layout.smoothing-limitation .seam-neighborhood {
+  fill: var(--limitation-accent);
+  fill-opacity: 0.2;
+}
+
+.slidev-layout.smoothing-limitation .seam-rays,
+.slidev-layout.smoothing-limitation .seam-join,
+.slidev-layout.smoothing-limitation .seam-arrow {
+  fill: none;
+  stroke: var(--limitation-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.smoothing-limitation .smoothing-limitation-flow p {
+  margin: 0;
   color: var(--cu-heading);
-  font-weight: 600;
-}
-
-.slidev-layout.smoothing-limitation .smoothing-limitation-next {
-  margin: 0.5rem 0 0;
-  padding: 0.8rem 1rem;
-  border-left: 4px solid var(--cu-gold);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
+  line-height: 1.3;
 }
 
 .slidev-layout.smoothing-conclusions .smoothing-conclusion-list {
