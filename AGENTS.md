@@ -65,3 +65,4 @@ We cannot use mysterious creative titles, this is not ted talks. Neutral/profess
 - A web build is distinct from PDF/PNG export. Check click-stepped Manim frames
   in the deployed site, and do not claim export behavior is verified until it
   has been tested.
+- Ask user before commit or push.
