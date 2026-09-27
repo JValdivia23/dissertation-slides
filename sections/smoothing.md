@@ -397,12 +397,14 @@ class: smoothing-benchmark
       <p>Random-noise arrays · fixed 5-pixel window</p>
       <div><strong>42 min</strong><span>spatial dynamic kernel · 2518 s</span></div>
       <div><strong>&lt;12 s</strong><span>Gaussian DCT · 180 million pixels</span></div>
+      <p class="smoothing-benchmark-speedup"><strong>&gt;200×</strong> faster than the spatial dynamic kernel</p>
       <p class="smoothing-benchmark-takeaway">A full radar volume: overnight → between volume scans.</p>
     </div>
     <div v-click="1" class="smoothing-benchmark-result">
-      <p>Fixed RHI: 474 × 1180 pixels · window 5–101 pixels</p>
-      <div><strong>≈60 ms</strong><span>analytical Gaussian and boxcar across tested widths</span></div>
+      <p>Fixed RHI · window 5–101 pixels</p>
+      <div><strong>≈60 ms</strong><span>analytical Gaussian and boxcar</span></div>
       <div><strong>8.5 to &gt;44 s</strong><span>tested spatial dynamic kernel</span></div>
+      <p class="smoothing-benchmark-speedup"><strong>&gt;800×</strong> faster at a 101-pixel window · <span>analytical boxcar &gt;700×</span></p>
       <p class="smoothing-benchmark-takeaway">Runtime is window-size agnostic: choose any width for free.</p>
     </div>
   </div>
@@ -414,11 +416,11 @@ class: smoothing-benchmark
 
 <div class="smoothing-benchmark-source fine">
   <p v-click.hide="1">Paper Figure 5(c): fixed window width, varying data size. A full volume at the spatial method's 42-minute runtime becomes a task measured in seconds.</p>
-  <p v-click="1">Paper Figure 5(a): fixed data size, varying window width. The filter response changes with width, but analytical-kernel runtime does not — a separate finding from the volume benchmark.</p>
+  <p v-click="1">Paper Figure 5(a): fixed 474 × 1180-pixel RHI, varying window width. The filter response changes with width, but analytical-kernel runtime does not — a separate finding from the volume benchmark.</p>
 </div>
 
 <!--
-About 1 minute 45 seconds. This paper benchmarks two different scaling questions. Open with the practical question: what does smoothing a full radar volume cost? Click 0 shows Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels — a full radar volume — the spatial dynamic-kernel implementation takes 2518 seconds, about 42 minutes. Gaussian DCT takes less than 12 seconds. That is the difference between a job you run overnight and one you run between volume scans. This is a controlled array benchmark, not the C-band RHI on slide 17 or the 20-sweep example on slide 11. Click 1: switch to Figure 5(a), which holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. Here the story changes: the analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent, but their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup. Other discrete DCT responses are faster than this spatial baseline but their cost increases with window width. Two separate findings: the volume speedup does not transfer to the window-width test, and the window-width speedup does not transfer to the volume test. Do not claim all possible spatial algorithms scale this way.
+About 1 minute 45 seconds. This paper benchmarks two different scaling questions. Open with the practical question: what does smoothing a full radar volume cost? Click 0 shows Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels — a full radar volume — the spatial dynamic-kernel implementation takes 2518 seconds, about 42 minutes. Gaussian DCT takes less than 12 seconds: over 200 times faster. That factor is derived from the reported times and is consistent with the paper's Figure 5(d); state it as a conservative bound. It is the difference between a job you run overnight and one you run between volume scans. This is a controlled array benchmark, not the C-band RHI on slide 17 or the 20-sweep example on slide 11. Click 1: switch to Figure 5(a), which holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. Here the story changes: the analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent, but their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup. Other discrete DCT responses are faster than this spatial baseline but their cost increases with window width. Two separate findings: the volume speedup does not transfer to the window-width test, and the window-width speedup does not transfer to the volume test. Do not claim all possible spatial algorithms scale this way.
 -->
 
 ---
