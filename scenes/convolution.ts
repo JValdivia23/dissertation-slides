@@ -19,8 +19,9 @@ const GOLD = '#cfb87c'
 const GRID = '#52667b'
 const CELL_SIZE = 0.53
 const GRID_SIZE = 7
+const GAUSSIAN_SIGMA = 0.85
 const GAUSSIAN_WEIGHTS = Array.from({ length: 3 }, (_, row) =>
-  Array.from({ length: 3 }, (_, col) => Math.exp(-((row - 1) ** 2 + (col - 1) ** 2) / (2 * 0.85 ** 2))))
+  Array.from({ length: 3 }, (_, col) => Math.exp(-((row - 1) ** 2 + (col - 1) ** 2) / (2 * GAUSSIAN_SIGMA ** 2))))
 const SCAN_ORDER: Array<[number, number]> = Array.from({ length: GRID_SIZE }, (_, row) =>
   Array.from({ length: GRID_SIZE }, (_, offset): [number, number] =>
     [row, row % 2 === 0 ? offset : GRID_SIZE - 1 - offset])).flat()
@@ -238,35 +239,52 @@ function kernel(center: [number, number, number], gaussian = false) {
 
 // The grid cells and the kernel are created lazily and can end up tied in
 // draw order, which lets bright cells cover the kernel outline mid-sweep.
-// Pinning render orders keeps the kernel (then its weight markers) on top.
-function pinToFront(window: VGroup, markers?: VGroup) {
-  const layers: Array<[VGroup, number]> = markers
-    ? [[window, 9999], [markers, 10000]]
-    : [[window, 9999]]
-  for (const [group, order] of layers) {
-    const host = group.getThreeObject()
-    host.renderOrder = order
-    host.traverse((object: { renderOrder: number }) => { object.renderOrder = order })
-  }
+// Pinning render orders keeps the kernel (then the weight dots) on top.
+function pinGroup(group: VGroup, order: number) {
+  const host = group.getThreeObject()
+  host.renderOrder = order
+  host.traverse((object: { renderOrder: number }) => { object.renderOrder = order })
 }
 
-function scan(window: VGroup, outputCells: Square[], alpha: number, markers?: VGroup) {
-  const progress = Math.min(SCAN_ORDER.length - 1, alpha * (SCAN_ORDER.length - 1))
+function pinToFront(window: VGroup) {
+  pinGroup(window, 9999)
+}
+
+// Same Gaussian as GAUSSIAN_WEIGHTS (sigma 0.85 cells), evaluated everywhere
+// so distant dots shrink toward zero instead of being cut off.
+const DOT_MAX_RADIUS = 0.22
+const DOT_MIN_RADIUS = 0.015
+
+function gaussianWeight(dRow: number, dCol: number) {
+  return Math.exp(-(dRow * dRow + dCol * dCol) / (2 * GAUSSIAN_SIGMA * GAUSSIAN_SIGMA))
+}
+
+function dotRadius(dRow: number, dCol: number) {
+  return Math.max(DOT_MIN_RADIUS, DOT_MAX_RADIUS * gaussianWeight(dRow, dCol))
+}
+
+// Fractional kernel position in grid coordinates over the full sweep,
+// including the opening glide from the center to the upper-left cell.
+function virtualCenter(alpha: number) {
+  const resetFraction = 0.08
+  if (alpha < resetFraction) {
+    const progress = alpha / resetFraction
+    return { row: 3 - 3 * progress, col: 3 - 3 * progress, reached: 0 }
+  }
+  const scanAlpha = (alpha - resetFraction) / (1 - resetFraction)
+  const progress = Math.min(SCAN_ORDER.length - 1, scanAlpha * (SCAN_ORDER.length - 1))
   const reached = Math.floor(progress)
   const [row, col] = SCAN_ORDER[reached]
   const [nextRow, nextCol] = SCAN_ORDER[Math.min(reached + 1, SCAN_ORDER.length - 1)]
-  const start = cellPosition(row, col, -3.7)
-  const end = cellPosition(nextRow, nextCol, -3.7)
   const fraction = progress - reached
-  const position: [number, number, number] = [
-    start[0] + (end[0] - start[0]) * fraction,
-    start[1] + (end[1] - start[1]) * fraction,
-    0,
-  ]
-  window.moveTo(position)
-  markers?.moveTo(position)
-  pinToFront(window, markers)
+  return {
+    row: row + (nextRow - row) * fraction,
+    col: col + (nextCol - col) * fraction,
+    reached,
+  }
+}
 
+function revealOutput(outputCells: Square[], reached: number) {
   // The next value appears only when the window reaches that cell.
   // (Toggled via stroke opacity: fill meshes key off _opacity, so this
   // keeps their geometry alive while hidden. See fillOpacity note above.)
@@ -276,23 +294,32 @@ function scan(window: VGroup, outputCells: Square[], alpha: number, markers?: VG
   }
 }
 
-function sweepFromCenter(window: VGroup, outputCells: Square[], alpha: number, markers?: VGroup) {
-  const resetFraction = 0.08
-  if (alpha < resetFraction) {
-    const center = cellPosition(3, 3, -3.7)
-    const upperLeft = cellPosition(0, 0, -3.7)
-    const progress = alpha / resetFraction
-    const position: [number, number, number] = [
-      center[0] + (upperLeft[0] - center[0]) * progress,
-      center[1] + (upperLeft[1] - center[1]) * progress,
-      0,
-    ]
-    window.moveTo(position)
-    markers?.moveTo(position)
-    pinToFront(window, markers)
-    return
+function scan(window: VGroup, outputCells: Square[], alpha: number) {
+  const { row, col, reached } = virtualCenter(alpha)
+  window.moveTo([-3.7 + (col - 3) * CELL_SIZE, (3 - row) * CELL_SIZE, 0])
+  pinToFront(window)
+  revealOutput(outputCells, reached)
+}
+
+// Gaussian sweep: no box travels -- the virtual kernel glides while every
+// dot resizes to its current weight and outputs reveal in sync.
+function sweepDots(dotsGroup: VGroup, dots: Circle[], outputCells: Square[], alpha: number) {
+  const { row, col, reached } = virtualCenter(alpha)
+  for (let r = 0; r < GRID_SIZE; r++) {
+    for (let c = 0; c < GRID_SIZE; c++) {
+      // setRadius() regenerates points around the group-local origin, so the
+      // dot must be moved back onto its cell afterwards. VGroup children sit
+      // at local origin with absolute-baked points; resetting position first
+      // keeps this exact however the group was normalized.
+      const dot = dots[r * GRID_SIZE + c]
+      const [cx, cy] = cellPosition(r, c, -3.7)
+      dot.setRadius(dotRadius(r - row, c - col))
+      dot.position.set(0, 0, 0)
+      dot.shift([cx, cy, 0])
+    }
   }
-  scan(window, outputCells, (alpha - resetFraction) / (1 - resetFraction), markers)
+  revealOutput(outputCells, reached)
+  pinGroup(dotsGroup, 10000)
 }
 
 // This is a deliberately synthetic, complete field. Missing-data handling is
@@ -328,14 +355,19 @@ export async function cartesianConvolution() {
 
   const centerPosition = cellPosition(3, 3, -3.7)
   const window = kernel(centerPosition)
-  const gaussianMarkers = new VGroup(...GAUSSIAN_WEIGHTS.flatMap((row, i) =>
-    row.map((weight, j) => new Circle({
-      radius: 0.04 + 0.18 * weight,
-      center: cellPosition(i + 2, j + 2, -3.7),
-      color: '#fff1c4',
-      fillOpacity: 0.8,
-      strokeWidth: 0,
-    }))))
+  const gaussianDots: Circle[] = []
+  for (let row = 0; row < GRID_SIZE; row++) {
+    for (let col = 0; col < GRID_SIZE; col++) {
+      gaussianDots.push(new Circle({
+        radius: dotRadius(row - 3, col - 3),
+        center: cellPosition(row, col, -3.7),
+        color: '#fff1c4',
+        fillOpacity: 0.8,
+        strokeWidth: 0,
+      }))
+    }
+  }
+  const dotsGroup = new VGroup(...gaussianDots)
   const arrow = new Arrow({
     start: ARROW_START,
     end: ARROW_END,
@@ -360,18 +392,18 @@ export async function cartesianConvolution() {
     new FadeOut(boxcarExample, { duration: 0.25 }),
     new UpdateFromAlphaFunc(
       window,
-      (_, alpha) => sweepFromCenter(window, outputCells, alpha),
+      (_, alpha) => scan(window, outputCells, alpha),
       { duration: 5.7, rateFunc: linear },
     ),
   )
 
   await scene.play(
-    new Transform(window, kernel(centerPosition, true), { duration: 0.85 }),
+    new FadeOut(window, { duration: 0.85 }),
     new FadeOut(boxcarOutput, { duration: 0.85 }),
     new FadeIn(gaussianExample, { duration: 0.85 }),
-    new FadeIn(gaussianMarkers, { duration: 0.85 }),
+    new FadeIn(dotsGroup, { duration: 0.85 }),
   )
-  pinToFront(window, gaussianMarkers)
+  pinGroup(dotsGroup, 10000)
 
   const gaussianOutput = new VGroup(...gaussianCells)
   gaussianCells.forEach(cell => cell.setStrokeOpacity(0))
@@ -379,8 +411,8 @@ export async function cartesianConvolution() {
   await scene.play(
     new FadeOut(gaussianExample, { duration: 0.25 }),
     new UpdateFromAlphaFunc(
-      window,
-      (_, alpha) => sweepFromCenter(window, gaussianCells, alpha, gaussianMarkers),
+      dotsGroup,
+      (_, alpha) => sweepDots(dotsGroup, gaussianDots, gaussianCells, alpha),
       { duration: 5.7, rateFunc: linear },
     ),
   )
