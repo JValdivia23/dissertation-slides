@@ -239,6 +239,19 @@
   font-size: 1.55rem;
 }
 
+.slidev-layout.smoothing-spectral .smoothing-theorem-definition {
+  margin: 0.4rem 0;
+}
+
+.slidev-layout.smoothing-spectral .smoothing-theorem-definition p {
+  margin: 0;
+}
+
+.slidev-layout.smoothing-spectral .smoothing-theorem-definition .katex-display {
+  margin: 0.15rem 0;
+  font-size: 1rem;
+}
+
 .slidev-layout.smoothing-spectral .smoothing-theorem-explanation {
   display: grid;
   flex: 1;
@@ -256,6 +269,89 @@
   color: var(--cu-text-muted);
   font-size: 1.5rem;
   text-align: center;
+}
+
+.slidev-layout.smoothing-transfer .transfer-polar-lead {
+  margin: 0.5rem 0 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.slidev-layout.smoothing-transfer .transfer-polar-dimensions {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.slidev-layout.smoothing-transfer .transfer-polar-dimensions section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.smoothing-transfer .transfer-polar-dimensions h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.15rem;
+}
+
+.slidev-layout.smoothing-transfer .transfer-polar-dimensions p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.smoothing-transfer .transfer-polar-dimensions .katex-display {
+  margin: 1.3rem 0;
+  font-size: 1.12rem;
+}
+
+.slidev-layout.smoothing-transfer .fine {
+  margin-top: 0.5rem;
+}
+
+.slidev-layout.smoothing-polar-dct .polar-dct-lead {
+  margin: 0.5rem 0 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.slidev-layout.smoothing-polar-dct .polar-dct-passes {
+  display: grid;
+  flex: 1;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+.slidev-layout.smoothing-polar-dct .polar-dct-pass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.smoothing-polar-dct .polar-dct-pass h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.slidev-layout.smoothing-polar-dct .polar-dct-pass .katex-display {
+  margin: 0.8rem 0;
+  font-size: 1.25rem;
+}
+
+.slidev-layout.smoothing-polar-dct .polar-dct-pass p {
+  margin: 0;
+  font-size: 0.96rem;
 }
 
 .slidev-layout.smoothing-cost .smoothing-cost-body {

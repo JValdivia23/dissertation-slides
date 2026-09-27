@@ -155,7 +155,7 @@ class: smoothing-dct-intro
 # Discrete cosine transform (DCT)
 
 <div class="dct-intro-body">
-  <p class="dct-intro-lead">A DCT represents samples along a chosen dimension—space or time—as cosine components.</p>
+  <p class="dct-intro-lead">A DCT represents samples along a chosen dimension (space or time) as cosine components.</p>
   <div class="dct-intro-flow">
     <section>
       <h2>Samples along one axis</h2>
@@ -189,7 +189,7 @@ class: smoothing-dct-intro
       <p>Low to high frequency · X(k)</p>
     </section>
   </div>
-  <p class="dct-intro-note">Unchanged coefficients reconstruct the original samples—no smoothing yet. Our radar method filters along both angle and range.</p>
+  <p class="dct-intro-note">Unchanged coefficients reconstruct the original samples, no smoothing yet. Our radar method filters along both angle and range.</p>
 </div>
 
 <p class="spectral-summary">JPEG also uses the DCT for image compression; here we use it to filter radar data, not to compress it.</p>
@@ -210,20 +210,130 @@ $$
 \mathcal{T}\{\vec{f} * \vec{g}\} = \mathcal{T}\{\vec{f}\} \cdot \mathcal{T}\{\vec{g}\}
 $$
 
-<p class="smoothing-theorem-terms"><strong>f</strong> = sampled data · <strong>g</strong> = smoothing kernel · <strong>T</strong> = suitable transform</p>
+<div class="smoothing-theorem-definition">
+
+$$
+H(k) \equiv \mathcal{T}\{\vec{g}\}(k) \qquad \text{kernel transfer function}
+$$
+
+</div>
+
+<p class="smoothing-theorem-terms"><strong>f</strong> = sampled data · <strong>g</strong> = smoothing kernel · <strong>T</strong> = spectral transform</p>
 
 <div class="smoothing-theorem-explanation">
-  <section><h2>Spatial domain · convolution (*)</h2><p>Slide the kernel across the data; calculate a weighted sum at each location.</p></section>
+  <section><h2>Spatial domain: convolution (*)</h2><p>Slide the kernel across the data; calculate a weighted sum at each location.</p></section>
   <span aria-hidden="true">↔</span>
-  <section><h2>Transform domain · multiplication (·)</h2><p>Transform the data and kernel, multiply corresponding coefficients, then invert.</p></section>
+  <section><h2>Transform domain: multiplication (·)</h2><p>Transform the data and kernel, multiply corresponding coefficients, then invert.</p></section>
 </div>
 
 <p class="spectral-summary">For radar: DCT convolution along angle (range-varying width), then along range (fixed width).</p>
 
 <!--
-About 1 minute 20 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. In our radar application T is the DCT with reflected boundaries; we derive the kernel's DCT response rather than simply transforming an arbitrary finite window. For the 2D polar field, first DCT along angle, multiply by a response whose angular width changes with range to maintain physical width, then inverse DCT. Repeat along range with a fixed-width response. These are two sequential one-dimensional filtering passes, not one global 2D transfer function. Exact equivalence requires matching the kernel and boundary treatment; the spatial baseline in the paper also handles missing pixels differently. Do not equate the personal spatial-smoothing time on slide 11 with a measured DCT runtime. The main field comparison uses boxcar smoothing; the large-array timing callout later uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
+About 50 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable spectral transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. We know the data and the desired spatial kernel; the remaining piece is the kernel's matching spectral response T{g}, called the transfer function H. Paper 1 derives analytical responses for boxcar and Gaussian kernels, so I will not derive those here. How do we choose and apply H on a polar grid, where angular spacing changes with range but range-gate spacing does not? Next slide. Exact equivalence requires matching the kernel and reflected boundary treatment; the spatial baseline in the paper also handles missing pixels differently. The field comparison uses boxcar smoothing; the later large-array timing callout uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
 
 This first method needs a complete field: gaps are interpolated before the DCT. Discuss that limitation after the results.
+-->
+
+---
+class: smoothing-transfer
+---
+
+# Transfer functions on a polar grid
+
+<p class="transfer-polar-lead">Choose a smoothing kernel and its analytical DCT-domain response, H(k; W).</p>
+
+<div class="transfer-polar-dimensions">
+  <section>
+
+## Angle: response varies with range
+
+Adjacent rays separate by approximately rΔθ.
+
+$$
+\begin{aligned}
+W_{\theta}(r) &= \frac{W_{\mathrm{phys}}}{r\,\Delta\theta} \\
+H_{\theta}(k_{\theta},r) &= H_{\mathrm{kernel}}\!\left(k_{\theta};W_{\theta}(r)\right)
+\end{aligned}
+$$
+
+One angular-frequency response for each range.
+
+  </section>
+
+  <section>
+
+## Range: fixed response
+
+Range-gate spacing Δr is constant.
+
+$$
+\begin{aligned}
+W_r &= \text{fixed in range gates} \\
+H_r(k_r) &= H_{\mathrm{kernel}}\!\left(k_r;W_r\right)
+\end{aligned}
+$$
+
+The same range-frequency response at every angle.
+
+  </section>
+</div>
+
+<p class="spectral-summary">The angle responses form a range-indexed set; the range response is shared. Apply each in its own DCT pass.</p>
+
+<p class="fine">Boxcar response via the Dirichlet identity: Oppenheim et al. (1999). Gaussian response: Smith (1997).</p>
+
+<!--
+About 45 seconds. The paper obtains the analytical continuous-width boxcar response using the Dirichlet-kernel identity cited to Oppenheim et al. (1999), and cites Smith (1997) for the normalized Gaussian response. We do not need to derive either on this slide. H_kernel denotes the chosen response as a function of spatial frequency and smoothing width; the Gaussian's native width parameter is sigma. For the field comparison after the method slide, we use the analytical boxcar response; the later large-array benchmark highlights the Gaussian response. Along angle, adjacent rays are physically separated by approximately r times delta theta, so a fixed physical smoothing scale translates to W_theta(r) = W_phys/(r delta theta) angular samples. Evaluate the chosen response at that width for each range, giving a range-indexed set of angular responses H_theta(k_theta,r). Along range, range gates have fixed separation, so W_r and the range response H_r(k_r) are fixed and shared across angles. These responses are derived for the chosen kernel and reflected DCT boundary treatment, not obtained by naively transforming an arbitrary finite array of weights. Next slide: apply the two responses in successive DCT filtering passes, with an inverse angular DCT between them.
+-->
+
+---
+class: smoothing-polar-dct
+---
+
+# DCT smoothing on a polar grid
+
+<p class="polar-dct-lead">Apply the separable filter to the two dimensions of the polar field, X(θ, r).</p>
+
+<div class="polar-dct-passes">
+
+<section class="polar-dct-pass">
+
+## 1 · Angular pass — range-varying width
+
+<div v-click="1" class="polar-dct-detail">
+
+$$
+Y_{\theta} = \operatorname{IDCT}_{\theta}\!\left[\operatorname{DCT}_{\theta}(X) \odot H_{\theta}(k_{\theta},r)\right]
+$$
+
+At each range, multiply angular-frequency coefficients by a response that changes with range.
+
+</div>
+
+</section>
+
+<section class="polar-dct-pass">
+
+## 2 · Range pass — fixed width
+
+<div v-click="2" class="polar-dct-detail">
+
+$$
+Y = \operatorname{IDCT}_{r}\!\left[\operatorname{DCT}_{r}(Y_{\theta}) \odot H_{r}(k_{r})\right]
+$$
+
+At each angle, multiply range-frequency coefficients by the same fixed-width response.
+
+</div>
+
+</section>
+
+</div>
+
+<p class="spectral-summary">The angular response varies with range, so the intermediate field Y<sub>θ</sub> is needed between passes—not one global 2D multiplication.</p>
+
+<!--
+About 1 minute. We have now selected the angle-dependent response H_theta and fixed range response H_r. The separable boxcar lets us smooth the 2D field in two directions. Click 1: at every range, take the DCT along the angular samples, multiply corresponding coefficients by H_theta, and inverse-transform to get the intermediate angularly smoothed field Y_theta. Its angular width decreases in samples with range, holding the desired physical scale. Click 2: DCT the intermediate field along range, multiply by H_r, and inverse-transform to obtain the final 2D field Y. Range-gate spacing does not widen with range. The products are element-wise in the appropriate spectral domain; both passes use reflected boundaries. Because the angular response depends on spatial range, we must return to Y_theta before transforming along range. This is not one global 2D DCT followed by a single product H_theta times H_r. The field comparison on the next slide uses the boxcar response. Gaps are interpolated before this method; discuss the limitation after the results.
 -->
 
 ---
