@@ -106,58 +106,72 @@ const { clicks } = useNav()
 </script>
 
 <!--
-About 1 minute 10 seconds. Click 1: glide a three-by-three sample window from the first gates by the radar out to far range; the near example fades as the sweep launches, so a single box travels. Adjacent rays diverge, so its transverse footprint is larger at far range even though the number of angular samples and the range-direction width are unchanged. Click 2: bring the middle window back for comparison while narrowing the far window's angular width to approximately the near window's physical transverse width. This is a schematic of footprint changes, not a distortion of the measurements. For 1–2 km cloud-top generating cells, the smoothing scale needs to be specified in distance, not gate count. A spatial kernel that changes with range is computationally costly; the paper tests a spectral alternative against the spatial method for both field structure and processing time. The next slide quantifies the angular-width adjustment. Do not say range gates themselves widen with range.
+About 1 minute 10 seconds. Click 1: glide a three-by-three sample window from the first gates by the radar out to far range; the near example fades as the sweep launches, so a single box travels. Adjacent rays diverge, so its transverse footprint is larger at far range even though the number of angular samples and the range-direction width are unchanged. Click 2: bring the middle window back for comparison while narrowing the far window's angular width to approximately the near window's physical transverse width. This is a schematic of footprint changes, not a distortion of the measurements. For 1–2 km cloud-top generating cells, the smoothing scale needs to be specified in distance, not gate count. The angular width decreases with range to hold the physical width approximately fixed; the range-direction kernel stays fixed. A spatial kernel that changes with range is computationally costly. The next slide shows what that computation achieves on a radar field and why the processing time matters. Do not say range gates themselves widen with range.
 -->
 
 ---
-class: smoothing-geometry
+class: smoothing-cost
 ---
 
-# Change the angular window with range
+# Range-adaptive spatial smoothing is costly
 
-<div class="smoothing-geometry-body">
-  <div class="smoothing-equation">
-    <p>For a target physical width <strong>L</strong>:</p>
-    <div>W<sub>θ</sub>(r) = L / (r Δθ)</div>
-    <p>Angular sample spacing is r Δθ.</p>
+<div class="smoothing-cost-body">
+  <div class="smoothing-cost-story">
+    <section>
+      <h2>One volume · personal timing</h2>
+      <strong>~20 min</strong>
+      <p>Spatial smoothing of 20 sweeps and four moments: Z<sub>H</sub>, Z<sub>DR</sub>, ρ<sub>HV</sub>, K<sub>DP</sub></p>
+    </section>
+    <section>
+      <h2>Two hours · extrapolated</h2>
+      <strong>~6 h 40 min</strong>
+      <p>~20 volumes at a 6-min cadence, processed serially</p>
+    </section>
+    <div class="smoothing-cost-source">
+      <p>Same RHI: full view and 17–23 km zoom · 5-pixel boxcar · Paper Figure 4(a, b, e, f)</p>
+      <p>Images show one Z<sub>H</sub> sweep. The separate personal timing covers the full four-moment volume, smoothing only; the two-hour total is extrapolated.</p>
+    </div>
   </div>
-  <div class="smoothing-range-pair">
-    <section>
-      <h2>Near the radar</h2>
-      <div class="smoothing-samples smoothing-samples-near" aria-hidden="true"></div>
-      <p>More angular samples within the same physical width</p>
-    </section>
-    <section>
-      <h2>Farther away</h2>
-      <div class="smoothing-samples smoothing-samples-far" aria-hidden="true"></div>
-      <p>Fewer angular samples within that width</p>
-    </section>
+  <div class="smoothing-cost-visual">
+    <div class="smoothing-cost-frame">
+      <img v-click.hide="1" src="../figures/dct-noisy-zoom.png" alt="Top, before click: unsmoothed C-band reflectivity zoom at 17–23 km range and 4.5–7.5 km altitude" />
+      <img v-click="1" src="../figures/dct-noisy-full.png" alt="Top, after click: the same unsmoothed RHI across the full 0–60 km range; a red box locates the earlier zoom" />
+    </div>
+    <div class="smoothing-cost-frame">
+      <img v-click.hide="1" src="../figures/dct-spatial-zoom.png" alt="Bottom, before click: the reflectivity zoom after spatial dynamic-boxcar smoothing, retaining three cloud-top cells" />
+      <img v-click="1" src="../figures/dct-spatial-full.png" alt="Bottom, after click: the same spatially smoothed RHI across the full 0–60 km range; a red box locates the earlier zoom" />
+    </div>
   </div>
 </div>
 
-<p class="fine">The range-direction kernel remains fixed; the angular width changes with range.</p>
-
 <!--
-About 1 minute 20 seconds. At fixed angular resolution, the distance between adjacent rays grows with range. To keep a specified length L, use more angular samples nearby and fewer farther out. In the paper W_theta is continuous for the analytical transfer function; a discrete spatial baseline rounds to an odd number of samples. The equation and preceding text in Chapter 2 show the 1/r dependence.
+About 1 minute 20 seconds. We saw that maintaining a physical smoothing width requires the angular window to change with range. Point to the top image: the unsmoothed reflectivity zoom from the 23 February 2022 C-band RHI varies from gate to gate. The lower image shows the paper's 5-pixel spatial dynamic boxcar: the three cloud-top structures remain while much of the gate-to-gate variability is reduced. These matched zooms are panels (e) and (f) of the paper's Figure 4, with the same bounds and color scale. Click 1: replace both zooms in place with the full original and spatially smoothed RHI panels (a) and (b); the red boxes indicate the zoom region. In my separate radar-data test, spatial smoothing alone took about 20 minutes for an entire 20-sweep volume and four fields: Z_H, Z_DR, rho_HV, and K_DP. That is not 20 minutes for the pictured sweep or zoom, and does not include reading or other processing. With one volume every 6 minutes, two hours contains roughly 20 volumes; at the same per-volume rate, serial smoothing would take about 400 minutes, or 6 hours 40 minutes. This total is extrapolated, not a measured two-hour run, and my personal timing is distinct from the controlled paper benchmark shown later. We need a faster way to compute the smoothing operation: the convolution theorem.
 -->
 
 ---
 class: smoothing-spectral
 ---
 
-# Smoothing in the spectral domain
+# Convolution becomes spectral multiplication
 
-<div class="spectral-steps">
-  <section><span>1</span><h2>Transform</h2><p>DCT of angular profiles</p></section>
-  <section><span>2</span><h2>Weight</h2><p>Range-specific spectral response</p></section>
-  <section><span>3</span><h2>Invert</h2><p>Return to the radar grid</p></section>
-  <section><span>4</span><h2>Repeat</h2><p>Fixed-width pass along range</p></section>
+<div class="smoothing-theorem-body">
+  <div class="smoothing-theorem-statement">
+    <p>Convolution theorem, along the angle direction at each range <strong>r</strong></p>
+    <div>DCT<sub>θ</sub>{x<sub>r</sub> * h<sub>r</sub>}(k) = X<sub>r</sub>(k) · H<sub>r</sub>(k)</div>
+    <p>Sliding a spatial kernel ↔ multiplying spectral coefficients</p>
+  </div>
+  <div class="spectral-steps">
+    <section><span>1</span><h2>Transform</h2><p>DCT along angle</p></section>
+    <section><span>2</span><h2>Multiply</h2><p>Use the range-specific response H<sub>r</sub>(k)</p></section>
+    <section><span>3</span><h2>Invert</h2><p>Return to the smoothed angular profile</p></section>
+    <section><span>4</span><h2>Along range</h2><p>Repeat DCT → multiply → invert with a fixed width</p></section>
+  </div>
 </div>
 
-<p class="spectral-summary">The filter changes with range, but the spectral multiplication remains efficient.</p>
+<p class="spectral-summary">The DCT uses reflected boundaries; the angular response varies with range, not one global 2D filter.</p>
 
 <!--
-About 1 minute 25 seconds. The convolution theorem motivates transforming each angular profile, multiplying by an analytical transfer function whose width depends on range, and transforming back. Then apply a fixed-width range-direction pass. This is a sequence of separable one-dimensional operations, not a single global two-dimensional transfer function. DCT boundary treatment corresponds to reflection rather than a periodic wrap. The main field comparison uses boxcar smoothing; the large-array timing callout later uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
+About 1 minute 25 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. The convolution theorem says that, for a matched kernel and boundary treatment, the same filtering operation can instead be obtained by transforming the data, multiplying matching frequency coefficients by the kernel's transfer response, and transforming back. Here x_r is an angular profile at range r, h_r is its symmetric smoothing kernel, and H_r(k) is the corresponding DCT transfer response; k indexes frequency. We choose the DCT because its symmetric extension reflects the data at the boundaries rather than wrapping the far edge back onto the near edge. Transform along angle, multiply by H_r(k), which changes with range to maintain the physical width illustrated on slide 10, then invert. Next transform along range, multiply by a fixed-width response, and invert again. These are sequential separable one-dimensional operations, not one global 2D transfer function; the range-dependent step avoids repeated spatial neighborhood calculations. Do not equate the personal spatial-smoothing time on slide 11 with a measured DCT runtime. The main field comparison uses boxcar smoothing; the large-array timing callout later uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
 
 This first method needs a complete field: gaps are interpolated before the DCT. Discuss that limitation after the results.
 -->
