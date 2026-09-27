@@ -924,6 +924,43 @@
   font-size: 1.15rem;
 }
 
+.slidev-layout.local-math .local-problem-svg {
+  display: block;
+  width: min(100%, 34rem);
+  height: 6.4rem;
+  margin: 0.1rem auto 0.45rem;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.local-math .local-pipeline-fig {
+  display: flex;
+  justify-content: center;
+  min-height: 0;
+  margin: 0.15rem 0 0.1rem;
+}
+
+.slidev-layout.local-math .local-pipeline-fig img {
+  max-width: 100%;
+  max-height: 30vh;
+  object-fit: contain;
+}
+
+.slidev-layout.local-math.local-contrib .local-pipeline-fig img {
+  max-height: 22vh;
+}
+
+.slidev-layout.local-math.local-contrib .local-math-grid {
+  flex: none;
+}
+
+.slidev-layout.local-math.local-contrib .local-math-card {
+  padding: 0.5rem 0.75rem;
+}
+
+.slidev-layout.local-math.local-contrib .local-math-card p {
+  font-size: 0.82rem;
+}
+
 .slidev-layout.default ul,
 .slidev-layout.image-right ul {
   margin-top: 0.4rem;
