@@ -82,8 +82,8 @@ class: convolution-polar
 <p class="convolution-polar-context">The same three-by-three sample window in range and elevation angle</p>
 
 <div class="convolution-demo">
-  <div class="convolution-canvas" role="img" aria-label="Animated range–elevation radar grid: an identical three-by-three sample window covers a larger transverse physical width at far range, then its angular width is reduced.">
-    <CuManim :steps="3" :width="1080" :height="320" :construct="polarConvolution" />
+  <div class="convolution-canvas" role="img" aria-label="Animated range–elevation radar grid: on the first click a three-by-three sample window glides from the first gates by the radar out to far range, where its transverse physical width is larger; on the second click its angular width is reduced.">
+    <CuManim :steps="2" :width="1080" :height="320" :construct="polarConvolution" />
     <svg v-if="clicks === 0" class="convolution-first-frame" viewBox="0 0 1080 390" aria-hidden="true">
       <path v-for="(ray, index) in polarPreview.rays" :key="`ray-${index}`" :d="ray" class="convolution-preview-line" />
       <path v-for="(arc, index) in polarPreview.arcs" :key="`arc-${index}`" :d="arc" class="convolution-preview-line" />
@@ -106,7 +106,7 @@ const { clicks } = useNav()
 </script>
 
 <!--
-About 1 minute 10 seconds. Click 1: show the range–elevation grid and a three-by-three sample window near the radar. Click 2: move an identical index-space window outward, leaving the near example visible. Adjacent rays diverge, so its transverse footprint is larger at far range even though the number of angular samples and the range-direction width are unchanged. Click 3: show how a narrower angular window at far range gives approximately the near window's physical transverse width. This is a schematic of footprint changes, not a distortion of the measurements. For 1–2 km cloud-top generating cells, the smoothing scale needs to be specified in distance, not gate count. A spatial kernel that changes with range is computationally costly; the paper tests a spectral alternative against the spatial method for both field structure and processing time. The next slide quantifies the angular-width adjustment. Do not say range gates themselves widen with range.
+About 1 minute 10 seconds. Click 1: glide a three-by-three sample window from the first gates by the radar out to far range; the near example fades as the sweep launches, so a single box travels. Adjacent rays diverge, so its transverse footprint is larger at far range even though the number of angular samples and the range-direction width are unchanged. Click 2: show how a narrower angular window at far range gives approximately the near window's physical transverse width. This is a schematic of footprint changes, not a distortion of the measurements. For 1–2 km cloud-top generating cells, the smoothing scale needs to be specified in distance, not gate count. A spatial kernel that changes with range is computationally costly; the paper tests a spectral alternative against the spatial method for both field structure and processing time. The next slide quantifies the angular-width adjustment. Do not say range gates themselves widen with range.
 -->
 
 ---

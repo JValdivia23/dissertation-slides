@@ -433,17 +433,27 @@ function svgPath(points: [number, number, number][], closed = false) {
 }
 
 const windowAngles = Array.from({ length: 13 }, (_, i) => -0.15 + 0.3 * i / 12)
+// Angular grid lines sit on cell boundaries (offset half a sample step), so
+// the +/-0.15 window edges coincide with rays and enclose exactly three
+// angular cells. Range arcs start at the first gate to fill the fan.
+const RAY_ANGLES = [-0.45, -0.35, -0.25, -0.15, -0.05, 0.05, 0.15, 0.25, 0.35, 0.45]
+const ARC_START = 0.4
+const ARC_STEP = 0.4
+const ARC_COUNT = 24
+const FAN_HALF_ANGLE = 0.45
+
+function fanArc(range: number, halfAngle = FAN_HALF_ANGLE, count = 29): [number, number, number][] {
+  return Array.from({ length: count }, (_, j) => polarPoint(range, -halfAngle + (2 * halfAngle * j) / (count - 1)))
+}
 const [radarX, radarY] = svgPoint(RADAR).split(',').map(Number)
 export const polarPreview = {
-  rays: Array.from({ length: 9 }, (_, i) => svgPath([RADAR, polarPoint(9.8, (i - 4) * 0.1)])),
-  arcs: Array.from({ length: 19 }, (_, i) => svgPath(
-    Array.from({ length: 25 }, (_, j) => polarPoint(2.4 + i * 0.4, (j - 12) * 0.0333)),
-  )),
+  rays: RAY_ANGLES.map(angle => svgPath([RADAR, polarPoint(9.8, angle)])),
+  arcs: Array.from({ length: ARC_COUNT }, (_, i) => svgPath(fanArc(ARC_START + i * ARC_STEP))),
   near: svgPath([
     ...windowAngles.map(angle => polarPoint(4.4, angle)),
     ...windowAngles.slice().reverse().map(angle => polarPoint(3.2, angle)),
   ], true),
-  chord: svgPath([polarPoint(3.8, -0.15), polarPoint(3.8, 0.15)]),
+  chord: svgPath(fanArc(3.8, 0.15, 13)),
   radar: { x: radarX, y: radarY },
 }
 
@@ -460,10 +470,10 @@ function footprint(inner: number, outer: number, halfAngle: number, color: strin
   }).setStyle({ fillColor: color, fillOpacity, strokeColor: color, strokeWidth: 5 })
 }
 
-function widthChord(range: number, halfAngle: number) {
-  return new Line({
-    start: polarPoint(range, -halfAngle),
-    end: polarPoint(range, halfAngle),
+function widthArc(range: number, halfAngle: number) {
+  return new Polygon({
+    vertices: fanArc(range, halfAngle, 13),
+    closed: false,
     color: '#f6f4e9',
     strokeWidth: 6,
   })
@@ -477,37 +487,43 @@ export async function polarConvolution() {
     frameHeight: 5.05,
     backgroundColor: BACKGROUND,
   })
-  const rays = Array.from({ length: 9 }, (_, i) => new Line({
+  const rays = RAY_ANGLES.map(angle => new Line({
     start: RADAR,
-    end: polarPoint(9.8, (i - 4) * 0.1),
+    end: polarPoint(9.8, angle),
     color: GRID,
     strokeWidth: 1.5,
   }))
-  const arcs = Array.from({ length: 19 }, (_, i) => new Polygon({
-    vertices: Array.from({ length: 25 }, (_, j) => polarPoint(2.4 + i * 0.4, (j - 12) * 0.0333)),
+  const arcs = Array.from({ length: ARC_COUNT }, (_, i) => new Polygon({
+    vertices: fanArc(ARC_START + i * ARC_STEP),
     closed: false,
     color: GRID,
     strokeWidth: 1.2,
   }))
   const radar = new Square({ sideLength: 0.18, center: RADAR, color: GOLD, fillOpacity: 1 })
 
-  const near = new VGroup(footprint(3.2, 4.4, 0.15, GOLD), widthChord(3.8, 0.15))
-  const traveling = near.copy()
-  const far = new VGroup(footprint(8, 9.2, 0.15, GOLD), widthChord(8.6, 0.15))
+  const near = new VGroup(footprint(3.2, 4.4, 0.15, GOLD), widthArc(3.8, 0.15))
+  // Click 2 starts the identical index-space window at the first gates by the
+  // radar and glides it out to far range, leaving the near example visible.
+  const traveling = new VGroup(footprint(ARC_START, ARC_START + 3 * ARC_STEP, 0.15, GOLD), widthArc(ARC_START + 1.5 * ARC_STEP, 0.15))
+  const far = new VGroup(footprint(8, 9.2, 0.15, GOLD), widthArc(8.6, 0.15))
   // At far range a narrower angular span covers approximately the near-window width.
   const adaptedAngle = 0.15 * 3.8 / 8.6
   const adapted = new VGroup(
     footprint(8, 9.2, adaptedAngle, '#6fd0aa', 0.26),
-    widthChord(8.6, adaptedAngle),
+    widthArc(8.6, adaptedAngle),
   )
   const farOutline = footprint(8, 9.2, 0.15, '#74bed5', 0)
   farOutline.setStrokeOpacity(0.65).setStrokeWidth(2)
 
+  // Click 1 launches the sweep with a single box: the grid and the near
+  // example are added statically (matching the first-frame overlay), then
+  // the near box fades while an identical window glides from the first
+  // gates out to far range.
+  scene.add(new VGroup(...rays, ...arcs, radar), near)
   await scene.play(
-    new FadeIn(new VGroup(...rays, ...arcs, radar), { duration: 0.65 }),
-    new FadeIn(near, { duration: 0.65 }),
+    new FadeOut(near, { duration: 0.4 }),
+    new Transform(traveling, far, { duration: 1.4 }),
   )
-  await scene.play(new Transform(traveling, far, { duration: 1.4 }))
   await scene.play(
     new FadeIn(farOutline, { duration: 0.75 }),
     new Transform(traveling, adapted, { duration: 0.75 }),
