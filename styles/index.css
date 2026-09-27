@@ -781,6 +781,149 @@
   line-height: 1.35;
 }
 
+/* Paper 2 math slides. Minimal gold-accent cards with theme-aware SVG. */
+.slidev-layout.local-math h1 {
+  margin-bottom: 0.35rem;
+  font-size: 1.55rem;
+}
+
+.slidev-layout.local-math .local-math-lead {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 1.02rem;
+  text-align: center;
+}
+
+.slidev-layout.local-math .local-math-center {
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+.slidev-layout.local-math .local-math-center .katex-display {
+  margin: 0.4rem 0;
+  font-size: 1.22rem;
+}
+
+.slidev-layout.local-math .local-math-grid {
+  display: grid;
+  flex: 1;
+  gap: 0.8rem;
+  min-height: 0;
+  align-items: stretch;
+  margin-top: 0.5rem;
+}
+
+.slidev-layout.local-math .local-math-grid.cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.slidev-layout.local-math .local-math-grid.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.slidev-layout.local-math .local-math-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.local-math .local-math-card h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.02rem;
+}
+
+.slidev-layout.local-math .local-math-card p {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.local-math .local-math-card .katex-display {
+  margin: 0.35rem 0;
+  font-size: 1.02rem;
+}
+
+.slidev-layout.local-math .local-boundary-svg {
+  display: block;
+  width: 100%;
+  height: 4.6rem;
+  margin-bottom: 0.3rem;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.local-math .local-boundary-svg .ext {
+  fill: currentColor;
+  fill-opacity: 0.25;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.slidev-layout.local-math .local-boundary-svg .orig {
+  fill: var(--cu-gold);
+  fill-opacity: 0.85;
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 1;
+}
+
+.dark .slidev-layout.local-math .local-boundary-svg .orig {
+  stroke: var(--cu-gold);
+}
+
+.slidev-layout.local-math .local-dim-chain {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr) 2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.slidev-layout.local-math .local-dim-chain .local-dim-box {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+  font-size: 0.87rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.slidev-layout.local-math .local-dim-chain > span {
+  color: var(--cu-text-muted);
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.slidev-layout.figure-slide .local-swap {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+}
+
+.slidev-layout.figure-slide .local-swap > * {
+  grid-area: 1 / 1;
+  min-height: 0;
+}
+
+.slidev-layout.figure-slide .local-swap img {
+  justify-self: center;
+  align-self: center;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.slidev-layout.figure-slide .local-criterion {
+  margin: 0.2rem 0 0.4rem;
+  text-align: center;
+}
+
+.slidev-layout.figure-slide .local-criterion .katex-display {
+  margin: 0.2rem 0;
+  font-size: 1.15rem;
+}
+
 .slidev-layout.default ul,
 .slidev-layout.image-right ul {
   margin-top: 0.4rem;
