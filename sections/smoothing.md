@@ -120,16 +120,16 @@ class: smoothing-cost
     <section>
       <h2>One volume · personal timing</h2>
       <strong>~20 min</strong>
-      <p>Spatial smoothing of 20 sweeps and four moments: Z<sub>H</sub>, Z<sub>DR</sub>, ρ<sub>HV</sub>, K<sub>DP</sub></p>
+      <p>Spatial smoothing of 20 sweeps and five variables: Z<sub>H</sub>, Z<sub>DR</sub>, ρ<sub>HV</sub>, K<sub>DP</sub>, VEL</p>
     </section>
     <section>
       <h2>Two hours · extrapolated</h2>
       <strong>~6 h 40 min</strong>
-      <p>~20 volumes at a 6-min cadence, processed serially</p>
+      <p>~20 volumes at a 6-min time-step</p>
     </section>
     <div class="smoothing-cost-source">
       <p>Same RHI: full view and 17–23 km zoom · 5-pixel boxcar · Paper Figure 4(a, b, e, f)</p>
-      <p>Images show one Z<sub>H</sub> sweep. The separate personal timing covers the full four-moment volume, smoothing only; the two-hour total is extrapolated.</p>
+      <p>Images show one Z<sub>H</sub> sweep. Smoothed with Dynamic Kernel method.</p>
     </div>
   </div>
   <div class="smoothing-cost-visual">
