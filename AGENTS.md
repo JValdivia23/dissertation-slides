@@ -66,3 +66,4 @@ We cannot use mysterious creative titles, this is not ted talks. Neutral/profess
   in the deployed site, and do not claim export behavior is verified until it
   has been tested.
 - Ask user before commit or push.
+- If the user modify the content, keep it. If there's a typo fixed it. If you think the sentence can be improved, ask the user for permission to modify it. 
