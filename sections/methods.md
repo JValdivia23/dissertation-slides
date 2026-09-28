@@ -591,29 +591,37 @@ class: figure-slide polar-figure
 <p class="fine">DOW6 X-band, WINTRE-MIX, 23 Feb 2022. Top: full domain. Bottom: 20 km central zoom. Shared dBZ scale. Missing sectors carry zero weight.</p>
 
 <!--
-About 50 seconds. Real-radar polar demonstration on uncorrected DOW6 reflectivity from the same 23 February 2022 event, following the dct_toolkit notebook workflow. W sets both the range width and the azimuth target width. Panels (a)–(c) are full-domain raw, W = 5, and W = 15; panels (d)–(f) are the matching 20 km central zooms. The operator uses mixed boundaries: periodic azimuth with reflective range. Despite extensive beam-blockage sectors, normalized convolution gives coherent local-mean estimates without obvious gap-driven artifacts, and no evident center-of-grid distortion appears even at W = 15. As expected, W = 5 preserves sharper gradients while W = 15 suppresses more small-scale variability; this is a tuning trade-off, not evidence for one globally optimal width. The evidence here is qualitative and dataset-specific. Next: what remains limited.
+About 50 seconds. Real-radar polar demonstration on uncorrected DOW6 reflectivity from the same 23 February 2022 event, following the dct_toolkit notebook workflow. W sets both the range width and the azimuth target width. Panels (a)–(c) are full-domain raw, W = 5, and W = 15; panels (d)–(f) are the matching 20 km central zooms. The operator uses mixed boundaries: periodic azimuth with reflective range. Despite extensive beam-blockage sectors, normalized convolution gives coherent local-mean estimates without obvious gap-driven artifacts, and no evident center-of-grid distortion appears even at W = 15. As expected, W = 5 preserves sharper gradients while W = 15 suppresses more small-scale variability; this is a tuning trade-off, not evidence for one globally optimal width. The evidence here is qualitative and dataset-specific. Next: where to find the implementation.
 -->
 
 ---
-class: smoothing-conclusions
+class: toolkit-availability
 ---
 
-# Project 2: limits
+# Spectral statistics implementation
 
-<div class="smoothing-conclusion-list">
-  <section>
-    <p>Sparse observations weaken estimates even when numerically stable.</p>
-  </section>
-  <section>
-    <p>Window width and threshold shape detection.</p>
-  </section>
-  <section>
-    <p>The radar demonstration is qualitative and dataset-specific.</p>
-  </section>
+<div class="toolkit-body">
+  <div class="toolkit-install">
+    <section>
+      <h2>Conda</h2>
+      <pre><code>conda install conda-forge::dct-toolkit</code></pre>
+    </section>
+    <section>
+      <h2>pip</h2>
+      <pre><code>pip install dct-toolkit</code></pre>
+    </section>
+    <figure class="toolkit-qr">
+      <img src="../figures/qr-dct-toolkit.png" alt="QR code linking to the dct-toolkit GitHub repository" />
+      <figcaption>github.com/JValdivia23/dct-toolkit</figcaption>
+    </figure>
+  </div>
+  <figure class="toolkit-shot">
+    <img src="../extras/Screenshot_Conda.png" alt="Anaconda.org page for conda-forge dct-toolkit version 0.6.0 showing the conda install command" />
+  </figure>
 </div>
 
 <!--
-About 35 seconds. Three qualifications. First, low-support regions can remain numerically stable yet weakly constrained; exclude or down-weight estimates where N_eff is a small fraction of nominal area. Second, outlier screening depends on threshold k, kernel width, support, and boundary mode; there is no single best setting from these tests. Third, the real-radar block shows plausible behavior on one dataset with large missing sectors; broader generalization needs more benchmarks, and non-binary certainty masks are not evaluated. These experiments also do not re-prove normalized-convolution fundamentals or re-benchmark transform scaling from the prior DCT work. Transition to the takeaways.
+About 30 seconds. The spectral-statistics implementation is packaged as dct-toolkit, installable from conda-forge or PyPI with the commands shown. The screenshot is the conda-forge page listing version 0.6.0. Results in this talk used version 0.5.0 at commit 9d3b60e. The QR code links to the GitHub repository for source, documentation, and notebooks. Then go to the takeaways.
 -->
 
 ---
@@ -630,12 +638,12 @@ class: smoothing-conclusions
     <p>The transfer function separability extends the same approach to N-dimensional Cartesian and mixed-boundary polar grids.</p>
   </section>
   <section>
-    <p>The examples demonstrate uses cases, where global moments fail, and polar smoothing on incomplete radar data.</p>
+    <p>The examples demonstrate use cases, where global moments fail, and polar smoothing on incomplete radar data.</p>
   </section>
 </div>
 
 <!--
-About 40 seconds. Suggested delivery: “This extends the smoothing method to local statistics that account for missing observations and scan geometry.” The claim is the capability: one spectral normalized-convolution operator gives local mean, variability, and support without interpolating first; the transform choice makes boundary handling explicit; and separability carries it to N-dimensional Cartesian and mixed-boundary polar grids. The three examples demonstrate uses, not final validations: edge-safe smoothing, neighborhood screening where global moments fail, and polar smoothing on gappy radar, each within the stated limits. Results use dct_toolkit at commit 9d3b60e. Future work should test more broadly against alternative baselines, expand sensitivity analyses, and evaluate non-binary certainty. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
+About 40 seconds. Suggested delivery: “This extends the smoothing method to local statistics that account for missing observations and scan geometry.” The claim is the capability: one spectral normalized-convolution operator gives local mean, variability, and support without interpolating first; the transform choice makes boundary handling explicit; and separability carries it to N-dimensional Cartesian and mixed-boundary polar grids. The three examples demonstrate uses, not final validations: edge-safe smoothing, neighborhood screening where global moments fail, and polar smoothing on gappy radar. Results use dct_toolkit at commit 9d3b60e. Future work should test more broadly against alternative baselines, expand sensitivity analyses, and evaluate non-binary certainty. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
 -->
 
 ---

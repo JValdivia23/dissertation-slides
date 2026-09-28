@@ -1791,6 +1791,79 @@
   margin-top: 0.2rem;
 }
 
+/* Paper 2 implementation slide: install commands plus conda screenshot. */
+.slidev-layout.toolkit-availability h1 {
+  margin-bottom: 0.5rem;
+  font-size: 1.55rem;
+}
+
+.slidev-layout.toolkit-availability .toolkit-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.slidev-layout.toolkit-availability .toolkit-install {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.slidev-layout.toolkit-availability .toolkit-install h2 {
+  margin: 0 0 0.3rem;
+  font-size: 0.95rem;
+}
+
+.slidev-layout.toolkit-availability .toolkit-install pre {
+  margin: 0;
+  padding: 0.55rem 0.8rem;
+  border-left: 4px solid var(--cu-gold);
+  background: rgb(127 135 148 / 12%);
+  font-size: 0.92rem;
+  overflow-x: auto;
+}
+
+.slidev-layout.toolkit-availability .toolkit-qr {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.2rem 0 0;
+}
+
+.slidev-layout.toolkit-availability .toolkit-qr img {
+  width: 6.5rem;
+  height: 6.5rem;
+  padding: 0.3rem;
+  background: #fff;
+}
+
+.slidev-layout.toolkit-availability .toolkit-qr figcaption {
+  color: var(--cu-text-muted);
+  font-size: 0.8rem;
+}
+
+.slidev-layout.toolkit-availability .toolkit-shot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+
+.slidev-layout.toolkit-availability .toolkit-shot img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 1px solid rgb(127 135 148 / 35%);
+}
+
 /* Paper 2 math slides. Minimal gold-accent cards with theme-aware SVG. */
 .slidev-layout.local-math h1 {
   margin-bottom: 0.35rem;
