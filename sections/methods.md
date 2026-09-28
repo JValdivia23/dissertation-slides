@@ -368,7 +368,7 @@ About 45 seconds. A 1D non-periodic synthetic signal with trend plus Gaussian no
 class: local-math
 ---
 
-# Cartesian filtering in N dimensions
+# Spectral operations in N dimensional space
 
 <p class="local-math-lead">Separability: one operator, two equivalent paths.</p>
 
@@ -404,7 +404,7 @@ $$
   <rect class="vol vol-out" x="340" y="92" width="36" height="36" />
 </svg>
 
-<p class="fine">Each axis keeps its own width. Apply the full operator to x·m, x²·m, and m, then form ratios. Do not average separately normalized intermediates.</p>
+<p class="fine">Each axis keeps its own width. Apply the full operator to x·m, x²·m, and m, then form ratios.</p>
 
 <!--
 About 50 seconds. The D-dimensional smoother is one operator: transform, multiply once by H_D, invert — with H_D the product of the axis responses. By separability this equals successive one-dimensional passes: S_1 along x, then S_2 along y, then S_3 along z. The circle means then, applied right to left, so S_1 runs first. Each axis keeps its own width. As before, apply the full multidimensional operator to the masked field, masked squares, and mask, then form the normalized ratios; do not average separately normalized intermediates. Next: the same idea with mixed boundaries on a polar grid.
