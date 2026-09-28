@@ -12,7 +12,7 @@ The dissertation text lives outside this repository:
 
 `/Users/java1127/Library/CloudStorage/OneDrive-UCB-O365/Papers/phd_thesis/manuscript`
 
-Use it as the source of scientific content for the slides. Read `AGENTS.md`,
+Use it as the source of scientific content for the slides. Read
 `SOURCE_MANIFEST.md`, and the chapter files there when checking claims, figure
 captions, or chapter order. Do not edit, commit, or build the manuscript from
 this repository unless you are explicitly asked to. Keep presentation source,
