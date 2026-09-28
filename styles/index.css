@@ -940,13 +940,13 @@
   border-left: 4px solid var(--cu-gold);
 }
 
-.slidev-layout.population-identification .population-identification-steps section span {
+.slidev-layout.population-identification .population-identification-steps section > span:first-child {
   color: var(--cu-gold-accessible);
   font-size: 1.55rem;
   font-weight: 700;
 }
 
-.dark .slidev-layout.population-identification .population-identification-steps section span {
+.dark .slidev-layout.population-identification .population-identification-steps section > span:first-child {
   color: var(--cu-gold);
 }
 
@@ -964,8 +964,8 @@
 }
 
 .slidev-layout.population-identification .population-identification-steps .math-pert {
-  margin-top: 0.2rem;
-  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
   color: var(--cu-heading);
 }
 

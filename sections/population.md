@@ -136,14 +136,14 @@ class: population-identification
   </div>
   <div class="population-identification-figure">
     <img v-click.hide="1" src="../figures/population-zmax.png" alt="Paper Figure 5(a): Maximum reflectivity in the 5.5–8 km layer" />
-    <img v-click="1" v-click.hide="2" src="../figures/population-zpert.png" alt="Paper Figure 5(b): Reflectivity perturbation after subtracting azimuthal mean" />
+    <img v-click="[1,2]" src="../figures/population-zpert.png" alt="Paper Figure 5(b): Reflectivity perturbation after subtracting azimuthal mean" />
     <img v-click="2" src="../figures/population-contours-final.png" alt="Paper Figure 5(e): Final closed CTGC contours after smoothing and screening" />
   </div>
 </div>
 
 <div class="population-identification-caption fine">
   <p v-click.hide="1">Paper Figure 5(a): Maximum reflectivity <em>Z</em><sub>max</sub> projected in polar coordinates across 5.5–8 km MSL (03:18 UTC).</p>
-  <p v-click="1" v-click.hide="2">Paper Figure 5(b): Perturbation field <em>Z</em>′ isolates localized enhancements relative to the azimuthal mean.</p>
+  <p v-click="[1,2]">Paper Figure 5(b): Perturbation field <em>Z</em>′ isolates localized enhancements relative to the azimuthal mean.</p>
   <p v-click="2">Paper Figure 5(e): Gaussian smoothing and area screening (&ge;0.09 km²) yield coherent closed cell boundaries.</p>
 </div>
 
