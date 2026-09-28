@@ -298,16 +298,16 @@ $$
     <h2>Reflective (DCT-II)</h2>
     <svg class="local-boundary-svg" viewBox="0 0 300 70" aria-hidden="true">
       <line x1="10" y1="56" x2="290" y2="56" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
-      <rect class="ext" x="70" y="19" width="16" height="36" />
-      <rect class="ext" x="90" y="27" width="16" height="28" />
-      <rect class="orig" x="110" y="27" width="16" height="28" />
-      <rect class="orig" x="130" y="19" width="16" height="36" />
+      <rect class="ext" x="70" y="37" width="16" height="18" />
+      <rect class="ext" x="90" y="43" width="16" height="12" />
+      <rect class="orig" x="110" y="43" width="16" height="12" />
+      <rect class="orig" x="130" y="37" width="16" height="18" />
       <rect class="orig" x="150" y="31" width="16" height="24" />
-      <rect class="orig" x="170" y="15" width="16" height="40" />
-      <rect class="orig" x="190" y="23" width="16" height="32" />
-      <rect class="orig" x="210" y="29" width="16" height="26" />
-      <rect class="ext" x="230" y="29" width="16" height="26" />
-      <rect class="ext" x="250" y="23" width="16" height="32" />
+      <rect class="orig" x="170" y="25" width="16" height="30" />
+      <rect class="orig" x="190" y="19" width="16" height="36" />
+      <rect class="orig" x="210" y="13" width="16" height="42" />
+      <rect class="ext" x="230" y="13" width="16" height="42" />
+      <rect class="ext" x="250" y="19" width="16" height="36" />
     </svg>
     <p>Mirror at the ends. Finite axes.</p>
 
@@ -320,21 +320,21 @@ $$
     <h2>Periodic (RFFT)</h2>
     <svg class="local-boundary-svg" viewBox="0 0 300 70" aria-hidden="true">
       <line x1="10" y1="56" x2="290" y2="56" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
-      <rect class="ext" x="70" y="23" width="16" height="32" />
-      <rect class="ext" x="90" y="29" width="16" height="26" />
-      <rect class="orig" x="110" y="27" width="16" height="28" />
-      <rect class="orig" x="130" y="19" width="16" height="36" />
+      <rect class="ext" x="70" y="19" width="16" height="36" />
+      <rect class="ext" x="90" y="13" width="16" height="42" />
+      <rect class="orig" x="110" y="43" width="16" height="12" />
+      <rect class="orig" x="130" y="37" width="16" height="18" />
       <rect class="orig" x="150" y="31" width="16" height="24" />
-      <rect class="orig" x="170" y="15" width="16" height="40" />
-      <rect class="orig" x="190" y="23" width="16" height="32" />
-      <rect class="orig" x="210" y="29" width="16" height="26" />
-      <rect class="ext" x="230" y="27" width="16" height="28" />
-      <rect class="ext" x="250" y="19" width="16" height="36" />
+      <rect class="orig" x="170" y="25" width="16" height="30" />
+      <rect class="orig" x="190" y="19" width="16" height="36" />
+      <rect class="orig" x="210" y="13" width="16" height="42" />
+      <rect class="ext" x="230" y="43" width="16" height="12" />
+      <rect class="ext" x="250" y="37" width="16" height="18" />
     </svg>
     <p>Repeat end to start. Circular azimuth.</p>
 
 $$
-2\pi k / n
+\omega_k = 2\pi k / n
 $$
 
   </section>
@@ -343,7 +343,7 @@ $$
 <p class="fine">Gaussian example: H<sub>g</sub>[k] = exp[−½(sω<sub>k</sub>)²], s = W/√12. Same form, different grid. Boxcar and discrete boxcar are also implemented.</p>
 
 <!--
-About 45 seconds. S_g can be applied to data, mask, squared data, or a prefilled field; it is not itself a local mean. The transform is also a boundary model. DCT-II means half-sample symmetric reflective extension; DFT/RFFT means periodic extension. The bars are schematic: gold is the finite signal, muted bars show the assumed continuation. The Gaussian response has the same functional form under both modes but is evaluated on different frequency grids for n samples. Next: does the boundary choice matter in practice?
+About 60 seconds. Read the center equation as: S sub g of f equals the inverse transform of the transform of f, times H sub g. S_g is the spectral smoother, T is the forward transform, and H_g is the kernel response. The same operator applies to data, mask, squared data, or a prefilled field; it is not itself a local mean. The transform is also the boundary model: DCT-II, read D C T two, means half-sample symmetric reflective extension; RFFT means periodic extension. The bars are schematic: gold is the finite signal of n samples, muted bars the assumed continuation — mirrored at the edges on the left, wrapped end to start on the right. Below, omega sub k equals pi k over n is the DCT frequency grid, and two pi k over n is the periodic grid; k indexes frequency, n counts samples. The Gaussian response H sub g of k is e to the minus one-half s omega sub k squared, with s equals W over root twelve linking s to the window width W. Same functional form, different grid. Next: does the boundary choice matter in practice?
 -->
 
 ---
