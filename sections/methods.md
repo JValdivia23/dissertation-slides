@@ -636,17 +636,5 @@ class: smoothing-conclusions conclusions-bullets
 - Potential applications go beyond radar: satellite observations, numerical simulations, even medical 3D-flow measurements.
 
 <!--
-About 45 seconds. Suggested delivery: “So what are the conclusions of this work? With the current implementation of dct-toolkit you can do the following.” First, compute local statistics in incomplete fields. Second, work in N-dimensional Cartesian or 2D polar coordinates. Third, combine boundary conditions across dimensions — periodic or reflective azimuth with reflective range in polar — and mix kernel types per dimension. Fourth, these potential applications go beyond radar signal processing: satellite observations, numerical simulations, even medical studies measuring 3D flows inside the body. Results in this talk used version 0.5.0 at commit 9d3b60e; per-axis kernel types are a 0.6.0 feature. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
--->
-
----
-
-# The methods are how the cells get measured
-
-- **Population:** smooth the perturbation, then contour at 5 dBZ
-- **One cell:** local background mean per radar for $Z'$, merged by beam weight
-- **The link:** the population track is the origin of the moving grid
-
-<!--
-About 30 seconds. This is the hinge. Keep the two method roles distinct. Population identification smooths the reflectivity perturbation and contours it; that path does not use the Paper 2 background estimator. For the tracked cell, each radar's smoothed reflectivity minus its Paper 2 weighted background mean gives that radar's Z-prime, and the radars are merged by beam weight so an unsampled voxel does not vote. Z-prime is therefore an anomaly relative to each radar's background, not a raw reflectivity composite or a rainfall rate. The population track supplies the moving-grid origin used in that merge. Then go to the storm.
+About 45 seconds. Suggested delivery: “So what are the conclusions of this work? With the current implementation of dct-toolkit you can do the following.” First, compute local statistics in incomplete fields. Second, work in N-dimensional Cartesian or 2D polar coordinates. Third, combine boundary conditions across dimensions — periodic or reflective azimuth with reflective range in polar — and mix kernel types per dimension. Fourth, these potential applications go beyond radar signal processing: satellite observations, numerical simulations, even medical studies measuring 3D flows inside the body. Results in this talk used version 0.5.0 at commit 9d3b60e; per-axis kernel types are a 0.6.0 feature. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, used in the Paper 4 fall-streak analysis. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
 -->
