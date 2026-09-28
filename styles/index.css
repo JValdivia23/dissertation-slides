@@ -20,6 +20,30 @@
   object-fit: contain;
 }
 
+.slidev-layout.figure-slide.polar-figure {
+  padding-top: 16px;
+  padding-bottom: 40px;
+}
+
+.slidev-layout.figure-slide.polar-figure h1 {
+  margin-bottom: 0.1rem;
+  padding-bottom: 0.15rem;
+  font-size: 1.3rem;
+}
+
+.slidev-layout.figure-slide.polar-figure .fig {
+  margin: 0 -1.5rem;
+}
+
+.slidev-layout.figure-slide.polar-figure .fig img {
+  width: 100%;
+}
+
+.slidev-layout.figure-slide.polar-figure .fine {
+  margin-top: 0.15rem;
+  font-size: 0.65rem;
+}
+
 .fine {
   margin: 0.3rem 0 0;
   font-size: 0.72rem;
