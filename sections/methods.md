@@ -132,20 +132,66 @@ $$
 <div class="local-math-grid cols-3">
 <section class="local-math-card">
 <h2>Extended statistics</h2>
+<svg class="local-card-illustration" viewBox="0 0 220 82" role="img" aria-label="Observed and missing samples produce a local mean, spread, and available-support indicator">
+  <line class="diagram-axis" x1="12" y1="61" x2="94" y2="61" />
+  <g class="diagram-stem">
+    <line x1="22" y1="38" x2="22" y2="61" />
+    <line x1="40" y1="20" x2="40" y2="61" />
+    <line x1="58" y1="30" x2="58" y2="61" />
+    <line x1="76" y1="48" x2="76" y2="61" />
+  </g>
+  <g class="diagram-observed-dot">
+    <circle cx="22" cy="38" r="4" />
+    <circle cx="40" cy="20" r="4" />
+    <circle cx="58" cy="30" r="4" />
+    <circle cx="76" cy="48" r="4" />
+  </g>
+  <circle class="diagram-missing-dot" cx="90" cy="39" r="4" />
+  <path class="diagram-arrow" d="M101 39h18m-6-6 6 6-6 6" />
+  <path class="diagram-spread" d="M135 27v21m0-10h57m0-11v21" />
+  <circle class="diagram-estimate-dot" cx="164" cy="38" r="5" />
+  <g class="diagram-support">
+    <circle cx="140" cy="63" r="3" />
+    <circle cx="154" cy="63" r="3" />
+    <circle cx="168" cy="63" r="3" />
+    <circle cx="182" cy="63" r="3" />
+  </g>
+  <circle class="diagram-missing-dot" cx="196" cy="63" r="3" />
+</svg>
 <p>Repeat for squared values to obtain the second moment, variance, and standard deviation.</p>
 </section>
 <section class="local-math-card">
 <h2>Explicit boundaries</h2>
+<svg class="local-card-illustration" viewBox="0 0 240 82" role="img" aria-label="Left: a signal reflects at a mirrored boundary. Right: the signal wraps from the end back to the beginning at a periodic boundary">
+  <path class="diagram-boundary-data" d="M18 55 36 25 54 43 66 43m78 12 18-30 18 18 12 0" />
+  <path class="diagram-mirror" d="M65 13v62m4-62v62" />
+  <path class="diagram-boundary-copy" d="M68 43 80 43 98 25 116 55m76-12 12 12 18-30" />
+  <path class="diagram-periodic-seam" d="M133 22v53m59-53v53" />
+  <path class="diagram-wrap" d="M193 17C186 1 147 1 136 17m0 0 7-3m-7 3 6 5" />
+</svg>
 <p>DCT for reflective axes; RFFT for periodic axes such as full-circle azimuth.</p>
 </section>
 <section class="local-math-card">
 <h2>Gap filling</h2>
+<svg class="local-card-illustration" viewBox="0 0 220 82" role="img" aria-label="A missing cell is estimated from neighboring observations, with the filled value distinguished from observations">
+  <g class="diagram-observed-cell">
+    <rect x="26" y="12" width="16" height="16" /><rect x="46" y="12" width="16" height="16" /><rect x="66" y="12" width="16" height="16" />
+    <rect x="26" y="32" width="16" height="16" /><rect x="66" y="32" width="16" height="16" />
+    <rect x="26" y="52" width="16" height="16" /><rect x="46" y="52" width="16" height="16" /><rect x="66" y="52" width="16" height="16" />
+    <rect x="140" y="12" width="16" height="16" /><rect x="160" y="12" width="16" height="16" /><rect x="180" y="12" width="16" height="16" />
+    <rect x="140" y="32" width="16" height="16" /><rect x="180" y="32" width="16" height="16" />
+    <rect x="140" y="52" width="16" height="16" /><rect x="160" y="52" width="16" height="16" /><rect x="180" y="52" width="16" height="16" />
+  </g>
+  <rect class="diagram-missing-cell" x="46" y="32" width="16" height="16" />
+  <path class="diagram-arrow" d="M98 40h29m-7-7 7 7-7 7" />
+  <rect class="diagram-estimated-cell" x="160" y="32" width="16" height="16" />
+</svg>
 <p>Missing data can be filled with the mean where support is insufficient.</p>
 </section>
 </div>
 
 <!--
-About 55 seconds. We use the same spectral convolution. To exclude missing or suspicious values we build a mask and perform normalized convolution: filter the masked data and the mask, then divide by the filtered mask so excluded locations carry zero weight. Applying the same procedure to squared values gives the second moment, hence variance and standard deviation. For boundaries we use RFFT where periodic behavior is wanted and DCT where reflective behavior is wanted; this distinction is particularly useful on Cartesian grids. Filling is only a fallback where support is insufficient: gaps are filled as long as enough neighbors give a meaningful average, and filled points then help fill remaining values iteratively. Filling does not create observations: the original mask still records support. The workflow and the estimators follow.
+About 60 seconds. We use the same spectral convolution. To exclude missing or suspicious values we build a mask and perform normalized convolution: filter the masked data and the mask, then divide by the filtered mask so excluded locations carry zero weight. Applying the same procedure to squared values gives the second moment, hence variance and standard deviation. For boundaries we use RFFT where periodic behavior is wanted and DCT where reflective behavior is wanted; this distinction is particularly useful on Cartesian grids. The same local mean can also estimate missing values if a downstream operation needs a complete field—for example, a dual-Doppler wind retrieval. That is a use case, not a validation in this paper. Where neighbors provide support, use the normalized mean; where support is insufficient, iterative smoothing and nearest completion provide the prefilled-field fallback. Filled cells do not become observations: the original mask still records support. The workflow and the estimators follow.
 -->
 
 ---

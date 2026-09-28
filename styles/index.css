@@ -1354,6 +1354,98 @@
   font-size: 0.8rem;
 }
 
+.slidev-layout.local-math.local-mask .local-card-illustration {
+  display: block;
+  width: min(100%, 15rem);
+  height: 5.2rem;
+  flex: none;
+  margin: 0.25rem auto 0.45rem;
+  overflow: visible;
+  color: var(--cu-text-muted);
+  --diagram-accent: var(--cu-gold-accessible);
+}
+
+.dark .slidev-layout.local-math.local-mask .local-card-illustration {
+  --diagram-accent: var(--cu-gold);
+}
+
+.slidev-layout.local-math.local-mask .diagram-axis,
+.slidev-layout.local-math.local-mask .diagram-stem,
+.slidev-layout.local-math.local-mask .diagram-arrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.local-math.local-mask .diagram-observed-dot,
+.slidev-layout.local-math.local-mask .diagram-support,
+.slidev-layout.local-math.local-mask .diagram-observed-cell {
+  fill: currentColor;
+  opacity: 0.7;
+}
+
+.slidev-layout.local-math.local-mask .diagram-missing-dot,
+.slidev-layout.local-math.local-mask .diagram-missing-cell {
+  fill: var(--cu-bg);
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 2;
+}
+
+.slidev-layout.local-math.local-mask .diagram-spread {
+  fill: none;
+  stroke: var(--diagram-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.local-math.local-mask .diagram-periodic-seam {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+.slidev-layout.local-math.local-mask .diagram-boundary-data {
+  fill: none;
+  stroke: var(--diagram-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.local-math.local-mask .diagram-boundary-copy {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-dasharray: 4 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.local-math.local-mask .diagram-mirror,
+.slidev-layout.local-math.local-mask .diagram-wrap {
+  fill: none;
+  stroke: var(--diagram-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.local-math.local-mask .diagram-estimate-dot {
+  fill: var(--diagram-accent);
+}
+
+.slidev-layout.local-math.local-mask .diagram-estimated-cell {
+  fill: color-mix(in srgb, var(--diagram-accent) 25%, var(--cu-bg));
+  stroke: var(--diagram-accent);
+  stroke-width: 2;
+  stroke-dasharray: 4 2;
+}
+
 .slidev-layout.local-math .local-pipeline-fig {
   display: flex;
   justify-content: center;
