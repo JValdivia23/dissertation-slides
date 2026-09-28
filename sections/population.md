@@ -69,51 +69,92 @@ To answer these, we analyze repeated volumetric radar scans from one winter stor
 class: population-context
 ---
 
-# Following a cell population through time
+# WINTRE-MIX: Study area and instrumentation
 
 <div class="population-context-body">
   <div class="population-context-story">
-    <p class="population-question">How did cloud-top generating cells form, organize, and dissipate in one observed winter storm?</p>
-    <div><strong>23 February 2022</strong><span>WINTRE-MIX IOP05 · St. Lawrence valley</span></div>
-    <div><strong>Every 6 minutes</strong><span>DOW6 X-band volume scans, 02:00–04:00 UTC</span></div>
-    <div><strong>5.5–8 km MSL</strong><span>Observed cloud-top cell layer</span></div>
+    <div>
+      <strong>WINTRE-MIX Campaign · IOP05</strong>
+      <span>22–23 February 2022 · St. Lawrence and Champlain valleys (US–Canada border). Studying winter precipitation near 0°C in complex terrain.</span>
+    </div>
+    <div>
+      <strong>DOW6 X-band radar (primary)</strong>
+      <span>Dual-polarization Doppler radar; 75 m range resolution; 17 PPI sweeps every 6 min (02:00–04:00 UTC).</span>
+    </div>
+    <div>
+      <strong>Context instrumentation</strong>
+      <span>Operational S-band radar from Environment and Climate Change Canada (ECCC Blainville; 240 km range); radiosondes from Sorel, QC (02:00 &amp; 04:15 UTC); airborne NAX radar on the NRC Convair-580.</span>
+    </div>
   </div>
   <img src="../figures/wintremix-map.png" alt="Topographic study-area map locating DOW6, the ECCC S-band radar, the Sorel sounding site, and the DOW6 RHI scan path" />
 </div>
 
-<p class="fine">Paper Figure 2. DOW6 supplies the population's repeated PPI observations; ECCC radar, RHI scans, airborne radar, and soundings provide context.</p>
+<p class="fine">Paper Figure 2. DOW6 supplies the repeated 6-minute volumetric scans for cell detection; ECCC radar, soundings, and airborne radar provide mesoscale context.</p>
 
 <!--
-About 45 seconds. The problem is temporal: isolated cross-sections reveal cell structure but not how a population changes from first appearance through decay. During WINTRE-MIX IOP05 near Montreal on 23 February 2022, DOW6 repeatedly sampled the storm with 17 PPI sweeps per six-minute volume between 02:00 and 04:00 UTC. Cells were observed near 5.5–8 km MSL. Locate DOW6, ECCC Blainville, and the Sorel sounding on the map; the magenta line is the DOW6 RHI path. ECCC low-level reflectivity, the DOW6 RHIs, a short airborne NAX pass, and two soundings provide context, but the population identification and statistics come from the DOW6 PPI volumes. This is one storm, not a climatology. Next, explain what is counted as a CTGC feature.
+About 45 seconds. Introduce the observational framework. The dataset comes from the Winter Precipitation Type Research Multi-scale Experiment (WINTRE-MIX), conducted in late winter 2022 across the US–Canada border in the St. Lawrence and Champlain valleys.
+
+Point to the map: DOW6 was deployed near the valley confluence to sample winter storm IOP05. The primary platform is the Doppler on Wheels 6 from the NSF-supported CSWR facility: an X-band dual-polarization radar sampling 17 PPI sweeps every six minutes between 02:00 and 04:00 UTC, with 75-meter range resolution. CTGCs were observed between 5.5 and 8 km MSL.
+
+Supporting context came from Environment and Climate Change Canada's operational S-band radar at Blainville for storm-scale coverage, two radiosondes launched at Sorel for vertical thermodynamics, and a flight pass by the NRC Convair-580 with the NAX cloud radar.
+
+Next, I will explain how we identify CTGC features from these volumetric scans.
 -->
 
 ---
 class: population-identification
 ---
 
-# Identifying CTGC boundaries
+# CTGC detection: Layer maximum and perturbation
 
-<p class="population-lead">From the 5.5–8 km column maximum to closed reflectivity-perturbation contours.</p>
+<p class="population-lead">Isolating convective cell enhancements from background stratiform echo in the generating layer.</p>
 
 <div class="population-identification-body">
   <div class="population-identification-steps">
-    <section><span>1</span><p>Take the maximum reflectivity in the cloud-top layer at each range–azimuth location.</p></section>
-    <section><span>2</span><p>Subtract the azimuthal mean at each range to obtain a reflectivity perturbation, <em>Z</em>′.</p></section>
-    <section><span>3</span><p>Gaussian-smooth <em>Z</em>′, contour at a 5-dB enhancement, and remove nested or &lt;0.09 km² regions.</p></section>
+    <section>
+      <span>1</span>
+      <div>
+        <strong>Layer column maximum (<em>Z</em><sub>max</sub>)</strong>
+        <p>Extract maximum reflectivity in the 5.5–8 km MSL cell layer at each range–azimuth gate (<em>r</em>, <em>θ</em>).</p>
+      </div>
+    </section>
+    <section>
+      <span>2</span>
+      <div>
+        <strong>Reflectivity perturbation (<em>Z</em>′)</strong>
+        <p>Subtract the range-dependent azimuthal mean:</p>
+        <p class="math-pert"><em>Z</em>′(<em>r</em>, <em>θ</em>) = <em>Z</em><sub>max</sub>(<em>r</em>, <em>θ</em>) − <span style="text-decoration: overline"><em>Z</em><sub>max</sub></span><sub>θ</sub>(<em>r</em>)</p>
+      </div>
+    </section>
+    <section>
+      <span>3</span>
+      <div>
+        <strong>Smoothing, 5-dB contouring &amp; screening</strong>
+        <p>Apply 2D Gaussian smoothing (9×9 window), contour at 5 dB, and discard nested or &lt;0.09 km² regions.</p>
+      </div>
+    </section>
   </div>
   <div class="population-identification-figure">
-    <img v-click.hide="1" src="../figures/population-contours-raw.png" alt="Paper Figure 5(c): unsmoothed 5-dB reflectivity-perturbation contours fragment into many noisy boundaries" />
-    <img v-click="1" src="../figures/population-contours-final.png" alt="Paper Figure 5(e): final closed CTGC contours after Gaussian smoothing and removal of nested and very small regions" />
+    <img v-click.hide="1" src="../figures/population-zmax.png" alt="Paper Figure 5(a): Maximum reflectivity in the 5.5–8 km layer" />
+    <img v-click="1" v-click.hide="2" src="../figures/population-zpert.png" alt="Paper Figure 5(b): Reflectivity perturbation after subtracting azimuthal mean" />
+    <img v-click="2" src="../figures/population-contours-final.png" alt="Paper Figure 5(e): Final closed CTGC contours after smoothing and screening" />
   </div>
 </div>
 
 <div class="population-identification-caption fine">
-  <p v-click.hide="1">Paper Figure 5(c): direct contouring fragments into noise-scale boundaries.</p>
-  <p v-click="1">Paper Figure 5(e): smoothing and contour screening yield coherent closed boundaries; 03:18 UTC example.</p>
+  <p v-click.hide="1">Paper Figure 5(a): Maximum reflectivity <em>Z</em><sub>max</sub> projected in polar coordinates across 5.5–8 km MSL (03:18 UTC).</p>
+  <p v-click="1" v-click.hide="2">Paper Figure 5(b): Perturbation field <em>Z</em>′ isolates localized enhancements relative to the azimuthal mean.</p>
+  <p v-click="2">Paper Figure 5(e): Gaussian smoothing and area screening (&ge;0.09 km²) yield coherent closed cell boundaries.</p>
 </div>
 
 <!--
-About 55 seconds. First quality-control the DOW6 radar measurements. From the PPI volume, take maximum reflectivity in the 5.5–8 km layer at each range and azimuth. Subtract the azimuthal mean at that range to isolate enhancements relative to the background. This is a difference in logarithmic reflectivity and therefore has dB units, though the paper and figure use the familiar dBZ notation for the threshold. The initial 5-dB contours without smoothing, Figure 5(c), are highly fragmented. Click 1: Figure 5(e) shows the final boundaries after a 9-by-9, one-gate-standard-deviation Gaussian smoothing of the perturbation, a 5-dB contour, removal of nested contours, and rejection of regions smaller than 0.09 km². The 5-dB choice was subjective after sensitivity tests; these are threshold-defined radar features, not guaranteed one-to-one individual updrafts. This is the paper's own spatial processing, not the Paper 2 normalized local-statistics background estimator. The full Figure 5 includes intermediate fields. Next, locate the groups in the storm.
+About 55 seconds. To identify CTGC features objectively, we develop a three-step polar-coordinate procedure.
+
+First, within the 5.5 to 8 km cloud-top layer identified in RHI scans, we take the column maximum reflectivity at each range and azimuth from the DOW6 volume scan. This produces the Z_max field shown here at 03:18 UTC.
+
+[click] Second, because CTGCs are localized convective enhancements embedded in a broader stratiform echo, we subtract the azimuthal mean reflectivity at each range. This yields the reflectivity perturbation field Z-prime in decibels. Notice how the cellular enhancements immediately stand out against the background.
+
+[click] Third, raw perturbation contours fragment due to noise and beam-broadening ring effects. We apply a two-dimensional Gaussian filter to Z-prime, contour at a 5-dB enhancement threshold, remove any nested contours, and filter out features smaller than 0.09 km² (corresponding to 4 pixels at 35 km range). This produces the final closed boundaries used for tracking and microphysical analysis.
 -->
 
 ---
