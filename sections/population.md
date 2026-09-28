@@ -17,7 +17,52 @@ title: Temporal Evolution of Cloud-Top Generating Cells
 </div>
 
 <!--
-About 20 seconds. The first two papers addressed radar analysis methods. This third paper is an observational case study, published in the Journal of the Atmospheric Sciences. Credit Katja Friedrich, Troy Zaremba, and Sarah Tessendorf. Do not imply that the spectral methods of Papers 1 and 2 produced this study's population results: the Chapter 4 identification procedure uses its own quality control, polar-coordinate smoothing, azimuthal-mean perturbation, and contouring. The fourth paper later combines the methodological work with the cell track from this study.
+About 20 seconds. The first two papers addressed radar analysis methods. This third paper is an observational case study, published in the Journal of the Atmospheric Sciences. Credit Katja Friedrich, Troy Zaremba, and Sarah Tessendorf. Do not imply that the spectral methods of Papers 1 and 2 produced this study's population results: the Chapter 4 identification procedure uses its own quality control, polar-coordinate smoothing, azimuthal-mean perturbation, and contouring. The fourth paper later combines the methodological work with the cell track from this study. Next, outline the core problem and three research objectives.
+-->
+
+---
+class: population-objectives
+---
+
+# Objectives: CTGC population evolution
+
+<p class="population-lead">
+  While instantaneous cell structures are known from snapshots, the <strong>complete lifecycle of a CTGC population</strong> has remained undocumented observationally.
+</p>
+
+<div class="limit-row">
+
+<div class="limit-card">
+  <h3>Macrostructural evolution</h3>
+  <p class="ask">How do CTGCs organize and evolve through time?</p>
+  <p>Track changes in cell counts, horizontal dimensions, and the merging of individual cells into contiguous clusters.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Microphysical progression</h3>
+  <p class="ask">How do particle signatures change across stages?</p>
+  <p>Examine systematic trends in polarimetric radar variables (<em>Z</em><sub>e</sub>, <em>Z</em><sub>DR</sub>, <em>ρ</em><sub>HV</sub>) and infer crystal habit evolution.</p>
+</div>
+
+<div class="limit-card">
+  <h3>Environmental conditions</h3>
+  <p class="ask">What factors govern the cell lifecycle?</p>
+  <p>Assess the roles of vertical wind shear, cloud-top thermodynamic stability, and moisture depletion in cell maintenance and decay.</p>
+</div>
+
+</div>
+
+<!--
+About 45 seconds. The first two papers developed radar analysis methods. This third paper applies high-resolution radar observations to address an open physical problem: following an entire CTGC population through time.
+
+While past studies revealed the instantaneous 1–2 km structure of generating cells using isolated RHI sweeps or aircraft passes, the complete life cycle of a population—from first appearance through organization to decay—has remained uncharacterized observationally.
+
+We address three questions:
+First, macrostructure: how do cell count, size, and clustering change over time?
+Second, microphysics: what do polarimetric variables reveal about particle sorting and habit changes as cells mature?
+And third, environment: what thermodynamic and shear conditions support each stage?
+
+To answer these, we analyze repeated volumetric radar scans from one winter storm during WINTRE-MIX.
 -->
 
 ---

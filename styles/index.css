@@ -825,6 +825,7 @@
 
 /* Paper 3: event-based population observations and figure crops. */
 .slidev-layout.population-context h1,
+.slidev-layout.population-objectives h1,
 .slidev-layout.population-identification h1,
 .slidev-layout.population-bands h1,
 .slidev-layout.population-maps h1,
@@ -838,6 +839,32 @@
   margin: 0 0 0.5rem;
   font-size: 1.02rem;
   text-align: center;
+}
+
+.slidev-layout.population-objectives .population-lead {
+  margin: 0 0 1.25rem;
+}
+
+.slidev-layout.population-objectives .limit-card {
+  padding: 1.25rem 1.15rem;
+  gap: 0.65rem;
+}
+
+.slidev-layout.population-objectives .limit-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.slidev-layout.population-objectives .limit-card .ask {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.population-objectives .limit-card p:not(.ask) {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
 .slidev-layout.population-context .population-context-body,
@@ -2568,13 +2595,15 @@
 
 .slidev-layout.observation-limits h1,
 .slidev-layout.physical-questions h1,
-.slidev-layout.dissertation-objectives h1 {
+.slidev-layout.dissertation-objectives h1,
+.slidev-layout.population-objectives h1 {
   margin-bottom: 0.55rem;
 }
 
 .slidev-layout.observation-limits .limit-row,
 .slidev-layout.physical-questions .limit-row,
-.slidev-layout.dissertation-objectives .limit-row {
+.slidev-layout.dissertation-objectives .limit-row,
+.slidev-layout.population-objectives .limit-row {
   display: grid;
   flex: 1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2584,7 +2613,8 @@
 
 .slidev-layout.observation-limits .limit-card,
 .slidev-layout.physical-questions .limit-card,
-.slidev-layout.dissertation-objectives .limit-card {
+.slidev-layout.dissertation-objectives .limit-card,
+.slidev-layout.population-objectives .limit-card {
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -2725,7 +2755,8 @@
 
 .slidev-layout.observation-limits .limit-card h3,
 .slidev-layout.physical-questions .limit-card h3,
-.slidev-layout.dissertation-objectives .limit-card h3 {
+.slidev-layout.dissertation-objectives .limit-card h3,
+.slidev-layout.population-objectives .limit-card h3 {
   margin: 0.55rem 0 0.35rem;
   color: var(--cu-heading);
   font-size: 1.02rem;
@@ -2734,7 +2765,8 @@
 
 .slidev-layout.observation-limits .limit-card p,
 .slidev-layout.physical-questions .limit-card p,
-.slidev-layout.dissertation-objectives .limit-card p {
+.slidev-layout.dissertation-objectives .limit-card p,
+.slidev-layout.population-objectives .limit-card p {
   margin: 0;
   color: var(--cu-text);
   font-size: 0.86rem;
@@ -2742,7 +2774,8 @@
 }
 
 .slidev-layout.physical-questions .limit-card h3,
-.slidev-layout.dissertation-objectives .limit-card h3 {
+.slidev-layout.dissertation-objectives .limit-card h3,
+.slidev-layout.population-objectives .limit-card h3 {
   margin-top: 0;
   margin-bottom: 0.45rem;
 }
@@ -2808,7 +2841,8 @@
 }
 
 .slidev-layout.physical-questions .limit-card .ask,
-.slidev-layout.dissertation-objectives .limit-card .ask {
+.slidev-layout.dissertation-objectives .limit-card .ask,
+.slidev-layout.population-objectives .limit-card .ask {
   margin: 0 0 0.7rem;
   color: var(--cu-heading);
   font-size: 1.05rem;
