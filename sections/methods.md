@@ -633,7 +633,7 @@ class: smoothing-conclusions conclusions-bullets
 - Compute local statistics in incomplete fields.
 - Work in N-dimensional Cartesian or 2D polar coordinates.
 - Combine boundary conditions across dimensions, and mix kernel types per dimension.
-- Potential applications go beyond radar — satellite observations, numerical simulations, even medical 3D-flow measurements.
+- Potential applications go beyond radar: satellite observations, numerical simulations, even medical 3D-flow measurements.
 
 <!--
 About 45 seconds. Suggested delivery: “So what are the conclusions of this work? With the current implementation of dct-toolkit you can do the following.” First, compute local statistics in incomplete fields. Second, work in N-dimensional Cartesian or 2D polar coordinates. Third, combine boundary conditions across dimensions — periodic or reflective azimuth with reflective range in polar — and mix kernel types per dimension. Fourth, these potential applications go beyond radar signal processing: satellite observations, numerical simulations, even medical studies measuring 3D flows inside the body. Results in this talk used version 0.5.0 at commit 9d3b60e; per-axis kernel types are a 0.6.0 feature. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
