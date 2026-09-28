@@ -1649,6 +1649,59 @@
   text-align: left;
 }
 
+.slidev-layout.local-math .local-paths-svg {
+  display: block;
+  width: min(100%, 30rem);
+  height: auto;
+  flex: none;
+  margin: 0.15rem auto 0.35rem;
+  overflow: visible;
+  color: var(--cu-text-muted);
+  --diagram-accent: var(--cu-gold-accessible);
+}
+
+.dark .slidev-layout.local-math .local-paths-svg {
+  --diagram-accent: var(--cu-gold);
+}
+
+.slidev-layout.local-math .local-paths-svg .vol {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.slidev-layout.local-math .local-paths-svg .vol-out {
+  stroke: var(--diagram-accent);
+  stroke-width: 2;
+}
+
+.slidev-layout.local-math .local-paths-svg .parrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.local-math .local-paths-svg .pop {
+  fill: currentColor;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.slidev-layout.local-math .local-paths-svg .paxis {
+  fill: currentColor;
+  opacity: 0.75;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.slidev-layout.local-math .local-paths-svg .equiv {
+  fill: currentColor;
+  opacity: 0.75;
+  font-size: 22px;
+}
+
 .slidev-layout.local-math .local-math-grid {
   display: grid;
   flex: 1;

@@ -358,7 +358,7 @@ class: figure-slide
   <img src="../figures/local-stats-boundary.png" alt="One-dimensional non-periodic signal: reflective DCT follows the trend at the edges while periodic treatment wraps toward the opposite end" />
 </div>
 
-<p class="fine">1D non-periodic signal, N = 200, W = 15 Gaussian, mean over 5 seeds. All-domain RMSE 0.28 versus 1.00. Dashed boxes mark the edge regions.</p>
+<p class="fine">1D non-periodic signal, N = 200, W = 15 Gaussian. All-domain RMSE 0.28 versus 1.00. Dashed boxes mark the edge regions.</p>
 
 <!--
 About 45 seconds. A 1D non-periodic synthetic signal with trend plus Gaussian noise, matched W = 15 Gaussian kernel, 5 seeds. Reflective DCT follows local trend continuity; periodic treatment pulls the edges toward the opposite end. All-domain RMSE is about 0.28 reflective versus 1.00 periodic; edge-only RMSE over the first and last W samples is about 0.38 versus 2.52. This is a boundary-model check, not a general accuracy claim. Transition from boundaries to dimensionality.
@@ -370,28 +370,44 @@ class: local-math
 
 # Cartesian filtering in N dimensions
 
-<p class="local-math-lead">One field, filtered along each axis in turn.</p>
+<p class="local-math-lead">Separability: one operator, two equivalent paths.</p>
 
 <div class="local-math-center">
 
 $$
-H_D(k_1,\ldots,k_D) = \prod_{d=1}^{D} H_d(k_d), \quad \mathcal{S}^{(D)} = \mathcal{S}_D \circ \cdots \circ \mathcal{S}_1
+\begin{aligned}
+\mathcal{S}^{(D)}\{f\} &= \mathcal{T}^{-1}\{\mathcal{T}\{f\} \cdot H_D\} \\
+H_D(k_1,\ldots,k_D) &= \prod_{d=1}^{D} H_d(k_d), \quad \mathcal{S}^{(D)} = \mathcal{S}_D \circ \cdots \circ \mathcal{S}_1
+\end{aligned}
 $$
 
 </div>
 
-<div class="local-dim-chain">
-  <div class="local-dim-box">Pass 1<br />filter the volume along x</div>
-  <span aria-hidden="true">→</span>
-  <div class="local-dim-box">Pass 2<br />filter the same volume along y</div>
-  <span aria-hidden="true">→</span>
-  <div class="local-dim-box">Pass 3<br />filter the same volume along z</div>
-</div>
+<svg class="local-paths-svg" viewBox="40 0 366 134" role="img" aria-label="Single D-dimensional multiply by H D is equivalent to successive one-dimensional passes along x, then y, then z">
+  <rect class="vol" x="158" y="8" width="40" height="40" />
+  <path class="parrow" d="M203 28h40m-7-7 7 7-7 7" />
+  <text class="pop" x="223" y="20" text-anchor="middle">×H_D</text>
+  <rect class="vol vol-out" x="248" y="8" width="40" height="40" />
+  <text class="equiv" x="223" y="86" text-anchor="middle">≡</text>
+  <rect class="vol" x="70" y="92" width="36" height="36" />
+  <path class="parrow" d="M111 110h44m-7-7 7 7-7 7" />
+  <text class="pop" x="133" y="102" text-anchor="middle">×H_1</text>
+  <text class="paxis" x="133" y="126" text-anchor="middle">x</text>
+  <rect class="vol" x="160" y="92" width="36" height="36" />
+  <path class="parrow" d="M201 110h44m-7-7 7 7-7 7" />
+  <text class="pop" x="223" y="102" text-anchor="middle">×H_2</text>
+  <text class="paxis" x="223" y="126" text-anchor="middle">y</text>
+  <rect class="vol" x="250" y="92" width="36" height="36" />
+  <path class="parrow" d="M291 110h44m-7-7 7 7-7 7" />
+  <text class="pop" x="313" y="102" text-anchor="middle">×H_3</text>
+  <text class="paxis" x="313" y="126" text-anchor="middle">z</text>
+  <rect class="vol vol-out" x="340" y="92" width="36" height="36" />
+</svg>
 
-<p class="fine">Each axis keeps its own width; the 3D wind test uses (3, 7, 7). Apply the full operator to x·m, x²·m, and m, then form ratios. Do not average separately normalized intermediates.</p>
+<p class="fine">Each axis keeps its own width. Apply the full operator to x·m, x²·m, and m, then form ratios. Do not average separately normalized intermediates.</p>
 
 <!--
-About 40 seconds. For Cartesian D-dimensional smoothing, the transfer function is the product of axis transfer functions. Implementation reduces the operation to sequential 1D spectral multiplications while preserving spectral efficiency for large windows. Each dimension keeps its own width; the cyclone-wind validation uses windows (3, 7, 7). Apply the full multidimensional operator to the masked field, masked squares, and mask, then form the normalized moments. Normalization follows the complete filtering operation. Next: the same idea with mixed boundaries on a polar grid.
+About 50 seconds. The D-dimensional smoother is one operator: transform, multiply once by H_D, invert — with H_D the product of the axis responses. By separability this equals successive one-dimensional passes: S_1 along x, then S_2 along y, then S_3 along z. The circle means then, applied right to left, so S_1 runs first. Each axis keeps its own width. As before, apply the full multidimensional operator to the masked field, masked squares, and mask, then form the normalized ratios; do not average separately normalized intermediates. Next: the same idea with mixed boundaries on a polar grid.
 -->
 
 ---
