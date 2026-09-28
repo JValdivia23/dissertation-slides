@@ -1035,6 +1035,566 @@
   font-size: 1.02rem;
 }
 
+/* Paper 4: cell-relative three-radar analysis and precipitation contrasts. */
+.slidev-layout.paper4-title h1 {
+  max-width: 61rem;
+  font-size: 2.1rem;
+}
+
+.slidev-layout.paper4-question h1,
+.slidev-layout.paper4-observations h1,
+.slidev-layout.paper4-grid h1,
+.slidev-layout.paper4-merge h1,
+.slidev-layout.paper4-footprints h1,
+.slidev-layout.paper4-estimation h1,
+.slidev-layout.paper4-hero h1,
+.slidev-layout.paper4-cross h1,
+.slidev-layout.paper4-overlap h1,
+.slidev-layout.paper4-rates h1,
+.slidev-layout.paper4-contrast h1 {
+  margin-bottom: 0.45rem;
+  font-size: 1.75rem;
+}
+
+.slidev-layout.paper4-question .paper4-question-body,
+.slidev-layout.paper4-grid .paper4-grid-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 1.3rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-question .paper4-question-story,
+.slidev-layout.paper4-grid .paper4-grid-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.slidev-layout.paper4-question .paper4-question-lead {
+  margin: 0 0 0.4rem;
+  color: var(--cu-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.slidev-layout.paper4-question .paper4-question-story section,
+.slidev-layout.paper4-grid .paper4-grid-facts section {
+  padding: 0.55rem 0.85rem;
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.paper4-question .paper4-question-story strong,
+.slidev-layout.paper4-question .paper4-question-story span,
+.slidev-layout.paper4-grid .paper4-grid-facts > section > strong {
+  display: block;
+}
+
+.slidev-layout.paper4-question .paper4-question-story strong,
+.slidev-layout.paper4-grid .paper4-grid-facts > section > strong {
+  color: var(--cu-heading);
+  font-size: 1rem;
+}
+
+.slidev-layout.paper4-question .paper4-question-story span,
+.slidev-layout.paper4-grid .paper4-grid-facts p {
+  margin: 0.2rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram,
+.slidev-layout.paper4-grid svg {
+  display: block;
+  width: 100%;
+  max-height: 22rem;
+  margin: auto;
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram text,
+.slidev-layout.paper4-grid svg text {
+  fill: var(--cu-heading);
+  font-size: 18px;
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram .paper4-cloud {
+  fill: color-mix(in srgb, var(--cu-text-muted) 14%, var(--cu-bg));
+  stroke: var(--cu-text-muted);
+  stroke-width: 2;
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram .paper4-cell {
+  fill: color-mix(in srgb, var(--cu-gold) 45%, var(--cu-bg));
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 3;
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram .paper4-streak {
+  fill: none;
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 5;
+  stroke-dasharray: 9 6;
+  stroke-linecap: round;
+}
+
+.dark .slidev-layout.paper4-question .paper4-question-diagram .paper4-cell,
+.dark .slidev-layout.paper4-question .paper4-question-diagram .paper4-streak {
+  stroke: var(--cu-gold);
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram .paper4-melting {
+  fill: none;
+  stroke: var(--cu-heading);
+  stroke-width: 2;
+  stroke-dasharray: 8 6;
+}
+
+.slidev-layout.paper4-question .paper4-question-diagram .paper4-precip {
+  fill: none;
+  stroke: var(--cu-text-muted);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.slidev-layout.paper4-observations .paper4-observations-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: center;
+  justify-items: center;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-observations figure,
+.slidev-layout.paper4-overlap figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+
+.slidev-layout.paper4-observations figure img {
+  display: block;
+  max-width: 100%;
+  max-height: 17.8rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-observations figcaption,
+.slidev-layout.paper4-overlap figcaption {
+  margin-top: 0.3rem;
+  color: var(--cu-heading);
+  font-size: 0.93rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.slidev-layout.paper4-observations .paper4-observations-note,
+.slidev-layout.paper4-footprints .paper4-footprint-takeaway,
+.slidev-layout.paper4-estimation .paper4-estimation-note,
+.slidev-layout.paper4-overlap .paper4-overlap-note {
+  margin: 0.4rem 0 0;
+  padding: 0.5rem 0.85rem;
+  border-left: 4px solid var(--cu-gold);
+  color: var(--cu-heading);
+  font-size: 0.96rem;
+  line-height: 1.3;
+}
+
+.slidev-layout.paper4-grid svg .paper4-svg-heading {
+  font-weight: 700;
+}
+
+.slidev-layout.paper4-grid svg .paper4-previous-box,
+.slidev-layout.paper4-grid svg .paper4-current-box {
+  fill: color-mix(in srgb, var(--cu-gold) 7%, transparent);
+  stroke: var(--cu-text-muted);
+  stroke-width: 2;
+}
+
+.slidev-layout.paper4-grid svg .paper4-previous-box {
+  stroke-dasharray: 6 5;
+}
+
+.slidev-layout.paper4-grid svg .paper4-current-box {
+  stroke: var(--cu-gold-accessible);
+  stroke-width: 3;
+}
+
+.dark .slidev-layout.paper4-grid svg .paper4-current-box {
+  stroke: var(--cu-gold);
+}
+
+.slidev-layout.paper4-grid svg .paper4-grid-lines {
+  fill: none;
+  stroke: var(--cu-text-muted);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+.slidev-layout.paper4-grid svg .paper4-track,
+.slidev-layout.paper4-grid svg .paper4-arrow {
+  fill: none;
+  stroke: var(--cu-heading);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slidev-layout.paper4-grid svg .paper4-previous-dot {
+  fill: var(--cu-text-muted);
+}
+
+.slidev-layout.paper4-grid svg .paper4-current-dot {
+  fill: var(--cu-gold-accessible);
+}
+
+.dark .slidev-layout.paper4-grid svg .paper4-current-dot {
+  fill: var(--cu-gold);
+}
+
+.slidev-layout .paper4-lead {
+  margin: 0.25rem 0 0.6rem;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.slidev-layout.paper4-merge .paper4-merge-flow {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-merge .paper4-merge-flow section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid var(--cu-border);
+  border-top: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.paper4-merge .paper4-merge-flow section > span {
+  color: var(--cu-gold-accessible);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.dark .slidev-layout.paper4-merge .paper4-merge-flow section > span {
+  color: var(--cu-gold);
+}
+
+.slidev-layout.paper4-merge .paper4-merge-flow h2 {
+  margin: 0.2rem 0 0.6rem;
+  font-size: 1.2rem;
+}
+
+.slidev-layout.paper4-merge .paper4-merge-flow p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.paper4-merge .paper4-merge-output {
+  margin-top: 0.7rem;
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.paper4-merge .paper4-merge-output p {
+  margin: 0.15rem 0;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-steps,
+.slidev-layout.paper4-estimation .paper4-estimation-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.4rem minmax(0, 1fr) 1.4rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.3rem 0 0.55rem;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-steps span,
+.slidev-layout.paper4-estimation .paper4-estimation-flow section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 3.2rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--cu-border);
+  border-left: 4px solid var(--cu-gold);
+  font-size: 0.85rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-steps b,
+.slidev-layout.paper4-estimation .paper4-estimation-flow > b {
+  color: var(--cu-text-muted);
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-figure {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-figure img {
+  max-width: 100%;
+  max-height: 14rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-estimation .paper4-estimation-flow {
+  grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr);
+  margin: 0.5rem 0;
+}
+
+.slidev-layout.paper4-estimation .paper4-estimation-flow section {
+  min-height: 5.1rem;
+  padding: 0.4rem 0.8rem;
+  text-align: left;
+}
+
+.slidev-layout.paper4-estimation .paper4-estimation-flow strong,
+.slidev-layout.paper4-estimation .paper4-estimation-flow span {
+  display: block;
+}
+
+.slidev-layout.paper4-estimation .paper4-estimation-flow span {
+  margin-top: 0.2rem;
+}
+
+.slidev-layout.paper4-estimation .paper4-rate-cards {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-estimation .paper4-rate-cards section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem;
+  border: 1px solid var(--cu-border);
+  border-top: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.paper4-estimation .paper4-rate-cards h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.2rem;
+}
+
+.slidev-layout.paper4-estimation .paper4-rate-cards .katex-display {
+  margin: 0.35rem 0;
+  font-size: 1.15rem;
+}
+
+.slidev-layout.paper4-estimation .paper4-rate-cards p {
+  margin: 0.4rem 0 0;
+  font-size: 0.94rem;
+}
+
+.slidev-layout .paper4-swap {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  min-height: 0;
+}
+
+.slidev-layout .paper4-swap > * {
+  grid-area: 1 / 1;
+}
+
+.slidev-layout.paper4-hero .paper4-hero-visual,
+.slidev-layout.paper4-rates .paper4-rates-plot {
+  flex: 1;
+}
+
+.slidev-layout.paper4-hero .paper4-hero-visual img {
+  max-width: 100%;
+  max-height: 21rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-cross .paper4-cross-message,
+.slidev-layout.paper4-overlap .paper4-overlap-time,
+.slidev-layout.paper4-rates .paper4-rates-message {
+  width: 100%;
+  min-height: 2.9rem;
+}
+
+.slidev-layout.paper4-hero .paper4-hero-message p,
+.slidev-layout.paper4-cross .paper4-cross-message p,
+.slidev-layout.paper4-overlap .paper4-overlap-time p,
+.slidev-layout.paper4-rates .paper4-rates-message p {
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.8rem;
+  border-left: 4px solid var(--cu-gold);
+  font-size: 1.03rem;
+  line-height: 1.3;
+}
+
+.slidev-layout.paper4-cross .paper4-cross-content {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 4.2rem;
+  align-items: center;
+  justify-items: center;
+  gap: 0.3rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-cross .paper4-cross-visual {
+  width: 100%;
+  height: 100%;
+}
+
+.slidev-layout.paper4-cross .paper4-cross-visual img {
+  max-width: 100%;
+  max-height: 20.5rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-cross .paper4-cross-scale {
+  max-width: 100%;
+  max-height: 17rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-overlap .paper4-overlap-fields {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-overlap figure {
+  width: 100%;
+}
+
+.slidev-layout.paper4-overlap figure figcaption {
+  order: -1;
+  margin: 0 0 0.35rem;
+}
+
+.slidev-layout.paper4-overlap .paper4-overlap-img {
+  flex: 1;
+  width: 100%;
+}
+
+.slidev-layout.paper4-overlap .paper4-overlap-img img {
+  max-width: 100%;
+  max-height: 14rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-overlap .paper4-overlap-note {
+  font-size: 0.88rem;
+}
+
+.slidev-layout.paper4-rates .paper4-rates-plot img {
+  max-width: 100%;
+  max-height: 20rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-rates .paper4-rates-message p {
+  font-size: 0.96rem;
+}
+
+.slidev-layout.paper4-rates .fine {
+  max-width: 54rem;
+  align-self: center;
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers section {
+  padding: 0.55rem 0.9rem;
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers section span,
+.slidev-layout.paper4-contrast .paper4-contrast-numbers section strong {
+  display: block;
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers section span {
+  color: var(--cu-heading);
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers section strong {
+  color: var(--cu-gold-accessible);
+  font-size: 3.3rem;
+  line-height: 1.05;
+}
+
+.dark .slidev-layout.paper4-contrast .paper4-contrast-numbers section strong {
+  color: var(--cu-gold);
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers section p,
+.slidev-layout.paper4-contrast .paper4-contrast-numbers > p {
+  margin: 0;
+  font-size: 0.83rem;
+  line-height: 1.3;
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-numbers > p {
+  margin-top: 0.2rem;
+  color: var(--cu-heading);
+}
+
+.slidev-layout.paper4-contrast .paper4-contrast-body > img {
+  max-width: 100%;
+  max-height: 20rem;
+  object-fit: contain;
+}
+
+.slidev-layout.paper4-limits .smoothing-conclusion-list p,
+.slidev-layout.paper4-conclusions .smoothing-conclusion-list p {
+  font-size: 1.13rem;
+}
+
 /* Paper 2 math slides. Minimal gold-accent cards with theme-aware SVG. */
 .slidev-layout.local-math h1 {
   margin-bottom: 0.35rem;
