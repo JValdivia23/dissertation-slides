@@ -427,7 +427,7 @@ class: smoothing-polar-dct
 <div class="polar-dct-detail">
 
 $$
-Y_{\mathrm{az}} = \operatorname{IRFFT}\!\left[\operatorname{RFFT}(X) \odot H_{\mathrm{az}}\right]
+Y_{\mathrm{az}} = \operatorname{IRFFT}\!\left[\operatorname{RFFT}(X) \cdot H_{\mathrm{az}}\right]
 $$
 
 At each range index, the grid width follows $W_{\mathrm{az,grid}}(r) = W_{\mathrm{azimuth}}/(r\Delta\theta)$.
@@ -443,7 +443,7 @@ At each range index, the grid width follows $W_{\mathrm{az,grid}}(r) = W_{\mathr
 <div class="polar-dct-detail">
 
 $$
-Y = \operatorname{IDCT}_{r}\!\left[\operatorname{DCT}_{r}(Y_{\mathrm{az}}) \odot H_{r}\right]
+Y = \operatorname{IDCT}_{r}\!\left[\operatorname{DCT}_{r}(Y_{\mathrm{az}}) \cdot H_{r}\right]
 $$
 
 At each angle, multiply range coefficients by the same fixed-width response.
@@ -454,7 +454,7 @@ At each angle, multiply range coefficients by the same fixed-width response.
 
 </div>
 
-<p class="spectral-summary">Full-circle: periodic azimuth with reflective range; partial-sector: reflective azimuth. Here r is the range index and Δθ is azimuth spacing. The azimuth response is range-dependent, so the intermediate field is required.</p>
+<p class="spectral-summary">Full-circle: periodic azimuth with reflective range; partial-sector: reflective azimuth.</p>
 
 <!--
 About 50 seconds. Polar arrays are indexed as azimuth by range. To hold physical azimuth width approximately fixed, the kernel width in grid units is W_az,grid(r) = W_azimuth / (r delta-theta), where r is the 1-based range index and delta-theta is azimuth spacing in radians. This r is an index convention, distinct from physical range discussed in the smoothing section. Because that width varies with range, H_az is a range-dependent 2D transfer-function array, not one global 2D multiplication. For a full-circle scan the implemented mixed mode is periodic azimuth with reflective range, shown here with RFFT and IRFFT; a partial-sector scan need not wrap and uses reflective DCT in azimuth. Stage 2 filters the intermediate field Y_az along range with reflective DCT-II. Apply the same two-stage operator to masked values, masked squares, and mask, then normalize. Polar effective area is range-dependent: A_polar(r) = W_range times W_az,grid(r). Next: validation, starting with structured 3D flow.
