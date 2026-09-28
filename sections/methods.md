@@ -67,7 +67,6 @@ class: local-math
 <ul class="local-kernel-legend">
   <li><span class="sw k-valid" aria-hidden="true"></span>Valid observation</li>
   <li><span class="sw k-missing" aria-hidden="true"></span>Missing gate</li>
-  <li><span class="sw k-excluded" aria-hidden="true"></span>Excluded value</li>
   <li><span class="sw k-cross-sw" aria-hidden="true">×</span>Suspicious, masked</li>
 </ul>
 </div>
@@ -97,7 +96,7 @@ About 55 seconds. Paper 1 smooths with a kernel-weighted average, but gaps are f
 class: local-math local-mask
 ---
 
-# Normalized spectral convolution
+# Extending spectral smoothing to local statistics
 
 <p class="local-math-lead">Retain the spectral filter; normalize by available support.</p>
 
@@ -132,7 +131,7 @@ $$
 
 <div class="local-math-grid cols-3">
 <section class="local-math-card">
-<h2>Beyond the average</h2>
+<h2>Extended statistics</h2>
 <p>Repeat for squared values to obtain the second moment, variance, and standard deviation.</p>
 </section>
 <section class="local-math-card">
@@ -140,13 +139,13 @@ $$
 <p>DCT for reflective axes; RFFT for periodic axes such as full-circle azimuth.</p>
 </section>
 <section class="local-math-card">
-<h2>Low-support fallback</h2>
-<p>Fill with the same convolution where neighbors suffice, iterate, and keep the original mask as the support record.</p>
+<h2>Gap filling</h2>
+<p>Missing data can be filled with the mean where support is insufficient.</p>
 </section>
 </div>
 
 <!--
-About 55 seconds. We use the same spectral convolution. To exclude missing or suspicious values we build a mask and perform normalized convolution: filter the masked data and the mask, then divide by the filtered mask so excluded locations carry zero weight. Applying the same procedure to squared values gives the second moment, hence variance and standard deviation. For boundaries we use RFFT where periodic behavior is wanted and DCT where reflective behavior is wanted; this distinction is particularly useful on Cartesian grids. Where support is insufficient we fill using the same convolution: gaps are filled as long as enough neighbors give a meaningful average, and filled points then help fill remaining values iteratively. Filling does not create observations: the original mask still records support. Details and stability rules follow.
+About 55 seconds. We use the same spectral convolution. To exclude missing or suspicious values we build a mask and perform normalized convolution: filter the masked data and the mask, then divide by the filtered mask so excluded locations carry zero weight. Applying the same procedure to squared values gives the second moment, hence variance and standard deviation. For boundaries we use RFFT where periodic behavior is wanted and DCT where reflective behavior is wanted; this distinction is particularly useful on Cartesian grids. Filling is only a fallback where support is insufficient: gaps are filled as long as enough neighbors give a meaningful average, and filled points then help fill remaining values iteratively. Filling does not create observations: the original mask still records support. The workflow and the estimators follow.
 -->
 
 ---
@@ -164,174 +163,34 @@ class: local-math local-workflow
 <p class="fine">Reflective Cartesian (DCT-II) 2D example with missing values in gray; zoomed inset shows μ, σ, and N<sub>eff</sub>. The same spectral operator filters masked values, squared values, and mask before normalization. N-dimensional Cartesian and polar forms follow.</p>
 
 <!--
-About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Next: the central estimator.
+About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Next: the estimators in equation form.
 -->
 
 ---
 class: local-math
 ---
 
-# Normalized convolution with missing data
+# Local mean, variance, and support
 
-<p class="local-math-lead">A weighted average over valid observations only.</p>
-
-<div class="local-math-center">
-
-$$
-\mu_i = \frac{\sum_j w_{ij} m_j x_j}{\sum_j w_{ij} m_j}
-$$
-
-</div>
-
-<div class="local-math-grid cols-3">
-<section class="local-math-card">
-<h2>Smooth the values</h2>
-<p>Zero-mask the field, then filter.</p>
-
-$$
-z = x \cdot m
-$$
-
-$$
-\mathcal{S}_g\{z\}
-$$
-
-<p>Example: (2 + 0 + 4) / 3 = 2.</p>
-</section>
-<section class="local-math-card">
-<h2>Smooth the mask</h2>
-<p>Filter where data exist.</p>
-
-$$
-m = 1 \text{ observed},\; 0 \text{ missing}
-$$
-
-$$
-d = \mathcal{S}_g\{m\}
-$$
-
-<p>Example: (1 + 0 + 1) / 3 = 2/3.</p>
-</section>
-<section class="local-math-card">
-<h2>Divide by support</h2>
-<p>Missing gates carry zero weight.</p>
-
-$$
-\mu = \mathcal{S}_g\{z\} / d
-$$
-
-<p>Example: 2 / (2/3) = 3.</p>
-</section>
-</div>
-
-<p class="fine">Three-point boxcar on [2, missing, 4]. Here w<sub>ij</sub> are kernel weights and S<sub>g</sub>{f} = T<sup>−1</sup>{T{f} · H<sub>g</sub>}. Gaussian, boxcar, and discrete boxcar kernels are retained from the prior DCT study.</p>
-
-<!--
-About 50 seconds. Here x is the observed field and m is 1 where valid, 0 where missing. Define z as x times m: retain observed values and put explicit zero at missing locations. S_g is the spectral smoothing operator: transform, multiply by H_g, invert. The denominator d is the filtered mask. The three-point boxcar example is a spatial illustration of the same ratio: filtered values 2, filtered mask 2/3, normalized mean 3. Zero placeholders never enter as zero-valued observations because the denominator removes their weight. Carry this example forward: mean 3, and later variance 1 with effective support 2 of 3 nominal samples.
--->
-
----
-class: local-math
----
-
-# Local variance from the same operator
-
-<p class="local-math-lead">Filter the squared values on a third path, then form the moments.</p>
+<p class="local-math-lead">One shared denominator from the filtered mask.</p>
 
 <div class="local-math-center">
 
 $$
-M_2 = \mathcal{S}_g\{x^2 \cdot m\} / d, \quad \sigma^2 = \max(0, M_2 - \mu^2), \quad \sigma = \sqrt{\sigma^2}
+\begin{aligned}
+d &= \mathcal{S}_g\{m\} \\
+\mu &= \mathcal{S}_g\{x \cdot m\} / d \\
+\sigma^2 &= \mathcal{S}_g\{x^2 \cdot m\} / d - \mu^2, \quad \sigma = \sqrt{\sigma^2} \\
+N_{\mathrm{eff}} &= A\,\mathrm{clip}(d, 0, 1)
+\end{aligned}
 $$
 
 </div>
 
-<div class="local-math-grid cols-3">
-<section class="local-math-card">
-<h2>Mean</h2>
-<p>Values over support.</p>
-
-$$
-\mu = \mathcal{S}_g\{z\} / d
-$$
-
-<p>Example mean: 3.</p>
-</section>
-<section class="local-math-card">
-<h2>Second moment</h2>
-<p>Square before filtering.</p>
-
-$$
-x^2 \cdot m
-$$
-
-<p>Example: (4 + 0 + 16) / 3 divided by 2/3 is 10.</p>
-</section>
-<section class="local-math-card">
-<h2>Spread</h2>
-<p>Center, then clamp and root.</p>
-
-$$
-\sigma^2 = 10 - 9 = 1
-$$
-
-<p>Example std: 1.</p>
-</section>
-</div>
-
-<p class="fine">Population-style local variance within window support, not Bessel-corrected. The clamp handles floating-point cancellation. Since m is binary, z² and x²·m agree.</p>
+<p class="fine">m = 1 where retained, 0 where missing or excluded; S<sub>g</sub>{f} = T<sup>−1</sup>{T{f} · H<sub>g</sub>}. A is nominal window area in grid units. Missing gates carry zero weight. Variance is population-style within window support, clamped for floating-point cancellation. If d &lt; ε = 1e-3, use the prefilled-field fallback; the original mask retains support. Screening such as N<sub>eff</sub> below half of A is a separate analysis choice.</p>
 
 <!--
-About 50 seconds. One spectral operator supplies all three filtered inputs: masked values, masked squared values, and the mask. M_2 is the normalized second moment. Variance is M_2 minus mu squared, clamped at zero before the square root to avoid small negative values from floating-point cancellation. This is population-style variance within window support, not a Bessel-corrected sample variance. The same three-point example continues: M_2 is 10, mu squared is 9, variance is 1, standard deviation is 1. The denominator-floor rule for the mean also applies to M_2. Next: how much data supports each location?
--->
-
----
-class: local-math
----
-
-# Data support and stability
-
-<p class="local-math-lead">The denominator also measures available support.</p>
-
-<div class="local-math-center">
-
-$$
-\rho = \mathrm{clip}(d, 0, 1), \quad N_{\mathrm{eff}} = \rho \cdot A
-$$
-
-</div>
-
-<div class="local-math-grid cols-2">
-<section class="local-math-card">
-<h2>Effective support</h2>
-<p>Filtered mask times window area.</p>
-
-$$
-A = \prod_{d=1}^{D} W_d
-$$
-
-<p>Same example: (2/3) × 3 = 2. Cartesian: product of axis widths. Polar: range-dependent area.</p>
-</section>
-<section class="local-math-card">
-<h2>Low-support fallback</h2>
-<p>Numerical floor with prefilled replacement.</p>
-
-$$
-\mu = \mathcal{S}_g\{z\}/d, \; d \ge \epsilon
-$$
-
-$$
-\mu = \mathcal{S}_g\{\bar{x}\}, \; d \lt \epsilon
-$$
-
-<p>Implementation floor ε is 1e-3. Same rule for the second moment.</p>
-</section>
-</div>
-
-<p class="fine"><em>N</em><sub>eff</sub> is a support diagnostic, not an uncertainty. Screening such as <em>N</em><sub>eff</sub> below half of <em>A</em> is an analysis choice. Prefill uses iterative smoothing with nearest completion, only where support is insufficient.</p>
-
-<!--
-About 50 seconds. Rho is the smoothed mask clipped to [0,1]; N_eff is rho times the local window area A in grid units. The running example gives N_eff of 2 from 3 nominal samples. Keep two thresholds distinct. Epsilon of 1e-3 is the numerical floor in the implementation, with a prefilled-field fallback only in under-supported regions. A screening rule such as excluding estimates below half of nominal area is a separate analysis choice for weakly constrained neighborhoods, because variance and anomaly scores there are weakly constrained regardless of numerical stability. The same floor applies to the second moment. Next: how the spectral operator implements boundaries.
+About 80 seconds. x is the observed field and m is 1 where retained, 0 where missing or excluded. S_g is the spectral smoothing operator: transform, multiply by H_g, invert. The filtered mask d is the shared denominator: normalizing the filtered values gives the mean, and normalizing the filtered squared values gives the second moment for variance and standard deviation. The same denominator measures available support through N_eff. Zero placeholders never enter as zero-valued observations because the denominator removes their weight. The prefilled-field fallback applies only where d is below epsilon; screening weakly supported estimates is a separate analysis choice. Next: how the spectral operator implements boundaries.
 -->
 
 ---
