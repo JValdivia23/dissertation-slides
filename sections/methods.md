@@ -550,7 +550,7 @@ About 70 seconds. This is the original synthetic 3D cyclone-wind experiment, reg
 
 [click] Enlarge a neighborhood and inspect two actual grid points. At the red-ringed injected anomaly, speed is 2.29, local mean 1.41, and local standard deviation 0.20: the residual is 4.48 local standard deviations, exceeding the threshold of 3. At the white-ringed ordinary point, speed is 1.27 and the score is only 0.17, so it is retained. Each horizontal shaded interval is mean plus or minus three local standard deviations, with a center tick at the mean and a marker at observed speed. Here k is the detection-threshold multiplier, distinct from the earlier spectral bin index.
 
-[click] Return to the full volume. Red denotes true detections, orange false alarms, and blue missed injections. This realization has 406 true positives, 39 false positives, and 120 false negatives. The precision 0.92, recall 0.77, and F1 0.84 in the fine text are averages across five realizations, not scores from the displayed subset of arrows. F1 is the harmonic mean of precision and recall, so 0.84 means the k = 3.0 setting balances both. Velocity-vector scoring could add sensitivity to direction changes, but its performance has not been evaluated in this experiment. Next: how changing the speed threshold trades false alarms against misses.
+[click] Return to the full volume. Red denotes true detections, orange false alarms, and blue missed injections. This realization has 406 true positives, 39 false positives, and 120 false negatives. The precision 0.92, recall 0.77, and F1 0.84 in the fine text are averages across five realizations, not scores from the displayed subset of arrows. Velocity-vector scoring could add sensitivity to direction changes, but its performance has not been evaluated in this experiment. Next: how changing the speed threshold trades false alarms against misses.
 -->
 
 ---
@@ -575,6 +575,7 @@ $$
 
 <!--
 About 40 seconds. Threshold sweep over k from 2.0 to 6.0, mean plus/minus std across seeds. Lower k finds more with more false alarms; higher k is cleaner but misses more. Mean F1 peaks at k = 3.0 within the tested sweep. Recommended practice is iterative: compute local statistics, flag with the z-score criterion, exclude flagged points from the mask, and recompute so outliers do not inflate local spread. Window width, support, and boundary mode also affect screening. Transition from synthetic winds to real radar.
+F1 is the harmonic mean of precision and recall, so 0.84 means the k = 3.0 setting balances both.
 -->
 
 ---
