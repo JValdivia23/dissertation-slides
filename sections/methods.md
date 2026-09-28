@@ -86,7 +86,7 @@ class: local-math
 </section>
 </div>
 
-<p class="local-math-lead">How can the kernel average use retained values only, while also reporting variability, support, and suitable boundaries?</p>
+<p class="local-math-lead">How can the kernel average use retained values only, while also reporting variability, and suitable boundaries?</p>
 
 <!--
 About 55 seconds. Paper 1 smooths with a kernel-weighted average, but gaps are filled before filtering and those filled values then contribute to the average. Once we are computing a local average, we can also compute variance and standard deviation to describe spread within the same neighborhood, and extend the method beyond a two-dimensional polar scan to Cartesian and N-dimensional grids. The problem is that inside the kernel some locations are missing and others were excluded by quality control as suspicious. We want local statistics from retained values, a measure of available support, and boundary handling suited to each grid. Normalized convolution is the established foundation; the spectral integration and safeguards are the extension.
@@ -165,9 +165,9 @@ $$
 <svg class="local-card-illustration" viewBox="0 0 240 82" role="img" aria-label="Left: a signal reflects at a mirrored boundary. Right: the signal wraps from the end back to the beginning at a periodic boundary">
   <path class="diagram-boundary-data" d="M18 55 36 25 54 43 66 43m78 12 18-30 18 18 12 0" />
   <path class="diagram-mirror" d="M65 13v62m4-62v62" />
-  <path class="diagram-boundary-copy" d="M68 43 80 43 98 25 116 55m76-12 12 12 18-30" />
-  <path class="diagram-periodic-seam" d="M133 22v53m59-53v53" />
-  <path class="diagram-wrap" d="M193 17C186 1 147 1 136 17m0 0 7-3m-7 3 6 5" />
+  <path class="diagram-boundary-copy" d="M68 43 80 43 98 25 116 55 M128 43 140 43 M196 55 214 25 232 43" />
+  <path class="diagram-periodic-seam" d="M142 20v53m52-53v53" />
+
 </svg>
 <p>DCT for reflective axes; RFFT for periodic axes such as full-circle azimuth.</p>
 </section>
