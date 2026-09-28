@@ -194,16 +194,14 @@ About 35 seconds. The threshold was chosen to balance noise and coherent detecti
 -->
 
 ---
-class: smoothing-conclusions population-conclusions
+class: smoothing-conclusions population-conclusions conclusions-bullets
 ---
 
 # Project 3: Conclusions
 
-<div class="smoothing-conclusion-list">
-  <section><p>Set 1 showed an approximately 1.7-hour population sequence: initiation, maturity, dissipation.</p></section>
-  <section><p>Counts fell as mean boundary area rose during maturity: adjacent features clustered.</p></section>
-  <section><p>Mean Z<sub>DR</sub> fell early, then rose, consistent with later particle sedimentation and sorting.</p></section>
-</div>
+- Set 1 showed an approximately 1.7-hour population sequence: initiation, maturity, dissipation.
+- Counts fell as mean boundary area rose during maturity: adjacent features clustered.
+- Mean Z<sub>DR</sub> fell early, then rose, consistent with later particle sedimentation and sorting.
 
 <p class="population-handoff">A selected cell track connects this population analysis to the three-dimensional fall-streak study.</p>
 

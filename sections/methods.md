@@ -625,25 +625,18 @@ About 30 seconds. The spectral-statistics implementation is packaged as dct-tool
 -->
 
 ---
-class: smoothing-conclusions
+class: smoothing-conclusions conclusions-bullets
 ---
 
 # Project 2: Conclusions
 
-<div class="smoothing-conclusion-list">
-  <section>
-    <p>Spectral normalized convolution produces local statistics from incomplete grids.</p>
-  </section>
-  <section>
-    <p>The transfer function separability extends the same approach to N-dimensional Cartesian and mixed-boundary polar grids.</p>
-  </section>
-  <section>
-    <p>The examples demonstrate use cases, where global moments fail, and polar smoothing on incomplete radar data.</p>
-  </section>
-</div>
+- Compute local statistics in incomplete fields.
+- Work in N-dimensional Cartesian or 2D polar coordinates.
+- Combine boundary conditions across dimensions, and mix kernel types per dimension.
+- Potential applications go beyond radar — satellite observations, numerical simulations, even medical 3D-flow measurements.
 
 <!--
-About 40 seconds. Suggested delivery: “This extends the smoothing method to local statistics that account for missing observations and scan geometry.” The claim is the capability: one spectral normalized-convolution operator gives local mean, variability, and support without interpolating first; the transform choice makes boundary handling explicit; and separability carries it to N-dimensional Cartesian and mixed-boundary polar grids. The three examples demonstrate uses, not final validations: edge-safe smoothing, neighborhood screening where global moments fail, and polar smoothing on gappy radar. Results use dct_toolkit at commit 9d3b60e. Future work should test more broadly against alternative baselines, expand sensitivity analyses, and evaluate non-binary certainty. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
+About 45 seconds. Suggested delivery: “So what are the conclusions of this work? With the current implementation of dct-toolkit you can do the following.” First, compute local statistics in incomplete fields. Second, work in N-dimensional Cartesian or 2D polar coordinates. Third, combine boundary conditions across dimensions — periodic or reflective azimuth with reflective range in polar — and mix kernel types per dimension. Fourth, these potential applications go beyond radar signal processing: satellite observations, numerical simulations, even medical studies measuring 3D flows inside the body. Results in this talk used version 0.5.0 at commit 9d3b60e; per-axis kernel types are a 0.6.0 feature. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
 -->
 
 ---

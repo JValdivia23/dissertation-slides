@@ -328,16 +328,14 @@ About 35 seconds. This is one selected cell in one winter storm, not a populatio
 -->
 
 ---
-class: smoothing-conclusions paper4-conclusions
+class: smoothing-conclusions paper4-conclusions conclusions-bullets
 ---
 
 # Project 4: Conclusions
 
-<div class="smoothing-conclusion-list">
-  <section><p>Cell-relative multi-radar observations follow an evolving three-dimensional CTGC and fall streak.</p></section>
-  <section><p>The southwestward signature connects with precipitation already present in the underlying cloud.</p></section>
-  <section><p>Estimated snow and rain rates are higher in persistent-enhancement footprints, without isolating the tracked cell's contribution.</p></section>
-</div>
+- Cell-relative multi-radar observations follow an evolving three-dimensional CTGC and fall streak.
+- The southwestward signature connects with precipitation already present in the underlying cloud.
+- Estimated snow and rain rates are higher in persistent-enhancement footprints, without isolating the tracked cell's contribution.
 
 <!--
 About 30 seconds. Summarize the question rather than re-delivering every figure: “Using the Paper 3 track and the methods developed in the first two papers, we built a moving three-radar view of a selected cloud-top cell. Its fall-streak anomaly connects with existing mid-cloud and lower-level precipitation. The footprints have higher estimated snow and rain rates, but those contrasts are not the amount produced by this one cell.” The measured connection is consistent with seeder–feeder growth, not direct evidence of particle trajectories. This manuscript is submitted to GRL and not yet accepted. Transition to the dissertation-level synthesis without adding a new number.
