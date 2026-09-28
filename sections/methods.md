@@ -624,18 +624,18 @@ class: smoothing-conclusions
 
 <div class="smoothing-conclusion-list">
   <section>
-    <p>Spectral filtering estimates local averages and variability from incomplete data.</p>
+    <p>Spectral normalized convolution produces local statistics from incomplete grids.</p>
   </section>
   <section>
-    <p>Matching boundary conditions to the grid reduces edge artifacts.</p>
+    <p>The transfer function separability extends the same approach to N-dimensional Cartesian and mixed-boundary polar grids.</p>
   </section>
   <section>
-    <p>Local statistics identify anomalies, but interpretation depends on available data.</p>
+    <p>The examples demonstrate uses cases, where global moments fail, and polar smoothing on incomplete radar data.</p>
   </section>
 </div>
 
 <!--
-About 35 seconds. Suggested delivery: “This extends the smoothing method to local statistics that account for missing observations and scan geometry.” Results use dct_toolkit at commit 9d3b60e. Future work should test more broadly against alternative baselines, expand sensitivity analyses, and evaluate non-binary certainty. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
+About 40 seconds. Suggested delivery: “This extends the smoothing method to local statistics that account for missing observations and scan geometry.” The claim is the capability: one spectral normalized-convolution operator gives local mean, variability, and support without interpolating first; the transform choice makes boundary handling explicit; and separability carries it to N-dimensional Cartesian and mixed-boundary polar grids. The three examples demonstrate uses, not final validations: edge-safe smoothing, neighborhood screening where global moments fail, and polar smoothing on gappy radar, each within the stated limits. Results use dct_toolkit at commit 9d3b60e. Future work should test more broadly against alternative baselines, expand sensitivity analyses, and evaluate non-binary certainty. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, introduced on the next slide. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
 -->
 
 ---
