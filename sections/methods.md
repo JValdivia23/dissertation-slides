@@ -461,29 +461,96 @@ About 50 seconds. Polar arrays are indexed as azimuth by range. To hold physical
 -->
 
 ---
-class: figure-slide
+class: outlier-animation
 ---
 
 # Outlier detection in a 3D wind field
 
-<p class="local-criterion">Flag a wind-speed residual larger than k local standard deviations.</p>
+<p class="outlier-lead">Flag a wind-speed residual larger than k local standard deviations.</p>
 
-<p class="local-criterion">
+<div class="outlier-stages" aria-label="Animation stages">
+  <span v-for="(label, index) in outlierStages" :key="label" :class="{ active: Math.min(clicks, 4) === index }">{{ label }}</span>
+</div>
+
+<div class="outlier-body">
+  <div class="outlier-visual">
+    <div class="outlier-canvas" role="img" aria-label="Click-stepped 3D synthetic wind example: noise and injected anomalies, local-mean circulation, a close-up of two actual speed scores, then true detections, false alarms, and missed anomalies.">
+      <CuManim :steps="4" :width="1000" :height="275" :construct="outlierDetection" />
+      <svg v-if="clicks === 0" class="outlier-first-frame" viewBox="0 0 1000 560" aria-hidden="true">
+        <path v-for="(edge, i) in outlierPreview.edges" :key="`edge-${i}`" :d="edge" fill="none" stroke="#52667b" stroke-width="1.5" opacity="0.55" />
+        <path v-for="(arrow, i) in outlierPreview.arrows" :key="`arrow-${i}`" :d="arrow" fill="none" stroke="#85bec8" stroke-width="2" opacity="0.8" />
+      </svg>
+    </div>
+    <p class="outlier-view-caption">{{ clicks === 3 ? 'Enlarged neighborhood · wind speed in arbitrary units' : 'Sparse 3D rendering · statistics use all 165,888 grid points' }}</p>
+  </div>
+  <div class="outlier-explanation">
+    <div class="outlier-equation">
 
 $$
 |\,\|v\| - \mu_{\|v\|}\,| > k\,\sigma_{\|v\|}
 $$
 
-</p>
-
-<div class="fig">
-  <img src="../figures/local-stats-outliers.png" alt="Synthetic cyclone-like wind field with injected anomalies, the local-mean estimate, and detected outliers at threshold 3.0" />
+</div>
+    <div v-if="clicks === 0" class="outlier-stage-copy">
+      <h2>Synthetic circulation</h2>
+      <p>18 × 96 × 96 grid</p>
+      <p>Known wind field and anomaly locations.</p>
+    </div>
+    <div v-else-if="clicks === 1" class="outlier-stage-copy">
+      <h2>Observed wind</h2>
+      <p>Noise: σ = 0.14 per component.</p>
+      <p><i class="outlier-key" :style="{ background: outlierColors.tp }"></i>Injected anomalies: 526 points.</p>
+      <p class="outlier-secondary">Random vector perturbations of amplitude 1.25–2.25.</p>
+    </div>
+    <div v-else-if="clicks === 2" class="outlier-stage-copy">
+      <h2>Local reference</h2>
+      <p>Reflective DCT · widths (3, 7, 7)</p>
+      <p>Estimate local mean and standard deviation of <strong>wind speed</strong>.</p>
+      <p class="outlier-secondary">Arrows show the local-mean vector field.</p>
+    </div>
+    <div v-else-if="clicks === 3" class="outlier-score-cards">
+      <section v-for="(sample, i) in [outlierData.focus, outlierData.ordinary]" :key="i" :class="{ flagged: i === 0 }">
+        <h2><i class="outlier-key" :style="{ background: i === 0 ? outlierColors.tp : outlierColors.ordinary }"></i>{{ i === 0 ? 'Injected anomaly' : 'Ordinary point' }}</h2>
+        <p>Speed <strong>{{ sample.speed.toFixed(2) }}</strong> · μ {{ sample.meanSpeed.toFixed(2) }} · σ {{ sample.stdSpeed.toFixed(2) }}</p>
+        <div class="outlier-band" aria-hidden="true">
+          <span class="outlier-interval" :style="{ left: `${100 * (sample.meanSpeed - 3 * sample.stdSpeed) / 2.6}%`, width: `${100 * 6 * sample.stdSpeed / 2.6}%` }"></span>
+          <span class="outlier-mean-tick" :style="{ left: `${100 * sample.meanSpeed / 2.6}%` }"></span>
+          <span class="outlier-speed-tick" :style="{ left: `${100 * sample.speed / 2.6}%` }"></span>
+        </div>
+        <p class="outlier-score-result">{{ sample.score.toFixed(2) }}σ {{ i === 0 ? '> 3σ → flagged' : '< 3σ → retained' }}</p>
+      </section>
+      <p class="outlier-secondary">Shaded interval: μ ± 3σ · marker: observed speed</p>
+    </div>
+    <div v-else class="outlier-stage-copy outlier-results">
+      <h2>Detection at k = 3</h2>
+      <p><i class="outlier-key" :style="{ background: outlierColors.tp }"></i><strong>406</strong> true detections</p>
+      <p><i class="outlier-key" :style="{ background: outlierColors.fp }"></i><strong>39</strong> false alarms</p>
+      <p><i class="outlier-key" :style="{ background: outlierColors.fn }"></i><strong>120</strong> missed anomalies</p>
+      <p class="outlier-secondary">Full-volume counts for this realization.</p>
+    </div>
+  </div>
 </div>
 
 <p class="fine">Synthetic cyclone-like wind, 18 × 96 × 96, windows (3, 7, 7). At k = 3.0: precision 0.92, recall 0.77, F1 0.84, mean over 5 seeds.</p>
+<p class="fine outlier-vector-note">Velocity-vector scoring may improve sensitivity to directional anomalies; this was not evaluated here.</p>
+
+<script setup>
+import { useNav } from '@slidev/client'
+import { outlierDetection, outlierPreview, outlierData, outlierStages, outlierColors } from '../scenes/outliers'
+
+const { clicks } = useNav()
+</script>
 
 <!--
-About 50 seconds. An idealized smooth 3D cyclone-like wind with Gaussian perturbations of sigma 0.14 per component, plus sparse injected vector anomalies of amplitude 1.25 to 2.25 as ground truth at 0.3% of grid points. Scoring uses wind-speed residuals against local statistics: flag where the absolute wind-speed residual exceeds k times local sigma. Panel (a) shows injected anomalies in red against structured flow; (b) shows the local-mean field; (c) separates true positives, false positives, and missed points at k = 3.0. At k = 3.0, mean precision is about 0.92, recall about 0.77, F1 about 0.84. Signed-component global averages are near zero while valid shear keeps global spread large, which motivates neighborhood re-centering and re-scaling; this test reports local-detector skill against known anomalies. This is a synthetic validation, not storm data. Next: how the threshold trades false alarms against misses.
+About 70 seconds. This is the original synthetic 3D cyclone-wind experiment, regenerated with the paper's code and random-number sequence, using dct_toolkit at commit 9d3b60e. The displayed realization uses seed 20260414. The animation depicts processing stages of one static field, not a time-evolving storm. Arrows are sparsely sampled for visibility; all statistics and detection counts use the full 18 × 96 × 96 grid. The projection compresses height for legibility, and the enlarged neighborhood is a display crop, not a truncated kernel.
+
+[click] Add the original Gaussian perturbations, sigma 0.14 per component, and sparse injected vector anomalies with random 3D direction and amplitude 1.25 to 2.25. Injection probability is 0.3%; this realization contains 526 injected points. Red indicates known injection locations at this stage.
+
+[click] Show the local-mean vector field estimated with reflective DCT normalized convolution and Gaussian widths (3, 7, 7), in z, y, x order. The detector separately computes the mean and standard deviation of wind SPEED. The mean speed is not the magnitude of the mean vector. In this complete-data experiment the support mask is all ones. The estimates include the noisy observations and injected anomalies; this is the original single-pass detector, not an iterative re-masking experiment.
+
+[click] Enlarge a neighborhood and inspect two actual grid points. At the red-ringed injected anomaly, speed is 2.29, local mean 1.41, and local standard deviation 0.20: the residual is 4.48 local standard deviations, exceeding the threshold of 3. At the white-ringed ordinary point, speed is 1.27 and the score is only 0.17, so it is retained. Each horizontal shaded interval is mean plus or minus three local standard deviations, with a center tick at the mean and a marker at observed speed. Here k is the detection-threshold multiplier, distinct from the earlier spectral bin index.
+
+[click] Return to the full volume. Red denotes true detections, orange false alarms, and blue missed injections. This realization has 406 true positives, 39 false positives, and 120 false negatives. The precision 0.92, recall 0.77, and F1 0.84 in the fine text are averages across five realizations, not scores from the displayed subset of arrows. F1 is the harmonic mean of precision and recall, so 0.84 means the k = 3.0 setting balances both. Velocity-vector scoring could add sensitivity to direction changes, but its performance has not been evaluated in this experiment. Next: how changing the speed threshold trades false alarms against misses.
 -->
 
 ---
