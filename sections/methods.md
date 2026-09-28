@@ -224,19 +224,20 @@ class: local-math
 
 $$
 \begin{aligned}
-d &= \mathcal{S}_g\{m\} \\
-\mu &= \mathcal{S}_g\{x \cdot m\} / d \\
-\sigma^2 &= \mathcal{S}_g\{x^2 \cdot m\} / d - \mu^2, \quad \sigma = \sqrt{\sigma^2} \\
-N_{\mathrm{eff}} &= A\,\mathrm{clip}(d, 0, 1)
+\rho &= \mathcal{S}_g\{m\} \\
+\mu &= \mathcal{S}_g\{x \cdot m\} / \rho \\
+\sigma^2 &= \mathcal{S}_g\{x^2 \cdot m\} / \rho - \mu^2, \quad \sigma = \sqrt{\sigma^2} \\
+N_{\mathrm{eff}} &= A\,\rho \\
+A &= \prod_d W_d, \quad A_{\mathrm{polar}}(r) = W_{\mathrm{range}} \cdot W_{\mathrm{az,grid}}(r)
 \end{aligned}
 $$
 
 </div>
 
-<p class="fine">m = 1 where retained, 0 where missing or excluded; S<sub>g</sub>{f} = T<sup>−1</sup>{T{f} · H<sub>g</sub>}. A is nominal window area in grid units. Missing gates carry zero weight. Variance is population-style within window support, clamped for floating-point cancellation. If d &lt; ε = 1e-3, use the prefilled-field fallback; the original mask retains support. Screening such as N<sub>eff</sub> below half of A is a separate analysis choice.</p>
+<p class="fine">m = 1 where retained, 0 where missing or excluded; S<sub>g</sub>{f} = T<sup>−1</sup>{T{f} · H<sub>g</sub>}. ρ is the retained fraction from the smoothed mask, so N<sub>eff</sub> is the effective number of contributing grid cells. A is the nominal window area in grid units: the product of axis widths on Cartesian grids, and range-dependent A<sub>polar</sub>(r) = W<sub>range</sub> · W<sub>az,grid</sub>(r) on polar grids. Missing gates carry zero weight. Variance is population-style within window support. If ρ &lt; ε = 1e-3, use the prefilled-field fallback; the original mask retains support. Screening such as N<sub>eff</sub> below half of A is a separate analysis choice.</p>
 
 <!--
-About 80 seconds. x is the observed field and m is 1 where retained, 0 where missing or excluded. S_g is the spectral smoothing operator: transform, multiply by H_g, invert. The filtered mask d is the shared denominator: normalizing the filtered values gives the mean, and normalizing the filtered squared values gives the second moment for variance and standard deviation. The same denominator measures available support through N_eff. Zero placeholders never enter as zero-valued observations because the denominator removes their weight. The prefilled-field fallback applies only where d is below epsilon; screening weakly supported estimates is a separate analysis choice. Next: how the spectral operator implements boundaries.
+About 80 seconds. x is the observed field and m is 1 where retained, 0 where missing or excluded. S_g is the spectral smoothing operator: transform, multiply by H_g, invert. The filtered mask ρ is the shared denominator: normalizing the filtered values gives the mean, and normalizing the filtered squared values gives the second moment for variance and standard deviation. The same denominator measures available support through N_eff: ρ is the retained fraction, and A is the nominal window area — the product of axis widths on Cartesian grids, range-dependent on polar grids — so N_eff reads as the effective number of contributing grid cells. Zero placeholders never enter as zero-valued observations because the denominator removes their weight. The prefilled-field fallback applies only where ρ is below epsilon; screening weakly supported estimates is a separate analysis choice. Next: how the spectral operator implements boundaries.
 -->
 
 ---
