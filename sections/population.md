@@ -362,38 +362,60 @@ About 40 seconds. This looping animation from COMPSII slide 26 shows the full-do
 class: population-trends population-maps
 ---
 
-# Set 1: structure and polarimetric evolution
+# Set 1: structure evolution
 
 <p class="population-lead">The approximately 1.7-hour observed population is divided into initiation, mature, and dissipation stages.</p>
 
 <div class="population-trends-figure">
-  <div v-click.hide="1" class="population-map-pair">
-    <figure><img src="../figures/population-map-initiation.png" alt="Paper Figure 12(a), 02:30 UTC: many small CTGC boundaries, mostly blue or cyan area classes, west of DOW6" /><figcaption>02:30 · many small features</figcaption></figure>
-    <span aria-hidden="true">→</span>
-    <figure><img src="../figures/population-map-mature.png" alt="Paper Figure 12(c), 03:12 UTC: fewer, larger contiguous CTGC boundaries, including red and orange area classes" /><figcaption>03:12 · larger contiguous features</figcaption></figure>
+  <div v-click.hide="1" class="population-map-scale-pair">
+    <div class="population-map-pair">
+      <figure><img src="../figures/population-map-initiation.png" alt="Paper Figure 12(a), 02:30 UTC: many small CTGC boundaries, mostly blue or cyan area classes, west of DOW6" /><figcaption>02:30 · many small features</figcaption></figure>
+      <span aria-hidden="true">→</span>
+      <figure><img src="../figures/population-map-mature.png" alt="Paper Figure 12(c), 03:12 UTC: fewer, larger contiguous CTGC boundaries, including red and orange area classes" /><figcaption>03:12 · larger contiguous features</figcaption></figure>
+    </div>
+    <img class="population-area-scale" src="../figures/population-area-scale.png" alt="Paper Figure 12 contour-area scale in square kilometers: 0–1, 1–2, 2–3, 3–5, 5–10, 10–20, 20–40, and 40 or more; warmer colors indicate larger area" />
   </div>
-  <img v-click="[1,2]" src="../figures/population-count-area.png" alt="Paper Figure 13(a): Set 1 CTGC count peaks near 02:30 UTC, while mean contour area grows into the mature stage, then the number declines" />
-  <img v-click="2" src="../figures/population-zdr.png" alt="Paper Figure 13(c): Set 1 mean differential reflectivity decreases during initiation and then rises through mature and dissipation stages" />
+  <img v-click="1" src="../figures/population-count-area.png" alt="Paper Figure 13(a): Set 1 CTGC count peaks near 02:30 UTC, while mean contour area grows into the mature stage, then the number declines" />
 </div>
 
 <div class="population-trends-message">
   <p v-click.hide="1"><strong>Small boundaries become larger contiguous clusters.</strong> A large boundary can contain several cells.</p>
-  <p v-click="[1,2]"><strong>Count peaks early.</strong> During maturity, count falls while mean contiguous area rises; later the count and coverage decline.</p>
-  <p v-click="2"><strong>Mean Z<sub>DR</sub> falls, then rises.</strong> The later increase is consistent with differential sedimentation and particle sorting in the cloud-top layer.</p>
+  <p v-click="1"><strong>Count peaks early.</strong> During maturity, count falls while mean contiguous area rises; later the count and coverage decline.</p>
 </div>
 
 <div class="population-trends-source fine">
-  <p v-click.hide="1">Paper Figure 12(a, c), 42 minutes apart. Warmer colors = larger contour area; insets show Set 1 blue and Set 2 red centroids.</p>
-  <p v-click="[1,2]">Paper Figure 13(a), Set 1: red = count; blue = mean boundary area; green dashed = area mode; gray = 10th–90th percentile.</p>
-  <p v-click="2">Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. Particle habits are inferred.</p>
+  <p v-click.hide="1">Paper Figure 12(a, c), 42 minutes apart. Color = contour area in km² (right); insets show Set 1 blue and Set 2 red centroids.</p>
+  <p v-click="1">Paper Figure 13(a), Set 1: red = count; blue = mean boundary area; green dashed = area mode; gray = 10th–90th percentile.</p>
 </div>
 
 <!--
-About 1 minute 40 seconds. Begin with the two Figure 12 maps previously shown on their own slide: initiation at 02:30 and mid-maturity at 03:12, 42 minutes apart. The black star marks DOW6; warmer colors indicate larger contiguous contour areas. Many small, separate enhancements become fewer, larger patches, some tens of square kilometers. The insets classify centroids into Set 1 (blue) and Set 2 (red); focus on the northern/earlier Set 1. Contiguous complexes up to approximately 60 km² do not mean an isolated 1–2 km turret grew to 60 km². A contour can connect multiple adjacent cells, so the maps show population organization and merging, with sensitivity to segmentation.
+About 1 minute. The two Figure 12 maps show initiation at 02:30 and mid-maturity at 03:12, 42 minutes apart. The black star marks DOW6; the scale at right gives the contour-area classes in square kilometers, with warmer colors indicating larger contiguous areas. Many small, separate enhancements become fewer, larger patches, some tens of square kilometers. The insets classify centroids into Set 1 (blue) and Set 2 (red); focus on the northern/earlier Set 1. Contiguous complexes up to approximately 60 km² do not mean an isolated 1–2 km turret grew to 60 km². A contour can connect multiple adjacent cells, so the maps show population organization and merging, with sensitivity to segmentation.
 
-[click] Figure 13(a), cropped to Set 1, quantifies this evolution. The red curve is detected feature count and the blue curve is mean contour area; the dashed green is the area mode and gray shading the 10th–90th percentile. Set 1 begins near 02:18 UTC; count rises sharply around 02:30–02:36, then declines during the mature stage while mean area grows, consistent with merging or clustering. During dissipation from roughly 03:24 to 04:00 the count and total coverage fall, although the mean area of surviving features does not necessarily decline monotonically because smaller features disappear. The stages are defined mainly from the count/area evolution. The chapter text and table place the first transition near 02:30, while the plotted dashed divider appears closer to 02:36; avoid presenting its minute as exact. Dissipation begins near 03:24. The chart's last plotted label is 03:54, while the study period extends to 04:00. This is about 1.7 hours of collective activity, not a mean individual-cell lifetime.
+[click] Figure 13(a), cropped to Set 1, quantifies this evolution. The red curve is detected feature count and the blue curve is mean contour area; the dashed green is the area mode and gray shading the 10th–90th percentile. Set 1 begins near 02:18 UTC; count rises sharply around 02:30–02:36, then declines during the mature stage while mean area grows, consistent with merging or clustering. During dissipation from roughly 03:24 to 04:00 the count and total coverage fall, although the mean area of surviving features does not necessarily decline monotonically because smaller features disappear. The stages are defined mainly from the count/area evolution. The chapter text and table place the first transition near 02:30, while the plotted dashed divider appears closer to 02:36; avoid presenting its minute as exact. Dissipation begins near 03:24. The chart's last plotted label is 03:54, while the study period extends to 04:00. This is about 1.7 hours of collective activity, not a mean individual-cell lifetime. Polarimetry next adds the microphysical dimension.
+-->
 
-[click] Figure 13(c), now the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Polarimetry supports this inference but does not directly identify particle habit. Reflectivity is relatively stable after initiation and rho_HV stays high; these additional plots remain in the full Figure 13. Do not call the contour-size increase growth of every individual cell. Move to the explicitly conceptual synthesis.
+---
+class: population-trends
+---
+
+# Set 1: polarimetric evolution
+
+<p class="population-lead">Mean differential reflectivity falls early, then rises through maturity and dissipation.</p>
+
+<div class="population-trends-figure">
+  <img src="../figures/population-zdr.png" alt="Paper Figure 13(c): Set 1 mean differential reflectivity decreases during initiation and then rises through mature and dissipation stages" />
+</div>
+
+<div class="population-trends-message">
+  <p><strong>Mean Z<sub>DR</sub> falls, then rises.</strong> The later increase is consistent with differential sedimentation and particle sorting in the cloud-top layer.</p>
+</div>
+
+<div class="population-trends-source fine">
+  <p>Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. Particle habits are inferred.</p>
+</div>
+
+<!--
+About 40 seconds. Figure 13(c) shows the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Polarimetry supports this inference but does not directly identify particle habit. Reflectivity is relatively stable after initiation and rho_HV stays high; these additional plots remain in the full Figure 13. Do not call the contour-size increase growth of every individual cell. Move to the explicitly conceptual synthesis.
 -->
 
 ---
