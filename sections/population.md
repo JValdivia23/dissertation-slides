@@ -158,7 +158,6 @@ class: population-identification
           <g v-else>
             <text x="830" y="270">One value per (r, θ)</text>
             <text x="830" y="307">Horizontal CTGC footprint</text>
-            <text x="830" y="399" class="ctgc-muted">Gray: no in-layer samples</text>
           </g>
           <rect x="715" y="466" width="240" height="16" fill="url(#ctgc-field-scale)" />
           <text x="715" y="512">{{ clicks === 5 ? '−4' : '0' }}</text>
