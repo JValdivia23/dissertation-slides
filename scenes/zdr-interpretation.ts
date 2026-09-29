@@ -30,6 +30,16 @@ export const zdrParticles = {
 }
 const CLUSTER_OFFSETS: Point[] = [[-.48, .3, 0], [.47, .15, 0], [0, -.45, 0]]
 
+// Orthogonal electric-field directions in 3D. Both signals propagate along X;
+// H oscillates along Y and V along Z. Project into the existing 2D Manim frame
+// rather than introducing a separate 3D scene / camera or another click.
+export const zdrWaveAxes = {
+  propagation: [1, 0, 0] as Point,
+  horizontal: [0, 1, 0] as Point,
+  vertical: [0, 0, 1] as Point,
+  amplitude: .26,
+}
+
 function mix(a: number, b: number, alpha: number) { return a + (b - a) * alpha }
 function clamp(value: number) { return Math.max(0, Math.min(1, value)) }
 function rectangle(x: number, y: number, width: number, height: number): Point[] {
@@ -59,15 +69,51 @@ function shape(points: Point[], color: string, opacity = 1, width = 2, fill = 0)
   return { points, color, opacity, width, fill }
 }
 
-function comparisonShapes(example: typeof EXAMPLES[number], opacity: number, revealed: number): Shape[] {
+function dish(): Point[] {
+  // A smooth right-facing parabola; its vertex remains attached to the mast.
+  return Array.from({ length: 33 }, (_, i) => {
+    const t = -1 + i / 16
+    return [-4.05 + .15 * t * t, .2 + .5 * t, 0]
+  })
+}
+
+function projectWave(k: number, horizontal: number, vertical: number, centerY: number): Point {
+  return [-3.35 + 1.08 * k + .3 * horizontal, centerY + .08 * k - .4 * horizontal + vertical, 0]
+}
+
+export function zdrWaveGeometry(phase = 0) {
+  function wave(horizontal: boolean): Point[] {
+    const centerY = horizontal ? .05 : .65
+    const points = Array.from({ length: 97 }, (_, i) => {
+      const k = i / 96
+      // Taper to a common baseline at either end. The shared phase advances
+      // crests toward +X without changing the transmitted wave amplitudes.
+      const field = i === 0 || i === 96 ? 0 : zdrWaveAxes.amplitude * Math.sin(Math.PI * k) ** 2 * Math.sin(4 * Math.PI * k - phase)
+      return projectWave(k, horizontal ? field : 0, horizontal ? 0 : field, centerY)
+    })
+    const end = projectWave(1, 0, 0, centerY)
+    // Arrowheads follow propagation, not the instantaneous E-field slope.
+    return [...points, ...arrow(projectWave(.86, 0, 0, centerY), end, .13).slice(2)]
+  }
+  function plane(horizontal: boolean): Point[] {
+    const centerY = horizontal ? .05 : .65
+    const offset = zdrWaveAxes.amplitude
+    return [[0, -offset], [1, -offset], [1, offset], [0, offset], [0, -offset]]
+      .map(([k, field]) => projectWave(k, horizontal ? field : 0, horizontal ? 0 : field, centerY))
+  }
+  return { horizontal: wave(true), vertical: wave(false), horizontalPlane: plane(true), verticalPlane: plane(false) }
+}
+
+function comparisonShapes(example: typeof EXAMPLES[number], opacity: number, revealed: number, phase = 0): Shape[] {
   const { horizontal: h, vertical: v, white, grid, aggregate: gold } = zdrColors
   const particle = ellipse(-.7, .35, example.rx, example.ry)
+  const waves = zdrWaveGeometry(phase)
   return [
-    // Dish, mast, base, and a diagram connector to the magnified particle view.
-    shape([[-4.4, .65, 0], [-4.25, .35, 0], [-3.95, .15, 0], [-3.65, .12, 0]], white, opacity, 3),
-    shape([[-4.4, .65, 0], [-3.65, .12, 0], [-3.75, .7, 0], [-4.25, .35, 0]], gold, opacity, 2),
+    // Two feed-support arms connect the dish rim ends, not its middle.
+    shape(dish(), white, opacity, 3),
+    shape([[-3.9, .7, 0], [-3.6, .2, 0], [-3.9, -.3, 0]], gold, opacity, 2.5),
     shape([[-4.05, .2, 0], [-4.05, -.4, 0], [-4.45, -.4, 0], [-3.65, -.4, 0]], white, opacity, 3),
-    shape(arrow([-3.35, .35, 0], [-2.45, .35, 0]), gold, .65 * opacity, 2),
+    shape(arrow(projectWave(0, 0, 0, .35), projectWave(1, 0, 0, .35)), grid, .5 * opacity, 1.5),
     // Electric-field directions lie in the plane perpendicular to propagation.
     shape(arrow([-2.1, -1.2, 0], [.6, -1.2, 0]), h, .9 * opacity, 2.5),
     shape(arrow([-2.1, -1.2, 0], [-2.1, 1.7, 0]), v, .9 * opacity, 2.5),
@@ -79,6 +125,15 @@ function comparisonShapes(example: typeof EXAMPLES[number], opacity: number, rev
     // from the cartoon shape. Keep nonzero fill geometry even when invisible.
     shape(rectangle(1.65, .48, Math.max(.001, example.h), .34), h, revealed * opacity, 0, 1),
     shape(rectangle(1.65, -.52, Math.max(.001, example.v), .34), v, revealed * opacity, 0, 1),
+    shape(ellipse(-3.6, .2, .04, .04), gold, opacity, 0, 1),
+    // The planes show why the foreshortened H waveform is flatter than V.
+    // Vertical offsets separate the glyphs for legibility, not separate rays.
+    shape(waves.horizontalPlane, h, .05 * opacity, 0, 1),
+    shape(waves.horizontalPlane, h, .25 * opacity, .8),
+    shape(waves.verticalPlane, v, .05 * opacity, 0, 1),
+    shape(waves.verticalPlane, v, .25 * opacity, .8),
+    shape(waves.horizontal, h, opacity, 3),
+    shape(waves.vertical, v, opacity, 3),
   ]
 }
 
@@ -129,7 +184,10 @@ export function zdrFrame(step: number, alpha = 1): Shape[] {
       rx: mix(previous.rx, next.rx, alpha), ry: mix(previous.ry, next.ry, alpha),
       h: mix(previous.h, next.h, alpha), v: mix(previous.v, next.v, alpha),
     }
-    return [...comparisonShapes(example, 1, step === 0 ? 0 : step === 1 ? alpha : 1), ...layerShapes(0, 0, 0)]
+    // Two phase cycles during each existing click; endpoints reset exactly to
+    // the preview phase so holds, direct entry, and rewind match bit-for-bit.
+    const phase = step === 0 || alpha === 0 || alpha === 1 ? 0 : 4 * Math.PI * alpha
+    return [...comparisonShapes(example, 1, step === 0 ? 0 : step === 1 ? alpha : 1, phase), ...layerShapes(0, 0, 0)]
   }
   const entering = step === 4 ? clamp(alpha / .28) : 1
   const merge = step === 4 ? clamp((alpha - .25) / .7) : 1

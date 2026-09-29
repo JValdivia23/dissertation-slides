@@ -438,6 +438,8 @@ class: population-identification population-zdr
       <svg class="zdr-labels" viewBox="0 0 1000 580" aria-hidden="true">
         <g v-if="zdrStep <= 3">
           <text x="93" y="166">Radar</text>
+          <text x="218" y="170" class="zdr-vertical">V</text>
+          <text x="218" y="325" class="zdr-horizontal">H</text>
           <text x="430" y="68">Particle viewed along beam</text>
           <text x="560" y="445" class="zdr-horizontal">Horizontal</text>
           <text x="290" y="96" class="zdr-vertical">Vertical</text>
@@ -445,6 +447,7 @@ class: population-identification population-zdr
           <text x="635" y="240" class="zdr-horizontal">H</text>
           <text x="635" y="340" class="zdr-vertical">V</text>
           <text x="795" y="425" class="zdr-comparison">{{ ['Compare H and V', 'H > V', 'H ≈ V', 'H < V'][zdrStep] }}</text>
+          <text x="795" y="465" class="zdr-comparison">{{ ['', 'ZDR > 0 dB', 'ZDR ≈ 0 dB', 'ZDR < 0 dB'][zdrStep] }}</text>
           <text x="500" y="538" class="zdr-muted">{{ ['Two polarizations · the same radar sample', 'Idealized horizontally oriented plate', 'Idealized spherical particle', 'Idealized vertically elongated particle'][zdrStep] }}</text>
         </g>
         <g v-else>
@@ -521,7 +524,7 @@ const zdrStep = computed(() => Math.max(0, Math.min(clicks.value, 5)))
 </script>
 
 <!--
-About 75–90 seconds, five clicks. Entry: the radar compares horizontal and vertical reflectivity from the same sampled volume. Define Z_DR as ten times the base-ten logarithm of the ratio of linear horizontal to vertical reflectivity. The horizontal and vertical arrows indicate electric-field directions in the plane perpendicular to propagation; the particle is shown as viewed along an idealized near-horizontal beam. The connector beside the radar is a diagram link, not an electric-field vector or a second viewing direction. The bars are qualitative relative linear reflectivity, not calculated scattering cross-sections or measured values. These first three cases are independent illustrations, not a time sequence of one observed crystal changing shape.
+About 75–90 seconds, five clicks. Entry: the radar compares horizontal and vertical reflectivity from the same sampled volume. Define Z_DR as ten times the base-ten logarithm of the ratio of linear horizontal to vertical reflectivity. The horizontal and vertical arrows indicate electric-field directions in the plane perpendicular to propagation; the particle is shown as viewed along an idealized near-horizontal beam. Beside the radar, blue H and pink V wave arrows show the polarized transmitted signal in schematic perspective: both propagate toward the particle, while their electric fields oscillate in perpendicular horizontal and vertical planes. The wave glyphs are offset vertically only for legibility, not separate physical beam paths. Both have the same illustrative 3D amplitude; H looks flatter because its horizontal plane is foreshortened. Their amplitudes do not change with particle shape or explain differences in returned reflectivity. Wave crests advance briefly during the existing first three clicks and disappear with the radar on click four. The bars are qualitative relative linear reflectivity, not calculated scattering cross-sections or measured values. These first three cases are independent illustrations, not a time sequence of one observed crystal changing shape.
 
 [click] Positive Z_DR: the horizontal return is stronger. A horizontally oriented plate is an idealized example relevant to ice clouds. Real values depend on shape, orientation, density, wavelength, and the particle mixture; do not identify a particular crystal habit from Z_DR alone.
 
