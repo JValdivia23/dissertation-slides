@@ -235,10 +235,12 @@ export async function ctgcIdentification() {
   const map = new VGroup(...tileRings, ...rangeRings, sweep, mapRadar)
   scene.add(map)
 
-  // 3: rotate the same radial maxima into plan view, then reveal all azimuths.
+  // 3: migrate the radial maxima onto one azimuth spoke, hand each dot to its
+  // sector tile, then sweep the remaining azimuths starting from that spoke.
   await scene.play(new UpdateFromAlphaFunc(map, (_, alpha) => {
-    const turn = clamp(alpha / .42)
-    const reveal = clamp((alpha - .32) / .68)
+    const turn = clamp(alpha / .35)
+    const handoff = clamp((alpha - .30) / .20)
+    const reveal = clamp((alpha - .45) / .55)
     grid.forEach((line, i) => line.setStrokeOpacity(sideGrid[i].stroke * (1 - turn)))
     rays.forEach(ray => ray.setStrokeOpacity(.16 * (1 - turn)))
     samples.forEach((point, i) => point.setStrokeOpacity((sideSamples[i].inside ? .3 : .09) * (1 - turn)))
@@ -248,12 +250,18 @@ export async function ctgcIdentification() {
     sourceMarks.forEach(mark => mark.setStrokeOpacity(1 - turn))
     maximumMarks.forEach((mark, i) => mark
       .setPointsAsCorners(dot(mixPoint(stripPoint(winners[i].r), mapPoint(winners[i].r, FOCUS_THETA), turn), mix(.09, .045, turn)))
-      .setStrokeOpacity(1 - reveal))
-    tiles.forEach(tile => tile.object.setStrokeOpacity(clamp((reveal - tile.ai / AZIMUTHS.length) * AZIMUTHS.length) * (tile.maximum === null ? .55 : 1)))
+      .setStrokeOpacity(1 - handoff))
+    tiles.forEach(tile => {
+      const order = (tile.ai - FOCUS_AI + AZIMUTHS.length) % AZIMUTHS.length
+      const shown = order === 0
+        ? clamp((alpha - .30) / .15)
+        : clamp((reveal - order / AZIMUTHS.length) * AZIMUTHS.length)
+      tile.object.setStrokeOpacity(shown * (tile.maximum === null ? .55 : 1))
+    })
     rangeRings.forEach(line => line.setStrokeOpacity(.4 * turn))
     mapRadar.setStrokeOpacity(turn)
-    sweep.setPointsAsCorners([MAP_CENTER, mapPoint(75, reveal * Math.PI * 2)]).setStrokeOpacity(reveal > 0 && reveal < .999 ? .9 : 0)
-  }, { duration: 2.5 }))
+    sweep.setPointsAsCorners([MAP_CENTER, mapPoint(75, FOCUS_THETA + reveal * Math.PI * 2)]).setStrokeOpacity(reveal > 0 && reveal < .999 ? .9 : 0)
+  }, { duration: 3 }))
 
   const ringHighlight = mobject(shape(ring(RANGES[FOCUS_R], 0), GOLD, 0, 0, 2))
   const reference = new VGroup(ringHighlight)
