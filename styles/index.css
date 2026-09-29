@@ -829,6 +829,7 @@
 .slidev-layout.population-identification h1,
 .slidev-layout.population-bands h1,
 .slidev-layout.population-storm h1,
+.slidev-layout.population-video h1,
 .slidev-layout.population-environment h1,
 .slidev-layout.population-maps h1,
 .slidev-layout.population-trends h1,
@@ -1202,6 +1203,47 @@
 .slidev-layout.population-storm .population-storm-groups p {
   margin: 0.15rem 0 0;
   line-height: 1.3;
+}
+
+.slidev-layout.population-video .population-video-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  gap: 1.4rem;
+  min-height: 0;
+}
+
+.slidev-layout.population-video .population-video-player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+.slidev-layout.population-video .population-video-points {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.slidev-layout.population-video .population-video-points section {
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--cu-gold);
+}
+
+.slidev-layout.population-video .population-video-points h2 {
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+}
+
+.slidev-layout.population-video .population-video-points p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.35;
 }
 
 .slidev-layout.population-storm .population-lead,

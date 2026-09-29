@@ -341,7 +341,31 @@ class: population-environment
 <!--
 About 75 seconds. Begin with the northwest portions of the four DOW6 RHI scans in Paper 3 Figure 6. These are fixed-azimuth cuts at 316 degrees, not a Lagrangian vertical sequence of the red selected cell. At 02:22 the stratiform echo is deep, with cloud top near 7 km. By 02:40 there are many distinct cloud-top turrets. At 03:04 the visible generating features are fewer and larger. By 03:34 the generating-layer echo is increasingly separated from the stratiform echo below. This apparent decoupling is consistent with drying, but reflectivity alone does not measure humidity. The cross-shear viewing direction emphasizes turret spacing and does not capture the complete along-shear fall streak. Negative ranges point northwest from DOW6; the shared color scale is equivalent reflectivity in dBZ.
 
-[click] Now compare specific humidity and horizontal wind profiles from the Sorel soundings at 02:00 and 04:15 UTC, Paper 3 Figure 9(b,c,f,g). The source figure's original shared height axes and sounding-time labels are retained beside the cropped panel pairs. Gray shading identifies the 5.5–8 km MSL generating layer. Specific humidity decreases within this layer, not uniformly throughout the column. The layer's bulk vector wind shear decreases from approximately 18 to 9 meters per second; do not describe this as halving the wind speed. Paper 3's VAD analysis, retained in the full backup Figure 9, gives intermediate kinematic context and shows shear relaxation during the organization period. The soundings bracket the event rather than resolve its short-term thermodynamic evolution, and their spatial separation from the cells limits causal interpretation. The layer is generally near-neutral to weakly stable, with only a shallow weakly-negative ice-equivalent-potential-temperature gradient near cloud top initially; do not claim broad instability or diagnose a unique radiative, shear, or wave initiation mechanism. These are accompanying conditions, not demonstrated causes. Next quantify the horizontal population changes.
+[click] Now compare specific humidity and horizontal wind profiles from the Sorel soundings at 02:00 and 04:15 UTC, Paper 3 Figure 9(b,c,f,g). The source figure's original shared height axes and sounding-time labels are retained beside the cropped panel pairs. Gray shading identifies the 5.5–8 km MSL generating layer. Specific humidity decreases within this layer, not uniformly throughout the column. The layer's bulk vector wind shear decreases from approximately 18 to 9 meters per second; do not describe this as halving the wind speed. Paper 3's VAD analysis, retained in the full backup Figure 9, gives intermediate kinematic context and shows shear relaxation during the organization period. The soundings bracket the event rather than resolve its short-term thermodynamic evolution, and their spatial separation from the cells limits causal interpretation. The layer is generally near-neutral to weakly stable, with only a shallow weakly-negative ice-equivalent-potential-temperature gradient near cloud top initially; do not claim broad instability or diagnose a unique radiative, shear, or wave initiation mechanism. These are accompanying conditions, not demonstrated causes. Next watch the complete detected evolution, then quantify the horizontal population changes.
+-->
+
+---
+class: population-video
+---
+
+# Horizontal evolution
+
+<p class="population-lead">The complete detected evolution: both CTGC sets emerge, intensify, and dissipate.</p>
+
+<div class="population-video-body">
+  <video class="population-video-player" muted autoplay loop playsinline controls poster="../figures/compsii-horizontal-poster.png">
+    <source src="../figures/compsii-horizontal-evolution.mp4" type="video/mp4" />
+  </video>
+  <div class="population-video-points">
+    <section><h2>Temporal evolution</h2><p>Detected anomalies emerge, intensify, and dissipate over the observed population sequence.</p></section>
+    <section><h2>Spatial distribution</h2><p>Two distinct CTGC groups are visible: the earlier Set 1 and the later Set 2.</p></section>
+  </div>
+</div>
+
+<p class="fine">COMPSII slide 26 video (dbz_anomaly_animation), full frame. Color is detected reflectivity anomaly in dB; both sets are shown.</p>
+
+<!--
+About 40 seconds. This looping animation from COMPSII slide 26 shows the full-domain detected reflectivity anomaly evolving through the observed population sequence: anomalies emerge, intensify into coherent features, and dissipate. Both spatiotemporal groups from the previous storm-context slide are visible here: the earlier Set 1 and the later Set 2. This is the same detection field quantified next: the maps show where the count and area time series come from, and the color scale is anomaly in dB, not equivalent reflectivity in dBZ. Do not attribute individual low-level echoes to the selected cell. The still maps and time series next quantify what this animation shows qualitatively.
 -->
 
 ---
