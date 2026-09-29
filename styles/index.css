@@ -1008,6 +1008,11 @@
   stroke-width: 2.5;
 }
 
+.slidev-layout.population-identification .ctgc-ring-profile .ctgc-link-arrow {
+  fill: none;
+  stroke: #cfb87c;
+  stroke-width: 3;
+}
 .slidev-layout.population-identification .ctgc-ring-profile .ctgc-mean-line {
   stroke: #cfb87c;
   stroke-dasharray: 7 5;

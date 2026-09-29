@@ -25,6 +25,10 @@ const MAP_CENTER: Point = [-1.15, 0, 0]
 const MAP_SCALE = 2.35 / 75
 const STRIP_Y = -2.05
 const FOCUS_R = 14 // 36.25 km: two sampled elevations intersect the layer.
+// Schematic cells sit 30 degrees clockwise from north (four azimuth bins), so
+// the reference peak never straddles the 0/360-degree profile seam.
+const FOCUS_THETA = Math.PI / 6
+const FOCUS_AI = 4
 
 export const ctgcColors = {
   reflectivity: ['#244765', '#4c9b9f', '#ded6a0', '#eaa456', '#ef7476'],
@@ -45,12 +49,12 @@ function color(value: number, perturbation = false) {
 }
 
 const cells = [
-  { r: 36.25, theta: 0, h: 6.2, amplitude: 12, width: 4.5 },
-  { r: 58.75, theta: 0, h: 7.1, amplitude: 11, width: 4 },
-  { r: 43, theta: 0.4 * Math.PI, h: 6.3, amplitude: 12, width: 5 },
-  { r: 31, theta: 0.9 * Math.PI, h: 6.9, amplitude: 13, width: 4.3 },
-  { r: 54, theta: 1.2 * Math.PI, h: 6.7, amplitude: 14, width: 5 },
-  { r: 65, theta: 1.62 * Math.PI, h: 6.2, amplitude: 12, width: 5.5 },
+  { r: 36.25, theta: FOCUS_THETA, h: 6.2, amplitude: 12, width: 4.5 },
+  { r: 58.75, theta: FOCUS_THETA, h: 7.1, amplitude: 11, width: 4 },
+  { r: 43, theta: 0.4 * Math.PI + FOCUS_THETA, h: 6.3, amplitude: 12, width: 5 },
+  { r: 31, theta: 0.9 * Math.PI + FOCUS_THETA, h: 6.9, amplitude: 13, width: 4.3 },
+  { r: 54, theta: 1.2 * Math.PI + FOCUS_THETA, h: 6.7, amplitude: 14, width: 5 },
+  { r: 65, theta: 1.62 * Math.PI + FOCUS_THETA, h: 6.2, amplitude: 12, width: 5.5 },
 ]
 
 function reflectivity(r: number, theta: number, height: number) {
@@ -85,8 +89,8 @@ export const ctgcData = {
   elevations: ELEVATIONS, ranges: RANGES, azimuths: AZIMUTHS, layer: LAYER,
   maxima, means, perturbations,
   focus: {
-    range: RANGES[FOCUS_R], samples: samplesAt(RANGES[FOCUS_R], 0),
-    maximum: maxima[FOCUS_R][0]!, mean: means[FOCUS_R]!, perturbation: perturbations[FOCUS_R][0]!,
+    range: RANGES[FOCUS_R], samples: samplesAt(RANGES[FOCUS_R], FOCUS_THETA),
+    maximum: maxima[FOCUS_R][FOCUS_AI]!, mean: means[FOCUS_R]!, perturbation: perturbations[FOCUS_R][FOCUS_AI]!,
   },
 }
 
@@ -136,7 +140,7 @@ const beams = ELEVATIONS.map(elevation => {
 })
 const sideSamples = RANGES.flatMap((r, ri) => ELEVATIONS.map(elevation => {
   const height = r * Math.sin(elevation * RAD)
-  const value = reflectivity(r, 0, height)
+  const value = reflectivity(r, FOCUS_THETA, height)
   return { r, ri, elevation, height, value, inside: height >= LAYER[0] && height <= LAYER[1], position: sidePoint(r, elevation) }
 }).filter(sample => sample.height <= 8.8))
 const sampleShapes = sideSamples.map(sample => shape(dot(sample.position), color(sample.value), .9, 0, 0))
@@ -195,7 +199,7 @@ export async function ctgcIdentification() {
   }, { duration: 1.1 }))
 
   const winners = RANGES.map((r, ri) => {
-    const candidates = samplesAt(r, 0).sort((a, b) => b.value - a.value)
+    const candidates = samplesAt(r, FOCUS_THETA).sort((a, b) => b.value - a.value)
     const winner = candidates[0]
     return winner ? { ri, r, value: winner.value, position: sidePoint(r, winner.elevation) } : null
   }).filter((winner): winner is NonNullable<typeof winner> => winner !== null)
@@ -243,7 +247,7 @@ export async function ctgcIdentification() {
     focus.setStrokeOpacity(.85 * (1 - turn))
     sourceMarks.forEach(mark => mark.setStrokeOpacity(1 - turn))
     maximumMarks.forEach((mark, i) => mark
-      .setPointsAsCorners(dot(mixPoint(stripPoint(winners[i].r), mapPoint(winners[i].r, 0), turn), mix(.09, .045, turn)))
+      .setPointsAsCorners(dot(mixPoint(stripPoint(winners[i].r), mapPoint(winners[i].r, FOCUS_THETA), turn), mix(.09, .045, turn)))
       .setStrokeOpacity(1 - reveal))
     tiles.forEach(tile => tile.object.setStrokeOpacity(clamp((reveal - tile.ai / AZIMUTHS.length) * AZIMUTHS.length) * (tile.maximum === null ? .55 : 1)))
     rangeRings.forEach(line => line.setStrokeOpacity(.4 * turn))
@@ -252,8 +256,7 @@ export async function ctgcIdentification() {
   }, { duration: 2.5 }))
 
   const ringHighlight = mobject(shape(ring(RANGES[FOCUS_R], 0), GOLD, 0, 0, 2))
-  const gateHighlight = mobject(shape(dot(mapPoint(RANGES[FOCUS_R], 0), .105), WHITE, 0, 0, 1.8))
-  const reference = new VGroup(ringHighlight, gateHighlight)
+  const reference = new VGroup(ringHighlight)
   scene.add(reference)
 
   // 4: the reference averages azimuth at fixed range, using the maxima above.
@@ -262,7 +265,6 @@ export async function ctgcIdentification() {
     // Pin them above the field, following the convolution scene's reticle.
     reference.getThreeObject().traverse((object: { renderOrder: number }) => { object.renderOrder = 9999 })
     ringHighlight.setPointsAsCorners(ring(RANGES[FOCUS_R], alpha)).setStrokeOpacity(.999 * alpha)
-    gateHighlight.setStrokeOpacity(.999 * alpha)
     tiles.forEach(tile => tile.object.setStrokeOpacity(tile.maximum === null ? .55 : tile.ri === FOCUS_R ? 1 : mix(1, .43, alpha)))
   }, { duration: 1.3 }))
 
@@ -281,7 +283,6 @@ export async function ctgcIdentification() {
     tiles.forEach(tile => tile.object.setStrokeOpacity((tile.maximum === null ? .55 : 1) * (1 - alpha)))
     rangeRings.forEach(line => line.setStrokeOpacity(.4 * (1 - alpha)))
     ringHighlight.setStrokeOpacity(.35 * (1 - alpha))
-    gateHighlight.setStrokeOpacity(.999 * (1 - alpha))
     mapRadar.setStrokeOpacity(1 - alpha)
   }, { duration: .6 }))
 }

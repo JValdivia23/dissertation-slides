@@ -107,7 +107,6 @@ class: population-identification
 
 # CTGC detection: Layer maximum and perturbation
 
-<p class="population-lead">Isolating convective cell enhancements from background stratiform echo in the generating layer.</p>
 
 <div class="ctgc-stages" aria-label="Animation stages">
   <span v-for="(label, index) in ctgcStages" :key="label" :class="{ active: Math.min(clicks, 6) === index }">{{ label }}</span>
@@ -125,6 +124,9 @@ class: population-identification
           <linearGradient id="ctgc-field-scale">
             <stop v-for="(color, i) in clicks === 5 ? ctgcColors.perturbation : ctgcColors.reflectivity" :key="i" :offset="`${i * 25}%`" :stop-color="color" />
           </linearGradient>
+          <marker id="ctgc-arrow-head" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L8,4 L0,8 z" fill="#cfb87c" />
+          </marker>
         </defs>
         <g v-if="clicks <= 2">
           <text v-for="(item, i) in ctgcLabels.side" :key="i" :x="item.x" :y="item.y" :text-anchor="item.anchor">{{ item.text }}</text>
@@ -141,6 +143,7 @@ class: population-identification
           <text v-else x="830" y="95" class="ctgc-map-title">Z<tspan baseline-shift="sub" style="font-size: 18px">max</tspan><tspan> (dBZ)</tspan></text>
           <text x="830" y="128">{{ clicks >= 4 ? 'One range ring: 36.25 km' : 'Sampled layer maximum' }}</text>
           <g v-if="clicks >= 4" class="ctgc-ring-profile">
+            <line x1="520" y1="252" x2="698" y2="252" class="ctgc-link-arrow" marker-end="url(#ctgc-arrow-head)" />
             <path d="M715 165 V338 H955" />
             <path :d="`M715 ${clicks === 5 ? ctgcRingProfile.zeroY : ctgcRingProfile.meanY} H955`" class="ctgc-mean-line" />
             <polyline :points="clicks === 5 ? ctgcRingProfile.perturbation : ctgcRingProfile.maximum" />
@@ -183,11 +186,7 @@ class: population-identification
     <div v-else-if="clicks === 2">
       <h2>Layer column maximum</h2>
       <p>Extract maximum reflectivity in the 5.5–8 km MSL cell layer at each range–azimuth gate (<em>r</em>, <em>θ</em>).</p>
-      <div class="ctgc-example">
-        <strong>Example · {{ ctgcData.focus.range }} km</strong>
-        <p v-for="sample in ctgcData.focus.samples" :key="sample.elevation">{{ sample.elevation.toFixed(1) }}° · {{ sample.height.toFixed(2) }} km → <b>{{ sample.value.toFixed(1) }} dBZ</b></p>
-        <p class="ctgc-result">Z<sub>max</sub> = {{ ctgcData.focus.maximum.toFixed(1) }} dBZ</p>
-      </div>
+      <p class="ctgc-secondary">The white rings mark the contributing samples; only the largest value is retained.</p>
     </div>
     <div v-else-if="clicks === 3">
       <h2>Repeat around the radar</h2>
@@ -206,15 +205,9 @@ class: population-identification
       <p>Subtract the range-dependent azimuthal mean:</p>
       <div class="ctgc-equation">
 
-$$
-\begin{aligned}
-Z'(r,\theta) &= Z_{\max}(r,\theta) \\
-&\quad - \overline{Z_{\max}}_{\theta}(r)
-\end{aligned}
-$$
+$$Z'(r,\theta) = Z_{\max}(r,\theta) - \overline{Z_{\max}}_{\theta}(r)$$
 
 </div>
-      <p class="ctgc-example ctgc-result">{{ ctgcData.focus.maximum.toFixed(1) }} − {{ ctgcData.focus.mean.toFixed(1) }} = {{ ctgcData.focus.perturbation.toFixed(1) }} dB</p>
       <p class="ctgc-secondary">Positive Z′ marks an enhancement above its range-ring background.</p>
     </div>
     <div v-else>
@@ -226,7 +219,7 @@ $$
   </div>
 </div>
 
-<p class="fine ctgc-source">{{ clicks >= 6 ? 'Paper Figure 5(e): Gaussian smoothing and area screening (≥0.09 km²) yield coherent closed cell boundaries.' : 'Illustrative reflectivity field · nominal elevations from Paper Figure 3 · maxima and azimuthal means computed from the same samples.' }}</p>
+<p class="fine ctgc-source">{{ clicks >= 6 ? 'Paper Figure 5(e): Gaussian smoothing and area screening (≥0.09 km²) yield coherent closed cell boundaries.' : 'Illustrative reflectivity field · maxima and azimuthal means computed from the example.' }}</p>
 
 <script setup>
 import { useNav } from '@slidev/client'
@@ -240,13 +233,13 @@ About 90 seconds. This click-stepped schematic explains the sampling and reducti
 
 [click] Select only observations in the 5.5–8 km MSL cloud-top layer identified in RHI scans. At a particular range, only a few of the 17 elevations intersect the layer. Missing coverage stays missing; the animation does not fill these gaps.
 
-[click] At each polar range–azimuth gate, take the largest of the sampled in-layer reflectivities. The highlighted example at 36.25 km has two contributing elevations. Their values are displayed alongside the animation, and the selected maxima move into a common radial strip. The maximum is over available observations, not a reconstructed continuous vertical profile.
+[click] At each polar range–azimuth gate, take the largest of the sampled in-layer reflectivities. The highlighted example at 36.25 km has two contributing elevations, marked by white rings, and the selected maxima move into a common radial strip. The maximum is over available observations, not a reconstructed continuous vertical profile.
 
 [click] Each of these elevations is a PPI sweep around the radar. Rotate the same strip into plan view, and repeat the reduction over all azimuths to obtain Z_max(r, theta). The sweep is a reveal of this one schematic volume, not a simultaneous scan or a time-evolving storm. The PPI volume samples height; reducing the elevations to one layer maximum produces the two-dimensional horizontal footprint. Gray rings have no in-layer samples.
 
 [click] Highlight one range ring and average its valid Z_max values over azimuth. The small profile plots those exact values; the gold dashed line is their mean in dBZ. Each range has its own background value.
 
-[click] Subtract the range-dependent mean from every gate to obtain Z-prime. The profile is now centered on zero, and the worked numerical example corresponds to the white-marked gate. This logarithmic reflectivity difference has units of dB. Localized enhancements remain prominent as the broad background weakens.
+[click] Subtract the range-dependent mean from every gate to obtain Z-prime. The profile is now centered on zero, with peaks marking enhancements above the range-ring background. This logarithmic reflectivity difference has units of dB. Localized enhancements remain prominent as the broad background weakens.
 
 [click] Now switch explicitly from the schematic to the observed 03:18 UTC example, Paper Figure 5(e). Apply the paper's two-dimensional Gaussian filter to Z-prime (sigma 1 gate in each direction, 9-by-9 window), contour at a 5-dB enhancement, remove nested contours, and discard regions smaller than 0.09 square kilometers. These are coherent horizontal boundaries for the population analysis. A connected boundary can encompass more than one turret.
 -->
