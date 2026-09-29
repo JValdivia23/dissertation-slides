@@ -282,12 +282,8 @@ class: population-storm
 
 <p class="population-storm-key"><strong>Black dots:</strong> both CTGC sets · <strong>Red marker:</strong> selected Set 1 cell · <strong>Red box:</strong> Paper 4 analysis domain</p>
 
-<div class="population-storm-groups">
-  <section><strong>Set 1 · earlier</strong><p>First detected near 02:18 UTC west of DOW6; translated northeast.</p></section>
-  <section><strong>Set 2 · later</strong><p>First detected near 02:48 UTC southwest of DOW6; translated east.</p></section>
-</div>
 
-<p class="fine">Paper 4 Figure S1(a, e, i), cropped. ECCC reflectivity (dBZ) with DOW6-derived CTGC centroids; dashed circle = DOW6's 75-km range.</p>
+<p class="fine">ECCC reflectivity (dBZ) with DOW6-derived CTGC centroids; dashed circle = DOW6's 75-km range.</p>
 
 <!--
 About 45 seconds. These three enlarged panels from Paper 4 supporting Figure S1 show the broader precipitation system and connect the two observational papers: the storm and the selected cell are the same. Color is ECCC equivalent reflectivity in dBZ, not cloud-top reflectivity or the perturbation field from the previous slide. Small black dots are the DOW6-derived CTGC centroids from both sets, not separate color-coded set labels. The red marker follows the selected Set 1 cell northeast, and the red box is the moving 40-by-40-kilometer domain used later in Paper 4. The dashed circle marks DOW6's 75-kilometer range. Do not interpret every strong low-level echo as precipitation from this cell.
@@ -331,11 +327,7 @@ class: population-environment
 <div class="population-environment-message">
   <p v-click.hide="1"><strong>Cloud-top features become fewer and larger,</strong> with increasing separation from the underlying stratiform echo.</p>
   <p v-click="1"><strong>Generating-layer drying and weaker shear:</strong> 5.5–8 km bulk wind shear decreased from approximately <span class="whitespace-nowrap">18 to 9 m s<sup>−1</sup></span> between soundings.</p>
-</div>
 
-<div class="population-environment-source fine">
-  <p v-click.hide="1">Paper 3 Figure 6(a–d), NW-focused crops (316°). Range is relative to DOW6; negative = NW. Fixed-azimuth views, not the selected cell's track.</p>
-  <p v-click="1">Paper 3 Figure 9(b, c, f, g), cropped with the shared height axes retained. Environmental changes accompany the evolution; they do not establish its cause.</p>
 </div>
 
 <!--
@@ -361,8 +353,6 @@ class: population-video
     <section><h2>Spatial distribution</h2><p>Two distinct CTGC groups are visible: the earlier Set 1 and the later Set 2.</p></section>
   </div>
 </div>
-
-<p class="fine">COMPSII slide 26 video (dbz_anomaly_animation), full frame. Color is detected reflectivity anomaly in dB; both sets are shown.</p>
 
 <!--
 About 40 seconds. This looping animation from COMPSII slide 26 shows the full-domain detected reflectivity anomaly evolving through the observed population sequence: anomalies emerge, intensify into coherent features, and dissipate. Both spatiotemporal groups from the previous storm-context slide are visible here: the earlier Set 1 and the later Set 2. This is the same detection field quantified next: the maps show where the count and area time series come from, and the color scale is anomaly in dB, not equivalent reflectivity in dBZ. Do not attribute individual low-level echoes to the selected cell. The still maps and time series next quantify what this animation shows qualitatively.
