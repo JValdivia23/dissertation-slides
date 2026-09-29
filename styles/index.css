@@ -1106,6 +1106,78 @@
   font-size: 0.65rem;
 }
 
+.slidev-layout.population-zdr .zdr-labels {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.slidev-layout.population-zdr .zdr-labels text {
+  fill: #edf2f7;
+  font-size: 24px;
+  text-anchor: middle;
+}
+
+.slidev-layout.population-zdr .zdr-labels text[text-anchor="start"] { text-anchor: start; }
+.slidev-layout.population-zdr .zdr-labels .zdr-horizontal { fill: #78baff; }
+.slidev-layout.population-zdr .zdr-labels .zdr-vertical { fill: #ef8f9b; }
+.slidev-layout.population-zdr .zdr-labels .zdr-crystal { fill: #85bec8; }
+.slidev-layout.population-zdr .zdr-labels .zdr-gold { fill: #cfb87c; }
+.slidev-layout.population-zdr .zdr-labels .zdr-muted { fill: #a8b6c6; font-size: 22px; }
+.slidev-layout.population-zdr .zdr-labels .zdr-comparison { font-size: 30px; font-weight: 700; }
+
+.slidev-layout.population-zdr .ctgc-explanation p {
+  margin: 0.35rem 0;
+}
+
+.slidev-layout.population-zdr .ctgc-explanation .zdr-definition {
+  margin-bottom: 0.35rem;
+}
+
+.slidev-layout.population-zdr .zdr-observed {
+  width: min(100%, 14rem);
+  margin: 0.4rem auto 0;
+}
+
+.slidev-layout.population-zdr .zdr-observed-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1066 / 467;
+}
+
+.slidev-layout.population-zdr .zdr-observed-frame img,
+.slidev-layout.population-zdr .zdr-observed-frame svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.slidev-layout.population-zdr .zdr-observed-frame img {
+  object-fit: contain;
+}
+
+.slidev-layout.population-zdr .zdr-observed-frame svg {
+  pointer-events: none;
+}
+
+.slidev-layout.population-zdr .zdr-observed-frame rect {
+  fill: #cfb87c;
+  fill-opacity: 0.08;
+  stroke: #8d7334;
+  stroke-width: 5;
+}
+
+.slidev-layout.population-zdr .zdr-observed figcaption {
+  margin-top: 0.25rem;
+  color: var(--cu-text-muted);
+  font-size: 0.64rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
 .slidev-layout.population-trends .population-trends-figure,
 .slidev-layout.population-trends .population-trends-message,
 .slidev-layout.population-trends .population-trends-source {
