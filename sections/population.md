@@ -166,10 +166,10 @@ class: population-identification
         </g>
       </svg>
       <div v-if="clicks >= 6" class="ctgc-observed">
-        <img src="../figures/population-contours-final.png" alt="Observed example at 03:18 UTC: Paper Figure 5(e), final closed CTGC boundaries after Gaussian smoothing, 5-dB contouring, and screening" />
+        <img src="../figures/population-contours-final.png" alt="Observed example at 03:18 UTC: Valdivia, et al. 2026 Figure 5e, final closed CTGC boundaries after Gaussian smoothing, 5-dB contouring, and screening" />
       </div>
     </div>
-    <p class="ctgc-view-caption">{{ clicks >= 6 ? 'Observed example · 03:18 UTC · Paper Figure 5(e)' : clicks <= 2 ? 'Schematic · one azimuth · vertical scale exaggerated' : 'Schematic · same volume reduced to a horizontal field' }}</p>
+    <p class="ctgc-view-caption">{{ clicks >= 6 ? 'Observed example · 03:18 UTC · Validiva, et al. 2026 Fig. 5e' : clicks <= 2 ? 'Schematic · one azimuth · vertical scale exaggerated' : 'Schematic · same volume reduced to a horizontal field' }}</p>
   </div>
   <div class="ctgc-explanation">
     <div v-if="clicks === 0">
@@ -220,7 +220,7 @@ $$Z'(r,\theta) = Z_{\max}(r,\theta) - \overline{Z_{\max}}_{\theta}(r)$$
   </div>
 </div>
 
-<p class="fine ctgc-source">{{ clicks >= 6 ? 'Paper Figure 5(e): Gaussian smoothing and area screening (≥0.09 km²) yield coherent closed cell boundaries.' : 'Illustrative reflectivity field · maxima and azimuthal means computed from the example.' }}</p>
+<p class="fine ctgc-source">{{ clicks >= 6 ? 'Gaussian smoothing and area screening (≥0.09 km²) yield coherent closed cell boundaries.' : 'Illustrative reflectivity field · maxima and azimuthal means computed from the example.' }}</p>
 
 <script setup>
 import { ref, watch } from 'vue'
