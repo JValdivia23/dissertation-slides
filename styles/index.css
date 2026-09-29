@@ -1008,6 +1008,19 @@
   stroke-width: 2.5;
 }
 
+.slidev-layout.population-identification .ctgc-ring-profile .ctgc-xfade {
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+
+.slidev-layout.population-identification .ctgc-ring-profile .ctgc-xfade.faded {
+  opacity: 0;
+}
+
+.slidev-layout.population-identification .ctgc-ring-profile.ctgc-no-anim .ctgc-xfade {
+  transition: none;
+}
+
 .slidev-layout.population-identification .ctgc-ring-profile .ctgc-link-arrow {
   fill: none;
   stroke: #cfb87c;

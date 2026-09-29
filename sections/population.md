@@ -142,11 +142,13 @@ class: population-identification
           <text v-if="clicks === 5" x="830" y="95" class="ctgc-map-title">Z′ (dB)</text>
           <text v-else x="830" y="95" class="ctgc-map-title">Z<tspan baseline-shift="sub" style="font-size: 18px">max</tspan><tspan> (dBZ)</tspan></text>
           <text x="830" y="128">{{ clicks >= 4 ? 'One range ring: 36.25 km' : 'Sampled layer maximum' }}</text>
-          <g v-if="clicks >= 4" class="ctgc-ring-profile">
+          <g v-if="clicks >= 4" class="ctgc-ring-profile" :class="{ 'ctgc-no-anim': ctgcNoAnim }">
             <line x1="520" y1="252" x2="698" y2="252" class="ctgc-link-arrow" marker-end="url(#ctgc-arrow-head)" />
             <path d="M715 165 V338 H955" />
-            <path :d="`M715 ${clicks === 5 ? ctgcRingProfile.zeroY : ctgcRingProfile.meanY} H955`" class="ctgc-mean-line" />
-            <polyline :points="clicks === 5 ? ctgcRingProfile.perturbation : ctgcRingProfile.maximum" />
+            <path :d="`M715 ${ctgcRingProfile.meanY} H955`" class="ctgc-mean-line ctgc-xfade" :class="{ faded: clicks === 5 }" />
+            <path :d="`M715 ${ctgcRingProfile.zeroY} H955`" class="ctgc-mean-line ctgc-xfade" :class="{ faded: clicks !== 5 }" />
+            <polyline :points="ctgcRingProfile.maximum" class="ctgc-profile-poly ctgc-xfade" :class="{ faded: clicks === 5 }" />
+            <polyline :points="ctgcRingProfile.perturbation" class="ctgc-profile-poly ctgc-xfade" :class="{ faded: clicks !== 5 }" />
             <text x="704" y="188" text-anchor="end">{{ clicks === 5 ? '12' : '18' }}</text>
             <text x="704" y="340" text-anchor="end">{{ clicks === 5 ? '−4' : '0' }}</text>
             <text x="715" y="365">0°</text><text x="955" y="365">360°</text>
@@ -222,10 +224,22 @@ $$Z'(r,\theta) = Z_{\max}(r,\theta) - \overline{Z_{\max}}_{\theta}(r)$$
 <p class="fine ctgc-source">{{ clicks >= 6 ? 'Paper Figure 5(e): Gaussian smoothing and area screening (≥0.09 km²) yield coherent closed cell boundaries.' : 'Illustrative reflectivity field · maxima and azimuthal means computed from the example.' }}</p>
 
 <script setup>
+import { ref, watch } from 'vue'
 import { useNav } from '@slidev/client'
 import { ctgcIdentification, ctgcStages, ctgcPreview, ctgcLabels, ctgcData, ctgcColors, ctgcRingProfile } from '../scenes/ctgc-identification'
 
 const { clicks } = useNav()
+// Forward steps fade the profile overlay alongside the 1.5 s map morph.
+// Backward navigation replays the map instantly, so the overlay must snap too.
+const ctgcNoAnim = ref(false)
+let ctgcNoAnimFrame = 0
+watch(clicks, (next, prev) => {
+  if (next < prev) {
+    ctgcNoAnim.value = true
+    cancelAnimationFrame(ctgcNoAnimFrame)
+    ctgcNoAnimFrame = requestAnimationFrame(() => requestAnimationFrame(() => { ctgcNoAnim.value = false }))
+  }
+})
 </script>
 
 <!--
