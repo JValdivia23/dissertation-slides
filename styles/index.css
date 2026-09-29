@@ -916,61 +916,175 @@
   font-size: 0.92rem;
 }
 
-.slidev-layout.population-identification .population-identification-body {
+.slidev-layout.population-identification h1 {
+  margin-bottom: 0.25rem;
+  font-size: 1.55rem;
+}
+
+.slidev-layout.population-identification .population-lead {
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.slidev-layout.population-identification .ctgc-stages {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  margin-bottom: 0.35rem;
+  color: var(--cu-text-muted);
+  font-size: 0.7rem;
+}
+
+.slidev-layout.population-identification .ctgc-stages span {
+  padding: 0.15rem 0.2rem;
+  border-bottom: 2px solid transparent;
+}
+
+.slidev-layout.population-identification .ctgc-stages .active {
+  border-color: var(--cu-gold);
+  color: var(--cu-heading);
+  font-weight: 700;
+}
+
+.slidev-layout.population-identification .ctgc-body {
   display: grid;
   flex: 1;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
   align-items: center;
   gap: 1.2rem;
   min-height: 0;
 }
 
-.slidev-layout.population-identification .population-identification-steps {
-  display: grid;
-  gap: 0.8rem;
+.slidev-layout.population-identification .ctgc-visual {
+  min-width: 0;
 }
 
-.slidev-layout.population-identification .population-identification-steps section {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.65rem 0.8rem;
-  border: 1px solid var(--cu-border);
-  border-left: 4px solid var(--cu-gold);
+.slidev-layout.population-identification .ctgc-canvas,
+.slidev-layout.population-identification .cu-manim-frame {
+  position: relative;
+  background: #101b2b;
 }
 
-.slidev-layout.population-identification .population-identification-steps section > span:first-child {
-  color: var(--cu-gold-accessible);
-  font-size: 1.55rem;
+.slidev-layout.population-identification .ctgc-first-frame,
+.slidev-layout.population-identification .ctgc-labels,
+.slidev-layout.population-identification .ctgc-observed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.slidev-layout.population-identification .ctgc-first-frame {
+  background: #101b2b;
+}
+
+.slidev-layout.population-identification .ctgc-labels text {
+  fill: #edf2f7;
+  font-size: 21px;
+  text-anchor: middle;
+}
+
+.slidev-layout.population-identification .ctgc-labels text[text-anchor="start"] { text-anchor: start; }
+.slidev-layout.population-identification .ctgc-labels text[text-anchor="end"] { text-anchor: end; }
+.slidev-layout.population-identification .ctgc-labels .ctgc-gold,
+.slidev-layout.population-identification .ctgc-labels .ctgc-gold text { fill: #cfb87c; }
+.slidev-layout.population-identification .ctgc-labels .ctgc-muted { fill: #a8b6c6; }
+
+.slidev-layout.population-identification .ctgc-labels .ctgc-map-title {
+  font-size: 29px;
   font-weight: 700;
 }
 
-.dark .slidev-layout.population-identification .population-identification-steps section > span:first-child {
-  color: var(--cu-gold);
+.slidev-layout.population-identification .ctgc-ring-profile path {
+  fill: none;
+  stroke: #52667b;
+  stroke-width: 2;
 }
 
-.slidev-layout.population-identification .population-identification-steps strong {
-  display: block;
-  margin-bottom: 0.15rem;
+.slidev-layout.population-identification .ctgc-ring-profile polyline {
+  fill: none;
+  stroke: #edf2f7;
+  stroke-width: 2.5;
+}
+
+.slidev-layout.population-identification .ctgc-ring-profile .ctgc-mean-line {
+  stroke: #cfb87c;
+  stroke-dasharray: 7 5;
+}
+
+.slidev-layout.population-identification .ctgc-observed {
+  display: flex;
+  justify-content: center;
+  background: var(--cu-bg);
+  animation: ctgc-observation-in 0.6s ease-out;
+}
+
+.slidev-layout.population-identification .ctgc-observed img {
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@keyframes ctgc-observation-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slidev-layout.population-identification .ctgc-view-caption {
+  margin: 0.3rem 0 0;
+  color: var(--cu-text-muted);
+  font-size: 0.65rem;
+  text-align: center;
+}
+
+.slidev-layout.population-identification .ctgc-explanation {
+  min-width: 0;
+}
+
+.slidev-layout.population-identification .ctgc-explanation h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.slidev-layout.population-identification .ctgc-explanation p {
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.slidev-layout.population-identification .ctgc-explanation .ctgc-secondary {
+  color: var(--cu-text-muted);
+  font-size: 0.73rem;
+}
+
+.slidev-layout.population-identification .ctgc-example {
+  margin-top: 0.8rem;
+  padding: 0.35rem 0.7rem;
+  border-left: 3px solid var(--cu-gold);
+  font-size: 0.78rem;
+}
+
+.slidev-layout.population-identification .ctgc-example p {
+  margin: 0.25rem 0;
+  font-size: 0.75rem;
+}
+
+.slidev-layout.population-identification .ctgc-result {
   color: var(--cu-heading);
-  font-size: 0.95rem;
+  font-weight: 700;
 }
 
-.slidev-layout.population-identification .population-identification-steps p {
-  margin: 0;
-  font-size: 0.86rem;
-  line-height: 1.3;
+.slidev-layout.population-identification .ctgc-equation .katex-display {
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
 }
 
-.slidev-layout.population-identification .population-identification-steps .math-pert {
-  margin-top: 0.25rem;
-  font-size: 0.95rem;
-  color: var(--cu-heading);
+.slidev-layout.population-identification .ctgc-source {
+  margin-top: 0.45rem;
+  font-size: 0.65rem;
 }
 
-.slidev-layout.population-identification .population-identification-figure,
-.slidev-layout.population-identification .population-identification-caption,
 .slidev-layout.population-trends .population-trends-figure,
 .slidev-layout.population-trends .population-trends-message,
 .slidev-layout.population-trends .population-trends-source {
@@ -980,21 +1094,12 @@
   min-height: 0;
 }
 
-.slidev-layout.population-identification .population-identification-figure > *,
-.slidev-layout.population-identification .population-identification-caption > *,
 .slidev-layout.population-trends .population-trends-figure > *,
 .slidev-layout.population-trends .population-trends-message > *,
 .slidev-layout.population-trends .population-trends-source > * {
   grid-area: 1 / 1;
 }
 
-.slidev-layout.population-identification .population-identification-figure img {
-  max-width: 100%;
-  max-height: 22rem;
-  object-fit: contain;
-}
-
-.slidev-layout.population-identification .population-identification-caption p,
 .slidev-layout.population-trends .population-trends-source p {
   margin: 0;
   text-align: center;
