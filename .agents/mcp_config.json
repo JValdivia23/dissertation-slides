@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "slidev": {
+      "command": "npm",
+      "args": ["exec", "--", "slidev", "mcp", "slides.md"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.82",
+        "--browser",
+        "chrome",
+        "--viewport-size",
+        "1280x720"
+      ]
+    }
+  }
+}
