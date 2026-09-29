@@ -258,48 +258,94 @@ About 90 seconds. This click-stepped schematic explains the sampling and reducti
 -->
 
 ---
-class: population-bands
+class: population-storm
 ---
 
-# Two spatiotemporal groups in one storm
+# CTGC population within the evolving storm
 
-<div class="population-bands-body">
-  <img src="../figures/precip-bands.png" alt="Paper Figure 10: four ECCC low-level reflectivity snapshots with the paths of the earlier Set 1 and later Set 2 annotated" />
-  <div class="population-bands-points">
-    <section><h2>Set 1 · earlier</h2><p>First detected near 02:18 UTC west of DOW6; translated northeast.</p></section>
-    <section><h2>Set 2 · later</h2><p>First detected near 02:48 UTC southwest of DOW6; translated east.</p></section>
-    <p>Focus on Set 1: its full population evolution was observed within the radar domain.</p>
+<p class="population-lead">23 February 2022 · WINTRE-MIX IOP05 · the same storm and selected cell in Papers 3 and 4.</p>
+
+<div class="population-storm-sequence">
+  <figure><img src="../figures/population-storm-0254.png" alt="Paper 4 Figure S1(a), 02:54 UTC: CTGC centroids over ECCC reflectivity, with the selected Set 1 cell west of DOW6 marked in red" /><figcaption>02:54 UTC</figcaption></figure>
+  <figure><img src="../figures/population-storm-0318.png" alt="Paper 4 Figure S1(e), 03:18 UTC: the same selected cell has moved northeast among the CTGC population; the red box marks the moving analysis domain" /><figcaption>03:18 UTC</figcaption></figure>
+  <figure><img src="../figures/population-storm-0342.png" alt="Paper 4 Figure S1(i), 03:42 UTC: the selected cell is northeast of DOW6 as the broader precipitation field translates across the domain" /><figcaption>03:42 UTC</figcaption></figure>
+  <svg class="population-storm-scale" viewBox="0 0 64 300" role="img" aria-label="ECCC reflectivity scale, −5 to 40 dBZ, with open-ended extremes">
+    <defs><clipPath id="population-storm-scale-clip"><path d="M11 27 L18 39 V268.5 L11 280 L4 268.5 V39Z" /></clipPath></defs>
+    <image href="../figures/population-storm-scale.png" x="-3.8" y="24" width="65" height="265" preserveAspectRatio="none" clip-path="url(#population-storm-scale-clip)" />
+    <text x="32" y="15" class="population-scale-unit">dBZ</text>
+    <g v-for="(value, index) in [40, 35, 30, 25, 20, 15, 10, 5, 0, -5]" :key="value">
+      <line x1="18" x2="23" :y1="39 + index * 25.5" :y2="39 + index * 25.5" />
+      <text x="28" :y="39 + index * 25.5">{{ value }}</text>
+    </g>
+  </svg>
+</div>
+
+<p class="population-storm-key"><strong>Black dots:</strong> both CTGC sets · <strong>Red marker:</strong> selected Set 1 cell · <strong>Red box:</strong> Paper 4 analysis domain</p>
+
+<div class="population-storm-groups">
+  <section><strong>Set 1 · earlier</strong><p>First detected near 02:18 UTC west of DOW6; translated northeast.</p></section>
+  <section><strong>Set 2 · later</strong><p>First detected near 02:48 UTC southwest of DOW6; translated east.</p></section>
+</div>
+
+<p class="fine">Paper 4 Figure S1(a, e, i), cropped. ECCC reflectivity (dBZ) with DOW6-derived CTGC centroids; dashed circle = DOW6's 75-km range.</p>
+
+<!--
+About 45 seconds. These three enlarged panels from Paper 4 supporting Figure S1 show the broader precipitation system and connect the two observational papers: the storm and the selected cell are the same. Color is ECCC equivalent reflectivity in dBZ, not cloud-top reflectivity or the perturbation field from the previous slide. Small black dots are the DOW6-derived CTGC centroids from both sets, not separate color-coded set labels. The red marker follows the selected Set 1 cell northeast, and the red box is the moving 40-by-40-kilometer domain used later in Paper 4. The dashed circle marks DOW6's 75-kilometer range. Do not interpret every strong low-level echo as precipitation from this cell.
+
+The two groups began before this displayed sequence: Set 1 near 02:18 UTC west of DOW6, moving northeast; Set 2 near 02:48 UTC to the southwest, moving east. Those onset times come from Paper 3, not from these later S1 panels. Focus on Set 1 because its complete population sequence was observed; Set 2's dissipation was not fully captured. This is radar storm context, not a thermodynamic diagnosis or proof of wave-driven forcing. The soundings and RHI sequence next provide the vertical and environmental context. Paper 4 is submitted to GRL, not published.
+-->
+
+---
+class: population-environment
+---
+
+# Vertical evolution and environmental conditions
+
+<div class="population-environment-lead">
+  <p v-click.hide="1" class="population-lead">DOW6 RHI observations show the evolution of the 5.5–8 km MSL generating layer.</p>
+  <p v-click="1" class="population-lead">Sorel soundings bracket the event: 02:00 and 04:15 UTC. Gray shading marks 5.5–8 km MSL.</p>
+</div>
+
+<div class="population-environment-figure">
+  <div v-click.hide="1" class="population-rhi-grid">
+    <figure><figcaption>02:22 · deep stratiform echo</figcaption><img src="../figures/population-rhi-0222.png" alt="Paper 3 Figure 6(a), NW-focused RHI crop at 02:22 UTC: a deep stratiform echo extends to approximately 7 km" /></figure>
+    <figure><figcaption>02:40 · distinct cloud-top turrets</figcaption><img src="../figures/population-rhi-0240.png" alt="Paper 3 Figure 6(b), NW-focused RHI crop at 02:40 UTC: numerous narrow generating-cell turrets appear near cloud top" /></figure>
+    <figure><figcaption>03:04 · fewer, larger features</figcaption><img src="../figures/population-rhi-0304.png" alt="Paper 3 Figure 6(c), NW-focused RHI crop at 03:04 UTC: fewer and larger cloud-top reflectivity features" /></figure>
+    <figure><figcaption>03:34 · increasing echo separation</figcaption><img src="../figures/population-rhi-0334.png" alt="Paper 3 Figure 6(d), NW-focused RHI crop at 03:34 UTC: the generating layer is increasingly separated from the echo below" /></figure>
+    <svg class="population-rhi-scale" viewBox="0 0 64 300" role="img" aria-label="DOW6 reflectivity scale, −10 to 40 dBZ">
+      <defs><clipPath id="population-rhi-scale-clip"><rect x="4" y="27" width="14" height="253" /></clipPath></defs>
+      <image href="../figures/population-rhi-scale.png" x="1" y="22.6" width="71.5" height="266" preserveAspectRatio="none" clip-path="url(#population-rhi-scale-clip)" />
+      <text x="32" y="15" class="population-scale-unit">dBZ</text>
+      <g v-for="(value, index) in [40, 30, 20, 10, 0, -10]" :key="value">
+        <line x1="18" x2="23" :y1="27 + index * 50.6" :y2="27 + index * 50.6" />
+        <text x="28" :y="27 + index * 50.6">{{ value }}</text>
+      </g>
+    </svg>
+  </div>
+  <div v-click="1" class="population-sounding-pair">
+    <figure><figcaption>02:00 UTC</figcaption><img src="../figures/population-environment-0200.png" alt="Paper 3 Figure 9(b, c): 02:00 UTC specific-humidity and wind profiles, with the original shared height axis and gray generating-layer band retained" /></figure>
+    <figure><figcaption>04:15 UTC</figcaption><img src="../figures/population-environment-0415.png" alt="Paper 3 Figure 9(f, g): 04:15 UTC specific-humidity and wind profiles show lower generating-layer moisture and weaker bulk wind shear than at 02:00 UTC" /></figure>
   </div>
 </div>
 
-<p class="fine">Paper Figure 10: ECCC reflectivity at 500 m MSL shows the associated precipitation bands. Set membership comes from DOW6 cell centroids, not the ECCC field.</p>
-
-<!--
-About 40 seconds. The detected CTGCs were neither spatially uniform nor all simultaneous. Set 1 appeared west of DOW6 near 02:18 UTC and translated northeast; Set 2 appeared later to the southwest near 02:48 UTC and translated east. On the ECCC radar panels, the blue and red annotations mark low-level precipitation bands or boundaries associated with the two groups. This is spatial-temporal context, not evidence that low-level bands caused the cells, nor definitive evidence of waves: the paper's Doppler-velocity diagnostics did not establish a persistent wave signature. Set 2's dissipation was not fully captured. Follow Set 1 for the complete life-cycle discussion. The grouping itself was based on DOW6 cell-centroid locations and tracks; the associated centroid plot is in the paper's appendix.
--->
-
----
-class: population-maps
----
-
-# From small boundaries to contiguous clusters
-
-<p class="population-lead">Set 1: two snapshots of the same event, 42 minutes apart.</p>
-
-<div class="population-map-pair">
-  <figure><img src="../figures/population-map-initiation.png" alt="Paper Figure 12(a), 02:30 UTC: many small CTGC boundaries, mostly blue or cyan area classes, west of DOW6" /><figcaption>02:30 · many small features</figcaption></figure>
-  <span aria-hidden="true">→</span>
-  <figure><img src="../figures/population-map-mature.png" alt="Paper Figure 12(c), 03:12 UTC: fewer, larger contiguous CTGC boundaries, including red and orange area classes" /><figcaption>03:12 · larger contiguous features</figcaption></figure>
+<div class="population-environment-message">
+  <p v-click.hide="1"><strong>Cloud-top features become fewer and larger,</strong> with increasing separation from the underlying stratiform echo.</p>
+  <p v-click="1"><strong>Generating-layer drying and weaker shear:</strong> 5.5–8 km bulk wind shear decreased from approximately <span class="whitespace-nowrap">18 to 9 m s<sup>−1</sup></span> between soundings.</p>
 </div>
 
-<p class="fine">Paper Figure 12(a, c). Color indicates contour area (warmer = larger); insets show Set 1 blue and Set 2 red centroids. A large boundary can contain several cells.</p>
+<div class="population-environment-source fine">
+  <p v-click.hide="1">Paper 3 Figure 6(a–d), NW-focused crops (316°). Range is relative to DOW6; negative = NW. Fixed-azimuth views, not the selected cell's track.</p>
+  <p v-click="1">Paper 3 Figure 9(b, c, f, g), cropped with the shared height axes retained. Environmental changes accompany the evolution; they do not establish its cause.</p>
+</div>
 
 <!--
-About 45 seconds. These are the initiation snapshot at 02:30 and a mid-mature snapshot at 03:12, both from Figure 12. The black star marks DOW6; warmer colors indicate larger contiguous contour areas. At first there are many small, separate enhancements west of the radar. Later there are fewer, larger patches, some tens of square kilometers. The insets classify centroids into Set 1 (blue) and Set 2 (red); focus on the northern/earlier Set 1. The paper reports contiguous complexes up to about 60 km², but that does not mean one isolated 1–2 km turret grew to 60 km². A contour can connect multiple adjacent cells, so this is evidence of population organization and merging, plus sensitivity to segmentation. The time series next quantifies the count and area changes.
+About 75 seconds. Begin with the northwest portions of the four DOW6 RHI scans in Paper 3 Figure 6. These are fixed-azimuth cuts at 316 degrees, not a Lagrangian vertical sequence of the red selected cell. At 02:22 the stratiform echo is deep, with cloud top near 7 km. By 02:40 there are many distinct cloud-top turrets. At 03:04 the visible generating features are fewer and larger. By 03:34 the generating-layer echo is increasingly separated from the stratiform echo below. This apparent decoupling is consistent with drying, but reflectivity alone does not measure humidity. The cross-shear viewing direction emphasizes turret spacing and does not capture the complete along-shear fall streak. Negative ranges point northwest from DOW6; the shared color scale is equivalent reflectivity in dBZ.
+
+[click] Now compare specific humidity and horizontal wind profiles from the Sorel soundings at 02:00 and 04:15 UTC, Paper 3 Figure 9(b,c,f,g). The source figure's original shared height axes and sounding-time labels are retained beside the cropped panel pairs. Gray shading identifies the 5.5–8 km MSL generating layer. Specific humidity decreases within this layer, not uniformly throughout the column. The layer's bulk vector wind shear decreases from approximately 18 to 9 meters per second; do not describe this as halving the wind speed. Paper 3's VAD analysis, retained in the full backup Figure 9, gives intermediate kinematic context and shows shear relaxation during the organization period. The soundings bracket the event rather than resolve its short-term thermodynamic evolution, and their spatial separation from the cells limits causal interpretation. The layer is generally near-neutral to weakly stable, with only a shallow weakly-negative ice-equivalent-potential-temperature gradient near cloud top initially; do not claim broad instability or diagnose a unique radiative, shear, or wave initiation mechanism. These are accompanying conditions, not demonstrated causes. Next quantify the horizontal population changes.
 -->
 
 ---
-class: population-trends
+class: population-trends population-maps
 ---
 
 # Set 1: structure and polarimetric evolution
@@ -307,24 +353,33 @@ class: population-trends
 <p class="population-lead">The approximately 1.7-hour observed population is divided into initiation, mature, and dissipation stages.</p>
 
 <div class="population-trends-figure">
-  <img v-click.hide="1" src="../figures/population-count-area.png" alt="Paper Figure 13(a): Set 1 CTGC count peaks near 02:30 UTC, while mean contour area grows into the mature stage, then the number declines" />
-  <img v-click="1" src="../figures/population-zdr.png" alt="Paper Figure 13(c): Set 1 mean differential reflectivity decreases during initiation and then rises through mature and dissipation stages" />
+  <div v-click.hide="1" class="population-map-pair">
+    <figure><img src="../figures/population-map-initiation.png" alt="Paper Figure 12(a), 02:30 UTC: many small CTGC boundaries, mostly blue or cyan area classes, west of DOW6" /><figcaption>02:30 · many small features</figcaption></figure>
+    <span aria-hidden="true">→</span>
+    <figure><img src="../figures/population-map-mature.png" alt="Paper Figure 12(c), 03:12 UTC: fewer, larger contiguous CTGC boundaries, including red and orange area classes" /><figcaption>03:12 · larger contiguous features</figcaption></figure>
+  </div>
+  <img v-click="[1,2]" src="../figures/population-count-area.png" alt="Paper Figure 13(a): Set 1 CTGC count peaks near 02:30 UTC, while mean contour area grows into the mature stage, then the number declines" />
+  <img v-click="2" src="../figures/population-zdr.png" alt="Paper Figure 13(c): Set 1 mean differential reflectivity decreases during initiation and then rises through mature and dissipation stages" />
 </div>
 
 <div class="population-trends-message">
-  <p v-click.hide="1"><strong>Count peaks early.</strong> During maturity, count falls while mean contiguous area rises; later the count and coverage decline.</p>
-  <p v-click="1"><strong>Mean Z<sub>DR</sub> falls, then rises.</strong> The later increase is consistent with differential sedimentation and particle sorting in the cloud-top layer.</p>
+  <p v-click.hide="1"><strong>Small boundaries become larger contiguous clusters.</strong> A large boundary can contain several cells.</p>
+  <p v-click="[1,2]"><strong>Count peaks early.</strong> During maturity, count falls while mean contiguous area rises; later the count and coverage decline.</p>
+  <p v-click="2"><strong>Mean Z<sub>DR</sub> falls, then rises.</strong> The later increase is consistent with differential sedimentation and particle sorting in the cloud-top layer.</p>
 </div>
 
 <div class="population-trends-source fine">
-  <p v-click.hide="1">Paper Figure 13(a), Set 1: red = count; blue = mean boundary area; green dashed = area mode; gray = 10th–90th percentile.</p>
-  <p v-click="1">Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. Particle habits are inferred.</p>
+  <p v-click.hide="1">Paper Figure 12(a, c), 42 minutes apart. Warmer colors = larger contour area; insets show Set 1 blue and Set 2 red centroids.</p>
+  <p v-click="[1,2]">Paper Figure 13(a), Set 1: red = count; blue = mean boundary area; green dashed = area mode; gray = 10th–90th percentile.</p>
+  <p v-click="2">Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. Particle habits are inferred.</p>
 </div>
 
 <!--
-About 1 minute 15 seconds. Begin with Figure 13(a), cropped to Set 1. The red curve is detected feature count and the blue curve is mean contour area; the dashed green is the area mode and gray shading the 10th–90th percentile. Set 1 begins near 02:18 UTC; count rises sharply around 02:30–02:36, then declines during the mature stage while mean area grows, consistent with merging or clustering. During dissipation from roughly 03:24 to 04:00 the count and total coverage fall, although the mean area of surviving features does not necessarily decline monotonically because smaller features disappear. The stages are defined mainly from the count/area evolution. The chapter text and table place the first transition near 02:30, while the plotted dashed divider appears closer to 02:36; avoid presenting its minute as exact. Dissipation begins near 03:24. The chart's last plotted label is 03:54, while the study period extends to 04:00. This is about 1.7 hours of collective activity, not a mean individual-cell lifetime.
+About 1 minute 40 seconds. Begin with the two Figure 12 maps previously shown on their own slide: initiation at 02:30 and mid-maturity at 03:12, 42 minutes apart. The black star marks DOW6; warmer colors indicate larger contiguous contour areas. Many small, separate enhancements become fewer, larger patches, some tens of square kilometers. The insets classify centroids into Set 1 (blue) and Set 2 (red); focus on the northern/earlier Set 1. Contiguous complexes up to approximately 60 km² do not mean an isolated 1–2 km turret grew to 60 km². A contour can connect multiple adjacent cells, so the maps show population organization and merging, with sensitivity to segmentation.
 
-Click 1: Figure 13(c), now the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Polarimetry supports this inference but does not directly identify particle habit. Reflectivity is relatively stable after initiation and rho_HV stays high; these additional plots remain in the full Figure 13. Do not call the contour-size increase growth of every individual cell. Move to the explicitly conceptual synthesis.
+[click] Figure 13(a), cropped to Set 1, quantifies this evolution. The red curve is detected feature count and the blue curve is mean contour area; the dashed green is the area mode and gray shading the 10th–90th percentile. Set 1 begins near 02:18 UTC; count rises sharply around 02:30–02:36, then declines during the mature stage while mean area grows, consistent with merging or clustering. During dissipation from roughly 03:24 to 04:00 the count and total coverage fall, although the mean area of surviving features does not necessarily decline monotonically because smaller features disappear. The stages are defined mainly from the count/area evolution. The chapter text and table place the first transition near 02:30, while the plotted dashed divider appears closer to 02:36; avoid presenting its minute as exact. Dissipation begins near 03:24. The chart's last plotted label is 03:54, while the study period extends to 04:00. This is about 1.7 hours of collective activity, not a mean individual-cell lifetime.
+
+[click] Figure 13(c), now the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Polarimetry supports this inference but does not directly identify particle habit. Reflectivity is relatively stable after initiation and rho_HV stays high; these additional plots remain in the full Figure 13. Do not call the contour-size increase growth of every individual cell. Move to the explicitly conceptual synthesis.
 -->
 
 ---
