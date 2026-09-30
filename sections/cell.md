@@ -27,13 +27,13 @@ class: paper4-question
 
 <div class="paper4-question-body">
   <div class="paper4-question-story">
-    <p class="paper4-question-lead">Paper 3 followed one persistent cell in two dimensions. Its precipitation signature extends downward below the generating layer.</p>
-    <section><strong>Structure</strong><span>Can multi-radar voxel fusion follow the 3D cell and its fall streak through underlying cloud?</span></section>
-    <section><strong>Environment</strong><span>How does the fall streak interact with pre-existing mid-level precipitation structures?</span></section>
-    <section><strong>Precipitation</strong><span>How do precipitation rates compare inside versus outside persistent fall-streak footprints?</span></section>
+    <p class="paper4-question-lead">We know CTGC fall streaks extends downward below the generating layer.</p>
+    <section><strong>Structure</strong><span>Can we resolve the 3D cell and its fall streak through underlying cloud?</span></section>
+    <section><strong>Evolution</strong><span>How does the fall streak interact with pre-existing cloud?</span></section>
+    <section><strong>Precipitation</strong><span>Can we quantify the precipitation enhancement due to CTGC?</span></section>
   </div>
   <svg class="paper4-question-diagram" viewBox="0 0 610 380" role="img" aria-label="Conceptual vertical schematic: a cloud-top generating cell, a southwestward fall-streak path through an existing cloud and precipitation layer, a melting layer, and precipitation below; not an observed cross section">
-    <rect x="35" y="148" width="540" height="151" rx="55" class="paper4-cloud" />
+    <rect x="35" y="122" width="540" height="179" rx="55" class="paper4-cloud" />
     <path d="M440 52 C472 28 511 48 515 75 C538 78 549 105 533 119 L389 119 C369 102 382 73 407 73 C413 62 423 55 440 52Z" class="paper4-cell" />
     <path d="M450 115 C423 158 385 181 359 205 S288 258 234 309" class="paper4-streak" />
     <path d="M80 275 H535" class="paper4-melting" />
@@ -41,7 +41,7 @@ class: paper4-question
     <text x="360" y="38">Tracked CTGC</text>
     <text x="56" y="143">Pre-existing cloud / precipitation</text>
     <text x="61" y="265">Melting layer</text>
-    <text x="36" y="363">Schematic, not a measured radar cross section</text>
+
   </svg>
 </div>
 
