@@ -213,9 +213,9 @@ $$Z'(r,\theta) = Z_{\max}(r,\theta) - \overline{Z_{\max}}_{\theta}(r)$$
     </div>
     <div v-else>
       <h2>Smoothing, 5-dB contouring &amp; screening</h2>
-      <p>Apply 2D Gaussian smoothing (9×9 window), contour at 5 dB, and discard nested or &lt;0.09 km² regions.</p>
+      <p>Apply 2D Gaussian smoothing, contour at 5 dB, and discard nested or &lt;0.09 km² regions.</p>
       <p class="ctgc-secondary">Gaussian σ = 1 gate in range and azimuth.</p>
-      <p class="ctgc-result">Closed boundaries describe the horizontal CTGC distribution.</p>
+      <p class="ctgc-result">Closed boundaries are used to quantify CTGCs.</p>
     </div>
   </div>
 </div>
@@ -373,7 +373,6 @@ class: population-video
 
 # Horizontal evolution
 
-<p class="population-lead">The complete detected evolution: both CTGC sets emerge, intensify, and dissipate.</p>
 
 <div class="population-video-body">
   <video class="population-video-player" muted autoplay loop playsinline controls poster="../figures/compsii-horizontal-poster.png">
@@ -438,11 +437,11 @@ class: population-trends
 </div>
 
 <div class="population-trends-message">
-  <p><strong>Mean Z<sub>DR</sub> falls, then rises.</strong></p>
+  <p><strong>Mean Z<sub>DR</sub> falls, then rises: Suggesting aggregation and preferential sedimentation</strong></p>
 </div>
 
 <div class="population-trends-source fine">
-  <p>Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. Particle habits are inferred.</p>
+  <p>Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. </p>
 </div>
 
 <!--
@@ -659,7 +658,7 @@ title: "Project 3: Conclusions"
 # Project 3: Conclusions
 - The detected population progressed through initiation, maturity, and dissipation over approximately 1.7 hours.
 - During maturity, counts decreased while size area increased, supporting merging and clustering into larger features rather than simply growth of individual turrets.
-- The polarimetric signals are consistent with early aggregation and later preferential fallout and particle sorting within the generating layer.
+- The polarimetric signals are consistent with early aggregation and later preferential sedimentation and particle sorting within the generating layer.
 
 <p class="population-handoff">One selected cell showed a similar structural and polarimetric progression.</p>
 
