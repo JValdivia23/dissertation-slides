@@ -203,22 +203,31 @@ Entry: identify the three instruments and wavelength bands. Different views help
 -->
 
 ---
-class: paper4-observations
+class: paper4-layer-slide
 ---
 
 # Generating layer (5.5–9 km) and downwind domain
 
-<div class="paper4-observations-body">
-  <figure><img src="../figures/paper4-layer-vad.png" alt="Chapter 5 Figure 1: 5.5–9 km layer-maximum reflectivity anomaly maps across nine times (02:54–03:42 UTC) with VAD wind profiles; the tracked cell stays at the origin while the domain extends southwestward into the downwind fall-streak region" /><figcaption><em>Z</em>′<sub>max</sub> (5.5–9 km MSL) · nine times · 02:54–03:42 UTC</figcaption></figure>
-  <div class="paper4-grid-facts">
-    <section><strong>CTGC generating layer: 5.5–9 km</strong><p>Layer maximum of <em>Z</em>′ isolates the generating cells near cloud top.</p></section>
-    <section><strong>Wind direction from VAD</strong><p>Northeasterly cell-relative shear directs falling particles toward the <strong>southwest (SW)</strong>.</p></section>
-    <section><strong>Asymmetric subdomain</strong><p>Domain extends from <strong>−30 to +10 km</strong> in <em>x</em> and <em>y</em> to capture the full downwind fall streak as the cell moves.</p></section>
+<div class="paper4-layer-body">
+  <figure class="paper4-layer-main">
+    <img src="../figures/paper4-layer-9times.png" alt="Chapter 5 / Madison Slide 9: 5.5–9 km layer-maximum reflectivity anomaly maps across nine analysis times (02:54–03:42 UTC); the tracked cell stays at the origin while the domain extends southwestward into the downwind fall-streak region" />
+    <figcaption><em>Z</em>′<sub>max</sub> (5.5–9 km MSL) · nine times · 02:54–03:42 UTC</figcaption>
+  </figure>
+  <div class="paper4-layer-side">
+    <figure class="paper4-panel-i-figure">
+      <img src="../figures/paper4-vad-polar.png" alt="Polar plot of VAD wind direction profile showing upper-level flow directing particles toward the southwest" />
+      <figcaption>VAD wind direction profile</figcaption>
+    </figure>
+    <div class="paper4-layer-facts">
+      <section><strong>Generating layer · 5.5–9 km</strong>: layer maximum of <em>Z</em>′ isolates cloud-top cells</section>
+      <section><strong>Wind direction from VAD</strong>: shear directs falling particles toward the <strong>southwest (SW)</strong></section>
+      <section><strong>Asymmetric subdomain</strong>: <strong>−30 to +10 km</strong> in <em>x</em> and <em>y</em> captures downwind fallout</section>
+    </div>
   </div>
 </div>
 
 <!--
-About 50 seconds. Madison Slide 9 and Paper Figure 1. Panel shows the 5.5–9 km layer maximum of Z' at all nine analysis times. The dashed circle tracks our selected cell at (0, 0). VAD wind profiles show the wind shear relative to cell motion. Because particles generated aloft are carried downwind by upper-tropospheric winds as they sediment, their trajectory points southwestward relative to the cell. That physical trajectory dictates our subdomain choice: an asymmetric 40x40 km box with 30 km extending to the southwest (x, y from -30 to +10 km).
+About 50 seconds. Madison Slide 9 and Paper Figure 1. Left: 5.5–9 km layer maximum of Z' across nine analysis times (02:54–03:42 UTC). The dashed circle marks the selected cell at the origin. Right: the polar VAD wind profile showing upper-tropospheric shear directing sedimenting ice southwestward relative to the cell, motivating the asymmetric -30 to +10 km analysis domain.
 -->
 
 ---
