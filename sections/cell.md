@@ -50,39 +50,152 @@ About 35 seconds. The central challenge: particles generated in cloud-top turret
 -->
 
 ---
-class: paper4-grid
+class: paper4-fusion
+clicks: 6
 ---
 
-# Single-cell 3D tracking: Multi-radar voxel fusion
+# Multi-radar reconstruction in a cell-relative frame
 
-<div class="paper4-grid-body">
-  <svg viewBox="0 0 650 380" role="img" aria-label="Schematic showing a moving 40 by 40 kilometer analysis box following three successive cell centroids and a cell-relative grid with the cell at x equals y equals zero near the upper right of a minus 30 to plus 10 kilometer domain">
-    <text x="29" y="32" class="paper4-svg-heading">Ground-relative view</text>
-    <path d="M60 285 L120 245 L175 214 L218 165 L268 125" class="paper4-track" />
-    <rect x="39" y="134" width="175" height="175" class="paper4-previous-box" />
-    <rect x="113" y="97" width="175" height="175" class="paper4-previous-box" />
-    <rect x="188" y="53" width="175" height="175" class="paper4-current-box" />
-    <circle cx="170" cy="178" r="8" class="paper4-previous-dot" />
-    <circle cx="245" cy="141" r="8" class="paper4-previous-dot" />
-    <circle cx="320" cy="97" r="9" class="paper4-current-dot" />
-    <path d="M383 178 H418 M407 168 L418 178 L407 188" class="paper4-arrow" />
-    <text x="427" y="32" class="paper4-svg-heading">Cell-relative grid</text>
-    <rect x="432" y="62" width="180" height="180" class="paper4-current-box" />
-    <path d="M477 62 V242 M522 62 V242 M567 62 V242 M432 107 H612 M432 152 H612 M432 197 H612" class="paper4-grid-lines" />
-    <circle cx="567" cy="107" r="9" class="paper4-current-dot" />
-    <text x="497" y="273">cell (0, 0)</text>
-    <text x="442" y="296">x, y: −30 to +10 km</text>
-    <text x="438" y="323">altitude: 1–9 km MSL</text>
-  </svg>
-  <div class="paper4-grid-facts">
-    <section><strong>All three radars in one coordinate system</strong><p><strong>DOW6</strong> (X-band), <strong>COW</strong> (C-band), and <strong>ECCC</strong> (S-band) synchronized at 6-minute intervals.</p></section>
-    <section><strong>Re-grid each radar into 3D voxels</strong><p>40 × 40 km horizontal domain ($x, y \in [-30, +10]\text{ km}$), 1–9 km MSL at 100-m grid spacing; cell fixed at $(0, 0)$.</p></section>
-    <section><strong>Weighted reflectivity perturbation (<em>Z</em>′)</strong><p>Subtract each radar's 3D background mean ($40 \times 40 \times 2\text{ km}$); merge anomalies weighted by distance from radar beam center.</p></section>
+<div class="fusion-stages" aria-label="Methodology animation stages">
+  <span v-for="(label, index) in fusionStages" :key="label" :class="{ active: Math.min(clicks, 6) === index }">{{ label }}</span>
+</div>
+
+<div class="fusion-body">
+  <div class="fusion-visual">
+    <div class="fusion-canvas" role="img" aria-label="Six-click methodological schematic: three radar sweeps sample a moving cloud, a box follows the selected cell, radar data are gridded independently, individual weighted backgrounds are subtracted, anomalies are merged with Gaussian beam-center weights, and VAD winds guide inspection of a southwestward fall-streak section. Illustrative fields, not observed data or exact particle trajectories.">
+      <CuManim v-if="fusionActive" :steps="6" :width="1000" :height="310" :construct="constructFusion" />
+      <div v-else class="fusion-inactive-frame" aria-hidden="true" />
+      <svg v-if="clicks === 0 || !fusionActive" class="fusion-first-frame" viewBox="0 0 1000 580" aria-hidden="true">
+        <path v-for="(item, i) in fusionPreview" :key="i" :d="item.d" :fill="item.color" :fill-opacity="item.fill" :stroke="item.color" :stroke-opacity="item.stroke" :stroke-width="item.width" />
+      </svg>
+      <svg class="fusion-labels" viewBox="0 0 1000 580" aria-hidden="true">
+        <defs>
+          <linearGradient id="fusion-field-scale">
+            <stop v-for="(color, i) in clicks >= 4 ? fusionColors.anomaly : fusionColors.reflectivity" :key="i" :offset="`${clicks >= 4 ? fusionColors.anomalyOffsets[i] : i * 25}%`" :stop-color="color" />
+          </linearGradient>
+        </defs>
+        <g v-if="clicks <= 2">
+          <text v-for="(item, i) in fusionLabels.map" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
+          <g v-if="clicks === 2">
+            <text v-for="(item, i) in fusionLabels.frame" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
+          </g>
+          <text v-else x="500" y="535" class="fusion-muted">{{ clicks === 1 ? 'Cloud translates while the three beams sweep together' : 'Selected cell embedded in a moving cloud' }}</text>
+        </g>
+        <g v-else-if="clicks <= 4">
+          <g v-for="(radar, i) in fusionLabels.grids" :key="i">
+            <text :x="radar.name.x" :y="radar.name.y" :fill="radar.name.color" class="fusion-label-title">{{ radar.name.text }}</text>
+            <text :x="radar.field.x" :y="radar.field.y">{{ clicks === 4 ? radar.anomaly.text : radar.field.text }}</text>
+            <text v-if="clicks === 4" :x="radar.background.x" :y="radar.background.y" :fill="radar.background.color">{{ radar.background.text }}</text>
+          </g>
+          <text v-if="clicks === 3" x="500" y="525" class="fusion-muted">Same voxel coordinates · separate radar fields and coverage</text>
+        </g>
+        <g v-else-if="clicks === 5">
+          <text v-for="(item, i) in fusionLabels.merge" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
+        </g>
+        <g v-else>
+          <text v-for="(item, i) in fusionLabels.section" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
+        </g>
+        <g v-if="clicks >= 3" class="fusion-scale">
+          <rect x="360" y="545" width="245" height="10" fill="url(#fusion-field-scale)" />
+          <text x="340" y="558" text-anchor="end">{{ clicks >= 4 ? '−4' : '0' }}</text>
+          <text x="627" y="558" text-anchor="start">{{ clicks >= 4 ? '16 dB' : '45 dBZ' }}</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fusion-view-caption">{{ fusionCaptions[Math.min(clicks, 6)] }}</p>
+  </div>
+  <div class="fusion-explanation">
+    <div v-if="clicks === 0">
+      <h2>Three complementary views</h2>
+      <p><strong>DOW6 · X band</strong><br /><strong>COW · C band</strong><br /><strong>ECCC · S band</strong></p>
+      <p>Different sites and viewing angles sample the same moving storm.</p>
+      <p class="fusion-secondary">Nine synchronized volume sets, every six minutes.</p>
+    </div>
+    <div v-else-if="clicks === 1">
+      <h2>Synchronized volume scans</h2>
+      <p>The three beams start at <strong>0°</strong> and sweep at equal speed in this illustration.</p>
+      <p>The cloud moves during sampling.</p>
+      <p class="fusion-secondary">The observations synchronize six-minute volumes—not necessarily identical antenna rotations.</p>
+    </div>
+    <div v-else-if="clicks === 2">
+      <h2>Follow the selected cell</h2>
+      <p>The Paper 3 centroid track defines the moving origin: <strong>cell at (0, 0)</strong>.</p>
+      <p><strong>40 × 40 km</strong> horizontal domain:<br />x, y = −30 to +10 km.</p>
+      <p class="fusion-secondary">Altitude: 1–9 km MSL. The box extends farther southwest to retain the downwind region.</p>
+    </div>
+    <div v-else-if="clicks === 3">
+      <h2>Grid each radar independently</h2>
+      <p>Polar smoothing → common Cartesian coordinates → gap filling and <strong>500-m 3D smoothing</strong>.</p>
+      <p>Grid spacing: <strong>100 m</strong> in x, y, and z.</p>
+      <p class="fusion-secondary">These are three separate fields on the same grid, not yet a merged reflectivity volume. Dim tiles mark unsampled voxels.</p>
+    </div>
+    <div v-else-if="clicks === 4">
+      <h2>Subtract each radar's background</h2>
+      <p>Calculate a beam-weighted local mean over <strong>40 × 40 × 2 km</strong>.</p>
+      <div class="fusion-equation">
+
+$$Z'_r(p)=\widetilde Z_{e,r}(p)-\mu_r(p)$$
+
+</div>
+      <p>Localized enhancements remain relative to that radar's own background.</p>
+      <p class="fusion-secondary">Gold slabs illustrate the 2-km vertical window; μ values refer to the highlighted voxel.</p>
+    </div>
+    <div v-else-if="clicks === 5">
+      <h2>Merge the anomalies</h2>
+      <p><strong>Gaussian beam-center weights:</strong> nearer the beam center → greater weight.</p>
+      <div class="fusion-equation">
+
+$$Z'(p)=\frac{\sum_r M_r(p)Z'_r(p)}{\sum_r M_r(p)}$$
+
+</div>
+      <p class="fusion-secondary">M = 0 where a radar does not sample the voxel. Merge anomalies, not raw cross-wavelength reflectivity.</p>
+      <p class="fusion-result">One 3D enhancement field, in dB.</p>
+    </div>
+    <div v-else>
+      <h2>Inspect the expected fall streak</h2>
+      <p><strong>DOW6 VAD winds</strong>, relative to cell motion, inform the expected southwestward extension.</p>
+      <p>Select a section through the cell and downwind positive Z′ to examine the descending signature.</p>
+      <p class="fusion-secondary">A narrowed view does not uniquely isolate this cell's particles. Quantitative footprints are defined separately later.</p>
+    </div>
   </div>
 </div>
 
+<script setup>
+import { useIsSlideActive, useNav } from '@slidev/client'
+import { multiRadarFusion, fusionStages, fusionPreview, fusionLabels, fusionColors } from '../scenes/multi-radar-fusion'
+
+const { clicks } = useNav()
+// Slidev retains slide components. Mount the scene only while this slide is
+// active, so a neighboring slide's clicks cannot start a hidden replay.
+const fusionActive = useIsSlideActive()
+function constructFusion() { return multiRadarFusion(() => clicks.value) }
+const fusionCaptions = [
+  'Schematic sites and cloud · not observed radar locations',
+  'Schematic antenna synchronization · actual volume cadence: 6 minutes',
+  'Moving cell-relative domain · centroid is not at the box center',
+  'Illustrative slices of 3D grids · displayed voxels are coarsened',
+  'Illustrative fields · weighted backgrounds computed separately',
+  'Computed weighted merge of the illustrative anomalies',
+  'Schematic section · expected direction, not exact particle trajectories',
+]
+</script>
+
 <!--
-About 45 seconds. Madison Slide 8. To overcome the limitation of single-radar scanning, we bring DOW6, COW, and ECCC into a single shared Cartesian framework. Using the Paper 3 cell track, the coordinate frame moves with the cell so that the CTGC is continuously fixed at (0, 0). Each radar is mapped to 100-m voxels with Gaussian beam weighting. For each instrument, we subtract its own 40x40 km by 2-km local background mean (applying the Paper 2 framework) to obtain the reflectivity perturbation Z'. We combine Z' across radars weighted by beam proximity, producing a seamless 3D anomaly volume.
+About 90 seconds, six clicks. Chapter 5 Data and Methods. This is a methodological illustration, not the observed volume data. The radar locations, scan angles, beam widths, cloud, and deliberately coarse displayed voxels are schematic. The smooth synthetic fields represent independently gridded/smoothed radar reflectivity; the beam-weighted local backgrounds, individual anomalies, and normalized merge are numerically computed from those illustrative fields. The coarse example truncates and renormalizes background windows at its domain boundaries; it is not an implementation or validation of the papers' DCT operators. Text and equations remain in Slidev/SVG, matching the earlier Manim slides.
+
+Entry: identify the three instruments and wavelength bands. Different views help describe the same moving cell despite incomplete, range-dependent sampling. The paper analyzes nine synchronized volume sets, every six minutes, from 02:54 to 03:42 UTC.
+
+[click] The three beams start at zero-degree azimuth (north) and rotate clockwise together at constant speed while the cloud translates northeast. This equal-speed, common-phase rotation demonstrates synchronized sampling; it is not a claim that the actual antennas used identical azimuth starts, angular speeds, or elevation schedules. The observed synchronization is at the volume level. This plan view stands in for repeated multi-elevation sweeps, not a full reconstruction from one PPI.
+
+[click] Draw the asymmetric 40-by-40-km box and move it with the selected cell. The Paper 3 centroid track supplies the origin, x=y=0; the horizontal bounds are -30 to +10 km, so the cell is not centered in the box. Altitude spans 1–9 km MSL. Retaining more of the southwest region anticipates the expected downwind signature. This is the common analysis domain, not an exclusive particle-source mask.
+
+[click] Map each radar separately into that common frame. The actual pipeline smooths reflectivity in polar coordinates using Paper 1, grids independently, fills gaps, and applies beam-weighted 500-m smoothing in all Cartesian directions. Grid spacing is 100 m in all directions; grid spacing is not the native or effective resolution. The animation shows three horizontal slices at 3, 5, and 7 km to make the 3D grids legible, not three layers replacing the full vertical volume. Dim tiles indicate that a radar does not sample a voxel; they are not zero reflectivity. Preserve each radar's own field and sampling weights through this stage.
+
+[click] Use the Paper 2 weighted-local-statistics framework to calculate each radar's own background. For a voxel, the background is the spatial mean of smoothed dBZ reflectivity with Gaussian beam weights over a 40-by-40-by-2-km boxcar window. The gold slabs show the 6–8-km example around the highlighted (0,0,7 km) voxel; repeat the window at other heights. Subtract the background separately for every radar. Z'_r is a logarithmic reflectivity difference, in dB. Different wavelengths can have different equivalent reflectivity because of scattering and attenuation; do not claim anomaly subtraction makes all wavelength effects vanish.
+
+[click] Use the same radar-beam weights in the normalized weighted average. Weight decreases with distance from the beam center according to a Gaussian, not simply with horizontal distance from the radar. The right-hand inset compares the same voxel relative to each radar's beam center; its M values come from the illustrative fields. No radar coverage means M=0, and a voxel with no contributing radar remains missing. The three independent anomaly grids become one common 3D Z-prime field, not a raw-reflectivity maximum or a wind retrieval.
+
+[click] DOW6 VAD horizontal winds provide the expected fall-streak direction relative to cell motion. Reveal the southwest–northeast section through the tracked cell and descending positive anomaly. The gold dashed corridor is a qualitative expected extension, not integrated particle trajectories, a measured terminal velocity, or proof of exclusive particle origin. A cross-section/subvolume makes the structure easier to inspect without removing the physical ambiguity from neighboring cells and pre-existing precipitation. The quantitative snow and rain footprints are defined separately later from the upper decile of time-mean layer-maximum Z-prime, not from a VAD-only trajectory or this schematic curtain. Continue to the observed generating-layer maps and VAD context on the next slide.
 -->
 
 ---
