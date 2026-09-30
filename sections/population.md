@@ -534,7 +534,35 @@ About 75–90 seconds, five clicks. Entry: the radar compares horizontal and ver
 
 [click] Return explicitly to the same observed Figure 13(c) from the previous slide, with its early-decrease interval highlighted. The population mean remains positive; the teaching examples do not imply it reaches zero. The conceptual animation shows oriented crystals joining into larger, more isotropic aggregates. This is consistent with the paper's early aggregation interpretation; riming can also reduce anisotropy but is not separately animated or uniquely established. Shapes, counts, and sizes are schematic, and the radar ratio is reflectivity-weighted rather than a simple particle-number average. Reflectivity is relatively stable after initiation and rho_HV stays high; these additional plots remain in the full Figure 13. Do not call the contour-size increase growth of every individual cell.
 
-[click] Highlight the subsequent overall rise through maturity and dissipation. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Keep the oriented crystals visibly distinct while the aggregates cross the lower boundary of the 5.5–8 km MSL generating layer: aggregates do not transform back into pristine crystals. Polarimetry supports this inference but does not directly identify particle habit. The animation shows the proposed differential sedimentation and sorting, not measured particle trajectories, a unique mechanism, or an exact scattering calculation. Continue to the existing conceptual population-life-cycle figure to combine this microphysical interpretation with the observed structural evolution.
+[click] Highlight the subsequent overall rise through maturity and dissipation. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Keep the oriented crystals visibly distinct while the aggregates cross the lower boundary of the 5.5–8 km MSL generating layer: aggregates do not transform back into pristine crystals. Polarimetry supports this inference but does not directly identify particle habit. The animation shows the proposed differential sedimentation and sorting, not measured particle trajectories, a unique mechanism, or an exact scattering calculation. Continue to the one selected cell tracked through this sequence; its Z_DR evolution shows the same population trend in a single example, which then supports the conceptual population-life-cycle figure.
+-->
+
+---
+class: population-cell
+clicks: 1
+---
+
+# One selected cell persisted for nearly 50 minutes
+
+<div class="population-cell-body">
+<div class="population-cell-text">
+  <p class="population-lead">Manually tracked Set 1 cell · nine times · 02:55–03:43 UTC</p>
+  <section><strong>Nearly 50 minutes</strong><p>The dashed circle follows the same feature from 02:55 to 03:43 UTC.</p></section>
+  <section><strong>Peak near 03:25</strong><p>Strongest and largest near mid-track (maximum contour area about 45 km²), then weaker.</p></section>
+  <section><strong>Sampling the moving cell</strong><p>PPI elevation changes between panels (6.9°, 11.6°) keep the cell in view; gray dashed arcs mark altitude.</p></section>
+  <section><strong>Matching Z<sub>DR</sub> behavior</strong><p>Z<sub>DR</sub> falls to near zero during maturity, then exceeds 2 dB late in the track, consistent with the population trend.</p></section>
+</div>
+
+<div class="population-cell-full population-swap">
+  <img v-click.hide="1" src="../figures/population-cell-full-z.png" alt="Paper Figure 17: the complete nine-panel reflectivity PPI sequence of the tracked cell from 02:55 to 03:43 UTC, with the dashed circle marking the cell in each panel" />
+  <img v-click="1" src="../figures/population-cell-full-zdr.png" alt="Paper Figure 18: the complete nine-panel differential reflectivity PPI sequence for the same cell and times, with the dashed circle marking the cell in each panel" />
+</div>
+</div>
+
+<p class="fine">Paper Figures 17 and 18, full panels; click to change from Z<sub>e</sub> to Z<sub>DR</sub>. Dashed circles locate the tracked cell; PPI elevation and altitude labels are printed with each panel. This selected track is not a population lifetime estimate.</p>
+
+<!--
+About 60 seconds, one click. Show the complete reflectivity sequence first: the dashed circle follows one selected Set 1 feature from 02:55 to 03:43 UTC, nearly 50 minutes, sampled at nine times. The middle panels near 03:25 show a stronger and larger signature (the paper estimates a maximum contour area of roughly 45 km²), then the signature weakens. The elevation angle printed above each panel changes to continue sampling the moving cell; the gray dashed arcs indicate altitude. Click once to swap to the full Z_DR sequence for the same cell and times: Z_DR decreases to near zero during maturity and exceeds 2 dB late in the track, consistent with the population trend but subject to the same interpretive caveats. This is a manually followed, long-lived example, not evidence that typical cells live 50 minutes. The track is also the starting point for the cell-relative three-dimensional analysis in Paper 4. Continue to the conceptual population-life-cycle figure, where this individual case supports the population synthesis.
 -->
 
 ---
@@ -550,27 +578,7 @@ class: figure-slide population-schematic
 <p class="fine">Paper Figure 19, cropped. Bottom: observed boundary evolution. Top: microphysical interpretation from radar signatures, not direct particle imagery.</p>
 
 <!--
-About 40 seconds. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. One unusually persistent cell lets us connect the population view to the next paper.
--->
-
----
-class: population-cell
----
-
-# One selected cell persisted for nearly 50 minutes
-
-<p class="population-lead">Three of nine reflectivity snapshots from a manually tracked Set 1 cell.</p>
-
-<div class="population-cell-sequence">
-  <figure><img src="../figures/population-cell-0255.png" alt="Paper Figure 17(a), 02:55 UTC: the selected cell appears inside the dashed tracking circle" /><figcaption>02:55 · first observed</figcaption></figure>
-  <figure><img src="../figures/population-cell-0325.png" alt="Paper Figure 17(f), 03:25 UTC: the tracked cell has a stronger, larger reflectivity signature" /><figcaption>03:25 · near peak area</figcaption></figure>
-  <figure><img src="../figures/population-cell-0343.png" alt="Paper Figure 17(i), 03:43 UTC: the tracked reflectivity signature has weakened" /><figcaption>03:43 · last observed</figcaption></figure>
-</div>
-
-<p class="fine">Paper Figure 17(a, f, i), cropped. Dashed circles locate the same cell; PPI elevations are 6.9°, 11.6°, and 6.9°. This selected track is not a population lifetime estimate.</p>
-
-<!--
-About 45 seconds. The dashed circle follows one selected Set 1 feature from 02:55 to 03:43 UTC, nearly 50 minutes. These are three of the nine PPI reflectivity panels in Figure 17; the full sequence and the corresponding Z_DR series appear in the paper, with the Z_DR sequence also in backup. The middle panel at 03:25 shows a stronger and larger signature (the paper estimates a maximum contour area of roughly 45 km²), then the signature weakens. The elevation angle printed above each panel changes to continue sampling the moving cell; the gray dashed arcs indicate altitude. This is a manually followed, long-lived example, not evidence that typical cells live 50 minutes. Its Z_DR decreases to near zero during maturity and exceeds 2 dB late in the track, consistent with the population trend but subject to the same interpretive caveats. The track is the starting point for the cell-relative three-dimensional analysis in Paper 4.
+About 40 seconds. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. The selected cell just shown grounds this synthesis in one tracked example. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. This closes the population results; the limitations follow.
 -->
 
 ---
