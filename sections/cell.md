@@ -422,19 +422,86 @@ About 55 seconds. Here is the quantitative synthesis from Chapter 5. Converting 
 -->
 
 ---
-class: smoothing-conclusions paper4-limits
+class: smoothing-conclusions population-limits paper4-limits
 ---
 
 # Project 4: Limitations
 
 <div class="smoothing-conclusion-list">
-  <section><p>One selected cell in one storm; six-minute volume scans and two soundings limit temporal and thermodynamic detail.</p></section>
-  <section><p>Time-mean footprints and empirical reflectivity–rate relations introduce quantitative uncertainties.</p></section>
-  <section><p>Overlapping cells and pre-existing precipitation prevent assigning an exact mass fraction to this cell alone.</p></section>
+  <section>
+    <h2>Attribution</h2>
+    <p>The 51% snow and 72% rain contrasts do not measure the tracked cell’s share of precipitation.</p>
+  </section>
+  <section>
+    <h2>Unresolved mechanisms</h2>
+    <p>The relative roles of changing shear and overlapping CTGC precipitation remain unresolved.</p>
+  </section>
+  <section>
+    <h2>Footprints and rate estimates</h2>
+    <p>Time-mean footprints may miss instantaneous streak boundaries; rates depend on chosen reflectivity–rate relations.</p>
+  </section>
+  <section>
+    <h2>Case scope</h2>
+    <p>One selected cell cannot establish a population mean or a storm-total precipitation contribution.</p>
+  </section>
 </div>
 
+<style>
+.paper4-limits .smoothing-conclusion-list {
+  max-height: 22rem;
+}
+
+.paper4-limits .smoothing-conclusion-list p {
+  font-size: 0.95rem;
+  text-wrap: pretty;
+}
+</style>
+
 <!--
-About 35 seconds. Methodological and physical limitations: This is a single, unusually persistent cell in one winter storm; 6-minute scanning aliases rapid microphysical fluctuations. The fixed time-mean upper-decile footprints capture persistent features but do not track instantaneous streak boundaries. Empirical Z–R and Z–S relations estimate precipitation from reflectivity rather than direct particle flux or surface gauge measurements. Most importantly, pre-existing precipitation and overlapping adjacent CTGCs prevent attributing the +51% or +72% enhancement solely to this one cell.
+About 40–45 seconds, no clicks. Read the panels from top left to bottom right.
+These limitations follow Chapter 5's discussion, matching the submitted paper.
+
+Suggested delivery: “The 51% snow and 72% rain contrasts do not measure this
+cell's share of precipitation. Changing shear and overlapping CTGC
+precipitation may both affect the bands, but their relative roles remain
+unresolved. The fixed footprints may miss instantaneous streak boundaries,
+and the estimated rates depend on reflectivity–rate relations. Finally, one
+cell cannot establish a population mean or its contribution to storm-total
+precipitation.”
+
+Supporting detail for discussion and questions, not the timed delivery:
+
+Attribution: The 51% liquid-equivalent snow-rate and 72% rain-rate enhancements
+compare rates inside versus outside the layer-specific footprints. They are
+spatial contrasts associated with persistent reflectivity enhancements, not
+the tracked cell's contribution or a fraction of storm-total precipitation.
+Both regions may include other CTGCs and pre-existing precipitation; the
+outside region is not a control without generating cells.
+
+Unresolved mechanisms: Changing shear and overlapping CTGC precipitation may
+both contribute to the less distinct north–south band pattern, but their
+relative roles remain unresolved. The observed connection is consistent with
+seeder–feeder growth, not a direct measurement of the growth mechanisms.
+Three-dimensional winds, particle trajectories, cloud liquid water, and
+ice-particle measurements would help constrain the processes and attribution.
+
+Footprints and rate estimates: The upper-decile footprints come from time-mean
+column-maximum reflectivity anomaly; they capture persistent features but may
+miss the fall streak's instantaneous position and extent. Rates depend on the
+chosen Z–S and Z–R relations and are estimates, not measured mass fluxes.
+The paper tested p85, p90, and p95: snow-rate enhancement spans 49–51% and
+rain-rate enhancement 68–75%. These ranges describe threshold sensitivity,
+not confidence intervals or the total rate-estimation uncertainty.
+
+Case scope: One selected cell in one winter storm cannot establish a population
+mean or a storm-total precipitation contribution. Additional cases are needed
+to assess which structural relationships and precipitation contrasts recur.
+
+Sampling details for questions: Nine synchronized volume sets, six minutes
+apart, can miss changes between scans. The 02:00 and 04:15 UTC soundings provide
+thermodynamic context rather than continuous local measurements along the
+02:54–03:42 UTC cell track. Keep these supporting constraints in the notes
+rather than displacing the paper's principal limitations on the slide.
 -->
 
 ---
