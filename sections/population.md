@@ -577,10 +577,10 @@ clicks: 1
 
 <div class="population-cell-body">
 <div class="population-cell-text">
-  <p class="population-lead">Manually tracked Set 1 cell · nine times · 02:55–03:43 UTC</p>
-  <section><strong>Nearly 50 minutes</strong><p>The dashed circle follows the same feature from 02:55 to 03:43 UTC.</p></section>
-  <section><strong>Peak near 03:25</strong><p>Strongest and largest near mid-track (maximum contour area about 45 km²), then weaker.</p></section>
-  <section><strong>Sampling the moving cell</strong><p>PPI elevation changes between panels (6.9°, 11.6°) keep the cell in view; gray dashed arcs mark altitude.</p></section>
+  <p class="population-lead">Tracked CTGC · nine times-steps · 02:55–03:43 UTC</p>
+    <section><strong>Sampling the moving cell</strong><p>PPI elevation changes between panels (6.9°, 11.6°) keep the cell in view; gray dashed arcs mark altitude.</p></section>
+    <section><strong>Nearly 50 minutes</strong><p></p></section>
+  <section><strong>Peak near 03:25</strong><p>Strongest and largest near mid-track (maximum contour area about 45 km²), then smaller.</p></section>
   <section><strong>Matching Z<sub>DR</sub> behavior</strong><p>Z<sub>DR</sub> falls to near zero during maturity, then exceeds 2 dB late in the track, consistent with the population trend.</p></section>
 </div>
 
