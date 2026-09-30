@@ -559,8 +559,6 @@ clicks: 1
 </div>
 </div>
 
-<p class="fine">Paper Figures 17 and 18, full panels; click to change from Z<sub>e</sub> to Z<sub>DR</sub>. Dashed circles locate the tracked cell; PPI elevation and altitude labels are printed with each panel. This selected track is not a population lifetime estimate.</p>
-
 <!--
 About 60 seconds, one click. Show the complete reflectivity sequence first: the dashed circle follows one selected Set 1 feature from 02:55 to 03:43 UTC, nearly 50 minutes, sampled at nine times. The middle panels near 03:25 show a stronger and larger signature (the paper estimates a maximum contour area of roughly 45 km²), then the signature weakens. The elevation angle printed above each panel changes to continue sampling the moving cell; the gray dashed arcs indicate altitude. Click once to swap to the full Z_DR sequence for the same cell and times: Z_DR decreases to near zero during maturity and exceeds 2 dB late in the track, consistent with the population trend but subject to the same interpretive caveats. This is a manually followed, long-lived example, not evidence that typical cells live 50 minutes. The track is also the starting point for the cell-relative three-dimensional analysis in Paper 4. Continue to the conceptual population-life-cycle figure, where this individual case supports the population synthesis.
 -->
