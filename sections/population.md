@@ -601,13 +601,11 @@ class: figure-slide population-schematic
 # A conceptual population life cycle
 
 <div class="fig">
-  <img src="../figures/population-lifecycle-core.png" alt="Cropped core of Paper Figure 19: the conceptual three-stage life cycle, with observed boundary organization below and inferred particle evolution above" />
+  <img src="../figures/population-lifecycle-full.png" alt="Paper Figure 19: conceptual CTGC lifecycle across initiation, mature, and dissipation stages, showing simplified vertical cross-sections above and horizontal boundary evolution below, with legend defining pristine crystals, isotropic aggregates or rimed crystals, and 5-dBZ perturbation CTGC boundaries" />
 </div>
 
-<p class="fine">Paper Figure 19, cropped. Bottom: observed boundary evolution. Top: microphysical interpretation from radar signatures, not direct particle imagery.</p>
-
 <!--
-About 40 seconds. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. The selected cell just shown grounds this synthesis in one tracked example. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. This closes the population results; the limitations follow.
+About 40 seconds. This is the complete Paper Figure 19 schematic, synthesizing the observed boundary evolution and inferred microphysics across initiation, mature, and dissipation stages. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. The bottom legend defines the pristine crystal, aggregate/rimed crystal, and the 5-dBZ perturbation CTGC boundary. The selected cell just shown grounds this synthesis in one tracked example. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. This closes the population results; the limitations follow.
 -->
 
 ---
