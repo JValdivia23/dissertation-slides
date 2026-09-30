@@ -656,11 +656,12 @@ class: smoothing-conclusions population-conclusions conclusions-bullets
 title: "Project 3: Conclusions"
 ---
 
-- Set 1’s detected population progressed through initiation, maturity, and dissipation over approximately 1.7 hours.
-- During maturity, counts decreased while mean boundary area increased, supporting merging and clustering into larger radar features rather than simply growth of individual turrets.
-- The early decrease and later increase in mean Z<sub>DR</sub> are consistent with early aggregation and later preferential fallout and particle sorting within the generating layer.
+# Project 3: Conclusions
+- The detected population progressed through initiation, maturity, and dissipation over approximately 1.7 hours.
+- During maturity, counts decreased while size area increased, supporting merging and clustering into larger features rather than simply growth of individual turrets.
+- The polarimetric signals are consistent with early aggregation and later preferential fallout and particle sorting within the generating layer.
 
-<p class="population-handoff">One selected cell showed a similar structural and polarimetric progression; the next study follows its three-dimensional structure and fall streak.</p>
+<p class="population-handoff">One selected cell showed a similar structural and polarimetric progression.</p>
 
 <!--
 About 40 seconds, no clicks. This conclusion slide has no visible title or labeled lead-ins; the title in frontmatter is only for navigation. Present three findings and their significance, then the selected-cell connection to the next paper. Suggested delivery: “Set 1's detected population evolved through initiation, maturity, and dissipation over about 1.7 hours. During maturity, fewer but larger radar features indicated organization through merging and clustering, rather than only growth of individual turrets. The early decrease and later increase in differential reflectivity are consistent with early aggregation and later preferential fallout and particle sorting in the generating layer. One selected cell showed a similar progression; we next follow its three-dimensional structure and fall streak.”
