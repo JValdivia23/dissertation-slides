@@ -35,6 +35,40 @@ const BOX_SIZE = 3.15
 const VIEWS: VolumeView[] = [-3.15, 0, 3.15].map(x => ({ center: [x, -.35, 0], size: 2.3 }))
 const MERGED_VIEW: VolumeView = { center: [-1.4, -.15, 0], size: 4.1 }
 
+// Observation-informed schematic, not a digitized retrieval or a particular
+// analysis time. Chapter 5 Figures 1(i) and 3(i) show winds FROM the southwest,
+// a speed minimum near 2–3 km, and stronger flow above the shear layer.
+// Restrict the illustration to the VAD's approximately 1–6.5-km coverage.
+export const fusionWindProfile = [
+  { z: 1, speed: 28, from: 230 },
+  { z: 1.5, speed: 27, from: 240 },
+  { z: 2.2, speed: 23, from: 250 },
+  { z: 2.5, speed: 25, from: 250 },
+  { z: 3.5, speed: 30, from: 245 },
+  { z: 4.5, speed: 34, from: 240 },
+  { z: 5.5, speed: 34, from: 235 },
+  { z: 6.5, speed: 35, from: 230 },
+]
+const WIND_COLOR = '#85bec8'
+const WIND_LEFT = 2.4
+const WIND_RIGHT = 4.05
+const WIND_VECTOR_SCALE = .015 // Same map-view length scale at every height.
+
+function windSpeedPoint(speed: number, z: number): Point {
+  return [WIND_LEFT + (WIND_RIGHT - WIND_LEFT) * speed / 40, sectionPoint(0, z)[1], 0]
+}
+export function fusionWindVectors() {
+  return fusionWindProfile.filter(p => p.z % 1 === .5).map(p => {
+    // Meteorological bearings describe where wind comes FROM. Negate both
+    // components so arrowheads show horizontal flow TOWARD (N up, E right).
+    const east = -p.speed * WIND_VECTOR_SCALE * Math.sin(p.from * RAD)
+    const north = -p.speed * WIND_VECTOR_SCALE * Math.cos(p.from * RAD)
+    const y = sectionPoint(0, p.z)[1]
+    return { ...p, start: [4.45 - east / 2, y - north / 2, 0] as Point,
+      end: [4.45 + east / 2, y + north / 2, 0] as Point }
+  })
+}
+
 function clamp(value: number) { return Math.max(0, Math.min(1, value)) }
 function mix(a: number, b: number, t: number) { return a + (b - a) * t }
 function mixPoint(a: Point, b: Point, t: number): Point { return a.map((value, i) => mix(value, b[i], t)) as Point }
@@ -251,12 +285,20 @@ function sectionShapes(step: number, alpha: number): Shape[] {
     const b = (i + .55) / 8
     result.push(line([point(-17.5 * a, 7.5 - 5.4 * a), point(-17.5 * b, 7.5 - 5.4 * b)], GOLD, .85 * opacity, 2.5))
   }
-  // Wind profile / relative-direction arrows, shown independently of echoes.
-  result.push(line([[3.0, -1.8, 0], [3.0, 1.75, 0]], GRID, opacity, 1.5))
-  for (const [z, length] of [[7.5, .45], [5.5, .8], [3.5, 1.2], [1.5, 1.4]]) {
+  // Ground-relative horizontal wind speed and direction are separate from
+  // the cell-relative echo curtain. Direction glyphs are miniature PLAN views,
+  // not vectors in the height–speed plane and not a vertical-wind retrieval.
+  const top = fusionWindProfile.at(-1)!.z
+  result.push(line([windSpeedPoint(0, top), windSpeedPoint(0, 1), windSpeedPoint(40, 1)], GRID, opacity, 1.5))
+  for (const speed of [0, 20, 40]) result.push(line([windSpeedPoint(speed, 1), windSpeedPoint(speed, top)], GRID, .35 * opacity, 1))
+  for (const z of [1, 3, 5, top]) {
+    result.push(line([windSpeedPoint(0, z), windSpeedPoint(40, z)], GRID, .35 * opacity, 1))
     const y = sectionPoint(0, z)[1]
-    result.push(line(arrow([3.9, y, 0], [3.9 - length, y, 0]), '#85bec8', opacity, 2.5))
+    result.push(line([[WIND_LEFT - .05, y, 0], [WIND_LEFT, y, 0]], WHITE, opacity, 1.5))
   }
+  result.push(line(fusionWindProfile.map(p => windSpeedPoint(p.speed, p.z)), WIND_COLOR, opacity, 3))
+  fusionWindProfile.forEach(p => result.push(fill(ellipse(windSpeedPoint(p.speed, p.z), .035), WIND_COLOR, opacity)))
+  fusionWindVectors().forEach(p => result.push(line(arrow(p.start, p.end, .08), WIND_COLOR, opacity, 2.5)))
   return result
 }
 
@@ -295,9 +337,14 @@ export const fusionLabels = {
   section: [label(-1.4, 2.28, 'Cell-relative Z′ section (dB)', GOLD),
     ...[1, 5, 9].map(z => label(-4.42, sectionPoint(0, z)[1] - .08, String(z), WHITE, 'end')),
     label(-4.25, 2.05, 'km MSL', WHITE, 'start'), label(-4.25, -2.2, 'SW'), label(1.45, -2.2, 'NE'),
-    label(sectionPoint(0, 1)[0], -2.2, 'cell (0, 0)', GOLD),
-    label(3.35, 2.28, 'VAD winds'), label(3.35, 1.91, 'relative to cell motion'),
-    label(3.35, -2.1, 'Expected SW extension', '#85bec8')],
+    label(sectionPoint(0, 1)[0], -2.2, 'cell (0, 0)', GOLD)],
+  wind: [label(3.35, 2.28, 'VAD winds'), label(3.35, 1.91, 'ground-relative'),
+    label(3.22, 1.26, 'Speed'), label(3.22, 1.00, '(m s⁻¹)'),
+    label(4.45, 1.26, 'Direction'), label(4.45, 1.00, 'N ↑  E →'),
+    label(2.21, 1.00, 'km', WHITE, 'end'),
+    ...[1, 3, 5, 6.5].map(z => label(2.21, sectionPoint(0, z)[1] - .07, String(z), WHITE, 'end')),
+    ...[0, 20, 40].map(speed => label(windSpeedPoint(speed, 1)[0], -2.11, String(speed))),
+    label(4.45, -2.11, 'NE', WIND_COLOR), label(3.35, -2.52, 'Flow: SW → NE', WIND_COLOR)],
 }
 
 export async function multiRadarFusion(getInitialClick: () => number = () => 0) {

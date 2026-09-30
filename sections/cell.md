@@ -94,6 +94,9 @@ clicks: 6
         </g>
         <g v-else>
           <text v-for="(item, i) in fusionLabels.section" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
+          <g class="fusion-wind-labels">
+            <text v-for="(item, i) in fusionLabels.wind" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
+          </g>
         </g>
         <g v-if="clicks >= 3" class="fusion-scale">
           <rect x="360" y="545" width="245" height="10" fill="url(#fusion-field-scale)" />
@@ -153,8 +156,9 @@ $$Z'(p)=\frac{\sum_r M_r(p)Z'_r(p)}{\sum_r M_r(p)}$$
     </div>
     <div v-else>
       <h2>Inspect the expected fall streak</h2>
-      <p><strong>DOW6 VAD winds</strong>, relative to cell motion, inform the expected southwestward extension.</p>
-      <p>Select a section through the cell and downwind positive Z′ to examine the descending signature.</p>
+      <p><strong>DOW6 VAD winds:</strong> mainly SW → NE, with stronger flow above the mid-level shear layer.</p>
+      <p>Slower winds below can leave falling particles southwest of the northeastward-moving cell.</p>
+      <p>Select a cell-relative section through the descending positive Z′.</p>
       <p class="fusion-secondary">A narrowed view does not uniquely isolate this cell's particles. Quantitative footprints are defined separately later.</p>
     </div>
   </div>
@@ -176,7 +180,7 @@ const fusionCaptions = [
   'Illustrative slices of 3D grids · displayed voxels are coarsened',
   'Illustrative fields · weighted backgrounds computed separately',
   'Computed weighted merge of the illustrative anomalies',
-  'Schematic section · expected direction, not exact particle trajectories',
+  'Observation-informed schematic VAD · not a measured trajectory',
 ]
 </script>
 
@@ -195,7 +199,7 @@ Entry: identify the three instruments and wavelength bands. Different views help
 
 [click] Use the same radar-beam weights in the normalized weighted average. Weight decreases with distance from the beam center according to a Gaussian, not simply with horizontal distance from the radar. The right-hand inset compares the same voxel relative to each radar's beam center; its M values come from the illustrative fields. No radar coverage means M=0, and a voxel with no contributing radar remains missing. The three independent anomaly grids become one common 3D Z-prime field, not a raw-reflectivity maximum or a wind retrieval.
 
-[click] DOW6 VAD horizontal winds provide the expected fall-streak direction relative to cell motion. Reveal the southwest–northeast section through the tracked cell and descending positive anomaly. The gold dashed corridor is a qualitative expected extension, not integrated particle trajectories, a measured terminal velocity, or proof of exclusive particle origin. A cross-section/subvolume makes the structure easier to inspect without removing the physical ambiguity from neighboring cells and pre-existing precipitation. The quantitative snow and rain footprints are defined separately later from the upper decile of time-mean layer-maximum Z-prime, not from a VAD-only trajectory or this schematic curtain. Continue to the observed generating-layer maps and VAD context on the next slide.
+[click] Reveal the southwest–northeast cell-relative section and a separate ground-relative VAD wind profile. The speed curve and horizontal direction arrows are an observation-informed schematic based on Chapter 5 Figures 1(i) and 3(i), not digitized retrievals, a time mean, or a particular analysis time. Show the lower/mid-level speed minimum and stronger flow above the shear layer, with modest directional turning. Restrict the illustrated VAD to approximately 1–6.5 km MSL; do not extrapolate measured winds to the 7.5-km cell or the 9-km analysis-domain top. The speed axis is in m/s. The direction arrows use one common speed-to-length scale and N-up/E-right miniature plan views at the labeled heights; they do not show vertical velocity. The source polar figure reports meteorological direction FROM, mainly the southwest, so our arrowheads point TOWARD the northeast. The direction arrows and the echo cross-section are in different reference frames. Slower northeastward winds below can allow sedimenting particles to lag the northeastward-moving generating cell and form a southwestward trailing signature in its moving frame; do not claim the ground-relative VAD winds themselves point southwest. This is a qualitative shear explanation, not a calculation of cell-relative velocities from these illustrative numbers. The gold dashed corridor remains a qualitative expected extension, not integrated particle trajectories, a measured terminal velocity, or proof of exclusive particle origin. A cross-section/subvolume makes the structure easier to inspect without removing the physical ambiguity from neighboring cells and pre-existing precipitation. The quantitative snow and rain footprints are defined separately later from the upper decile of time-mean layer-maximum Z-prime, not from a VAD-only trajectory or this schematic curtain. Continue to the observed generating-layer maps and VAD context on the next slide.
 -->
 
 ---
