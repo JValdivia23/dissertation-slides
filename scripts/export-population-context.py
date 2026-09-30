@@ -91,6 +91,18 @@ def export(manuscript: Path, output: Path) -> None:
             pair.paste(profiles, (axis.width, 0))
             pair.save(output / f"population-environment-{time}.png", optimize=True)
 
+        # Complete sounding rows (a–d and e–h) for successive clicks on slide 40.
+        # Equal crop dimensions and the source's 866-pixel row offset align all
+        # four panels and their axes without rescaling or changing any curves.
+        for time, top in [("0200", 0), ("0415", 866)]:
+            row = images["sounding"].crop((0, top, 2453, top + 886))
+            if time == "0415":
+                # Only remove remnants of the preceding row's x-axis labels.
+                # The second row's first heading starts at pixel 22; its own
+                # headings, legends, height axis, and full profiles stay intact.
+                row.paste("white", (0, 0, row.width, 18))
+            row.save(output / f"population-sounding-{time}.png", optimize=True)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
