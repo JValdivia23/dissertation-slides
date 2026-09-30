@@ -231,68 +231,33 @@ About 50 seconds. Madison Slide 9 and Paper Figure 1. Left: 5.5–9 km layer max
 -->
 
 ---
-class: paper4-video
+class: paper4-evolution
 ---
 
 # Three-dimensional evolution
 
-<div class="paper4-video-body">
-  <video class="paper4-video-player" muted autoplay loop playsinline controls poster="../figures/paper4-3d-poster.png">
-    <source src="../figures/paper4-3d-evolution.mp4" type="video/mp4" />
-  </video>
-  <div class="paper4-video-points">
-    <section>
-      <h2>Other CTGCs appear and dissipate</h2>
-      <p>The selected cell is embedded in an active population; neighboring cells emerge and decay around it.</p>
-    </section>
-    <section>
-      <h2>Fall streak is not that easy to see</h2>
-      <p>In 3D anomaly isosurfaces aloft, the streak appears discontinuous rather than a solid vertical column.</p>
-    </section>
-    <section>
-      <h2>Strong signal in the melting layer</h2>
-      <p>A persistent, high-reflectivity anomaly remains continuously present in the underlying melting layer.</p>
-    </section>
-  </div>
-</div>
+<Paper4Evolution />
+
+<script setup>
+import Paper4Evolution from '../components/Paper4Evolution.vue'
+</script>
 
 <!--
 About 50 seconds. Madison Slide 10. This 12-second 3D animation (Paper 4 hero sequence in continuous time) renders Z' isosurfaces at 5 and 7 dB in the moving frame. Note three immediate physical observations: First, other generating cells continuously form and dissipate in the vicinity of the tracked cell. Second, tracing a continuous fall streak in 3D isosurfaces alone is challenging because turbulent eddies, shear, and evaporation create patchy signatures aloft. Third, notice the large, persistent red feature in the lowest layer: a strong melting-layer enhancement is present throughout the entire sequence.
+
+The original twelve-second evolution is preserved. It now plays once, then
+explicitly returns to the Madison reference volume and camera pose in a short
+crossfade and holds that frame. This reset is not additional storm evolution
+or a new observed time. The original movies did not join because the evolution's last volume
+differs from the camera-rotation clip's first volume. This reference ending is
+the same image, crop, scale, and position used on entry to the next slide.
+The scientific statements above are unchanged; their text is now on the left
+so the volume can remain at the right across both slides. Motion is web-only.
 -->
 
 ---
-class: paper4-video
+src: ./paper4-lateral-view.md
 ---
-
-# Lateral view: Deconstructing the three layers
-
-<div class="paper4-video-body">
-  <video class="paper4-video-player" muted autoplay loop playsinline controls poster="../figures/paper4-lateral-poster.png">
-    <source src="../figures/paper4-lateral-view.mp4" type="video/mp4" />
-  </video>
-  <div class="paper4-video-points">
-    <section>
-      <h2>GC layer · 5.5–9 km MSL</h2>
-      <p>Cloud-top turrets where ice crystal generation and initial growth occur.</p>
-    </section>
-    <section>
-      <h2>Mid-cloud layer · 3.5–5 km MSL</h2>
-      <p>Intermediate echo structures where sedimenting ice interacts with pre-existing cloud.</p>
-    </section>
-    <section>
-      <h2>Melting layer · 1.5–2.5 km MSL</h2>
-      <p>Bright-band region of high reflectivity anomaly before melting into rain.</p>
-    </section>
-    <section>
-      <h2>A continuous fall streak?</h2>
-      <p>Does the CTGC produce a single uninterrupted trail, or does it feed into existing lower precipitation?</p>
-    </section>
-  </div>
-</div>
-
-<!--
-About 45 seconds. Madison Slide 11. Rotating to a lateral perspective allows us to distinguish the vertical structure into three distinct dynamical and microphysical regimes: the generating layer at 5.5–9 km, the mid-cloud layer from 3.5–5 km, and the melting layer at 1.5–2.5 km. The key scientific question posed here: Is what we see beneath the cell a single continuous fall streak produced solely by this turret, or does it merge with pre-existing precipitation already present below?
--->
 
 ---
 class: figure-slide paper4-cross-full
