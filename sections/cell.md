@@ -274,22 +274,21 @@ About 50 seconds. Madison Slide 12 and Paper Figure 3. Vertical cross sections a
 -->
 
 ---
-class: paper4-video
+class: paper4-video paper4-midcloud
+clicks: 1
 ---
 
 # Understanding the mid-cloud layer (3.5–5 km)
 
 <div class="paper4-video-body">
-  <video class="paper4-video-player" muted autoplay loop playsinline controls poster="../figures/paper4-cutaway-mid-poster.png">
-    <source src="../figures/paper4-cutaway-mid.mp4" type="video/mp4" />
-  </video>
+  <Paper4MidCloudVideo />
   <div class="paper4-video-points">
     <section>
       <h2>Horizontal convective rolls?</h2>
       <p>Mid-cloud echoes exhibit organized, elongated parallel bands aligned with the background shear.</p>
     </section>
     <figure class="paper4-roll-photo">
-      <img src="../figures/paper4-cloud-streets.png" alt="Photograph of boundary-layer cloud streets illustrating parallel convective roll structures" />
+      <img src="../figures/paper4-cloud-streets-cropped.png" alt="Photograph of boundary-layer cloud streets illustrating parallel convective roll structures" />
       <figcaption>Boundary-layer roll clouds (analogous organization aloft)</figcaption>
     </figure>
     <section>
@@ -299,24 +298,31 @@ class: paper4-video
   </div>
 </div>
 
+<script setup>
+import Paper4MidCloudVideo from '../components/Paper4MidCloudVideo.vue'
+</script>
+
 <!--
 About 45 seconds. Madison Slide 13. Slicing through the 3.5–5 km mid-cloud layer reveals elongated, quasi-parallel reflectivity enhancements oriented roughly north–south. These structures resemble horizontal convective rolls or shear-parallel precipitation bands (conceptually analogous to visible cloud streets). Importantly, these rolls already produce their own precipitation trails, establishing that mid-cloud echoes are not created in a vacuum by cloud-top turrets alone.
+
+[click] Play the original three-second elevation cutaway once, then hold its
+final view. Entry and rewind show the decoded first frame; direct entry at the
+completed click and return from the following slide show the final frame.
+The cloud-street photograph uses Madison slide 13's original crop, exported
+without resampling by scripts/export-paper4-midcloud.py. It remains an analogy
+for the organization of the echoes aloft, not an observation of this storm.
 -->
 
 ---
-class: paper4-video
+class: paper4-map-evolution
 ---
 
 # Mid-cloud layer: Along-wind band structure
 
-<div class="paper4-video-body">
-  <video class="paper4-video-player" muted autoplay loop playsinline controls poster="../figures/paper4-cutaway-bands-poster.png">
-    <source src="../figures/paper4-cutaway-bands.mp4" type="video/mp4" />
-  </video>
-  <div class="paper4-video-points">
+<Paper4EvolutionMaps :src="midCloudMaps" alt="Chapter 5 Figure 4: column-maximum reflectivity anomaly over 3.5–5 km MSL at all nine analysis times from 02:54 to 03:42 UTC, in dB; cell-relative distance axes, analysis corridor, transect, and selected-cell circle are retained">
     <section>
-      <h2>3D elevation cutaway</h2>
-      <p>Lowering the viewing threshold reveals how mid-cloud bands extend continuously along the mean flow.</p>
+      <h2>Mid-cloud evolution</h2>
+      <p>North–south bands are already present at 02:54 UTC and become less distinct during 03:24–03:42 UTC.</p>
     </section>
     <section>
       <h2>Modulation of mid-level echo</h2>
@@ -326,30 +332,56 @@ class: paper4-video
       <h2>Combined structure</h2>
       <p>The resulting mid-level reflectivity anomaly reflects both the CTGC fall streak and roll updraft enhancement.</p>
     </section>
-  </div>
-</div>
+</Paper4EvolutionMaps>
+
+<script setup>
+import Paper4EvolutionMaps from '../components/Paper4EvolutionMaps.vue'
+import midCloudMaps from '../figures/paper4-mid-full.png'
+</script>
 
 <!--
-About 45 seconds. Madison Slide 14. This cutaway isolates the mid-cloud volume as the cell moves along the track. Notice how the falling particles from the generating cell intersect and modulate the existing banded structure. The observed mid-level enhancement is therefore a combined structure: ice crystals seeded from the CTGC fall into pre-existing supercooled liquid and updrafts within the rolls, consistent with a seeder–feeder enhancement mechanism.
+About 45 seconds. Paper Figure 4, replacing Madison slide 14's cutaway video.
+These are column-maximum reflectivity-anomaly maps over 3.5–5 km MSL at all
+nine analysis times from 02:54 to 03:42 UTC, in the moving cell-relative frame.
+The plotted quantity is Z-prime-max in dB, not equivalent reflectivity in dBZ.
+Keep the original time labels, distance axes, colorbar, corridor, transect,
+and selected-cell circle visible; the figure caption is omitted on the slide
+so the complete nine-panel figure can fill the left-hand space.
+
+North–south elongated structures are already present at 02:54 UTC and persist,
+but become less distinct during 03:24–03:42 UTC. Changes in shear and the
+increasing prominence of CTGC precipitation may both contribute to this
+evolution. The roll-updraft and seeder–feeder mechanisms remain interpretations:
+these anomaly maps do not retrieve vertical velocity or exclusive particle
+origin. Use the preceding vertical sections when discussing the connection
+between the selected CTGC and the existing mid-cloud echoes.
 -->
 
 ---
-class: paper4-observations
+class: paper4-map-evolution
 ---
 
 # Melting layer effects (1.5–2.5 km)
 
-<div class="paper4-observations-body">
-  <figure><img src="../figures/paper4-rain-full.png" alt="Chapter 5 Figure 5: lower-level (1–1.5 km MSL) equivalent reflectivity maps with p90 footprint contours across nine analysis times (02:54–03:42 UTC)" /><figcaption><em>Z</em><sub>e,max</sub> (1–1.5 km MSL) · nine times · 02:54–03:42 UTC</figcaption></figure>
-  <div class="paper4-grid-facts">
+<Paper4EvolutionMaps :src="rainMaps" alt="Chapter 5 Figure 5: lower-level (1–1.5 km MSL) equivalent reflectivity maps with p90 footprint contours across nine analysis times (02:54–03:42 UTC)">
     <section><strong>Early melting layer enhancement</strong><p>Lower-level precipitation is already present before CTGC fall-streak arrival; it is not related to the cell alone.</p></section>
     <section><strong>Horizontal precipitating bands</strong><p>Underlying stratiform bands produce significant background precipitation throughout the domain.</p></section>
     <section><strong>A combined effect</strong><p>The CTGC fall streak and pre-existing precipitating bands overlap, producing localized precipitation enhancement.</p></section>
-  </div>
-</div>
+</Paper4EvolutionMaps>
+
+<script setup>
+import Paper4EvolutionMaps from '../components/Paper4EvolutionMaps.vue'
+import rainMaps from '../figures/paper4-rain-full.png'
+</script>
 
 <!--
 About 50 seconds. Madison Slide 15 and Paper Figure 5. Looking below the melting level in the 1–1.5 km rain layer: At early times (02:54 UTC), substantial reflectivity is already observed below the melting level. The underlying precipitation field contains organized bands independent of the cell. As the cell matures and its fall streak descends, it overlaps these existing bands. The outcome is a combined effect: the cell reinforces and enriches an active precipitation system rather than initiating rainfall on dry ground.
+
+Figure metadata, retained here rather than as a visible caption: maximum-radar
+composite Z-e-max over 1–1.5 km MSL, in dBZ, at all nine times from 02:54 to
+03:42 UTC. This figure is below the melting layer named in the slide title,
+not a map of the 1.5–2.5 km melting layer itself. The original footprint legend,
+contours, time labels, distance axes, and colorbar remain part of the figure.
 -->
 
 ---

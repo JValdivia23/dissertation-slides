@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   src: string
   startFrame: string
   endFrame: string
@@ -9,7 +9,8 @@ const props = defineProps<{
   active: boolean
   label: string
   controls?: boolean
-}>()
+  cropTop?: number
+}>(), { cropTop: 600 })
 const emit = defineEmits<{ ended: [], error: [message: string] }>()
 const player = ref<HTMLVideoElement | null>(null)
 const live = ref(false)
@@ -58,7 +59,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="paper4-held-video" :data-pose="currentPose" :data-active="active" role="img" :aria-label="label">
+  <div class="paper4-held-video" :style="{ '--paper4-crop-top': `${-cropTop / 1060 * 100}%` }" :data-crop-top="cropTop" :data-pose="currentPose" :data-active="active" role="img" :aria-label="label">
     <video
       ref="player"
       :src="src"
@@ -81,9 +82,9 @@ onBeforeUnmount(() => {
 .paper4-held-video {
   position: relative;
   width: 100%;
-  /* Keep the full source width, including the moving compass. Only trim
-     vertical white margins outside the union of every frame in both clips:
-     y=600..1660 in the 2030-pixel source. Use the same crop for all holds. */
+  /* Keep the full 2030-pixel source width, including the moving compass.
+     Crop a 1060-pixel-high band; its top is checked across all movie frames.
+     Use exactly the same framing for the video and its static hold frames. */
   aspect-ratio: 2030 / 1060;
   overflow: hidden;
   background: white;
@@ -93,7 +94,7 @@ onBeforeUnmount(() => {
 .paper4-held-video img {
   position: absolute;
   left: 0;
-  top: -56.60377358%;
+  top: var(--paper4-crop-top);
   width: 100%;
   height: 191.50943396%;
   max-width: none;
