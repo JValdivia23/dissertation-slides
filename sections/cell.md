@@ -54,7 +54,7 @@ class: paper4-fusion
 clicks: 6
 ---
 
-# Multi-radar reconstruction in a cell-relative frame
+# 3D tracking methodology
 
 <div class="fusion-stages" aria-label="Methodology animation stages">
   <span v-for="(label, index) in fusionStages" :key="label" :class="{ active: Math.min(clicks, 6) === index }">{{ label }}</span>
@@ -211,7 +211,7 @@ class: paper4-layer-slide
 <div class="paper4-layer-body">
   <figure class="paper4-layer-main">
     <img src="../figures/paper4-layer-9times.png" alt="Chapter 5 / Madison Slide 9: 5.5–9 km layer-maximum reflectivity anomaly maps across nine analysis times (02:54–03:42 UTC); the tracked cell stays at the origin while the domain extends southwestward into the downwind fall-streak region" />
-    <figcaption><em>Z</em>′<sub>max</sub> (5.5–9 km MSL) · nine times · 02:54–03:42 UTC</figcaption>
+
   </figure>
   <div class="paper4-layer-side">
     <figure class="paper4-panel-i-figure">
@@ -317,7 +317,7 @@ for the organization of the echoes aloft, not an observation of this storm.
 class: paper4-map-evolution
 ---
 
-# Mid-cloud layer: Along-wind band structure
+# Mid-cloud layer: max Z' between 3.5 and 5 km
 
 <Paper4EvolutionMaps :src="midCloudMaps" alt="Chapter 5 Figure 4: column-maximum reflectivity anomaly over 3.5–5 km MSL at all nine analysis times from 02:54 to 03:42 UTC, in dB; cell-relative distance axes, analysis corridor, transect, and selected-cell circle are retained">
     <section>
@@ -391,7 +391,7 @@ class: paper4-footprints
 # Defining fall-streak footprints
 
 <div class="paper4-footprint-steps">
-  <span>Layer maximum of <em>Z</em>′<br />at each time</span><b>→</b><span>Average the nine maps over time</span><b>→</b><span>Upper 10% in each layer (p90)</span>
+  <span>Layer maximum of <em>Z'</em></span><b>→</b><span>Average over the nine time steps</span><b>→</b><span>Upper 10% in each layer (p90)</span>
 </div>
 
 <div class="paper4-footprint-figure"><img src="../figures/time-mean-anomaly.png" alt="Chapter 5 Figure S2: time-mean column-maximum reflectivity anomaly maps, with black upper-decile contours in the rain layer at 1–1.5 km and snow layer at 2.5–3 km MSL; both footprints are southwest of the tracked cell" /></div>
@@ -429,12 +429,12 @@ class: smoothing-conclusions population-limits paper4-limits
 
 <div class="smoothing-conclusion-list">
   <section>
-    <h2>Attribution</h2>
-    <p>The 51% snow and 72% rain contrasts do not measure the tracked cell’s share of precipitation.</p>
+    <h2>CTGC Contribution</h2>
+    <p>The 51% snow and 72% rain contrasts do not measure the tracked cell’s precipitation.</p>
   </section>
   <section>
     <h2>Unresolved mechanisms</h2>
-    <p>The relative roles of changing shear and overlapping CTGC precipitation remain unresolved.</p>
+    <p>The roles of wind shear and CTGC triggers remain unresolved.</p>
   </section>
   <section>
     <h2>Footprints and rate estimates</h2>
@@ -510,8 +510,8 @@ class: smoothing-conclusions paper4-conclusions conclusions-bullets
 
 # Project 4: Conclusions
 
-- Multi-radar 3D voxel fusion resolves the evolving three-dimensional structure and fall streak of a tracked CTGC.
-- The fall streak interacts and merges with pre-existing mid-level bands (horizontal rolls) and underlying precipitation.
+- Multi-radar 3D voxel resolves the evolving three-dimensional structure and fall streak of a tracked CTGC.
+- The fall streak interacts and merges with pre-existing mid-level cloud (horizontal rolls) and underlying precipitation.
 - Persistent fall-streak footprints show 51% higher snow and 72% higher rain rates, consistent with seeder–feeder enhancement.
 
 <!--
