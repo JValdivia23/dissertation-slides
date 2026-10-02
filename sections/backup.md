@@ -39,6 +39,40 @@ class: figure-slide
 <p class="fine">23 Feb 2022, 02:28 UTC. Window of 5 pixels. Difference is the rightmost column of the comparison.</p>
 
 ---
+class: convolution-cartesian
+---
+
+# Backup: Gaussian weighting on a Cartesian grid
+
+<div class="convolution-demo">
+  <div class="convolution-demo-labels"><span>Noisy input</span><span>Smoothed output</span></div>
+  <div class="convolution-canvas" role="img" aria-label="Backup animation of a synthetic Cartesian grid: Gaussian weights appear as dots sized by distance from the center; on the first click the center average appears, then the weighting glides row by row revealing each output value.">
+    <CuManim :steps="2" :width="1080" :height="320" :construct="cartesianGaussianConvolution" />
+    <svg v-if="clicks === 0" class="convolution-first-frame" viewBox="0 0 1080 390" aria-hidden="true">
+      <rect v-for="(cell, index) in cartesianGaussianPreview.input" :key="`in-${index}`" :x="cell.x" :y="cell.y" :width="cell.w" :height="cell.h" :fill="cell.fill" />
+      <rect v-for="(cell, index) in cartesianGaussianPreview.backing" :key="`back-${index}`" :x="cell.x" :y="cell.y" :width="cell.w" :height="cell.h" :fill="cell.fill" />
+      <circle v-for="(dot, index) in cartesianGaussianPreview.dots" :key="`dot-${index}`" :cx="dot.x" :cy="dot.y" :r="dot.r" fill="#fff1c4" fill-opacity="0.8" />
+      <path :d="`M${cartesianGaussianPreview.arrowShaft.x1},${cartesianGaussianPreview.arrowShaft.y1} L${cartesianGaussianPreview.arrowShaft.x2},${cartesianGaussianPreview.arrowShaft.y2}`" stroke="#cfb87c" stroke-width="6" stroke-linecap="round" fill="none" />
+      <polygon :points="cartesianGaussianPreview.arrowTip.map(point => `${point.x},${point.y}`).join(' ')" fill="#cfb87c" />
+    </svg>
+  </div>
+  <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>Gaussian: center-weighted mean</strong></p>
+</div>
+
+<script setup>
+import { useNav } from '@slidev/client'
+import { cartesianGaussianConvolution, cartesianGaussianPreview } from '../scenes/convolution'
+
+const { clicks } = useNav()
+</script>
+
+<p class="fine">Same synthetic field as the boxcar illustration · Gaussian sigma 0.85 cells.</p>
+
+<!--
+Use if asked about kernel choice. Same synthetic, complete field as the boxcar illustration. Click 1: the Gaussian-weighted average at the center appears at the corresponding output cell. Click 2: the weighting glides along the same row-by-row path with dot sizes tracking it, revealing each Gaussian output value in sync. Dots are sized by the same discrete Gaussian, sigma 0.85 cells, truncated to three-by-three samples and normalized for the output. This is an illustration of center-weighted averaging, not a comparison of method performance.
+-->
+
+---
 class: figure-slide
 ---
 

@@ -48,8 +48,8 @@ class: convolution-cartesian
 
 <div class="convolution-demo">
   <div class="convolution-demo-labels"><span>Noisy input</span><span>Smoothed output</span></div>
-  <div class="convolution-canvas" role="img" aria-label="Animated synthetic Cartesian grid: a boxcar kernel begins at the center and reveals its average on the first click, then scans row by row from upper left to lower right, revealing each average as it reaches that cell; then the box dissolves into weight dots across all cells, which resize as the Gaussian weighting glides across the grid.">
-    <CuManim :steps="4" :width="1080" :height="320" :construct="cartesianConvolution" />
+  <div class="convolution-canvas" role="img" aria-label="Animated synthetic Cartesian grid: a boxcar kernel begins at the center and reveals its average on the first click, then scans row by row from upper left to lower right, revealing each average as it reaches that cell.">
+    <CuManim :steps="2" :width="1080" :height="320" :construct="cartesianConvolution" />
     <svg v-if="clicks === 0" class="convolution-first-frame" viewBox="0 0 1080 390" aria-hidden="true">
       <rect v-for="(cell, index) in cartesianPreview.input" :key="`in-${index}`" :x="cell.x" :y="cell.y" :width="cell.w" :height="cell.h" :fill="cell.fill" />
       <rect v-for="(cell, index) in cartesianPreview.backing" :key="`back-${index}`" :x="cell.x" :y="cell.y" :width="cell.w" :height="cell.h" :fill="cell.fill" />
@@ -59,7 +59,7 @@ class: convolution-cartesian
       <polygon :points="cartesianPreview.arrowTip.map(point => `${point.x},${point.y}`).join(' ')" fill="#cfb87c" />
     </svg>
   </div>
-  <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>{{ clicks >= 3 ? 'Gaussian: center-weighted mean' : 'Boxcar: equal-weight mean' }}</strong></p>
+  <p class="convolution-demo-caption">Illustrative, evenly spaced grid · <strong>Boxcar: equal-weight mean</strong></p>
 </div>
 
 <script setup>
@@ -70,7 +70,7 @@ const { clicks } = useNav()
 </script>
 
 <!--
-About 1 minute. After slide 8, explain that we want to reduce gate-to-gate variability while preserving coherent structure. Convolution applies the same local operation at each position. The three-by-three boxcar kernel starts over the center of this synthetic, evenly spaced grid. Click 1: all nine kernel weights are equal, so their average appears at the corresponding output cell. Click 2: clear that example, then scan successive rows from the upper-left cell, alternately left-to-right and right-to-left, revealing each output value as the kernel reaches it; finish at the lower right. Edge values are extended with nearest-value padding in this illustration; this is not Paper 1's DCT boundary treatment. Click 3: dissolve the box and show the Gaussian weights as dots in every cell, sized by the same discrete Gaussian (truncated to three-by-three samples and normalized for the output); weights far from the center are near zero, visible as specks. Click 4: glide the weighting across the grid along the same row-by-row path with dot sizes tracking it, revealing each Gaussian output value in sync. These are illustrative, complete data, not a measured radar field or a comparison of method performance. The kernels are symmetric, so the sliding weighted average is the convolution used here. Transition: a fixed pixel window has a fixed physical footprint on an evenly spaced Cartesian grid, but radar is sampled in range and angle.
+About 40 seconds. After slide 8, explain that we want to reduce gate-to-gate variability while preserving coherent structure. Convolution applies the same local operation at each position. The three-by-three boxcar kernel starts over the center of this synthetic, evenly spaced grid. Click 1: all nine kernel weights are equal, so their average appears at the corresponding output cell. Click 2: clear that example, then scan successive rows from the upper-left cell, alternately left-to-right and right-to-left, revealing each output value as the kernel reaches it; finish at the lower right. Edge values are extended with nearest-value padding in this illustration; this is not Paper 1's DCT boundary treatment. These are illustrative, complete data, not a measured radar field or a comparison of method performance. The kernel is symmetric, so the sliding weighted average is the convolution used here. Transition: a fixed pixel window has a fixed physical footprint on an evenly spaced Cartesian grid, but radar is sampled in range and angle.
 -->
 
 ---

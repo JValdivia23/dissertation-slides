@@ -322,6 +322,32 @@ function sweepDots(dotsGroup: VGroup, dots: Circle[], outputCells: Square[], alp
   pinGroup(dotsGroup, 10000)
 }
 
+export interface PreviewDot {
+  x: number
+  y: number
+  r: number
+}
+
+function buildCartesianGaussianPreview() {
+  const base = buildCartesianPreview()
+  const pxPerUnit = DISPLAY_W / FRAME_W
+  const round = (value: number) => Math.round(value * 10) / 10
+  const dots: PreviewDot[] = []
+  for (let row = 0; row < GRID_SIZE; row++) {
+    for (let col = 0; col < GRID_SIZE; col++) {
+      const [cx, cy] = cellPosition(row, col, -3.7)
+      dots.push({
+        x: round(previewX(cx)),
+        y: round(previewY(cy)),
+        r: round(dotRadius(row - 3, col - 3) * pxPerUnit),
+      })
+    }
+  }
+  return { input: base.input, backing: base.backing, dots, arrowShaft: base.arrowShaft, arrowTip: base.arrowTip }
+}
+
+export const cartesianGaussianPreview = buildCartesianGaussianPreview()
+
 // This is a deliberately synthetic, complete field. Missing-data handling is
 // introduced later in the paper segment, not implied by this illustration.
 export async function cartesianConvolution() {
@@ -337,7 +363,6 @@ export async function cartesianConvolution() {
   const inputCells: Square[] = []
   const outputBacking: Square[] = []
   const outputCells: Square[] = []
-  const gaussianCells: Square[] = []
   for (let row = 0; row < GRID_SIZE; row++) {
     for (let col = 0; col < GRID_SIZE; col++) {
       inputCells.push(fieldCell(row, col, -3.7, input[row][col]))
@@ -349,12 +374,69 @@ export async function cartesianConvolution() {
         strokeWidth: 0,
       }).setStyle({ strokeWidth: 0 }).setFill('#1c2d40', 1))
       outputCells.push(fieldCell(row, col, 3.7, smooth(input, boxcar, row, col)))
-      gaussianCells.push(fieldCell(row, col, 3.7, smooth(input, GAUSSIAN_WEIGHTS, row, col)))
     }
   }
 
   const centerPosition = cellPosition(3, 3, -3.7)
   const window = kernel(centerPosition)
+  const arrow = new Arrow({
+    start: ARROW_START,
+    end: ARROW_END,
+    color: GOLD,
+    strokeWidth: ARROW_STROKE_WIDTH,
+    tipLength: ARROW_TIP_LENGTH,
+    tipWidth: ARROW_TIP_WIDTH,
+  })
+
+  const boxcarExample = fieldCell(3, 3, 3.7, smooth(input, boxcar, 3, 3))
+
+  // The static preview matches this initial state. One play() is one Slidev click.
+  scene.add(new VGroup(...inputCells), new VGroup(...outputBacking), window, arrow)
+  await scene.play(new FadeIn(boxcarExample, { duration: 0.5 }))
+  pinToFront(window)
+
+  const boxcarOutput = new VGroup(...outputCells)
+  outputCells.forEach(cell => cell.setStrokeOpacity(0))
+  scene.add(boxcarOutput)
+  await scene.play(
+    new FadeOut(boxcarExample, { duration: 0.25 }),
+    new UpdateFromAlphaFunc(
+      window,
+      (_, alpha) => scan(window, outputCells, alpha),
+      { duration: 5.7, rateFunc: linear },
+    ),
+  )
+}
+
+// Standalone Gaussian weighting for the backup slides: the same synthetic
+// field and row-by-row path, but the center-weighted dots are present from
+// the start instead of dissolving from the boxcar window.
+export async function cartesianGaussianConvolution() {
+  const scene = new Scene(document.getElementById('container'), {
+    width: 1080,
+    height: 390,
+    frameWidth: 14,
+    frameHeight: 5.05,
+    backgroundColor: BACKGROUND,
+  })
+  const input = sampleField()
+  const inputCells: Square[] = []
+  const outputBacking: Square[] = []
+  const gaussianCells: Square[] = []
+  for (let row = 0; row < GRID_SIZE; row++) {
+    for (let col = 0; col < GRID_SIZE; col++) {
+      inputCells.push(fieldCell(row, col, -3.7, input[row][col]))
+      outputBacking.push(new Square({
+        sideLength: CELL_SIZE - 0.025,
+        center: cellPosition(row, col, 3.7),
+        color: '#1c2d40',
+        fillOpacity: 1,
+        strokeWidth: 0,
+      }).setStyle({ strokeWidth: 0 }).setFill('#1c2d40', 1))
+      gaussianCells.push(fieldCell(row, col, 3.7, smooth(input, GAUSSIAN_WEIGHTS, row, col)))
+    }
+  }
+
   const gaussianDots: Circle[] = []
   for (let row = 0; row < GRID_SIZE; row++) {
     for (let col = 0; col < GRID_SIZE; col++) {
@@ -377,33 +459,12 @@ export async function cartesianConvolution() {
     tipWidth: ARROW_TIP_WIDTH,
   })
 
-  const boxcarExample = fieldCell(3, 3, 3.7, smooth(input, boxcar, 3, 3))
   const gaussianExample = fieldCell(3, 3, 3.7, smooth(input, GAUSSIAN_WEIGHTS, 3, 3))
 
   // The static preview matches this initial state. One play() is one Slidev click.
-  scene.add(new VGroup(...inputCells), new VGroup(...outputBacking), window, arrow)
-  await scene.play(new FadeIn(boxcarExample, { duration: 0.5 }))
-  pinToFront(window)
-
-  const boxcarOutput = new VGroup(...outputCells)
-  outputCells.forEach(cell => cell.setStrokeOpacity(0))
-  scene.add(boxcarOutput)
-  await scene.play(
-    new FadeOut(boxcarExample, { duration: 0.25 }),
-    new UpdateFromAlphaFunc(
-      window,
-      (_, alpha) => scan(window, outputCells, alpha),
-      { duration: 5.7, rateFunc: linear },
-    ),
-  )
-
-  await scene.play(
-    new FadeOut(window, { duration: 0.85 }),
-    new FadeOut(boxcarOutput, { duration: 0.85 }),
-    new FadeIn(gaussianExample, { duration: 0.85 }),
-    new FadeIn(dotsGroup, { duration: 0.85 }),
-  )
+  scene.add(new VGroup(...inputCells), new VGroup(...outputBacking), dotsGroup, arrow)
   pinGroup(dotsGroup, 10000)
+  await scene.play(new FadeIn(gaussianExample, { duration: 0.5 }))
 
   const gaussianOutput = new VGroup(...gaussianCells)
   gaussianCells.forEach(cell => cell.setStrokeOpacity(0))
