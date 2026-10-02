@@ -27,6 +27,133 @@ Also: COW loses the cell at the last time. The footprints are time-mean masks, s
 -->
 
 ---
+class: smoothing-conclusions population-limits
+---
+
+# Project 3: Limits
+
+<div class="smoothing-conclusion-list">
+  <section>
+    <h2>Detection and boundaries</h2>
+    <p>The 5-dB threshold, smoothing, and X-band sensitivity can exclude weaker features.</p>
+    <p>A contour may contain several turrets: counts and areas describe detected radar features, not individual updrafts.</p>
+  </section>
+  <section>
+    <h2>Temporal resolution</h2>
+    <p>Six-minute volumes can miss short-lived cells and rapid merging or splitting.</p>
+    <p>Stage boundaries are selected from population trends, so stage durations are approximate.</p>
+  </section>
+  <section>
+    <h2>Microphysical interpretation</h2>
+    <p>Z<sub>DR</sub> evolution is consistent with aggregation and sorting, but does not uniquely identify particle habits or processes.</p>
+    <p>Uncorrected differential attenuation can lower absolute values.</p>
+  </section>
+  <section>
+    <h2>Environmental attribution</h2>
+    <p>Two soundings provide environmental context but do not resolve local, short-timescale instability.</p>
+    <p>The observations do not isolate the mechanisms responsible for initiation, organization, or decay.</p>
+  </section>
+</div>
+
+<p class="population-limits-scope"><strong>Scope:</strong> One winter storm; additional cases are needed to assess how general these lifecycle and microphysical trends are.</p>
+
+<!--
+Supporting slide, no clicks. Use if asked about population-study limitations. Read the panels from top left to bottom right, then the scope statement. These are the boundaries of the conclusions, not reasons to dismiss the observed evolution. Suggested delivery: “We identify radar features, which can omit weak cells or combine several turrets. Six-minute sampling limits individual-cell histories, and the population stage boundaries are approximate. The polarimetric evolution supports aggregation and sorting, but does not identify particles uniquely. Absolute Z_DR may be biased low, although the paper's attenuation bounds argue against attenuation as the primary explanation for the late increase. Two soundings constrain the environment, not the forcing mechanism. These conclusions describe one winter storm.”
+
+Detection and boundaries: the threshold balances coherent detection against false positives. It is a 5-dB reflectivity enhancement in the perturbation field, not an absolute 5-dBZ echo threshold. Smoothing and X-band sensitivity can obscure weak or small features; the small-area screen primarily removes noise-scale regions. Connected contours may encompass several adjacent turrets, so increasing area reflects both physical organization and segmentation connectivity, not solely the growth of one updraft. Do not call all observed clustering an artifact.
+
+Temporal resolution: six-minute volume sampling can miss short-lived cells and rapid splitting or merging. Lifecycle stage transitions were selected from count and area trends; small shifts change stage durations and the statistics assigned to each stage. The approximately 1.7-hour population sequence is not a typical individual-cell lifetime, and the selected nearly 50-minute track is not a population lifetime estimate.
+
+Microphysical interpretation: particle shape, orientation, density, and mixtures affect Z_DR, so the proposed aggregation and later preferential fallout/sorting are interpretations consistent with the observations, not direct particle-habit measurements. Full differential-attenuation correction was not applied through the mixed-phase beam paths. Bird-bath calibration addresses instrumental offsets, not propagation effects. The paper's conservative attenuation-bound analysis argues against attenuation as the primary driver of the late higher Z_DR; distinguish that case-specific evidence from uncertainty in absolute values. Do not argue that a negative bias alone, without examining how it changes in time, rules out every possible temporal artifact.
+
+Environmental attribution: the two Sorel soundings are offset from the cells in space and time and cannot resolve local, short-lived instability. VAD provides intermediate wind context but does not fill the thermodynamic sampling gap. Shear relaxation and layer-specific drying accompany the evolution, but the observations do not isolate a radiative, shear, or wave mechanism. No definitive wave signature was found; that is not proof that waves were absent. Finally, additional storms are needed to test the generality of the lifecycle and microphysical trends. Refer to Project 3: Conclusions in the main talk.
+-->
+
+---
+class: smoothing-conclusions population-limits paper4-limits
+---
+
+# Project 4: Limitations
+
+<div class="smoothing-conclusion-list">
+  <section>
+    <h2>CTGC Contribution</h2>
+    <p>The 51% snow and 72% rain contrasts do not measure the tracked cell’s precipitation.</p>
+  </section>
+  <section>
+    <h2>Unresolved mechanisms</h2>
+    <p>The roles of wind shear and CTGC triggers remain unresolved.</p>
+  </section>
+  <section>
+    <h2>Footprints and rate estimates</h2>
+    <p>Time-mean footprints may miss instantaneous streak boundaries; rates depend on chosen reflectivity–rate relations.</p>
+  </section>
+  <section>
+    <h2>Case scope</h2>
+    <p>One selected cell cannot establish a population mean or a storm-total precipitation contribution.</p>
+  </section>
+</div>
+
+<style>
+.paper4-limits .smoothing-conclusion-list {
+  max-height: 22rem;
+}
+
+.paper4-limits .smoothing-conclusion-list p {
+  font-size: 0.95rem;
+  text-wrap: pretty;
+}
+</style>
+
+<!--
+Supporting slide, no clicks. Use if asked about single-cell-study limitations.
+Read the panels from top left to bottom right.
+These limitations follow Chapter 5's discussion, matching the submitted paper.
+
+Suggested delivery: “The 51% snow and 72% rain contrasts do not measure this
+cell's share of precipitation. Changing shear and overlapping CTGC
+precipitation may both affect the bands, but their relative roles remain
+unresolved. The fixed footprints may miss instantaneous streak boundaries,
+and the estimated rates depend on reflectivity–rate relations. Finally, one
+cell cannot establish a population mean or its contribution to storm-total
+precipitation.”
+
+Supporting detail for discussion and questions, not the timed delivery:
+
+Attribution: The 51% liquid-equivalent snow-rate and 72% rain-rate enhancements
+compare rates inside versus outside the layer-specific footprints. They are
+spatial contrasts associated with persistent reflectivity enhancements, not
+the tracked cell's contribution or a fraction of storm-total precipitation.
+Both regions may include other CTGCs and pre-existing precipitation; the
+outside region is not a control without generating cells.
+
+Unresolved mechanisms: Changing shear and overlapping CTGC precipitation may
+both contribute to the less distinct north–south band pattern, but their
+relative roles remain unresolved. The observed connection is consistent with
+seeder–feeder growth, not a direct measurement of the growth mechanisms.
+Three-dimensional winds, particle trajectories, cloud liquid water, and
+ice-particle measurements would help constrain the processes and attribution.
+
+Footprints and rate estimates: The upper-decile footprints come from time-mean
+column-maximum reflectivity anomaly; they capture persistent features but may
+miss the fall streak's instantaneous position and extent. Rates depend on the
+chosen Z–S and Z–R relations and are estimates, not measured mass fluxes.
+The paper tested p85, p90, and p95: snow-rate enhancement spans 49–51% and
+rain-rate enhancement 68–75%. These ranges describe threshold sensitivity,
+not confidence intervals or the total rate-estimation uncertainty.
+
+Case scope: One selected cell in one winter storm cannot establish a population
+mean or a storm-total precipitation contribution. Additional cases are needed
+to assess which structural relationships and precipitation contrasts recur.
+
+Sampling details for questions: Nine synchronized volume sets, six minutes
+apart, can miss changes between scans. The 02:00 and 04:15 UTC soundings provide
+thermodynamic context rather than continuous local measurements along the
+02:54–03:42 UTC cell track. Keep these supporting constraints in the notes
+rather than displacing the paper's principal limitations on the slide.
+-->
+
+---
 class: figure-slide
 ---
 

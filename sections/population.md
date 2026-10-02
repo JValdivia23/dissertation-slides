@@ -604,50 +604,7 @@ class: figure-slide population-schematic
 </div>
 
 <!--
-About 40 seconds. This is the complete Paper Figure 19 schematic, synthesizing the observed boundary evolution and inferred microphysics across initiation, mature, and dissipation stages. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. The bottom legend defines the pristine crystal, aggregate/rimed crystal, and the 5-dBZ perturbation CTGC boundary. The selected cell just shown grounds this synthesis in one tracked example. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. This closes the population results; the limitations follow.
--->
-
----
-class: smoothing-conclusions population-limits
----
-
-# Project 3: Limits
-
-<div class="smoothing-conclusion-list">
-  <section>
-    <h2>Detection and boundaries</h2>
-    <p>The 5-dB threshold, smoothing, and X-band sensitivity can exclude weaker features.</p>
-    <p>A contour may contain several turrets: counts and areas describe detected radar features, not individual updrafts.</p>
-  </section>
-  <section>
-    <h2>Temporal resolution</h2>
-    <p>Six-minute volumes can miss short-lived cells and rapid merging or splitting.</p>
-    <p>Stage boundaries are selected from population trends, so stage durations are approximate.</p>
-  </section>
-  <section>
-    <h2>Microphysical interpretation</h2>
-    <p>Z<sub>DR</sub> evolution is consistent with aggregation and sorting, but does not uniquely identify particle habits or processes.</p>
-    <p>Uncorrected differential attenuation can lower absolute values.</p>
-  </section>
-  <section>
-    <h2>Environmental attribution</h2>
-    <p>Two soundings provide environmental context but do not resolve local, short-timescale instability.</p>
-    <p>The observations do not isolate the mechanisms responsible for initiation, organization, or decay.</p>
-  </section>
-</div>
-
-<p class="population-limits-scope"><strong>Scope:</strong> One winter storm; additional cases are needed to assess how general these lifecycle and microphysical trends are.</p>
-
-<!--
-About 45–50 seconds, no clicks. Read the panels from top left to bottom right, then the scope statement. These are the boundaries of the conclusions, not reasons to dismiss the observed evolution. Suggested delivery: “We identify radar features, which can omit weak cells or combine several turrets. Six-minute sampling limits individual-cell histories, and the population stage boundaries are approximate. The polarimetric evolution supports aggregation and sorting, but does not identify particles uniquely. Absolute Z_DR may be biased low, although the paper's attenuation bounds argue against attenuation as the primary explanation for the late increase. Two soundings constrain the environment, not the forcing mechanism. These conclusions describe one winter storm.”
-
-Detection and boundaries: the threshold balances coherent detection against false positives. It is a 5-dB reflectivity enhancement in the perturbation field, not an absolute 5-dBZ echo threshold. Smoothing and X-band sensitivity can obscure weak or small features; the small-area screen primarily removes noise-scale regions. Connected contours may encompass several adjacent turrets, so increasing area reflects both physical organization and segmentation connectivity, not solely the growth of one updraft. Do not call all observed clustering an artifact.
-
-Temporal resolution: six-minute volume sampling can miss short-lived cells and rapid splitting or merging. Lifecycle stage transitions were selected from count and area trends; small shifts change stage durations and the statistics assigned to each stage. The approximately 1.7-hour population sequence is not a typical individual-cell lifetime, and the selected nearly 50-minute track is not a population lifetime estimate.
-
-Microphysical interpretation: particle shape, orientation, density, and mixtures affect Z_DR, so the proposed aggregation and later preferential fallout/sorting are interpretations consistent with the observations, not direct particle-habit measurements. Full differential-attenuation correction was not applied through the mixed-phase beam paths. Bird-bath calibration addresses instrumental offsets, not propagation effects. The paper's conservative attenuation-bound analysis argues against attenuation as the primary driver of the late higher Z_DR; distinguish that case-specific evidence from uncertainty in absolute values. Do not argue that a negative bias alone, without examining how it changes in time, rules out every possible temporal artifact.
-
-Environmental attribution: the two Sorel soundings are offset from the cells in space and time and cannot resolve local, short-lived instability. VAD provides intermediate wind context but does not fill the thermodynamic sampling gap. Shear relaxation and layer-specific drying accompany the evolution, but the observations do not isolate a radiative, shear, or wave mechanism. No definitive wave signature was found; that is not proof that waves were absent. Finally, additional storms are needed to test the generality of the lifecycle and microphysical trends. The next slide states what is supported within this case.
+About 40 seconds. This is the complete Paper Figure 19 schematic, synthesizing the observed boundary evolution and inferred microphysics across initiation, mature, and dissipation stages. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. The bottom legend defines the pristine crystal, aggregate/rimed crystal, and the 5-dBZ perturbation CTGC boundary. The selected cell just shown grounds this synthesis in one tracked example. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. This closes the population results; the conclusions follow.
 -->
 
 ---
@@ -665,7 +622,7 @@ title: "Project 3: Conclusions"
 <!--
 About 40 seconds, no clicks. This conclusion slide has no visible title or labeled lead-ins; the title in frontmatter is only for navigation. Present three findings and their significance, then the selected-cell connection to the next paper. Suggested delivery: “Set 1's detected population evolved through initiation, maturity, and dissipation over about 1.7 hours. During maturity, fewer but larger radar features indicated organization through merging and clustering, rather than only growth of individual turrets. The early decrease and later increase in differential reflectivity are consistent with early aggregation and later preferential fallout and particle sorting in the generating layer. One selected cell showed a similar progression; we next follow its three-dimensional structure and fall streak.”
 
-Keep the approximately 1.7-hour observed population sequence distinct from individual-cell lifetimes. Counts and boundary areas describe the detected radar features, not a one-to-one census of updrafts. The structural result is population organization, not a claim that all area growth is an artifact or that individual turrets cannot grow. The microphysical statement remains an interpretation consistent with the radar signatures: early aggregation, potentially riming, produces more isotropic particles; later preferential fallout of larger aggregates or rimed particles leaves a greater relative contribution from slower-falling oriented pristine crystals. Do not describe aggregates transforming back into pristine crystals or imply that every cell follows an identical sequence. The selected nearly 50-minute track provides cell-scale support within this case and the moving reference for Paper 4, not a typical lifetime estimate. Leave shear relaxation and layer-specific drying as accompanying environmental context rather than introduce a causal conclusion here; the limitations are already on the preceding slide.
+Keep the approximately 1.7-hour observed population sequence distinct from individual-cell lifetimes. Counts and boundary areas describe the detected radar features, not a one-to-one census of updrafts. The structural result is population organization, not a claim that all area growth is an artifact or that individual turrets cannot grow. The microphysical statement remains an interpretation consistent with the radar signatures: early aggregation, potentially riming, produces more isotropic particles; later preferential fallout of larger aggregates or rimed particles leaves a greater relative contribution from slower-falling oriented pristine crystals. Do not describe aggregates transforming back into pristine crystals or imply that every cell follows an identical sequence. The selected nearly 50-minute track provides cell-scale support within this case and the moving reference for Paper 4, not a typical lifetime estimate. Leave shear relaxation and layer-specific drying as accompanying environmental context rather than introduce a causal conclusion here; the detailed limitations are in the supporting slides.
 
 Paper 3 is published in JAS (2026); Paper 4 is submitted to GRL, not yet accepted. Do not say Papers 1 and 2 directly generated the Paper 3 identification; Paper 4 integrates their methods with this track.
 -->
