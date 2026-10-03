@@ -52,6 +52,7 @@ We cannot use mysterious creative titles, this is not ted talks. Neutral/profess
   signature, follow `node_modules/manim-web/dist/index.d.ts` into its exported
   declaration files; the installed types take precedence over mutable online
   API pages.
+- Review if the process is running at port 3030 before launching running it
 
 ## Git and publishing
 
