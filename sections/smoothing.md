@@ -128,24 +128,22 @@ class: smoothing-cost
       <p>~20 volumes at a 6-min time-step</p>
     </section>
     <div class="smoothing-cost-source">
-      <p>Same RHI: full view and 17–23 km zoom · 5-pixel boxcar · Paper Figure 4(a, b, e, f)</p>
+      <p>17–23 km zoom · 5-pixel boxcar · Paper Figure 4(e, f)</p>
       <p>Images show one Z<sub>H</sub> sweep. Smoothed with Dynamic Kernel method.</p>
     </div>
   </div>
   <div class="smoothing-cost-visual">
     <div class="smoothing-cost-frame">
-      <img v-click.hide="1" src="../figures/dct-noisy-zoom.png" alt="Top, before click: unsmoothed C-band reflectivity zoom at 17–23 km range and 4.5–7.5 km altitude" />
-      <img v-click="1" src="../figures/dct-noisy-full.png" alt="Top, after click: the same unsmoothed RHI across the full 0–60 km range; a red box locates the earlier zoom" />
+      <img src="../figures/dct-noisy-zoom.png" alt="Top: unsmoothed C-band reflectivity zoom at 17–23 km range and 4.5–7.5 km altitude" />
     </div>
     <div class="smoothing-cost-frame">
-      <img v-click.hide="1" src="../figures/dct-spatial-zoom.png" alt="Bottom, before click: the reflectivity zoom after spatial dynamic-boxcar smoothing, retaining three cloud-top cells" />
-      <img v-click="1" src="../figures/dct-spatial-full.png" alt="Bottom, after click: the same spatially smoothed RHI across the full 0–60 km range; a red box locates the earlier zoom" />
+      <img src="../figures/dct-spatial-zoom.png" alt="Bottom: the reflectivity zoom after spatial dynamic-boxcar smoothing, retaining three cloud-top cells" />
     </div>
   </div>
 </div>
 
 <!--
-About 1 minute 20 seconds. We saw that maintaining a physical smoothing width requires the angular window to change with range. Point to the top image: the unsmoothed reflectivity zoom from the 23 February 2022 C-band RHI varies from gate to gate. The lower image shows the paper's 5-pixel spatial dynamic boxcar: the three cloud-top structures remain while much of the gate-to-gate variability is reduced. These matched zooms are panels (e) and (f) of the paper's Figure 4, with the same bounds and color scale. Click 1: replace both zooms in place with the full original and spatially smoothed RHI panels (a) and (b); the red boxes indicate the zoom region. In my separate radar-data test, spatial smoothing alone took about 20 minutes for an entire 20-sweep volume and four fields: Z_H, Z_DR, rho_HV, and K_DP. That is not 20 minutes for the pictured sweep or zoom, and does not include reading or other processing. With one volume every 6 minutes, two hours contains roughly 20 volumes; at the same per-volume rate, serial smoothing would take about 400 minutes, or 6 hours 40 minutes. This total is extrapolated, not a measured two-hour run, and my personal timing is distinct from the controlled paper benchmark shown later. I propose using a fast transform to compute the smoothing more efficiently.
+About 1 minute 20 seconds. We saw that maintaining a physical smoothing width requires the angular window to change with range. Point to the top image: the unsmoothed reflectivity zoom from the 23 February 2022 C-band RHI varies from gate to gate. The lower image shows the paper's 5-pixel spatial dynamic boxcar: the three cloud-top structures remain while much of the gate-to-gate variability is reduced. These matched zooms are panels (e) and (f) of the paper's Figure 4, with the same bounds and color scale. In my separate radar-data test, spatial smoothing alone took about 20 minutes for an entire 20-sweep volume and four fields: Z_H, Z_DR, rho_HV, and K_DP. That is not 20 minutes for the pictured sweep or zoom, and does not include reading or other processing. With one volume every 6 minutes, two hours contains roughly 20 volumes; at the same per-volume rate, serial smoothing would take about 400 minutes, or 6 hours 40 minutes. This total is extrapolated, not a measured two-hour run, and my personal timing is distinct from the controlled paper benchmark shown later. I propose using a fast transform to compute the smoothing more efficiently.
 -->
 
 ---
