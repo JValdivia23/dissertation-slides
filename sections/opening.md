@@ -257,7 +257,7 @@ class: presentation-roadmap
   <div class="roadmap-sources">
     <div class="roadmap-methods">
       <section class="roadmap-stage">
-        <span class="roadmap-paper">Paper 1</span>
+        <span class="roadmap-paper">Paper 1 <span class="roadmap-status published" title="Published" aria-label="Published">★</span></span>
         <div class="roadmap-method-content">
           <h2>Radar data smoothing using the DCT</h2>
           <p>Fast noise removal</p>
@@ -267,7 +267,7 @@ class: presentation-roadmap
         <path d="M10 0 V26 M4 20 L10 26 L16 20" />
       </svg>
       <section class="roadmap-stage">
-        <span class="roadmap-paper">Paper 2</span>
+        <span class="roadmap-paper">Paper 2 <span class="roadmap-status review" title="Under review" aria-label="Under review">◷</span></span>
         <div class="roadmap-method-content">
           <h2>Spectral-domain local statistics</h2>
           <p>Spectral operation for cartesian and polar grids</p>
@@ -275,7 +275,7 @@ class: presentation-roadmap
       </section>
     </div>
     <section class="roadmap-stage roadmap-population">
-      <span class="roadmap-paper">Paper 3</span>
+      <span class="roadmap-paper">Paper 3 <span class="roadmap-status published" title="Published" aria-label="Published">★</span></span>
       <h2>Temporal evolution of cloud-top generating cells</h2>
       <p>CTGC population life cycle and organization</p>
     </section>
@@ -287,11 +287,13 @@ class: presentation-roadmap
   </svg>
 
   <section class="roadmap-stage roadmap-destination">
-    <span class="roadmap-paper">Paper 4</span>
+    <span class="roadmap-paper">Paper 4 <span class="roadmap-status review" title="Under review" aria-label="Under review">◷</span></span>
     <h2>Tracking 3D CTGC structure and associated precipitation</h2>
     <p>CTGC fall streak and precipitation</p>
   </section>
 </div>
+
+<p class="roadmap-legend fine"><span class="roadmap-status published">★</span> Published&nbsp;&nbsp;&nbsp;<span class="roadmap-status review">◷</span> Under review</p>
 
 <!--
 These four boxes represent the four papers in talk order. Paper 1 develops physical-scale smoothing for radar data; Paper 2 extends that spectral framework to local statistics with missing data. Paper 3 follows a population of cells in one storm and identifies a persistent cell. Paper 4 brings the methods from Papers 1 and 2 together with that cell track to examine three-dimensional structure, the fall streak, and precipitation context. I will close with a synthesis and limitations.

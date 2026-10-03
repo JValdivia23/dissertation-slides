@@ -3537,6 +3537,26 @@
   min-height: 5.8rem;
 }
 
+.slidev-layout.presentation-roadmap .roadmap-status {
+  font-size: 0.68rem;
+  line-height: 1;
+  vertical-align: baseline;
+}
+
+.slidev-layout.presentation-roadmap .roadmap-status.published {
+  color: #1e7e34;
+  font-size: 0.85rem;
+}
+
+.slidev-layout.presentation-roadmap .roadmap-status.review {
+  color: var(--cu-text-muted);
+}
+
+.slidev-layout.presentation-roadmap .roadmap-legend {
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+}
+
 .slidev-layout.ctgc-intro h1 {
   margin-bottom: 0.45rem;
 }
