@@ -166,15 +166,13 @@ $$
 
 </div>
 
-<p class="smoothing-theorem-terms"><strong>f</strong> = sampled data · <strong>g</strong> = smoothing kernel · <strong>T</strong> = spectral transform</p>
+<p class="smoothing-theorem-terms"><strong>f</strong> = data, <strong>g</strong> = smoothing kernel, <strong>T</strong> = spectral transform</p>
 
 <div class="smoothing-theorem-explanation">
-  <section><h2>Spatial domain: convolution (*)</h2><p>Slide the kernel across the data; calculate a weighted sum at each location.</p></section>
+  <section><h2>Spatial domain: convolution (*)</h2><p>Slide the kernel across the data.</p></section>
   <span aria-hidden="true">↔</span>
-  <section><h2>Transform domain: multiplication (·)</h2><p>Transform the data and kernel, multiply corresponding coefficients, then invert.</p></section>
+  <section><h2>Transform domain: multiplication (·)</h2><p>Multiply corresponding coefficients, then invert.</p></section>
 </div>
-
-<p class="spectral-summary">For radar: DCT convolution along angle (range-varying width), then along range (fixed width).</p>
 
 <!--
 About 50 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable spectral transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. We know the data and the desired spatial kernel; the remaining piece is the kernel's matching spectral response T{g}, called the transfer function H. Paper 1 derives analytical responses for boxcar and Gaussian kernels, so I will not derive those here. Next, demonstrate the DCT computation with a twelve-sample 1D signal before returning to the polar-grid responses. Exact equivalence requires matching the kernel and reflected boundary treatment; the spatial baseline in the paper also handles missing pixels differently. The field comparison uses boxcar smoothing; the later large-array timing callout uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
