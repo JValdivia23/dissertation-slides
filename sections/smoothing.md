@@ -147,56 +147,6 @@ About 1 minute 20 seconds. We saw that maintaining a physical smoothing width re
 -->
 
 ---
-class: smoothing-dct-intro
----
-
-# Discrete cosine transform (DCT)
-
-<div class="dct-intro-body">
-  <p class="dct-intro-lead">A DCT represents samples along a chosen dimension (space or time) as cosine components.</p>
-  <div class="dct-intro-flow">
-    <section>
-      <h2>Samples along one axis</h2>
-      <svg viewBox="0 0 320 130" aria-hidden="true">
-        <line class="dct-intro-axis" x1="14" y1="110" x2="306" y2="110" />
-        <polyline class="dct-intro-profile" points="18,87 44,70 70,77 96,43 122,54 148,82 174,68 200,38 226,58 252,75 278,59 304,84" />
-        <g class="dct-intro-samples">
-          <circle cx="18" cy="87" r="3.5" /><circle cx="44" cy="70" r="3.5" />
-          <circle cx="70" cy="77" r="3.5" /><circle cx="96" cy="43" r="3.5" />
-          <circle cx="122" cy="54" r="3.5" /><circle cx="148" cy="82" r="3.5" />
-          <circle cx="174" cy="68" r="3.5" /><circle cx="200" cy="38" r="3.5" />
-          <circle cx="226" cy="58" r="3.5" /><circle cx="252" cy="75" r="3.5" />
-          <circle cx="278" cy="59" r="3.5" /><circle cx="304" cy="84" r="3.5" />
-        </g>
-      </svg>
-      <p>Schematic 1D profile · x(n)</p>
-    </section>
-    <div class="dct-intro-arrows" aria-hidden="true"><span>DCT →</span><span>← inverse DCT</span></div>
-    <section>
-      <h2>Cosine coefficients</h2>
-      <svg viewBox="0 0 320 130" aria-hidden="true">
-        <line class="dct-intro-axis" x1="14" y1="105" x2="306" y2="105" />
-        <g class="dct-intro-bars">
-          <rect x="20" y="27" width="16" height="78" /><rect x="50" y="48" width="16" height="57" />
-          <rect x="80" y="73" width="16" height="32" /><rect x="110" y="88" width="16" height="17" />
-          <rect x="140" y="105" width="16" height="17" /><rect x="170" y="80" width="16" height="25" />
-          <rect x="200" y="94" width="16" height="11" /><rect x="230" y="99" width="16" height="6" />
-          <rect x="260" y="102" width="16" height="3" /><rect x="290" y="103" width="16" height="2" />
-        </g>
-      </svg>
-      <p>Low to high frequency · X(k)</p>
-    </section>
-  </div>
-  <p class="dct-intro-note">Unchanged coefficients reconstruct the original samples, no smoothing yet. Our radar method filters along both angle and range.</p>
-</div>
-
-<p class="spectral-summary">JPEG also uses the DCT for image compression; here we use it to filter radar data, not to compress it.</p>
-
-<!--
-About 55 seconds. The proposed way around repeated spatial windows begins with a fast discrete cosine transform. This is a general transform of sampled data along a chosen dimension, spatial or temporal: it expresses the samples as coefficients of cosine components ordered from low to high frequency. The drawing illustrates one 1D slice, not a measured spectrum from the RHI or the full 2D operation. Applying the inverse DCT with coefficients unchanged reconstructs the original samples; the transform alone has not smoothed anything. The DCT is familiar from JPEG, where it is applied to image blocks as part of compression; here we filter a 2D polar radar field by applying DCT-based smoothing along angle and along range in separate passes, without JPEG quantization or encoding. The cosine basis corresponds to reflecting data at the boundaries rather than wrapping opposite edges together. The next slide shows how the convolution theorem supplies the weighting in each pass. The angular response changes with range; the range response has fixed width.
--->
-
----
 class: smoothing-spectral
 ---
 
@@ -227,9 +177,45 @@ $$
 <p class="spectral-summary">For radar: DCT convolution along angle (range-varying width), then along range (fixed width).</p>
 
 <!--
-About 50 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable spectral transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. We know the data and the desired spatial kernel; the remaining piece is the kernel's matching spectral response T{g}, called the transfer function H. Paper 1 derives analytical responses for boxcar and Gaussian kernels, so I will not derive those here. How do we choose and apply H on a polar grid, where angular spacing changes with range but range-gate spacing does not? Next slide. Exact equivalence requires matching the kernel and reflected boundary treatment; the spatial baseline in the paper also handles missing pixels differently. The field comparison uses boxcar smoothing; the later large-array timing callout uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
+About 50 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable spectral transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. We know the data and the desired spatial kernel; the remaining piece is the kernel's matching spectral response T{g}, called the transfer function H. Paper 1 derives analytical responses for boxcar and Gaussian kernels, so I will not derive those here. Next, demonstrate the DCT computation with a twelve-sample 1D signal before returning to the polar-grid responses. Exact equivalence requires matching the kernel and reflected boundary treatment; the spatial baseline in the paper also handles missing pixels differently. The field comparison uses boxcar smoothing; the later large-array timing callout uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
 
 This first method needs a complete field: gaps are interpolated before the DCT. Discuss that limitation after the results.
+-->
+
+---
+class: convolution-cartesian dct-convolution
+clicks: 5
+---
+
+# DCT convolution in one dimension
+
+<div class="convolution-demo">
+  <div class="convolution-canvas" role="img" aria-label="Five-click Manim animation: twelve sampled values expand about their mean into a constant mean component and eleven signed, amplitude-weighted cosine components in depth; the weights move into a coefficient plot; a three-point boxcar response multiplies them; the updated components return to the shared mean reference; adding their deviations to the mean reconstructs the smoothed signal at the original sample positions.">
+    <CuManim v-if="dctActive" :steps="5" :width="1080" :height="360" :construct="constructDct" />
+  </div>
+  <p class="convolution-demo-caption">Illustrative 12-sample signal · Three-point boxcar · Reflected boundaries</p>
+</div>
+
+<script setup>
+import { useIsSlideActive, useNav } from '@slidev/client'
+import { dctConvolution } from '../scenes/dct-convolution'
+
+const { clicks } = useNav()
+const dctActive = useIsSlideActive()
+function constructDct() { return dctConvolution(() => clicks.value) }
+</script>
+
+<!--
+About 90 seconds, five clicks. Reuse the twelve illustrative sample heights from the former DCT introduction; they are not radar observations. All cosine weights, transfer-function values, and reconstructed samples are calculated from those values. The DCT-II basis is cos[pi*k*(n+1/2)/12], including the constant k=0 mode. Display the expansion weights a_0 = mean(x), a_k = (2/N) sum_n x[n] cos[pi*k*(n+1/2)/N] for k>0, not an unnormalized DCT library output. The original signal stays at its initial vertical position. On the first click, the reference axis moves to mu=43.75 and every mode is already scaled by its actual signed weight, using the original signal's vertical scale. The k=0 contribution is the flat mean itself; higher modes are displayed as mu+a_k*cos(...) to share that reference. The repeated display offset is not summed: reconstruct as mu plus the eleven deviations, adding mu only once. Depth separates mode index k; it is not a third physical dimension of the sampled data. All labels and figure geometry are native Manim mobjects.
+
+Initial frame: identify the twelve samples. The connected line is a visual guide.
+[click] Move the reference to the mean while keeping the signal's height unchanged, then fan out the weighted cosine components into depth. Point to k=0, which is flat at the mean, and the signed weights at right. The other components oscillate about the shared mean reference with their actual amplitudes; small-weight modes are nearly flat. There is no smoothing yet: the same weights reconstruct the original samples.
+[click] Move those weights into the signed coefficient plot. These are the actual coefficients of the displayed signal, ordered from low to high frequency.
+[click] Introduce the three-point equal-weight average and its matching DCT-domain response H(k) = [1 + 2*cos(pi*k/12)]/3. Then multiply every a_k by H(k). Faint bar outlines retain the original coefficients. H(0)=1 preserves the mean; H(8)=0 removes that mode; H(9..11)<0 reverses signs while attenuating magnitude. Do not describe the boxcar as a hard spectral cutoff or a purely positive taper. The response is not a naive DCT of a three-element array.
+[click] Reverse the coefficient-plot transition, returning each new weight b_k to its already amplitude-weighted cosine component. The cosine frequencies have not changed, and b_0=a_0 keeps the mean fixed.
+[click] Keep the flat mean and add the eleven weighted deviations. The gold reconstruction is a real pointwise sum, starting at the mean rather than dropping to zero. Do not add the shared display reference twelve times. Finish with twelve gold samples over the faint blue original. The result equals a direct three-point average using half-sample reflection, including x[-1]=x[0] and x[12]=x[11]. Numerical equivalence and the single-mean reconstruction are checked independently in scripts/test-dct-convolution.ts. Curves between samples illustrate the cosine interpolant; equivalence to direct convolution is asserted at the twelve sample positions, not for an arbitrary continuous interpolation.
+
+Transition: this demonstrated one axis and one fixed width. The next slide explains how the angular response varies with range while the range response stays fixed, followed by the two successive DCT passes. Do not imply one global 2D multiplication. Gaps are interpolated before Paper 1's method; discuss that limitation after the results.
 -->
 
 ---
