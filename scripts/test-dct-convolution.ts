@@ -11,6 +11,7 @@ import {
   reflectedBoxcar,
   reflectedIndex,
 } from '../scenes/dct-convolution-data.ts'
+import { rotateDctPoint, type DctPoint } from '../scenes/dct-convolution-view.ts'
 
 function close(actual: number, expected: number, tolerance = 1e-10) {
   assert.ok(Math.abs(actual - expected) < tolerance, `${actual} differs from ${expected}`)
@@ -50,6 +51,47 @@ test('the reconstruction animation begins at the mean, not at the zero axis', ()
   for (let n = 0; n < 12; n++) {
     close(partialReconstructionAt(dctData.filteredWeights, n, 0), dctData.weights[0])
     close(partialReconstructionAt(dctData.filteredWeights, n, 1), dctData.smoothed[n])
+  }
+})
+
+test('camera rotation fixes the mean pivot and preserves the three-dimensional geometry', () => {
+  const pivot: DctPoint = [-1.15, -2.55 + .045 * dctData.weights[0], 0]
+  const point: DctPoint = [3.1, pivot[1] + .5, 7.37]
+  for (const yaw of [0, Math.PI / 6, Math.PI / 2]) {
+    for (const elevation of [0, 25 * Math.PI / 180, Math.PI / 3]) {
+      rotateDctPoint(pivot, pivot, yaw, elevation).forEach((value, i) => close(value, pivot[i]))
+      const rotated = rotateDctPoint(point, pivot, yaw, elevation)
+      close(Math.hypot(...rotated.map((value, i) => value - pivot[i])),
+        Math.hypot(...point.map((value, i) => value - pivot[i])))
+    }
+  }
+})
+
+test('30-degree yaw and 25-degree elevation visibly tilt the constant-value sample axis', () => {
+  const yaw = 30 * Math.PI / 180
+  const elevation = 25 * Math.PI / 180
+  const pivot: DctPoint = [-1.15, -2.55 + .045 * dctData.weights[0], 0]
+  const left = rotateDctPoint([-5.4, pivot[1], 0], pivot, yaw, elevation)
+  const right = rotateDctPoint([3.1, pivot[1], 0], pivot, yaw, elevation)
+  const dx = right[0] - left[0]
+  const dy = right[1] - left[1]
+  close(dy / dx, -Math.tan(yaw) * Math.sin(elevation))
+  assert.ok(Math.abs(dy) > 1, 'Yaw must affect projected vertical positions, not only horizontal spacing.')
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI
+  assert.ok(angle < -13 && angle > -14, `Unexpected projected sample-axis angle: ${angle}`)
+})
+
+test('all twelve mean baselines share the same tilt with consistent depth separation', () => {
+  const yaw = Math.PI / 6
+  const elevation = 25 * Math.PI / 180
+  const pivot: DctPoint = [-1.15, -2.55 + .045 * dctData.weights[0], 0]
+  const front = rotateDctPoint([-5.4, pivot[1], 0], pivot, yaw, elevation)
+  for (let k = 0; k < 12; k++) {
+    const left = rotateDctPoint([-5.4, pivot[1], k * .67], pivot, yaw, elevation)
+    const right = rotateDctPoint([3.1, pivot[1], k * .67], pivot, yaw, elevation)
+    close(left[0] - front[0], k * .67 * Math.sin(yaw))
+    close(left[1] - front[1], k * .67 * Math.cos(yaw) * Math.sin(elevation))
+    close((right[1] - left[1]) / (right[0] - left[0]), -Math.tan(yaw) * Math.sin(elevation))
   }
 })
 

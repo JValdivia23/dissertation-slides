@@ -1,12 +1,13 @@
 import { Scene, Text, UpdateFromAlphaFunc, VGroup, VMobject, linear } from 'manim-web'
 import { dctData, meanReferencedModeAt, partialReconstructionAt } from './dct-convolution-data'
+import { rotateDctPoint } from './dct-convolution-view'
 
 type Point = [number, number, number]
-type View = { yaw: number, elevation: number, scale: number, offset: number }
+type View = { yaw: number, elevation: number, scale: number, offset: number, offsetY: number }
 
 const WIDTH = 1080
 const HEIGHT = 440
-const FRAME_W = 16
+const FRAME_W = 17.5
 const FRAME_H = FRAME_W * HEIGHT / WIDTH
 const BACKGROUND = '#101b2b'
 const WHITE = '#edf2f7'
@@ -20,7 +21,10 @@ const COLORS = ['#cfb87c', '#85d4d1', '#83cbe2', '#83bdef', '#9daff1', '#b7a1ee'
 const N = dctData.samples.length
 const CURVE_SAMPLES = 145
 const SIGNAL_SCALE = .045
-const SIGNAL_BASE = -1.9
+// The data-value origin is shared by every frame. Rotate around the mean
+// instead of translating the signal to a separate decomposition baseline.
+const SIGNAL_BASE = -2.55
+const SIGNAL_CENTER = -1.15
 const MEAN = dctData.weights[0]
 const MEAN_HEIGHT = SIGNAL_BASE + SIGNAL_SCALE * MEAN
 const BAR_BASE = -.6
@@ -28,8 +32,9 @@ const BAR_WIDTH = .38
 const BAR_SCALE = .055
 const GAIN_BASE = -2.22
 const GAIN_SCALE = .72
-const FRONT: View = { yaw: 0, elevation: 0, scale: 1.35, offset: 1.15 * 1.35 }
-const DEPTH: View = { yaw: .26, elevation: .32, scale: 1, offset: -.3 }
+const FRONT: View = { yaw: 0, elevation: 0, scale: 1.35, offset: 0, offsetY: 0 }
+// Pan the entire depth figure down, without changing its rotation or data.
+const DEPTH: View = { yaw: 30 * Math.PI / 180, elevation: 25 * Math.PI / 180, scale: 1, offset: -2.1, offsetY: -.5 }
 
 export const dctStages = ['Original signal', 'DCT: mean and weighted cosines', 'Cosine coefficients',
   'Apply the boxcar transfer function', 'Return to the cosine components', 'Inverse DCT: reconstruct the signal']
@@ -42,18 +47,19 @@ function pointMix(a: Point, b: Point, alpha: number): Point {
 }
 function viewMix(a: View, b: View, alpha: number): View {
   return { yaw: mix(a.yaw, b.yaw, alpha), elevation: mix(a.elevation, b.elevation, alpha),
-    scale: mix(a.scale, b.scale, alpha), offset: mix(a.offset, b.offset, alpha) }
+    scale: mix(a.scale, b.scale, alpha), offset: mix(a.offset, b.offset, alpha),
+    offsetY: mix(a.offsetY, b.offsetY, alpha) }
 }
 
-// An oblique depth projection keeps each sample's vertical position unchanged
-// while the mode layers unfold. In particular, the front constant mode stays
-// at the signal's mean instead of falling toward an unrelated zero baseline.
+// A complete yaw/elevation rotation, followed by orthographic projection.
+// The mean at the center of the front signal is the rotation anchor;
+// its line tilts with the sample axis, but its underlying value never changes.
+// Front-view horizontal fitting does not affect the depth view's angles.
 // Text remains camera-facing and replay is independent of camera timers.
 // There are no SVG/HTML figure overlays: paths, labels, and bars are mobjects.
 function project(x: number, y: number, z: number, view: View): Point {
-  const horizontal = x * Math.cos(view.yaw) + z * Math.sin(view.yaw)
-  return [view.offset + view.scale * horizontal,
-    y + z * Math.sin(view.elevation), 0]
+  const rotated = rotateDctPoint([x, y, z], [SIGNAL_CENTER, MEAN_HEIGHT, 0], view.yaw, view.elevation)
+  return [view.offset + view.scale * (rotated[0] - SIGNAL_CENTER), rotated[1] + view.offsetY, 0]
 }
 function sampleX(n: number) { return -5.4 + 8.5 * (n + .5) / N }
 function modeDepth(k: number) { return k * .67 }
@@ -119,14 +125,11 @@ export async function dctConvolution(getInitialClick: () => number = () => 0) {
   // VGroup updater can resize the mesh without refreshing its rendered raster.
   // Fixed native Text mobjects avoid that observed texture-refresh problem.
   const headings = dctStages.map(title => label(title, WHITE, .36))
-  const captions = ['Twelve sampled values · x[n]', 'Actual signed amplitudes · shared mean reference · no smoothing yet',
-    'One signed coefficient for each of the twelve cosine modes',
+  const captions = ['Twelve sampled values · x[n]', null, null,
     'H(k) = [1 + 2 cos(πk/12)] / 3     ·     bₖ = aₖ H(k)',
-    'Updated amplitudes · the mean is unchanged', 'y[n] = μ + Σₖ₌₁¹¹ bₖ cos[πk(n + ½)/12]']
-    .map(text => label(text, MUTED, .25))
-  const constantDetail = label('k = 0 is the mean · higher modes oscillate about it', MUTED, .24)
+    null, 'y[n] = μ + Σₖ₌₁¹¹ bₖ cos[πk(n + ½)/12]']
+    .map(text => text === null ? null : label(text, MUTED, .25))
   const meanLabel = label(`μ = ${MEAN.toFixed(2)}`, GOLD, .25)
-  const filterDetail = label('Three-point boxcar · mean preserved · signed gains', MUTED, .24)
   const original = path(INPUT, 3)
   const result = path(GOLD, 4)
   const originalDots = dctData.samples.map(() => path(INPUT, 0, true))
@@ -159,7 +162,6 @@ export async function dctConvolution(getInitialClick: () => number = () => 0) {
   const gainZero = label('0', MUTED, .21)
   const originalLegend = label('Original', INPUT, .25)
   const resultLegend = label('Smoothed', GOLD, .25)
-  const sumLabel = label('Keep the mean; add the weighted deviations', GOLD, .26)
   const illustration = new VGroup(...all).disableChildZLayering()
 
   function draw(step: number, alpha = 1) {
@@ -183,16 +185,16 @@ export async function dctConvolution(getInitialClick: () => number = () => 0) {
     const depths = dctData.samples.map((_, k) => modeDepth(k) * reveal * (1 - sumProgress))
     const currentWeights = dctData.weights.map((value, k) => mix(value, dctData.filteredWeights[k], filtering))
 
-    headings.forEach((item, index) => drawLabel(item, [0, 2.91, 0], index === step ? 1 : 0))
-    captions.forEach((item, index) => drawLabel(item, [0, -3.02, 0], index === step ? 1 : 0))
-    drawLabel(constantDetail, [0, -2.58, 0], step === 1 ? reveal : step === 4 ? alpha : 0)
-    drawLabel(filterDetail, [0, 2.39, 0], step === 3 ? 1 : 0)
+    headings.forEach((item, index) => drawLabel(item, [0, 3.25, 0], index === step ? 1 : 0))
+    captions.forEach((item, index) => {
+      if (item) drawLabel(item, [0, index === 0 ? 2.67 : -3.02, 0], index === step ? 1 : 0)
+    })
 
     const inputPoints = dctData.samples.map((value, n) => project(sampleX(n), SIGNAL_BASE + SIGNAL_SCALE * value, 0, view))
     drawPath(original, inputPoints, originalOpacity)
     inputPoints.forEach((point, n) => drawPath(originalDots[n], circle(point, .055), originalOpacity))
-    // Move only the reference axis up to the mean; the original samples never
-    // move vertically. All depth layers then use that same data-value origin.
+    // Move the reference axis up to the mean. The signal and all components
+    // rotate together about that mean, with no independent downward shift.
     const axisHeight = step === 0 ? SIGNAL_BASE : step === 1
       ? mix(SIGNAL_BASE, MEAN_HEIGHT, interval(alpha, 0, .22)) : MEAN_HEIGHT
     const axisStart = project(sampleX(-.5), axisHeight, 0, view)
@@ -203,11 +205,12 @@ export async function dctConvolution(getInitialClick: () => number = () => 0) {
       drawPath(sampleTicks[n], [tick, [tick[0], tick[1] - .08, 0]], axisOpacity)
       drawLabel(sampleNumbers[n], [tick[0], tick[1] - .23, 0], axisOpacity)
     })
-    drawLabel(sampleAxisTitle, [0, -2.48, 0], axisOpacity * (step === 1 || step === 4 ? 0 : 1))
-    drawLabel(meanLabel, [-6.9, MEAN_HEIGHT, 0], step === 1 ? interval(alpha, .1, .32)
+    drawLabel(sampleAxisTitle, [0, step === 0 ? -3.08 : -2.48, 0], axisOpacity * (step === 1 || step === 4 ? 0 : 1))
+    const meanStart = project(sampleX(-.5), MEAN_HEIGHT, 0, view)
+    drawLabel(meanLabel, [meanStart[0] - 1.1, meanStart[1], 0], step === 1 ? interval(alpha, .1, .32)
       : step === 2 ? 1 - alpha : step === 4 ? alpha : step === 5 ? 1 : 0)
     drawPath(depthAxis, [project(-5.4, MEAN_HEIGHT, 0, view), project(-5.4, MEAN_HEIGHT, modeDepth(N - 1) * reveal, view)], .5 * modeOpacity)
-    drawLabel(depthAxisTitle, project(-5.9, MEAN_HEIGHT, modeDepth(N - 1) + .3, view), .8 * modeOpacity)
+    drawLabel(depthAxisTitle, project(-6.2, MEAN_HEIGHT, modeDepth(N - 1) / 2, view), .8 * modeOpacity)
 
     for (let k = 0; k < N; k++) {
       const basisPoints = curve(n => {
@@ -275,7 +278,6 @@ export async function dctConvolution(getInitialClick: () => number = () => 0) {
     drawPath(result, sumPoints, reconstructing ? interval(alpha, 0, .15) : 0)
     const complete = reconstructing ? interval(alpha, .8, 1) : 0
     dctData.smoothed.forEach((value, n) => drawPath(resultDots[n], circle(project(sampleX(n), SIGNAL_BASE + SIGNAL_SCALE * value, 0, view), .061), complete))
-    drawLabel(sumLabel, [0, 2.39, 0], reconstructing ? 1 - complete : 0)
     drawLabel(originalLegend, [-1.3, 2.2, 0], complete)
     drawLabel(resultLegend, [1.3, 2.2, 0], complete)
   }
