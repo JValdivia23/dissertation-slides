@@ -724,6 +724,10 @@
   --limitation-accent: var(--cu-gold-accessible);
 }
 
+.slidev-layout.smoothing-limitation img.smoothing-limitation-diagram {
+  object-fit: contain;
+}
+
 .dark .slidev-layout.smoothing-limitation .smoothing-limitation-diagram {
   --limitation-accent: var(--cu-gold);
 }

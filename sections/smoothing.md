@@ -339,23 +339,7 @@ class: smoothing-limitation
 <div class="smoothing-limitation-flow">
   <section>
     <h2>Missing data</h2>
-    <svg class="smoothing-limitation-diagram" viewBox="0 0 500 280" role="img" aria-label="Illustrative polar grid with a missing sector beginning halfway out in range and scattered patches of missing gates">
-      <circle class="scan-field" cx="250" cy="140" r="118" />
-      <g class="scan-grid">
-        <circle cx="250" cy="140" r="59" />
-        <circle cx="250" cy="140" r="89" />
-        <path d="M132 140 H368 M250 22 V258 M167 57 L333 223 M333 57 L167 223" />
-      </g>
-      <g class="missing-gates">
-        <path d="M288 95 L326 50 A118 118 0 0 1 364 109 L307 125 A59 59 0 0 0 288 95 Z" />
-        <path d="M170 92 L179 85 L194 89 L199 101 L189 108 L173 104 Z" />
-        <path d="M202 179 L211 171 L226 176 L229 187 L217 193 L204 190 Z" />
-        <path d="M264 211 L273 204 L286 209 L288 220 L278 226 L266 221 Z" />
-        <path d="M322 177 L332 172 L343 179 L340 189 L328 193 L319 185 Z" />
-      </g>
-      <circle class="scan-outline" cx="250" cy="140" r="118" />
-      <circle class="scan-origin" cx="250" cy="140" r="4" />
-    </svg>
+    <img class="smoothing-limitation-diagram" src="../figures/dow6-raw-panel-a.png" alt="DOW6 X-band raw PPI, panel (a): uncorrected reflectivity with white beam-blockage sectors and missing gates" />
     <p>Interpolating broad gaps can bias estimates near missing regions.</p>
   </section>
   <section>
@@ -379,5 +363,5 @@ class: smoothing-limitation
 </div>
 
 <!--
-About 1 minute 10 seconds. These minimal polar sketches are illustrative, not measured fields or a demonstration of Paper 1's interpolation error. Two assumptions qualify Paper 1. First, its DCT needs defined input values, so the paper linearly interpolates missing gates before smoothing. In the left sketch, a blocked sector begins about halfway out in range, with separate isolated invalid patches. A short gap may be less consequential than a wide blocked sector: interpolation can introduce a low-frequency bridge and kinks at its edges. Filled values are not observations. Second, DCT-II in the angular and range passes assumes reflected boundaries. This is a reasonable model for the finite elevation and range limits of an RHI, not a universal radar boundary rule. On the right, the two rays on either side of 0/360 degrees are physically adjacent on a full-circle PPI; a periodic angular transform is more appropriate while range remains reflective. A partial-sector scan need not wrap in azimuth. There is also a scale-versus-noise trade-off: keeping physical smoothing width approximately fixed means fewer angular samples at longer ranges, where signal-to-noise ratio may be poorer, so the method does not guarantee equal noise reduction everywhere. The real-data demonstration here is reflectivity; Doppler velocity must be de-aliased before smoothing. Paper 2 extends the framework to support-aware local statistics and explicit periodic azimuth versus reflective range modes. Do not imply that it automatically solves the range-dependent noise trade-off.
+About 1 minute 10 seconds. The left panel is a real raw DOW6 X-band PPI from the same 23 February 2022 event, shown here only to illustrate blocked sectors and missing gates; it is not Paper 1's data or output, and not a demonstration of Paper 1's interpolation error. The right sketch is illustrative, not a measured field. Two assumptions qualify Paper 1. First, its DCT needs defined input values, so the paper linearly interpolates missing gates before smoothing. In the left PPI, wide beam-blockage sectors appear in white with separate isolated invalid patches. A short gap may be less consequential than a wide blocked sector: interpolation can introduce a low-frequency bridge and kinks at its edges. Filled values are not observations. Second, DCT-II in the angular and range passes assumes reflected boundaries. This is a reasonable model for the finite elevation and range limits of an RHI, not a universal radar boundary rule. On the right, the two rays on either side of 0/360 degrees are physically adjacent on a full-circle PPI; a periodic angular transform is more appropriate while range remains reflective. A partial-sector scan need not wrap in azimuth. There is also a scale-versus-noise trade-off: keeping physical smoothing width approximately fixed means fewer angular samples at longer ranges, where signal-to-noise ratio may be poorer, so the method does not guarantee equal noise reduction everywhere. The real-data demonstration here is reflectivity; Doppler velocity must be de-aliased before smoothing. Paper 2 extends the framework to support-aware local statistics and explicit periodic azimuth versus reflective range modes. Do not imply that it automatically solves the range-dependent noise trade-off.
 -->
