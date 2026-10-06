@@ -720,3 +720,35 @@ $$
 About 40 seconds. Threshold sweep over k from 2.0 to 6.0, mean plus/minus std across seeds. Lower k finds more with more false alarms; higher k is cleaner but misses more. Mean F1 peaks at k = 3.0 within the tested sweep. Recommended practice is iterative: compute local statistics, flag with the z-score criterion, exclude flagged points from the mask, and recompute so outliers do not inflate local spread. Window width, support, and boundary mode also affect screening. Transition from synthetic winds to real radar.
 F1 is the harmonic mean of precision and recall, so 0.84 means the k = 3.0 setting balances both.
 -->
+
+---
+class: smoothing-contribution
+---
+
+# Contribution: from smoothing to local statistics
+
+<div class="flex flex-1 items-center gap-12 min-h-0">
+  <p class="flex-1 text-2xl leading-relaxed">Local mean and spread on <strong>N-dimensional Cartesian</strong> and <strong>polar grids</strong>, mixing <strong>boundary conditions</strong> and <strong>kernel types</strong> per dimension.</p>
+  <svg class="shrink-0" width="360" height="225" viewBox="0 0 320 200" role="img" aria-label="Illustrative Cartesian grid and polar sampling grid, not measured data">
+    <g fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="2">
+      <path d="M18 50 H108 M18 50 V140 M108 50 V140 M18 140 H108 M48 50 V140 M78 50 V140 M18 80 H108 M18 110 H108" />
+    </g>
+    <rect x="48" y="80" width="30" height="30" fill="#cfb87c" fill-opacity="0.55" />
+    <text x="63" y="170" text-anchor="middle" fill="currentColor" style="font-size: 22px">Cartesian</text>
+    <g transform="translate(140,45) scale(0.55)">
+      <path d="M32 158 L250.24 32 A252 252 0 0 1 284 158 Z" fill="#cfb87c" fill-opacity="0.12" />
+      <g fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="2">
+        <path d="M32 158 H284 M32 158 L280.18 114.24 M32 158 L268.8 71.81 M32 158 L250.24 32" />
+        <path d="M86.56 126.5 A63 63 0 0 1 95 158 M141.12 95 A126 126 0 0 1 158 158 M195.68 63.5 A189 189 0 0 1 221 158 M250.24 32 A252 252 0 0 1 284 158" />
+      </g>
+      <circle cx="32" cy="158" r="4" fill="currentColor" />
+    </g>
+    <text x="227" y="160" text-anchor="middle" fill="currentColor" style="font-size: 22px">Polar</text>
+  </svg>
+</div>
+
+<p class="fine convolution-demo-caption">See the preprint <a href="https://doi.org/10.48550/arXiv.2604.22721" target="_blank" rel="noopener noreferrer">Valdivia et al. (arXiv:2604.22721)</a> for the mathematical formulation and implementation.</p>
+
+<!--
+About 30 seconds, no clicks. The sketches are illustrative, not results or measured data. Suggested delivery: “Paper 1 smoothed complete fields with one kernel average. The new step is a statistical framework: from retained values only, we estimate local mean, spread, and available support — on N-dimensional Cartesian and polar grids, combining reflective and periodic boundaries and different kernel types per dimension. I will leave the formulation to the paper and now show the validation.” Do not present equations on this slide; the estimator, boundary, dimensionality, and polar-filter details are in the supporting slides if asked. This work is under review; cite the arXiv preprint, not a publication. The link opens the preprint in a separate tab.
+-->

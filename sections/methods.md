@@ -200,48 +200,21 @@ class: local-math local-workflow
 
 # Spectral local-statistics workflow
 
-<p class="local-math-lead">One operator applied to values, squared values, and mask.</p>
+
 
 <div class="local-pipeline-fig">
   <img src="../figures/local-stats-pipeline.png" alt="Reflective Cartesian spectral filtering example on a 2D field with missing values, producing local mean, standard deviation, and effective sample count" />
 </div>
 
-<p class="fine">Reflective Cartesian (DCT-II) 2D example with missing values in gray; zoomed inset shows μ, σ, and N<sub>eff</sub>. The same spectral operator filters masked values, squared values, and mask before normalization. N-dimensional Cartesian and polar forms follow.</p>
+<p class="fine">Reflective Cartesian (DCT-II) 2D example with missing values in gray; zoomed inset shows μ, σ, and N<sub>eff</sub>. </p>
 
-<!--
-About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Next: what is new in this work.
--->
-
----
-class: smoothing-contribution
----
-
-# Contribution: from smoothing to local statistics
-
-<div class="flex flex-1 items-center gap-12 min-h-0">
-  <p class="flex-1 text-2xl leading-relaxed">Local mean and spread on <strong>N-dimensional Cartesian</strong> and <strong>polar grids</strong>, mixing <strong>boundary conditions</strong> and <strong>kernel types</strong> per dimension.</p>
-  <svg class="shrink-0" width="360" height="225" viewBox="0 0 320 200" role="img" aria-label="Illustrative Cartesian grid and polar sampling grid, not measured data">
-    <g fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="2">
-      <path d="M18 50 H108 M18 50 V140 M108 50 V140 M18 140 H108 M48 50 V140 M78 50 V140 M18 80 H108 M18 110 H108" />
-    </g>
-    <rect x="48" y="80" width="30" height="30" fill="#cfb87c" fill-opacity="0.55" />
-    <text x="63" y="170" text-anchor="middle" fill="currentColor" style="font-size: 22px">Cartesian</text>
-    <g transform="translate(140,45) scale(0.55)">
-      <path d="M32 158 L250.24 32 A252 252 0 0 1 284 158 Z" fill="#cfb87c" fill-opacity="0.12" />
-      <g fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="2">
-        <path d="M32 158 H284 M32 158 L280.18 114.24 M32 158 L268.8 71.81 M32 158 L250.24 32" />
-        <path d="M86.56 126.5 A63 63 0 0 1 95 158 M141.12 95 A126 126 0 0 1 158 158 M195.68 63.5 A189 189 0 0 1 221 158 M250.24 32 A252 252 0 0 1 284 158" />
-      </g>
-      <circle cx="32" cy="158" r="4" fill="currentColor" />
-    </g>
-    <text x="227" y="160" text-anchor="middle" fill="currentColor" style="font-size: 22px">Polar</text>
-  </svg>
-</div>
+<p class="local-takeaway">Local statistics on polar and Cartesian grids, from retained values only.</p>
+<p class="local-takeaway">The same idea extends to N-dimensional grids, with per-dimension kernels and boundary conditions.</p>
 
 <p class="fine convolution-demo-caption">See the preprint <a href="https://doi.org/10.48550/arXiv.2604.22721" target="_blank" rel="noopener noreferrer">Valdivia et al. (arXiv:2604.22721)</a> for the mathematical formulation and implementation.</p>
 
 <!--
-About 30 seconds, no clicks. The sketches are illustrative, not results or measured data. Suggested delivery: “Paper 1 smoothed complete fields with one kernel average. The new step is a statistical framework: from retained values only, we estimate local mean, spread, and available support — on N-dimensional Cartesian and polar grids, combining reflective and periodic boundaries and different kernel types per dimension. I will leave the formulation to the paper and now show the validation.” Do not present equations on this slide; the estimator, boundary, dimensionality, and polar-filter details are in the supporting slides if asked. This work is under review; cite the arXiv preprint, not a publication. The link opens the preprint in a separate tab.
+About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Takeaway: from retained values only, local statistics on polar and Cartesian grids, extending to N-dimensional grids with per-dimension kernels and boundaries. Next: validation in a synthetic 3D wind field.
 -->
 
 ---

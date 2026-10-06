@@ -2901,6 +2901,12 @@
   text-align: center;
 }
 
+.slidev-layout.local-math .local-takeaway {
+  margin: 0.2rem 0 0;
+  font-size: 1.02rem;
+  text-align: center;
+}
+
 .slidev-layout.local-math .local-math-center {
   margin: 0.3rem 0;
   text-align: center;
