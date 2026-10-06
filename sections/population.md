@@ -532,7 +532,7 @@ $$Z_{\mathrm{DR}} = 10\log_{10}\!\left(\frac{z_{\mathrm{H}}}{z_{\mathrm{V}}}\rig
     </div>
     <figure v-if="zdrStep >= 4" class="zdr-observed">
       <div class="zdr-observed-frame">
-        <img src="../figures/population-zdr.png" alt="The same observed Paper Figure 13(c) from slide 41: Set 1 mean differential reflectivity decreases early and rises later; the highlighted interval connects to the conceptual particle animation." />
+        <img src="../figures/population-zdr.png" alt="The same observed Paper Figure 13(c) from slide 37: Set 1 mean differential reflectivity decreases early and rises later; the highlighted interval connects to the conceptual particle animation." />
         <svg viewBox="0 0 1066 467" aria-hidden="true">
           <rect :x="zdrStep === 4 ? 153 : 365" y="7" :width="zdrStep === 4 ? 212 : 633" height="435" />
         </svg>

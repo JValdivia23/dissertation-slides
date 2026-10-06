@@ -18,10 +18,10 @@ themeConfig:
     sections:
       - { label: Introduction, start: 1, end: 6 }
       - { label: Smoothing, start: 7, end: 18 }
-      - { label: Local statistics, start: 19, end: 32 }
-      - { label: CTGC population life cycle, start: 33, end: 45 }
-      - { label: CTGC fall streak, start: 46, end: 58 }
-      - { label: Conclusions, start: 59, end: 62 }
+      - { label: Local statistics, start: 19, end: 28 }
+      - { label: CTGC population life cycle, start: 29, end: 41 }
+      - { label: CTGC fall streak, start: 42, end: 54 }
+      - { label: Conclusions, start: 55, end: 58 }
     outsideLabel: Backup
     pageNumberOnly: true
     hideOnCover: true

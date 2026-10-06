@@ -443,3 +443,236 @@ class: figure-slide
 </div>
 
 <p class="fine">Nine analysis times, 02:54–03:42 UTC. The 3D cell is one member of Set 1.</p>
+
+---
+class: local-math
+---
+
+# Local mean, variance, and support
+
+<p class="local-math-lead">One shared denominator from the filtered mask.</p>
+
+<div class="local-eq-rows">
+<div class="local-eq-row">
+<div class="local-eq-label">Data density</div>
+<div class="local-eq-math">
+
+$$
+\rho = \mathcal{S}_g\{m\}
+$$
+
+</div>
+</div>
+<div class="local-eq-row">
+<div class="local-eq-label">Mean</div>
+<div class="local-eq-math">
+
+$$
+\mu = \mathcal{S}_g\{x \cdot m\} / \rho
+$$
+
+</div>
+</div>
+<div class="local-eq-row">
+<div class="local-eq-label">Variance, std</div>
+<div class="local-eq-math">
+
+$$
+\sigma^2 = \mathcal{S}_g\{x^2 \cdot m\} / \rho - \mu^2, \quad \sigma = \sqrt{\sigma^2}
+$$
+
+</div>
+</div>
+<div class="local-eq-row">
+<div class="local-eq-label">Effective number</div>
+<div class="local-eq-math">
+
+$$
+N_{\mathrm{eff}} = A\,\rho
+$$
+
+</div>
+</div>
+<div class="local-eq-row">
+<div class="local-eq-label">Area</div>
+<div class="local-eq-math">
+
+$$
+A = \prod_d W_d, \quad A_{\mathrm{polar}}(r) = W_{\mathrm{range}} \cdot W_{\mathrm{az,grid}}(r)
+$$
+
+</div>
+</div>
+</div>
+
+<!--
+About 80 seconds. x is the observed field and m is 1 where retained, 0 where missing or excluded. S_g is the spectral smoothing operator: transform, multiply by H_g, invert. The filtered mask ρ is the shared denominator: normalizing the filtered values gives the mean, and normalizing the filtered squared values gives the second moment for variance and standard deviation. The same denominator measures available support through N_eff: ρ is the retained fraction, and A is the nominal window area — the product of axis widths on Cartesian grids, range-dependent on polar grids — so N_eff reads as the effective number of contributing grid cells. Zero placeholders never enter as zero-valued observations because the denominator removes their weight. The prefilled-field fallback applies only where ρ is below epsilon; screening weakly supported estimates is a separate analysis choice. Next: how the spectral operator implements boundaries.
+-->
+
+
+---
+class: local-math
+---
+
+# Boundary conditions are part of the transform
+
+<p class="local-math-lead">The choice of transform is also a boundary model for S<sub>g</sub>.</p>
+
+<div class="local-math-center">
+
+$$
+\mathcal{S}_g\{f\} = \mathcal{T}^{-1}\{\mathcal{T}\{f\} \cdot H_g\}
+$$
+
+</div>
+
+<div class="local-math-grid cols-2">
+  <section class="local-math-card">
+    <h2>Reflective (DCT-II)</h2>
+    <svg class="local-boundary-svg" viewBox="0 0 300 70" aria-hidden="true">
+      <line x1="10" y1="56" x2="290" y2="56" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
+      <rect class="ext" x="70" y="37" width="16" height="18" />
+      <rect class="ext" x="90" y="43" width="16" height="12" />
+      <rect class="orig" x="110" y="43" width="16" height="12" />
+      <rect class="orig" x="130" y="37" width="16" height="18" />
+      <rect class="orig" x="150" y="31" width="16" height="24" />
+      <rect class="orig" x="170" y="25" width="16" height="30" />
+      <rect class="orig" x="190" y="19" width="16" height="36" />
+      <rect class="orig" x="210" y="13" width="16" height="42" />
+      <rect class="ext" x="230" y="13" width="16" height="42" />
+      <rect class="ext" x="250" y="19" width="16" height="36" />
+    </svg>
+    <p>Mirror at the ends. Finite axes.</p>
+
+$$
+\omega_k = \pi k / n
+$$
+
+  </section>
+  <section class="local-math-card">
+    <h2>Periodic (RFFT)</h2>
+    <svg class="local-boundary-svg" viewBox="0 0 300 70" aria-hidden="true">
+      <line x1="10" y1="56" x2="290" y2="56" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
+      <rect class="ext" x="70" y="19" width="16" height="36" />
+      <rect class="ext" x="90" y="13" width="16" height="42" />
+      <rect class="orig" x="110" y="43" width="16" height="12" />
+      <rect class="orig" x="130" y="37" width="16" height="18" />
+      <rect class="orig" x="150" y="31" width="16" height="24" />
+      <rect class="orig" x="170" y="25" width="16" height="30" />
+      <rect class="orig" x="190" y="19" width="16" height="36" />
+      <rect class="orig" x="210" y="13" width="16" height="42" />
+      <rect class="ext" x="230" y="43" width="16" height="12" />
+      <rect class="ext" x="250" y="37" width="16" height="18" />
+    </svg>
+    <p>Repeat end to start. Circular azimuth.</p>
+
+$$
+\omega_k = 2\pi k / n
+$$
+
+  </section>
+</div>
+
+<p class="fine">Gaussian example: H<sub>g</sub>[k] = exp[−½(sω<sub>k</sub>)²], s = W/√12. Same form, different grid. Boxcar and discrete boxcar are also implemented.</p>
+
+<!--
+Read the center equation as: S sub g of f equals the inverse transform of the transform of f, times H sub g. S_g is the spectral smoother, T is the forward transform, and H_g is the kernel response. The same operator applies to data, mask, squared data, or a prefilled field; it is not itself a local mean. The transform is also the boundary model: DCT-II, read D C T two, means half-sample symmetric reflective extension; RFFT means periodic extension. The bars are schematic: gold is the finite signal of n samples, muted bars the assumed continuation — mirrored at the edges on the left, wrapped end to start on the right. Below, omega sub k equals pi k over n is the DCT frequency grid, and omega sub k equals two pi k over n is the periodic grid; k is the wavenumber, the integer frequency-bin index; omega is the frequency in radians per grid sample; and n is the number of samples. The Gaussian response H sub g of k is e to the minus one-half s omega sub k squared, with s equals W over root twelve linking s to the window width W. Same functional form, different grid. Next: does the boundary choice matter in practice?
+-->
+
+
+---
+class: local-math
+---
+
+# Spectral operations in N dimensional space
+
+<p class="local-math-lead">Separability: one operator, two equivalent paths.</p>
+
+<div class="local-math-center">
+
+$$
+\begin{aligned}
+\mathcal{S}^{(D)}\{f\} &= \mathcal{T}^{-1}\{\mathcal{T}\{f\} \cdot H_D\} \\
+H_D(k_1,\ldots,k_D) &= \prod_{d=1}^{D} H_d(k_d), \quad \mathcal{S}^{(D)} = \mathcal{S}_D \circ \cdots \circ \mathcal{S}_1
+\end{aligned}
+$$
+
+</div>
+
+<svg class="local-paths-svg" viewBox="40 0 366 134" role="img" aria-label="Single D-dimensional multiply by H D is equivalent to successive one-dimensional passes along x, then y, then z">
+  <rect class="vol" x="158" y="8" width="40" height="40" />
+  <path class="parrow" d="M203 28h40m-7-7 7 7-7 7" />
+  <text class="pop" x="223" y="20" text-anchor="middle">×H_D</text>
+  <rect class="vol vol-out" x="248" y="8" width="40" height="40" />
+  <text class="equiv" x="223" y="86" text-anchor="middle">≡</text>
+  <rect class="vol" x="70" y="92" width="36" height="36" />
+  <path class="parrow" d="M111 110h44m-7-7 7 7-7 7" />
+  <text class="pop" x="133" y="102" text-anchor="middle">×H_1</text>
+  <text class="paxis" x="133" y="126" text-anchor="middle">x</text>
+  <rect class="vol" x="160" y="92" width="36" height="36" />
+  <path class="parrow" d="M201 110h44m-7-7 7 7-7 7" />
+  <text class="pop" x="223" y="102" text-anchor="middle">×H_2</text>
+  <text class="paxis" x="223" y="126" text-anchor="middle">y</text>
+  <rect class="vol" x="250" y="92" width="36" height="36" />
+  <path class="parrow" d="M291 110h44m-7-7 7 7-7 7" />
+  <text class="pop" x="313" y="102" text-anchor="middle">×H_3</text>
+  <text class="paxis" x="313" y="126" text-anchor="middle">z</text>
+  <rect class="vol vol-out" x="340" y="92" width="36" height="36" />
+</svg>
+
+<p class="fine">Each axis keeps its own width. Apply the full operator to x·m, x²·m, and m, then form ratios.</p>
+
+<!--
+About 50 seconds. The D-dimensional smoother is one operator: transform, multiply once by H_D, invert — with H_D the product of the axis responses. By separability this equals successive one-dimensional passes: S_1 along x, then S_2 along y, then S_3 along z. The circle means then, applied right to left, so S_1 runs first. Each axis keeps its own width. As before, apply the full multidimensional operator to the masked field, masked squares, and mask, then form the normalized ratios; do not average separately normalized intermediates. Next: the same idea with mixed boundaries on a polar grid.
+-->
+
+
+---
+class: smoothing-polar-dct
+---
+
+# Polar filtering with mixed boundaries
+
+<p class="polar-dct-lead">Apply the separable filter to the two dimensions of the polar field, X(θ, r).</p>
+
+<div class="polar-dct-passes">
+
+<section class="polar-dct-pass">
+
+## 1 · Azimuth pass — range-dependent width
+
+<div class="polar-dct-detail">
+
+$$
+Y_{\mathrm{az}} = \operatorname{IRFFT}\!\left[\operatorname{RFFT}(X) \cdot H_{\mathrm{az}}\right]
+$$
+
+At each range index, the grid width follows $W_{\mathrm{az,grid}}(r) = W_{\mathrm{azimuth}}/(r\Delta\theta)$.
+
+</div>
+
+</section>
+
+<section class="polar-dct-pass">
+
+## 2 · Range pass — fixed reflective width
+
+<div class="polar-dct-detail">
+
+$$
+Y = \operatorname{IDCT}_{r}\!\left[\operatorname{DCT}_{r}(Y_{\mathrm{az}}) \cdot H_{r}\right]
+$$
+
+At each angle, multiply range coefficients by the same fixed-width response.
+
+</div>
+
+</section>
+
+</div>
+
+<p class="spectral-summary">Full-circle: periodic azimuth with reflective range; partial-sector: reflective azimuth.</p>
+
+<!--
+About 50 seconds. Polar arrays are indexed as azimuth by range. To hold physical azimuth width approximately fixed, the kernel width in grid units is W_az,grid(r) = W_azimuth / (r delta-theta), where r is the 1-based range index and delta-theta is azimuth spacing in radians. This r is an index convention, distinct from physical range discussed in the smoothing section. Because that width varies with range, H_az is a range-dependent 2D transfer-function array, not one global 2D multiplication. For a full-circle scan the implemented mixed mode is periodic azimuth with reflective range, shown here with RFFT and IRFFT; a partial-sector scan need not wrap and uses reflective DCT in azimuth. Stage 2 filters the intermediate field Y_az along range with reflective DCT-II. Apply the same two-stage operator to masked values, masked squares, and mask, then normalize. Polar effective area is range-dependent: A_polar(r) = W_range times W_az,grid(r). Next: validation, starting with structured 3D flow.
+-->
