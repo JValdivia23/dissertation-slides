@@ -74,15 +74,15 @@ class: local-math
 <div class="local-math-grid cols-3">
 <section class="local-math-card">
 <h2>Use valid observations</h2>
-<p>Missing gates and excluded values carry zero weight inside the kernel.</p>
+
 </section>
 <section class="local-math-card">
 <h2>Estimate mean and spread</h2>
-<p>Local average plus variance, standard deviation, and available support.</p>
+
 </section>
 <section class="local-math-card">
 <h2>Generalize the grid</h2>
-<p>Polar and Cartesian forms, extended to N-dimensional arrays.</p>
+
 </section>
 </div>
 
