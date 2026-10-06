@@ -219,7 +219,7 @@ class: smoothing-contribution
 # Contribution: from smoothing to local statistics
 
 <div class="flex flex-1 items-center gap-12 min-h-0">
-  <p class="flex-1 text-2xl leading-relaxed">Local mean, spread, and support from <strong>retained values only</strong> — on <strong>N-dimensional Cartesian</strong> and <strong>2D polar grids</strong>, mixing <strong>boundary conditions</strong> and <strong>kernel types</strong> per dimension.</p>
+  <p class="flex-1 text-2xl leading-relaxed">Local mean and spread on <strong>N-dimensional Cartesian</strong> and <strong>polar grids</strong>, mixing <strong>boundary conditions</strong> and <strong>kernel types</strong> per dimension.</p>
   <svg class="shrink-0" width="360" height="225" viewBox="0 0 320 200" role="img" aria-label="Illustrative Cartesian grid and polar sampling grid, not measured data">
     <g fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="2">
       <path d="M18 50 H108 M18 50 V140 M108 50 V140 M18 140 H108 M48 50 V140 M78 50 V140 M18 80 H108 M18 110 H108" />
