@@ -206,8 +206,6 @@ class: local-math local-workflow
   <img src="../figures/local-stats-pipeline.png" alt="Reflective Cartesian spectral filtering example on a 2D field with missing values, producing local mean, standard deviation, and effective sample count" />
 </div>
 
-<p class="fine">Reflective Cartesian (DCT-II) 2D example with missing values in gray; zoomed inset shows μ, σ, and N<sub>eff</sub>. </p>
-
 <p class="local-takeaway">Local statistics on polar and Cartesian grids, from retained values only.</p>
 <p class="local-takeaway">The same idea extends to N-dimensional grids, with per-dimension kernels and boundary conditions.</p>
 
