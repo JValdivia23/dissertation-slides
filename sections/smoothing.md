@@ -175,7 +175,7 @@ $$
 </div>
 
 <!--
-About 50 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable spectral transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. We know the data and the desired spatial kernel; the remaining piece is the kernel's matching spectral response T{g}, called the transfer function H. Paper 1 derives analytical responses for boxcar and Gaussian kernels, so I will not derive those here. Next, demonstrate the DCT computation with a twelve-sample 1D signal before returning to the polar-grid responses. Exact equivalence requires matching the kernel and reflected boundary treatment; the spatial baseline in the paper also handles missing pixels differently. The field comparison uses boxcar smoothing; the later large-array timing callout uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
+About 50 seconds. On slide 9 we moved a kernel across a field and computed a weighted sum at each location. Here f represents sampled data and g a smoothing kernel. The left side of the equation transforms their spatial convolution—the result of sliding g over f. The right side says that with a suitable spectral transform T and matching boundary treatment, we can instead transform the data and kernel, multiply corresponding coefficients, and inverse-transform the product to recover the filtered data. The multiplication is point-wise in the transform domain, not multiplication of the original samples. We know the data and the desired spatial kernel; the remaining piece is the kernel's matching spectral response T{g}, called the transfer function H. Paper 1 derives analytical responses for boxcar and Gaussian kernels, so I will not derive those here. Next, demonstrate the established DCT computation with a twelve-sample 1D signal before stating this work's contribution for 2D polar radar fields. Exact equivalence requires matching the kernel and reflected boundary treatment; the spatial baseline in the paper also handles missing pixels differently. The field comparison uses boxcar smoothing; the later large-array timing callout uses the analytical Gaussian DCT. Avoid saying one filter produced both results.
 
 This first method needs a complete field: gaps are interpolated before the DCT. Discuss that limitation after the results.
 -->
@@ -213,128 +213,39 @@ Initial frame: identify the twelve samples. The connected line is a visual guide
 [click] Reverse the coefficient-plot transition, returning each new weight b_k to its already amplitude-weighted cosine component. The cosine frequencies have not changed, and b_0=a_0 keeps the mean fixed.
 [click] Keep the flat mean and add the eleven weighted deviations. The gold reconstruction is a real pointwise sum, starting at the mean rather than dropping to zero. Do not add the shared display reference twelve times. Finish with twelve gold samples over the faint blue original. The result equals a direct three-point average using half-sample reflection, including x[-1]=x[0] and x[12]=x[11]. Numerical equivalence and the single-mean reconstruction are checked independently in scripts/test-dct-convolution.ts. Curves between samples illustrate the cosine interpolant; equivalence to direct convolution is asserted at the twelve sample positions, not for an arbitrary continuous interpolation.
 
-Transition: this demonstrated one axis and one fixed width. The next slide explains how the angular response varies with range while the range response stays fixed, followed by the two successive DCT passes. Do not imply one global 2D multiplication. Gaps are interpolated before Paper 1's method; discuss that limitation after the results.
+Transition: this demonstrated an established spectral-domain smoothing operation on one axis with one fixed width. The next slide states this work's contribution: DCT smoothing of 2D radar fields in native polar coordinates, with range-dependent angular filtering to maintain a consistent physical scale. Refer listeners to the paper for the formulation rather than explaining the extension here. The transfer-function details, two successive DCT passes, and synthetic validation are available in the supporting slides if asked. Do not imply one global 2D multiplication. Gaps are interpolated before Paper 1's method; discuss that limitation after the results.
 -->
 
 ---
-class: smoothing-transfer
+class: smoothing-contribution
 ---
 
-# Transfer functions on a polar grid
+# Contribution: DCT smoothing on a 2D polar grid
 
-<p class="transfer-polar-lead">Choose a smoothing kernel and its analytical DCT-domain response, H(k; W).</p>
-
-<div class="transfer-polar-dimensions">
-  <section>
-
-## Angle: response varies with range
-
-Adjacent rays separate by approximately rΔθ.
-
-$$
-\begin{aligned}
-W_{\theta}(r) &= \frac{W_{\mathrm{phys}}}{r\,\Delta\theta} \\
-H_{\theta}(k_{\theta},r) &= H_{\mathrm{kernel}}\!\left(k_{\theta};W_{\theta}(r)\right)
-\end{aligned}
-$$
-
-One angular-frequency response for each range.
-
-  </section>
-
-  <section>
-
-## Range: fixed response
-
-Range-gate spacing Δr is constant.
-
-$$
-\begin{aligned}
-W_r &= \text{fixed in range gates} \\
-H_r(k_r) &= H_{\mathrm{kernel}}\!\left(k_r;W_r\right)
-\end{aligned}
-$$
-
-The same range-frequency response at every angle.
-
-  </section>
+<div class="flex flex-1 items-center gap-12 min-h-0">
+  <p class="flex-1 text-2xl leading-relaxed">DCT smoothing of <strong>2D radar fields</strong> directly in <strong>native polar coordinates</strong>.</p>
+  <svg class="shrink-0" width="360" height="225" viewBox="0 0 320 200" role="img" aria-label="Illustrative two-dimensional radar sampling grid in range and angle, not measured radar data">
+    <path d="M32 158 L250.24 32 A252 252 0 0 1 284 158 Z" fill="#cfb87c" fill-opacity="0.12" />
+    <g fill="#cfb87c" fill-opacity="0.55">
+      <path d="M141.12 95 L195.68 63.5 A189 189 0 0 1 209.6 93.36 L150.4 114.91 A126 126 0 0 0 141.12 95 Z" />
+      <path d="M156.09 136.12 L218.13 125.18 A189 189 0 0 1 221 158 L158 158 A126 126 0 0 0 156.09 136.12 Z" />
+    </g>
+    <g fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="2">
+      <path d="M32 158 H284 M32 158 L280.18 114.24 M32 158 L268.8 71.81 M32 158 L250.24 32" />
+      <path d="M86.56 126.5 A63 63 0 0 1 95 158 M141.12 95 A126 126 0 0 1 158 158 M195.68 63.5 A189 189 0 0 1 221 158 M250.24 32 A252 252 0 0 1 284 158" />
+    </g>
+    <circle cx="32" cy="158" r="4" fill="currentColor" />
+    <text x="162" y="190" text-anchor="middle" fill="currentColor" style="font-size: 22px">Range</text>
+    <text x="242" y="24" fill="currentColor" style="font-size: 22px">Angle</text>
+  </svg>
 </div>
 
-<p class="spectral-summary">The angle responses form a range-indexed set; the range response is shared. Apply each in its own DCT pass.</p>
+<p class="text-lg">Range-dependent angular filtering maintains a <strong>consistent physical smoothing scale.</strong></p>
 
-<p class="fine">Boxcar response via the Dirichlet identity: Oppenheim et al. (1999). Gaussian response: Smith (1997).</p>
+<p class="fine convolution-demo-caption">See <a href="https://doi.org/10.5194/amt-19-5211-2026" target="_blank" rel="noopener noreferrer">Valdivia et al. (2026)</a> for the mathematical formulation and implementation.</p>
 
 <!--
-About 45 seconds. The paper obtains the analytical continuous-width boxcar response using the Dirichlet-kernel identity cited to Oppenheim et al. (1999), and cites Smith (1997) for the normalized Gaussian response. We do not need to derive either on this slide. H_kernel denotes the chosen response as a function of spatial frequency and smoothing width; the Gaussian's native width parameter is sigma. For the field comparison after the method slide, we use the analytical boxcar response; the later large-array benchmark highlights the Gaussian response. Along angle, adjacent rays are physically separated by approximately r times delta theta, so a fixed physical smoothing scale translates to W_theta(r) = W_phys/(r delta theta) angular samples. Evaluate the chosen response at that width for each range, giving a range-indexed set of angular responses H_theta(k_theta,r). Along range, range gates have fixed separation, so W_r and the range response H_r(k_r) are fixed and shared across angles. These responses are derived for the chosen kernel and reflected DCT boundary treatment, not obtained by naively transforming an arbitrary finite array of weights. Next slide: apply the two responses in successive DCT filtering passes, with an inverse angular DCT between them.
--->
-
----
-class: smoothing-polar-dct
----
-
-# DCT smoothing on a polar grid
-
-<p class="polar-dct-lead">Apply the separable filter to the two dimensions of the polar field, X(θ, r).</p>
-
-<div class="polar-dct-passes">
-
-<section class="polar-dct-pass">
-
-## 1 · Angular pass — range-varying width
-
-<div v-click="1" class="polar-dct-detail">
-
-$$
-Y_{\theta} = \operatorname{IDCT}_{\theta}\!\left[\operatorname{DCT}_{\theta}(X) \odot H_{\theta}(k_{\theta},r)\right]
-$$
-
-At each range, multiply angular-frequency coefficients by a response that changes with range.
-
-</div>
-
-</section>
-
-<section class="polar-dct-pass">
-
-## 2 · Range pass — fixed width
-
-<div v-click="2" class="polar-dct-detail">
-
-$$
-Y = \operatorname{IDCT}_{r}\!\left[\operatorname{DCT}_{r}(Y_{\theta}) \odot H_{r}(k_{r})\right]
-$$
-
-At each angle, multiply range-frequency coefficients by the same fixed-width response.
-
-</div>
-
-</section>
-
-</div>
-
-<p class="spectral-summary">The angular response varies with range, so the intermediate field Y<sub>θ</sub> is needed between passes—not one global 2D multiplication.</p>
-
-<!--
-About 1 minute. We have now selected the angle-dependent response H_theta and fixed range response H_r. The separable boxcar lets us smooth the 2D field in two directions. Click 1: at every range, take the DCT along the angular samples, multiply corresponding coefficients by H_theta, and inverse-transform to get the intermediate angularly smoothed field Y_theta. Its angular width decreases in samples with range, holding the desired physical scale. Click 2: DCT the intermediate field along range, multiply by H_r, and inverse-transform to obtain the final 2D field Y. Range-gate spacing does not widen with range. The products are element-wise in the appropriate spectral domain; both passes use reflected boundaries. Because the angular response depends on spatial range, we must return to Y_theta before transforming along range. This is not one global 2D DCT followed by a single product H_theta times H_r. The field comparison on the next slide uses the boxcar response. Gaps are interpolated before this method; discuss the limitation after the results.
--->
-
----
-class: smoothing-synthetic
----
-
-# Synthetic validation of DCT smoothing
-
-<div class="synthetic-comparison-figure">
-  <img src="../figures/dct-synthetic-input-row.png" alt="Paper Figure 2(a–c): synthetic ground truth, the same field with added noise of standard deviation 2, and the added noise pattern" />
-  <img v-click="1" src="../figures/dct-synthetic-result-row.png" alt="Paper Figure 2(d–f): DCT-smoothed field with RMSE 0.263, spatial dynamic-kernel result with RMSE 0.241, and their small but nonzero difference on its own color scale" />
-</div>
-
-<img class="synthetic-field-scale" src="../figures/dct-synthetic-field-scale.png" alt="Shared field-value color scale for the synthetic truth, noisy data, and two smoothed fields" />
-
-<p class="fine">Synthetic reflectivity-like field · Paper Figure 2(a–f). Noise and difference panels have separate scales.</p>
-
-<!--
-About 1 minute. First show the synthetic ground truth, noisy observation with added noise of standard deviation 2, and the noise pattern. This is an artificial reflectivity-like field, not the measured C-band RHI on the next slide. Click 1: reveal the paper's DCT-smoothed result, spatial dynamic-kernel result, and DCT-minus-dynamic-kernel difference. Both remove much of the speckle and preserve the broad structures. The DCT and spatial outputs are visually nearly indistinguishable, but not numerically identical: their RMSEs against the known truth are 0.263 and 0.241, respectively. The difference panel uses a separate narrow scale and shows small structured discrepancies, especially near edges; do not call the outputs exactly equal or confuse this with an error-to-truth panel. These are the boxcar comparisons from panels (a)–(f) of the paper's Figure 2. The shared field-value scale is shown below, while the noise and difference panels retain their own colorbars. Next move from controlled synthetic data to the real C-band radar comparison.
+About 30 seconds, no clicks. The polar-grid sketch is illustrative, not a radar observation. Suggested delivery: “The spectral-domain smoothing operation I just showed is established. Our contribution is to formulate and implement it for two-dimensional radar fields directly in their native polar coordinates. We adapt the angular filtering with range to maintain a consistent physical smoothing scale. I will leave the mathematical formulation to the paper and now show the results on measured radar data.” Do not claim that the convolution theorem, DCT, or 2D DCT alone is new. The novelty here is the range-aware formulation for the 2D polar radar field. Do not explain the transfer functions or successive passes during the main talk; the supporting slides titled Transfer functions on a polar grid, DCT smoothing on a polar grid, and Synthetic validation of DCT smoothing retain those details for questions. The DOI link opens the paper in a separate tab. Gaps still require interpolation in Paper 1; cover that limitation after the results.
 -->
 
 ---
@@ -364,7 +275,7 @@ class: smoothing-comparison
 <p class="fine">C-band radar, 23 Feb 2022, 02:28 UTC · 5-pixel boxcar · Paper Figure 4(b, c, f, g). Spatial skips missing gates; DCT input is interpolated.</p>
 
 <!--
-About 1 minute 30 seconds. Move from the synthetic test with known ground truth to measured C-band radar. Initially show the matched full-RHI spatial dynamic-boxcar and analytical DCT-boxcar outputs, panels (b) and (c) of Figure 4. Point to the red boxes at 17–23 km. Click 1: replace both panels with their matched cloud-top zooms (f) and (g). The three roughly 1–2 km structures at about 5–7 km altitude remain distinguishable in both outputs. They are closely matching, not numerically identical; the original paper also includes difference panels. The spatial method skips missing values whereas Paper 1 linearly interpolates gaps before the DCT, so do not attribute every discrepancy to the filter itself. Both views retain the source axes and shared reflectivity color scale. The full eight-panel comparison remains in backup.
+About 1 minute 30 seconds. Move from the contribution statement to measured C-band radar. Initially show the matched full-RHI spatial dynamic-boxcar and analytical DCT-boxcar outputs, panels (b) and (c) of Figure 4. Point to the red boxes at 17–23 km. Click 1: replace both panels with their matched cloud-top zooms (f) and (g). The three roughly 1–2 km structures at about 5–7 km altitude remain distinguishable in both outputs. They are closely matching, not numerically identical; the original paper also includes difference panels. The spatial method skips missing values whereas Paper 1 linearly interpolates gaps before the DCT, so do not attribute every discrepancy to the filter itself. Both views retain the source axes and shared reflectivity color scale. The full eight-panel comparison remains in backup.
 -->
 
 ---
@@ -402,7 +313,7 @@ class: smoothing-benchmark
 </div>
 
 <!--
-About 1 minute 45 seconds. This paper benchmarks two different scaling questions. Open with the practical question: what does smoothing a full radar volume cost? Click 0 shows Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels — a full radar volume — the spatial dynamic-kernel implementation takes 2518 seconds, about 42 minutes. Gaussian DCT takes less than 12 seconds: over 200 times faster. That factor is derived from the reported times and is consistent with the paper's Figure 5(d); state it as a conservative bound. It is the difference between a job you run overnight and one you run between volume scans. This is a controlled array benchmark, not the C-band RHI on slide 17 or the 20-sweep example on slide 11. Click 1: switch to Figure 5(a), which holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. Here the story changes: the analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent, but their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup. Other discrete DCT responses are faster than this spatial baseline but their cost increases with window width. Two separate findings: the volume speedup does not transfer to the window-width test, and the window-width speedup does not transfer to the volume test. Do not claim all possible spatial algorithms scale this way.
+About 1 minute 45 seconds. This paper benchmarks two different scaling questions. Open with the practical question: what does smoothing a full radar volume cost? Click 0 shows Figure 5(c), which fixes the window at 5 pixels and varies random-noise array size. At 180 million pixels — a full radar volume — the spatial dynamic-kernel implementation takes 2518 seconds, about 42 minutes. Gaussian DCT takes less than 12 seconds: over 200 times faster. That factor is derived from the reported times and is consistent with the paper's Figure 5(d); state it as a conservative bound. It is the difference between a job you run overnight and one you run between volume scans. This is a controlled array benchmark, not the C-band RHI on slide 15 or the 20-sweep example on slide 11. Click 1: switch to Figure 5(a), which holds one measured 474-by-1180-pixel RHI fixed and varies the window from 5 to 101 pixels. Here the story changes: the analytical Gaussian and boxcar DCT transfer functions change with width, so the smoothing itself is not width-independent, but their measured computation times stay approximately constant near 60 ms because evaluating the response does not iterate over every window weight. The tested spatial dynamic-kernel implementation rises from 8.5 to over 44 seconds. At width 101, Figure 5(b) gives over 800-fold Gaussian and over 700-fold analytical-boxcar speedup. Other discrete DCT responses are faster than this spatial baseline but their cost increases with window width. Two separate findings: the volume speedup does not transfer to the window-width test, and the window-width speedup does not transfer to the volume test. Do not claim all possible spatial algorithms scale this way.
 -->
 
 ---
@@ -468,5 +379,5 @@ class: smoothing-conclusions conclusions-bullets
 - Missing data and boundary conditions still need explicit handling.
 
 <!--
-About 45 seconds. These statements are conclusions; the benchmark timings are supporting results already shown on slide 18. Suggested delivery: “So, in this work, we developed a fast DCT-based method for reducing noise in polar radar data. It gives results visually very close to spatial convolution while accounting for radar geometry. In our large-array benchmark, processing fell from about 42 minutes to under 12 seconds. But gaps still need to be interpolated, and the boundary assumption must suit the scan. Those limitations motivated my next project.” The 180-million-pixel data-size test uses random-noise arrays at a fixed five-pixel width: 2518 s for the tested spatial dynamic-kernel implementation versus less than 12 s for Gaussian DCT. It is not a measured full-volume processing time. Separately, on a fixed RHI, analytical Gaussian and boxcar runtimes stay near 60 ms across tested widths of 5–101 pixels; the filter response does change with width. The analytical Gaussian is the recommended general-purpose kernel, and analytical boxcar allows comparison with a spatial moving average. The synthetic outputs are visually nearly indistinguishable, not numerically identical; the real C-band cloud-top features remain distinct in both outputs. Slide 19 introduced the missing-data and boundary assumptions, so there is no need to repeat its details here. Do not imply that all spatial methods scale like the tested implementation. This paper is published in AMT (2026).
+About 45 seconds. These statements are conclusions; the benchmark timings are supporting results already shown on slide 16. Suggested delivery: “So, in this work, we developed a fast DCT-based method for reducing noise in polar radar data. It gives results visually very close to spatial convolution while accounting for radar geometry. In our large-array benchmark, processing fell from about 42 minutes to under 12 seconds. But gaps still need to be interpolated, and the boundary assumption must suit the scan. Those limitations motivated my next project.” The 180-million-pixel data-size test uses random-noise arrays at a fixed five-pixel width: 2518 s for the tested spatial dynamic-kernel implementation versus less than 12 s for Gaussian DCT. It is not a measured full-volume processing time. Separately, on a fixed RHI, analytical Gaussian and boxcar runtimes stay near 60 ms across tested widths of 5–101 pixels; the filter response does change with width. The analytical Gaussian is the recommended general-purpose kernel, and analytical boxcar allows comparison with a spatial moving average. The synthetic outputs are visually nearly indistinguishable, not numerically identical; the real C-band cloud-top features remain distinct in both outputs. Slide 17 introduced the missing-data and boundary assumptions, so there is no need to repeat its details here. Do not imply that all spatial methods scale like the tested implementation. This paper is published in AMT (2026).
 -->

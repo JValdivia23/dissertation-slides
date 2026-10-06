@@ -154,6 +154,127 @@ rather than displacing the paper's principal limitations on the slide.
 -->
 
 ---
+class: smoothing-transfer
+---
+
+# Transfer functions on a polar grid
+
+<p class="transfer-polar-lead">Choose a smoothing kernel and its analytical DCT-domain response, H(k; W).</p>
+
+<div class="transfer-polar-dimensions">
+  <section>
+
+## Angle: response varies with range
+
+Adjacent rays separate by approximately rΔθ.
+
+$$
+\begin{aligned}
+W_{\theta}(r) &= \frac{W_{\mathrm{phys}}}{r\,\Delta\theta} \\
+H_{\theta}(k_{\theta},r) &= H_{\mathrm{kernel}}\!\left(k_{\theta};W_{\theta}(r)\right)
+\end{aligned}
+$$
+
+One angular-frequency response for each range.
+
+  </section>
+
+  <section>
+
+## Range: fixed response
+
+Range-gate spacing Δr is constant.
+
+$$
+\begin{aligned}
+W_r &= \text{fixed in range gates} \\
+H_r(k_r) &= H_{\mathrm{kernel}}\!\left(k_r;W_r\right)
+\end{aligned}
+$$
+
+The same range-frequency response at every angle.
+
+  </section>
+</div>
+
+<p class="spectral-summary">The angle responses form a range-indexed set; the range response is shared. Apply each in its own DCT pass.</p>
+
+<p class="fine">Boxcar response via the Dirichlet identity: Oppenheim et al. (1999). Gaussian response: Smith (1997).</p>
+
+<!--
+About 45 seconds. The paper obtains the analytical continuous-width boxcar response using the Dirichlet-kernel identity cited to Oppenheim et al. (1999), and cites Smith (1997) for the normalized Gaussian response. We do not need to derive either on this slide. H_kernel denotes the chosen response as a function of spatial frequency and smoothing width; the Gaussian's native width parameter is sigma. For the field comparison after the method slide, we use the analytical boxcar response; the later large-array benchmark highlights the Gaussian response. Along angle, adjacent rays are physically separated by approximately r times delta theta, so a fixed physical smoothing scale translates to W_theta(r) = W_phys/(r delta theta) angular samples. Evaluate the chosen response at that width for each range, giving a range-indexed set of angular responses H_theta(k_theta,r). Along range, range gates have fixed separation, so W_r and the range response H_r(k_r) are fixed and shared across angles. These responses are derived for the chosen kernel and reflected DCT boundary treatment, not obtained by naively transforming an arbitrary finite array of weights. Next slide: apply the two responses in successive DCT filtering passes, with an inverse angular DCT between them.
+-->
+
+---
+class: smoothing-polar-dct
+---
+
+# DCT smoothing on a polar grid
+
+<p class="polar-dct-lead">Apply the separable filter to the two dimensions of the polar field, X(θ, r).</p>
+
+<div class="polar-dct-passes">
+
+<section class="polar-dct-pass">
+
+## 1 · Angular pass — range-varying width
+
+<div v-click="1" class="polar-dct-detail">
+
+$$
+Y_{\theta} = \operatorname{IDCT}_{\theta}\!\left[\operatorname{DCT}_{\theta}(X) \odot H_{\theta}(k_{\theta},r)\right]
+$$
+
+At each range, multiply angular-frequency coefficients by a response that changes with range.
+
+</div>
+
+</section>
+
+<section class="polar-dct-pass">
+
+## 2 · Range pass — fixed width
+
+<div v-click="2" class="polar-dct-detail">
+
+$$
+Y = \operatorname{IDCT}_{r}\!\left[\operatorname{DCT}_{r}(Y_{\theta}) \odot H_{r}(k_{r})\right]
+$$
+
+At each angle, multiply range-frequency coefficients by the same fixed-width response.
+
+</div>
+
+</section>
+
+</div>
+
+<p class="spectral-summary">The angular response varies with range, so the intermediate field Y<sub>θ</sub> is needed between passes—not one global 2D multiplication.</p>
+
+<!--
+About 1 minute. We have now selected the angle-dependent response H_theta and fixed range response H_r. The separable boxcar lets us smooth the 2D field in two directions. Click 1: at every range, take the DCT along the angular samples, multiply corresponding coefficients by H_theta, and inverse-transform to get the intermediate angularly smoothed field Y_theta. Its angular width decreases in samples with range, holding the desired physical scale. Click 2: DCT the intermediate field along range, multiply by H_r, and inverse-transform to obtain the final 2D field Y. Range-gate spacing does not widen with range. The products are element-wise in the appropriate spectral domain; both passes use reflected boundaries. Because the angular response depends on spatial range, we must return to Y_theta before transforming along range. This is not one global 2D DCT followed by a single product H_theta times H_r. The field comparison on the next slide uses the boxcar response. Gaps are interpolated before this method; discuss the limitation after the results.
+-->
+
+---
+class: smoothing-synthetic
+---
+
+# Synthetic validation of DCT smoothing
+
+<div class="synthetic-comparison-figure">
+  <img src="../figures/dct-synthetic-input-row.png" alt="Paper Figure 2(a–c): synthetic ground truth, the same field with added noise of standard deviation 2, and the added noise pattern" />
+  <img v-click="1" src="../figures/dct-synthetic-result-row.png" alt="Paper Figure 2(d–f): DCT-smoothed field with RMSE 0.263, spatial dynamic-kernel result with RMSE 0.241, and their small but nonzero difference on its own color scale" />
+</div>
+
+<img class="synthetic-field-scale" src="../figures/dct-synthetic-field-scale.png" alt="Shared field-value color scale for the synthetic truth, noisy data, and two smoothed fields" />
+
+<p class="fine">Synthetic reflectivity-like field · Paper Figure 2(a–f). Noise and difference panels have separate scales.</p>
+
+<!--
+About 1 minute. First show the synthetic ground truth, noisy observation with added noise of standard deviation 2, and the noise pattern. This is an artificial reflectivity-like field, not the measured C-band RHI on the next slide. Click 1: reveal the paper's DCT-smoothed result, spatial dynamic-kernel result, and DCT-minus-dynamic-kernel difference. Both remove much of the speckle and preserve the broad structures. The DCT and spatial outputs are visually nearly indistinguishable, but not numerically identical: their RMSEs against the known truth are 0.263 and 0.241, respectively. The difference panel uses a separate narrow scale and shows small structured discrepancies, especially near edges; do not call the outputs exactly equal or confuse this with an error-to-truth panel. These are the boxcar comparisons from panels (a)–(f) of the paper's Figure 2. The shared field-value scale is shown below, while the noise and difference panels retain their own colorbars. Next move from controlled synthetic data to the real C-band radar comparison.
+-->
+
+---
 class: figure-slide
 ---
 
