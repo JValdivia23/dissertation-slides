@@ -21,7 +21,7 @@ About 20 seconds. This is the second of four paper talks. Name the paper and its
 -->
 
 ---
-class: local-math
+class: local-math local-intro
 ---
 
 # Local statistics on incomplete grids

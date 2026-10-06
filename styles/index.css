@@ -3039,6 +3039,28 @@
   font-size: 1.02rem;
 }
 
+/* Slide 20 only: compact heading-only cards. */
+.slidev-layout.local-math.local-intro .local-math-grid {
+  flex: none;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+}
+
+.slidev-layout.local-math.local-intro .local-math-card {
+  padding: 0.35rem 0.6rem;
+}
+
+.slidev-layout.local-math.local-intro .local-math-card h2 {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Slide 20 only: larger kernel diagram; text sizes unchanged. */
+.slidev-layout.local-math.local-intro .local-kernel-svg {
+  width: min(60%, 22rem);
+  height: 13rem;
+}
+
 .slidev-layout.local-math .local-boundary-svg {
   display: block;
   width: 100%;
