@@ -13,7 +13,7 @@ import Paper4LateralView from '../components/Paper4LateralView.vue'
 
 <!--
 About 45 seconds, following Madison slide 11. This is the original conference
-reference volume and maximum-anomaly figure, not the schematic on slide 45.
+reference volume and maximum-anomaly figure, not the schematic on slide 43.
 The plotted maximum reflectivity anomaly is Z-prime-max in dB, not equivalent
 reflectivity in dBZ. The reused two-dimensional panel is 02:54 UTC, as labeled;
 it is a maximum projection, not a particle path or the single-transect cross
@@ -21,8 +21,8 @@ sections introduced on the next slide. Layer boxes identify regions for
 discussion; they are not a time-invariant retrieval of layer boundaries.
 
 Entry: continue from the exact reference frame, crop, scale, and viewport from slide
-47's reference-view ending. The original MP4s do not join
-on their own: slide 47 preserves the twelve-second evolution, then returns to
+45's reference-view ending. The original MP4s do not join
+on their own: slide 45 preserves the twelve-second evolution, then returns to
 this reference volume before the handoff. This reset is not new storm evolution.
 
 The original one-second camera rotation plays automatically on entry, without

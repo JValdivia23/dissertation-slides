@@ -209,25 +209,7 @@ class: local-math local-workflow
 <p class="fine">Reflective Cartesian (DCT-II) 2D example with missing values in gray; zoomed inset shows μ, σ, and N<sub>eff</sub>. The same spectral operator filters masked values, squared values, and mask before normalization. N-dimensional Cartesian and polar forms follow.</p>
 
 <!--
-About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Next: whether the boundary choice matters in practice.
--->
-
----
-class: figure-slide
----
-
-# Boundary treatment changes the edges
-
-<p class="local-criterion">Edge RMSE over the first and last W samples: 0.38 reflective versus 2.52 periodic.</p>
-
-<div class="fig">
-  <img src="../figures/local-stats-boundary.png" alt="One-dimensional non-periodic signal: reflective DCT follows the trend at the edges while periodic treatment wraps toward the opposite end" />
-</div>
-
-<p class="fine">1D non-periodic signal, N = 200, W = 15 Gaussian. All-domain RMSE 0.28 versus 1.00. Dashed boxes mark the edge regions.</p>
-
-<!--
-About 45 seconds. A 1D non-periodic synthetic signal with trend plus Gaussian noise, matched W = 15 Gaussian kernel, 5 seeds. Reflective DCT follows local trend continuity; periodic treatment pulls the edges toward the opposite end. All-domain RMSE is about 0.28 reflective versus 1.00 periodic; edge-only RMSE over the first and last W samples is about 0.38 versus 2.52. This is a boundary-model check, not a general accuracy claim. Next: what is new in this work.
+About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Next: what is new in this work.
 -->
 
 ---
@@ -352,32 +334,7 @@ About 70 seconds. This is the original synthetic 3D cyclone-wind experiment, reg
 
 [click] Enlarge a neighborhood and inspect two actual grid points. At the red-ringed injected anomaly, speed is 2.29, local mean 1.41, and local standard deviation 0.20: the residual is 4.48 local standard deviations, exceeding the threshold of 3. At the white-ringed ordinary point, speed is 1.27 and the score is only 0.17, so it is retained. Each horizontal shaded interval is mean plus or minus three local standard deviations, with a center tick at the mean and a marker at observed speed. Here k is the detection-threshold multiplier, distinct from the earlier spectral bin index.
 
-[click] Return to the full volume. Red denotes true detections, orange false alarms, and blue missed injections. This realization has 406 true positives, 39 false positives, and 120 false negatives. The precision 0.92, recall 0.77, and F1 0.84 in the fine text are averages across five realizations, not scores from the displayed subset of arrows. Velocity-vector scoring could add sensitivity to direction changes, but its performance has not been evaluated in this experiment. Next: how changing the speed threshold trades false alarms against misses.
--->
-
----
-class: figure-slide
----
-
-# Outlier threshold sensitivity
-
-<p class="local-criterion">
-
-$$
-|\,\|v\| - \mu_{\|v\|}\,| > k\,\sigma_{\|v\|}
-$$
-
-</p>
-
-<div class="fig">
-  <img src="../figures/local-stats-threshold.png" alt="Threshold sweep for 3D outlier identification: precision rises and recall falls with increasing k; F1 peaks near k = 3.0" />
-</div>
-
-<p class="fine">Precision is the fraction of detections that are true anomalies; recall is the fraction of true anomalies found. At k = 2.0: 0.14 and 0.86. At k = 3.0: 0.92, 0.77, F1 0.84. At k = 4.0: 1.00 and 0.63. Mean F1 peaks at k = 3.0 within the tested 2.0–6.0 sweep.</p>
-
-<!--
-About 40 seconds. Threshold sweep over k from 2.0 to 6.0, mean plus/minus std across seeds. Lower k finds more with more false alarms; higher k is cleaner but misses more. Mean F1 peaks at k = 3.0 within the tested sweep. Recommended practice is iterative: compute local statistics, flag with the z-score criterion, exclude flagged points from the mask, and recompute so outliers do not inflate local spread. Window width, support, and boundary mode also affect screening. Transition from synthetic winds to real radar.
-F1 is the harmonic mean of precision and recall, so 0.84 means the k = 3.0 setting balances both.
+[click] Return to the full volume. Red denotes true detections, orange false alarms, and blue missed injections. This realization has 406 true positives, 39 false positives, and 120 false negatives. The precision 0.92, recall 0.77, and F1 0.84 in the fine text are averages across five realizations, not scores from the displayed subset of arrows. Velocity-vector scoring could add sensitivity to direction changes, but its performance has not been evaluated in this experiment. Next: the same framework on a real polar radar scan.
 -->
 
 ---
