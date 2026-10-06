@@ -220,10 +220,10 @@ Transition: this demonstrated an established spectral-domain smoothing operation
 class: smoothing-contribution
 ---
 
-# Contribution: DCT smoothing on a 2D polar grid
+# Challenge: 
 
 <div class="flex flex-1 items-center gap-12 min-h-0">
-  <p class="flex-1 text-2xl leading-relaxed">DCT smoothing of <strong>2D radar fields</strong> directly in <strong>native polar coordinates</strong>.</p>
+  <p class="flex-1 text-2xl leading-relaxed">Spectral operation of <strong>2D radar fields</strong> in <strong>polar coordinates</strong>.</p>
   <svg class="shrink-0" width="360" height="225" viewBox="0 0 320 200" role="img" aria-label="Illustrative two-dimensional radar sampling grid in range and angle, not measured radar data">
     <path d="M32 158 L250.24 32 A252 252 0 0 1 284 158 Z" fill="#cfb87c" fill-opacity="0.12" />
     <g fill="#cfb87c" fill-opacity="0.55">
@@ -240,7 +240,7 @@ class: smoothing-contribution
   </svg>
 </div>
 
-<p class="text-lg">Range-dependent angular filtering maintains a <strong>consistent physical smoothing scale.</strong></p>
+
 
 <p class="fine convolution-demo-caption">See <a href="https://doi.org/10.5194/amt-19-5211-2026" target="_blank" rel="noopener noreferrer">Valdivia et al. (2026)</a> for the mathematical formulation and implementation.</p>
 
