@@ -332,20 +332,31 @@ class: population-trends population-maps
   <img v-click="1" src="../figures/population-count-area.png" alt="Paper Figure 13(a): Set 1 CTGC count peaks near 02:30 UTC, while mean contour area grows into the mature stage, then the number declines" />
 </div>
 
+<div class="population-trends-legend">
+  <div v-click.hide="1" class="population-legend-row" role="group" aria-label="Map inset centroid legend">
+    <span class="population-legend-context">Inset centroids:</span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><circle cx="24" cy="10" r="6" fill="#0000ff" /></svg><span>Set 1</span></span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><circle cx="24" cy="10" r="6" fill="#ff0000" /></svg><span>Set 2</span></span>
+  </div>
+  <div v-click="1" class="population-legend-row" role="group" aria-label="CTGC count and area legend">
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#ff0000" stroke-width="4" /><circle cx="24" cy="10" r="6" fill="#ff0000" /></svg><span>Count</span></span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#0000ff" stroke-width="4" /></svg><span>Mean area</span></span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#008000" stroke-width="4" stroke-dasharray="8 5" /></svg><span>Area mode</span></span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><rect x="4" y="4" width="40" height="12" fill="#e4e4e4" stroke="#aaaaaa" /></svg><span>10th–90th percentile of area</span></span>
+  </div>
+</div>
+
 <div class="population-trends-message">
   <p v-click.hide="1"><strong>Small boundaries become larger contiguous clusters.</strong> A large boundary can contain several cells.</p>
   <p v-click="1"><strong>Count peaks early.</strong> During maturity, count falls while mean contiguous area rises; later the count and coverage decline.</p>
-</div>
-
-<div class="population-trends-source fine">
-  <p v-click.hide="1">Paper Figure 12(a, c), 42 minutes apart. Color = contour area in km² (right); insets show Set 1 blue and Set 2 red centroids.</p>
-  <p v-click="1">Paper Figure 13(a), Set 1: red = count; blue = mean boundary area; green dashed = area mode; gray = 10th–90th percentile.</p>
 </div>
 
 <!--
 About 1 minute. The two Figure 12 maps show initiation at 02:30 and mid-maturity at 03:12, 42 minutes apart. The black star marks DOW6; the scale at right gives the contour-area classes in square kilometers, with warmer colors indicating larger contiguous areas. Many small, separate enhancements become fewer, larger patches, some tens of square kilometers. The insets classify centroids into Set 1 (blue) and Set 2 (red); focus on the northern/earlier Set 1. Contiguous complexes up to approximately 60 km² do not mean an isolated 1–2 km turret grew to 60 km². A contour can connect multiple adjacent cells, so the maps show population organization and merging, with sensitivity to segmentation.
 
 [click] Figure 13(a), cropped to Set 1, quantifies this evolution. The red curve is detected feature count and the blue curve is mean contour area; the dashed green is the area mode and gray shading the 10th–90th percentile. Set 1 begins near 02:18 UTC; count rises sharply around 02:30–02:36, then declines during the mature stage while mean area grows, consistent with merging or clustering. During dissipation from roughly 03:24 to 04:00 the count and total coverage fall, although the mean area of surviving features does not necessarily decline monotonically because smaller features disappear. The stages are defined mainly from the count/area evolution. The chapter text and table place the first transition near 02:30, while the plotted dashed divider appears closer to 02:36; avoid presenting its minute as exact. Dissipation begins near 03:24. The chart's last plotted label is 03:54, while the study period extends to 04:00. This is about 1.7 hours of collective activity, not a mean individual-cell lifetime. Polarimetry next adds the microphysical dimension.
+
+Figure sources: Paper Figure 12(a, c) (map view; 42 minutes apart) and Paper Figure 13(a) (count/area view).
 -->
 
 ---
@@ -360,16 +371,22 @@ class: population-trends
   <img src="../figures/population-zdr.png" alt="Paper Figure 13(c): Set 1 mean differential reflectivity decreases during initiation and then rises through mature and dissipation stages" />
 </div>
 
+<div class="population-trends-legend">
+  <div class="population-legend-row" role="group" aria-label="Differential reflectivity legend">
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#0000ff" stroke-width="4" /></svg><span>Mean Z<sub>DR</sub></span></span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#008000" stroke-width="4" stroke-dasharray="8 5" /></svg><span>Mode Z<sub>DR</sub></span></span>
+    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><rect x="4" y="4" width="40" height="12" fill="#e4e4e4" stroke="#aaaaaa" /></svg><span>10th–90th percentile</span></span>
+  </div>
+</div>
+
 <div class="population-trends-message">
   <p><strong>Mean Z<sub>DR</sub> falls, then rises: Suggesting aggregation and preferential sedimentation</strong></p>
 </div>
 
-<div class="population-trends-source fine">
-  <p>Paper Figure 13(c), Set 1, 02:18–03:54 UTC: blue = mean Z<sub>DR</sub>; green dashed = mode; gray = 10th–90th percentile. </p>
-</div>
-
 <!--
 About 25 seconds. Figure 13(c) shows the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. Pause on this observed trend before explaining the proposed microphysical mechanism. Introduce differential reflectivity on the next slide for audience members unfamiliar with the variable; its two clicks return to this same curve. The population mean remains positive: the near-zero example next is a teaching reference, not a value reached by this mean curve. The complete sign tutorial, including the negative example, is retained in supporting material.
+
+Figure source: Paper Figure 13(c), Set 1, 02:18–03:54 UTC.
 -->
 
 ---

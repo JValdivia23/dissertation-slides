@@ -1384,6 +1384,7 @@
 }
 
 .slidev-layout.population-trends .population-trends-figure,
+.slidev-layout.population-trends .population-trends-legend,
 .slidev-layout.population-trends .population-trends-message,
 .slidev-layout.population-trends .population-trends-source {
   display: grid;
@@ -1393,6 +1394,7 @@
 }
 
 .slidev-layout.population-trends .population-trends-figure > *,
+.slidev-layout.population-trends .population-trends-legend > *,
 .slidev-layout.population-trends .population-trends-message > *,
 .slidev-layout.population-trends .population-trends-source > * {
   grid-area: 1 / 1;
@@ -1852,6 +1854,43 @@
 
 .slidev-layout.population-trends .population-trends-source {
   min-height: 2rem;
+}
+
+/* Readable figure keys replace fine-print color descriptions on slides 34–35. */
+.slidev-layout.population-trends .population-trends-legend {
+  width: 100%;
+  min-height: 2.5rem;
+}
+
+.slidev-layout.population-trends .population-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem 1.15rem;
+  width: 100%;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.slidev-layout.population-trends .population-legend-context {
+  font-weight: 600;
+}
+
+.slidev-layout.population-trends .population-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.slidev-layout.population-trends .population-legend-sample {
+  flex: none;
+  width: 2.4rem;
+  height: 1.15rem;
+  border: 1px solid #bbbbbb;
+  background: #ffffff;
 }
 
 /* Paper 3 selected cell: text explanation beside the full Figure 17/18 pair. */
