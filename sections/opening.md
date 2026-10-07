@@ -5,122 +5,179 @@ class: ctgc-intro
 
 # Cloud-Top Generating Cells
 
+<div class="ctgc-definition">
+  <p>“In radar, a small region of locally high reflectivity from which a trail of hydrometeors originates.”</p>
+  <cite><a href="https://glossary.ametsoc.org/wiki/Generating_cell/">AMS Glossary of Meteorology — generating cell</a></cite>
+</div>
+
 <div class="ctgc-figure">
-  <img src="../figures/ctgc-concept.png" alt="DOW6 range-height scan on 23 February 2022 at 02:28 UTC, with a conceptual cloud-top generating cell inset" />
+  <svg class="ctgc-example" viewBox="0 0 1080 478" role="img" aria-label="DOW6 range-height radar scan on 23 February 2022 at 02:28 UTC. A boxed cloud-top reflectivity enhancement is linked to a separate conceptual generating-cell schematic outside the radar plot.">
+    <image href="../figures/ctgc-intro-rhi.png" x="40" y="18" width="660" height="431.28" />
+    <text x="105" y="67" class="ctgc-rhi-label">DOW6 · 23 Feb 2022 · 02:28 UTC</text>
+    <text x="326" y="474" text-anchor="middle" class="ctgc-axis-label">Horizontal distance from radar (km)</text>
+    <text transform="translate(14 245) rotate(-90)" text-anchor="middle" class="ctgc-axis-label">Vertical distance from radar (km)</text>
+    <rect x="378" y="100" width="54" height="68" class="ctgc-callout" />
+    <path d="M432 100 L482 8 H788 V98 H824" class="ctgc-connector" />
+    <text x="942" y="83" text-anchor="middle" class="ctgc-schematic-label">Conceptual generating cell</text>
+    <rect x="824" y="98" width="236" height="300" class="ctgc-callout" />
+    <image href="../figures/ctgc-intro-schematic.png" x="830" y="113" width="224" height="269.49" />
+    <path d="M843 432 V414 M838 420 L843 414 L848 420" class="ctgc-air-key" />
+    <text x="858" y="430" class="ctgc-key-label">Air motion</text>
+    <path d="M843 445 V465" class="ctgc-particle-key" />
+    <path d="M838 459 L843 465 L848 459" class="ctgc-particle-tip" />
+    <text x="858" y="462" class="ctgc-key-label">Particle descent</text>
+  </svg>
 </div>
 
-<p class="fine">DOW6 RHI, 23 Feb 2022, 02:28 UTC. Concept adapted from Kumjian et al. (2014).</p>
-
-<div class="ctgc-points">
-
-<div v-click>
-
-Small convective regions near cloud top (~1–2 km)
-
-</div>
-<div v-click>
-
-Ice particles seed the cloud below and descend in **fall streaks**
-
-</div>
-<div v-click>
-
-Their small scale is poorly resolved by many weather prediction models
-
-</div>
-
-</div>
+<p class="fine">WINTRE-MIX observation. Concept adapted from Kumjian et al. (2014); schematic is not to scale.</p>
 
 <!--
-[click] Point to the boxed feature in the radar cross section. This is a vertical view through a winter storm. These small convective regions near cloud top are cloud-top generating cells, typically about one to two kilometers across.
+About 45 seconds, no clicks. Start with the AMS radar definition: a small region of locally high reflectivity from which a trail of hydrometeors originates. The glossary defines a generating cell in general; here we focus on cells near the tops of winter clouds.
 
-[click] Point to the conceptual inset, then follow the trail downward. Ice particles form and grow in the cells and fall in trails called fall streaks. As they descend through the underlying cloud, they can continue to grow and enhance precipitation. The cells seed ice into a cloud that provides conditions for further growth—a seeder–feeder interaction.
+Point to the boxed feature in the DOW6 range-height scan. These cloud-top reflectivity enhancements are typically about one to two kilometers across. The schematic is deliberately outside the radar image so the underlying precipitation remains visible. It is a conceptual interpretation, not an enlarged radar image, and is not to scale.
 
-[click] Despite their possible importance to winter precipitation, these small, high-altitude circulations are poorly resolved by many operational weather prediction models. That leaves three physical questions.
+Point to the conceptual core and surrounding shroud, then follow the descending particles. Ice particles form and grow in the cells and descend in fall streaks; they can continue growing in the cloud below. This is a seeder–feeder interaction. Do not put a percentage on the precipitation contribution.
 
-Do not yet discuss the sampling limits. Those come after the questions, as the reason the questions remain open.
+Transition: prior observations and simulations have established several processes that influence these cells. What remained less clear was their evolution as a population and their three-dimensional precipitation relationships. Sampling limitations follow on slide 5.
 -->
 
 ---
-class: physical-questions
+class: ctgc-background
+clicks: 1
 ---
 
-# Physical and Microphysical Questions
+# CTGC Processes
 
-<div class="limit-row">
+<div class="ctgc-background-stages">
 
-<div class="limit-card">
-  <h3>Formation and organization</h3>
-  <div class="question-figure mechanism-row" aria-hidden="true">
-    <div>
-      <svg viewBox="0 0 72 48"><path d="M8 12 H64 M36 18 V36 M30 30 L36 38 L42 30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
-      <span>Cooling</span>
-    </div>
-    <div>
-      <svg viewBox="0 0 72 48"><path d="M8 10 L12 4 L16 10 M12 4 V44 H64 M58 40 L64 44 L58 48 M50 44 L26 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
-      <span>Instability</span>
-    </div>
-    <div>
-      <svg viewBox="0 0 72 48"><path d="M8 14 H54 M48 8 L58 14 L48 20 M8 34 H34 M28 28 L38 34 L28 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
-      <span>Shear</span>
+<section class="ctgc-background-panel ctgc-known">
+  <div class="ctgc-known-copy">
+    <h2>Established processes</h2>
+    <dl class="ctgc-processes">
+      <div>
+        <dt>Potential instability</dt>
+        <dd>Lifting potentially unstable air can initiate cloud-top convection.</dd>
+      </div>
+      <div>
+        <dt>Wind shear</dt>
+        <dd>Influences cell shape and organization; can support shear-driven initiation.</dd>
+      </div>
+      <div>
+        <dt>Longwave radiative cooling</dt>
+        <dd>Destabilizes the upper cloud and helps sustain convection.</dd>
+      </div>
+    </dl>
+    <p class="ctgc-process-sources">Kumjian et al. (2014); Rauber et al. (2014); Keeler et al. (2016b, 2017).</p>
+    <div class="ctgc-known-takeaways">
+      <p v-click.hide="1">Instability and shear influence CTGC structure and organization.</p>
+      <p v-click="1">Radiative cooling can sustain cells in initially stable clouds.</p>
     </div>
   </div>
-  <p class="ask">What processes govern how the cells form and become organized?</p>
-  <p>Cooling, instability, and shear are candidate mechanisms. Their role through a population's evolution is not established.</p>
-</div>
-
-<div class="limit-card">
-  <h3>Particle evolution</h3>
-  <div class="question-figure descent" aria-hidden="true">
-    <svg viewBox="0 0 220 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
-      <rect x="30" y="48" width="160" height="24" fill="currentColor" fill-opacity="0.08" />
-      <rect x="136" y="24" width="42" height="24" />
-      <path d="M157 44 L110 72 V94" />
-      <path d="M52 84 V94 M72 84 V94 M132 84 V94 M152 84 V94 M172 84 V94" />
-    </g></svg>
+  <div class="ctgc-simulations">
+    <figure v-click.hide="1">
+      <svg class="ctgc-simulation-plot" viewBox="0 0 1040 940" role="img" aria-label="Keeler et al. (2017), Figure 9: simulated ice precipitation mixing ratio at 7.5 km under nighttime radiation. Rows vary initial stability; columns vary wind shear from 0 to 4 to 10 meters per second per kilometer.">
+        <g transform="translate(13 11)">
+          <image href="../figures/ctgc-keeler-instability.png" width="1002" height="924" />
+        </g>
+      </svg>
+      <figcaption>Idealized plan views · Keeler et al. (2017), Fig. 9.<br>7.5 km · <i>t</i> = 180 min · 50.1 × 50.1 km domain.</figcaption>
+    </figure>
+    <figure v-click="1">
+      <svg class="ctgc-simulation-plot" viewBox="0 0 1040 940" role="img" aria-label="Keeler et al. (2016b), Figure 18: simulated ice precipitation mixing ratio at 7.5 km. Rows vary initial stability; columns compare nighttime, daytime, and no radiation. Cells occur in initially stable simulations with radiative forcing, but not without it.">
+        <g transform="translate(12.086 18.993) scale(0.827338)">
+          <image href="../figures/ctgc-keeler-radiation.png" width="1236" height="1102" />
+        </g>
+      </svg>
+      <figcaption>Idealized plan views · Keeler et al. (2016b), Fig. 18.<br>7.5 km · <i>t</i> = 180 min · 50.1 × 50.1 km domain.</figcaption>
+    </figure>
   </div>
-  <p class="ask">How do ice particles change in the cells and during descent?</p>
-  <p>Growth can occur near cloud top and in the cloud below. The change through a cell's life and along the fall streak remains unresolved.</p>
-</div>
-
-<div class="limit-card">
-  <h3>Precipitation contribution</h3>
-  <div class="question-figure compare" aria-hidden="true">
-    <div>
-      <svg viewBox="0 0 100 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
-        <rect x="10" y="44" width="80" height="22" fill="currentColor" fill-opacity="0.08" />
-        <path d="M24 78 V90 M50 78 V90 M76 78 V90" />
-      </g></svg>
-      <span>Unseeded</span>
-    </div>
-    <div>
-      <svg viewBox="0 0 100 112"><g fill="none" stroke="currentColor" stroke-width="1.8">
-        <rect x="10" y="44" width="80" height="22" fill="currentColor" fill-opacity="0.08" />
-        <rect x="30" y="18" width="40" height="26" />
-        <path d="M50 40 L40 66 V94" />
-        <path d="M24 78 V90 M50 78 V90 M76 78 V90" />
-      </g></svg>
-      <span>Seeded</span>
-    </div>
-  </div>
-  <p class="ask">How much does ice supplied by the cells change precipitation?</p>
-  <p>The lower cloud may already be precipitating. Overlapping fall streaks prevent attribution to one cell.</p>
-</div>
+</section>
 
 </div>
 
 <!--
-These are broader motivating questions, not results of this dissertation. Do not explain the sampling limits yet.
+About 60 seconds, one click. Present the established physical processes first. These figures are idealized simulations, not observations of the WINTRE-MIX event.
 
-Point to the three marks separately. The middle mark is a temperature profile that cools steeply with height. Do not draw a circulation that connects cooling, instability, and shear.
+Initially show the nighttime shear–stability comparison from Keeler et al. (2017), Figure 9, at 7.5 km and 180 minutes. Rows vary initial stability and columns vary the imposed wind shear. Lifting potentially unstable cloud-top air can initiate convection. Shear influences cell shape and organization and can support shear-driven initiation; the simulations develop different cellular and roll-like patterns. Longwave cloud-top cooling helps sustain convection. These mechanisms are established from previous observations and simulations, although their relative roles in a particular storm require evidence. The shear figure was labeled 2016 in COMPSII; its verified source is the 2017 Part III paper, doi:10.1175/JAS-D-16-0314.1.
 
-Formation and organization: cloud-top potential instability and lifting can initiate the updrafts. Longwave cooling helps sustain them; in the Keeler simulations, latent heating alone was not sufficient. Shear can organize the cells, including into linear, roll-like structures in simulations. A snapshot does not show how a population forms, merges, and dissipates, and it does not establish the circulation. Kumjian et al. (2014), Rauber et al. (2014), Keeler et al. (2016, 2017).
+Both figures show ice precipitation mixing ratio, not vertical velocity, over the 50.1 × 50.1 km model domain. The black lines in panels (a) and (b) of the shear figure locate the cross sections analyzed in Figures 11 and 12 of the source paper; they do not depict cell motion.
 
-Trace the diagram: the cell box sits flush on the cloud, one diagonal streak runs to the cloud base, then falls vertically as rain. Particle evolution: the cells are strongly ice-supersaturated, so depositional growth near cloud top is rapid. Kumjian et al. (2014) described pristine plates or dendrites around a core of aggregates or rimed particles. That is one time, not a life cycle. Plummer et al. (2015) summarize earlier studies as finding most ice-mass growth below the cells, mainly by deposition and aggregation. Riming is possible where supercooled liquid is present. Do not put a percentage on the slide.
+[click] Replace the shear comparison with Keeler et al. (2016b), Figure 18, also at 7.5 km and 180 minutes. Columns compare nighttime, daytime, and no radiative forcing; rows vary initial stability. Highlight the initially stable row: cells develop with radiative forcing, whereas no cells are present in the stable, no-radiation simulation. Cooling changes the initially stable environment, rather than demonstrating convection in an environment that remains stable. Latent heating from depositional growth matters, but was insufficient by itself to maintain cells under some simulated conditions. doi:10.1175/JAS-D-15-0127.1.
 
-Precipitation contribution: the two panels show the same precipitating cloud unseeded and seeded. The extra line marks the open question, not a measured increase. The open quantity is the change relative to what that lower cloud would have produced alone. Do not say the cells are responsible for 20–30% of precipitation.
+The blank panel (i) is not missing data: the stable, no-radiation simulation produced no GCs, and ice precipitation mixing ratio did not exceed 0.01 g kg−1 at 7.5 km. The arrow in panel (f) is the 6.3–7.8 km shear vector; the bands there were interpreted as gravity waves, not buoyancy-driven CTGCs. This snapshot illustrates the comparison; the persistence claim comes from the source paper's time-evolution analysis, not from this image alone.
 
-These questions have stayed open because of how the cells are observed.
+Transition: the next slide distinguishes these established processes from the observational gaps that motivated the dissertation.
+-->
+
+---
+class: ctgc-background
+---
+
+# CTGC Observational Gaps
+
+<div class="ctgc-background-stages">
+
+<section class="ctgc-background-panel ctgc-gaps">
+  <h2>Observational gaps before this dissertation</h2>
+  <p class="ctgc-gap-lead">Established mechanisms and snapshots do not describe the complete evolution of a population and its precipitation.</p>
+  <div class="ctgc-gap-cards">
+    <div class="ctgc-gap-card">
+      <h3>Population life cycle</h3>
+      <div class="ctgc-gap-figure" aria-hidden="true">
+        <svg viewBox="0 0 220 110"><g fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M18 88 H202 M60 83 V93 M110 83 V93 M160 83 V93 M196 82 L202 88 L196 94" />
+          <rect x="42" y="34" width="12" height="10" /><rect x="58" y="46" width="12" height="10" /><rect x="44" y="58" width="12" height="10" />
+          <rect x="93" y="29" width="18" height="14" /><rect x="114" y="42" width="18" height="14" /><rect x="97" y="58" width="18" height="14" />
+          <rect x="155" y="41" width="14" height="11" /><rect x="176" y="56" width="10" height="8" />
+        </g></svg>
+        <span>Formation → growth → decay</span>
+      </div>
+      <p class="ask">How does a population develop and decay?</p>
+      <p>Evolution of cell number, size, and polarimetric signatures was poorly characterized.</p>
+    </div>
+    <div class="ctgc-gap-card">
+      <h3>Horizontal structure</h3>
+      <div class="ctgc-gap-figure" aria-hidden="true">
+        <svg viewBox="0 0 220 110"><g fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="12" y="14" width="78" height="78" stroke-dasharray="4 3" /><rect x="130" y="14" width="78" height="78" stroke-dasharray="4 3" />
+          <ellipse cx="34" cy="34" rx="9" ry="6" /><ellipse cx="62" cy="45" rx="9" ry="6" /><ellipse cx="37" cy="66" rx="9" ry="6" /><ellipse cx="69" cy="75" rx="8" ry="5" />
+          <path d="M98 53 H122 M116 47 L122 53 L116 59" />
+          <ellipse cx="167" cy="36" rx="23" ry="8" transform="rotate(-20 167 36)" /><ellipse cx="170" cy="67" rx="23" ry="13" transform="rotate(20 170 67)" />
+        </g></svg>
+        <span>Illustrative plan-view changes</span>
+      </div>
+      <p class="ask">How do cell shape and spatial organization change?</p>
+      <p>Morphology, distribution, and merging needed quantitative observations through time.</p>
+    </div>
+    <div class="ctgc-gap-card">
+      <h3>Associated precipitation</h3>
+      <div class="ctgc-gap-figure" aria-hidden="true">
+        <svg viewBox="0 0 220 110"><g fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M136 12 H178 M172 6 L178 12 L172 18" />
+          <rect x="30" y="48" width="160" height="24" fill="currentColor" fill-opacity="0.08" />
+          <rect x="136" y="24" width="42" height="24" /><path d="M157 44 L110 72 V94" />
+          <path d="M52 84 V94 M72 84 V94 M132 84 V94 M152 84 V94 M172 84 V94" />
+          <rect x="95" y="48" width="30" height="46" stroke-dasharray="4 3" />
+        </g><g fill="currentColor" font-size="12"><text x="128" y="16" text-anchor="end">Motion</text><text x="53" y="64">Cloud</text></g></svg>
+        <span>Cell → fall streak → precipitation</span>
+      </div>
+      <p class="ask">How does precipitation evolve below a moving cell?</p>
+      <p>Three-dimensional connections and enhancement relative to surrounding precipitation remained uncertain.</p>
+    </div>
+  </div>
+  <p class="ctgc-gap-history">Precipitation-growth studies: Hobbs et al. (1980); Houze et al. (1981); Plummer et al. (2015). Individual-cell attribution remains unresolved.</p>
+</section>
+
+</div>
+
+<!--
+About 30 seconds, no clicks. Present the three observational gaps, framed as the state of knowledge before this dissertation. First, the full population life cycle: how the number, size, and inferred particle properties of cells change from formation through dissipation. Population duration is not the lifetime of an individual cell. Second, time-resolved horizontal morphology and organization: the changing cell shapes, spatial distributions, and merging processes. Prior observations had documented instantaneous structure and organization; do not claim that no plan views existed before this work. The diagrams are illustrative questions, not the dissertation's results.
+
+Third, the evolving three-dimensional connection between moving cells, their fall streaks, and precipitation relative to the surrounding field. Early work by Hobbs et al. (1980) and Houze et al. (1981) quantified precipitation growth; later studies, including Plummer et al. (2015), also provide quantitative evidence. Do not claim that no quantification occurred after the 1980s or equate the fraction of mass growth inside a cell with its contribution to total precipitation. The dissertation measures precipitation contrasts associated with a tracked fall streak, not the causal fraction produced by one cell or the storm-total contribution.
+
+The slide's final attribution statement is a continuing limitation, not a gap claimed to have been closed by this dissertation.
+
+Transition: addressing these gaps requires sustained observations of moving cells and their precipitation. The next slide explains why previous sampling rarely provided that view. Keep the observational limitations and the event-based dissertation objectives distinct from the broader scientific questions.
 -->
 
 ---
