@@ -369,6 +369,82 @@ class: figure-slide
 <p class="fine">A validation of the local statistics, not a result of the storm.</p>
 
 ---
+class: population-environment
+clicks: 2
+---
+
+# Vertical evolution and environmental conditions
+
+<div class="population-environment-lead">
+  <p v-click.hide="1" class="population-lead">DOW6 RHI observations show the evolution of the 5.5–8 km MSL generating layer.</p>
+  <p v-click="[1,2]" class="population-lead"><strong>Sorel · 02:00 UTC</strong> · Gray shading marks the 5.5–8 km MSL generating layer.</p>
+  <p v-click="2" class="population-lead"><strong>Sorel · 04:15 UTC</strong> · Gray shading marks the same 5.5–8 km MSL layer.</p>
+</div>
+
+<div class="population-environment-figure">
+  <div v-click.hide="1" class="population-rhi-grid">
+    <figure><figcaption>02:22 · deep stratiform echo</figcaption><img src="../figures/population-rhi-0222.png" alt="Paper 3 Figure 6(a), NW-focused RHI crop at 02:22 UTC: a deep stratiform echo extends to approximately 7 km" /></figure>
+    <figure><figcaption>02:40 · distinct cloud-top turrets</figcaption><img src="../figures/population-rhi-0240.png" alt="Paper 3 Figure 6(b), NW-focused RHI crop at 02:40 UTC: numerous narrow generating-cell turrets appear near cloud top" /></figure>
+    <figure><figcaption>03:04 · fewer, larger features</figcaption><img src="../figures/population-rhi-0304.png" alt="Paper 3 Figure 6(c), NW-focused RHI crop at 03:04 UTC: fewer and larger cloud-top reflectivity features" /></figure>
+    <figure><figcaption>03:34 · increasing echo separation</figcaption><img src="../figures/population-rhi-0334.png" alt="Paper 3 Figure 6(d), NW-focused RHI crop at 03:34 UTC: the generating layer is increasingly separated from the echo below" /></figure>
+    <svg class="population-rhi-scale" viewBox="0 0 64 300" role="img" aria-label="DOW6 reflectivity scale, −10 to 40 dBZ">
+      <defs><clipPath id="population-rhi-scale-clip"><rect x="4" y="27" width="14" height="253" /></clipPath></defs>
+      <image href="../figures/population-rhi-scale.png" x="1" y="22.6" width="71.5" height="266" preserveAspectRatio="none" clip-path="url(#population-rhi-scale-clip)" />
+      <text x="32" y="15" class="population-scale-unit">dBZ</text>
+      <g v-for="(value, index) in [40, 30, 20, 10, 0, -10]" :key="value">
+        <line x1="18" x2="23" :y1="27 + index * 50.6" :y2="27 + index * 50.6" />
+        <text x="28" :y="27 + index * 50.6">{{ value }}</text>
+      </g>
+    </svg>
+  </div>
+  <figure v-click="[1,2]" class="population-sounding-row" data-sounding="0200">
+    <div class="population-sounding-plot">
+      <img src="../figures/population-sounding-0200.png" alt="Paper 3 Figure 9(a–d), complete 02:00 UTC Sorel sounding row: temperature, dewpoint and ice-equivalent potential temperature; specific humidity; total wind speed and u/v components; and the vertical gradient of ice-equivalent potential temperature. Original axes, legends and gray 5.5–8 km generating-layer shading are retained." />
+      <svg viewBox="0 0 2453 886" aria-hidden="true">
+        <rect x="731" y="222" width="142" height="175" />
+        <path d="M1796 222 H1816 V397 H1796" />
+        <rect x="1974" y="222" width="62" height="175" />
+      </svg>
+    </div>
+    <figcaption class="population-sounding-annotations">
+      <div class="population-sounding-layer"><strong><span aria-hidden="true"></span>CTGC layer</strong><p>5.5–8 km MSL</p></div>
+      <div><strong>Moisture</strong><p>Initial layer humidity</p></div>
+      <div><strong>Bulk vector shear</strong><p class="population-sounding-value">≈18 m s<sup>−1</sup></p></div>
+      <div><strong>Stability</strong><p>Near-neutral / weakly stable<br />Shallow negative at cloud top</p></div>
+    </figcaption>
+  </figure>
+  <figure v-click="2" class="population-sounding-row" data-sounding="0415">
+    <div class="population-sounding-plot">
+      <img src="../figures/population-sounding-0415.png" alt="Paper 3 Figure 9(e–h), complete 04:15 UTC Sorel sounding row with the same temperature, humidity, wind and stability panels and axes: specific humidity is lower in the generating layer, bulk vector wind shear is approximately 9 meters per second, and the profile is more uniformly stable." />
+      <svg viewBox="0 0 2453 886" aria-hidden="true">
+        <rect x="731" y="222" width="142" height="175" />
+        <path d="M1796 222 H1816 V397 H1796" />
+        <rect x="1974" y="222" width="62" height="175" />
+      </svg>
+    </div>
+    <figcaption class="population-sounding-annotations">
+      <div class="population-sounding-layer"><strong><span aria-hidden="true"></span>CTGC layer</strong><p>5.5–8 km MSL</p></div>
+      <div><strong>Moisture</strong><p>Drier than at 02:00</p></div>
+      <div><strong>Bulk vector shear</strong><p class="population-sounding-value">≈9 m s<sup>−1</sup> · weaker</p></div>
+      <div><strong>Stability</strong><p>More uniformly stable</p></div>
+    </figcaption>
+  </figure>
+</div>
+
+<div class="population-environment-message">
+  <p v-click.hide="1"><strong>Cloud-top features become fewer and larger,</strong> with increasing separation from the underlying stratiform echo.</p>
+  <p v-click="1" class="population-sounding-source">Paper Figure 9(a–h) · Sorel, 23 February 2022. Soundings bracket the event; these are accompanying conditions, not demonstrated causes.</p>
+</div>
+
+<!--
+Supporting slide, about 85–90 seconds if needed, two clicks. Begin with the northwest portions of the four DOW6 RHI scans in Paper 3 Figure 6. These are fixed-azimuth cuts at 316 degrees, not a Lagrangian vertical sequence of the red selected cell. At 02:22 the stratiform echo is deep, with cloud top near 7 km. By 02:40 there are many distinct cloud-top turrets. At 03:04 the visible generating features are fewer and larger. By 03:34 the generating-layer echo is increasingly separated from the stratiform echo below. This apparent decoupling is consistent with drying, but reflectivity alone does not measure humidity. The cross-shear viewing direction emphasizes turret spacing and does not capture the complete along-shear fall streak. Negative ranges point northwest from DOW6; the shared color scale is equivalent reflectivity in dBZ.
+
+[click] Show the complete 02:00 UTC Sorel sounding row, Paper 3 Figure 9(a–d), across the slide. Retain all four original panels, their axes and legends: temperature/dewpoint and ice-equivalent potential temperature; specific humidity; total wind speed and u/v components; and the vertical gradient of ice-equivalent potential temperature. Gray shading identifies the 5.5–8 km MSL generating layer. The gold outlines focus attention on humidity and the near-zero stability-gradient region; the wind bracket marks the same height interval, not a difference in wind speed. Within this layer, the bulk vector shear is approximately 18 meters per second. The stability profile is generally near-neutral to weakly stable, with only a shallow weakly-negative gradient near cloud top. Mention this limited exception rather than claiming broad instability or a uniquely established initiation mechanism. The first humidity profile provides the reference for the next sounding; avoid an unrelated tour of the low-level warm nose.
+
+[click] Crossfade to the complete 04:15 UTC row, Figure 9(e–h), with all panels aligned in the same positions. These are two measured profiles, not a morph or a continuous thermodynamic time series. Specific humidity is lower within the generating layer, not uniformly throughout the column. Its bulk vector wind shear is now approximately 9 meters per second, compared with approximately 18 at 02:00; do not describe this as halving the wind speed or derive the vector difference from the purple total-speed curve alone. The profile is more uniformly stable, despite small noisy gradient excursions near zero. Paper 3's VAD analysis, retained in the full backup Figure 9, gives intermediate kinematic context and shows shear relaxation during the organization period. The two soundings bracket the event rather than resolve its short-term thermodynamic evolution, and their spatial separation from the cells limits causal interpretation. These are accompanying conditions, not demonstrated causes; do not diagnose a unique radiative, shear, or wave initiation mechanism. The next supporting slide retains full Figure 9, including the VAD wind context.
+-->
+
+---
 class: figure-slide
 ---
 
