@@ -417,11 +417,11 @@ $$Z_{\mathrm{DR}} = 10\log_{10}\!\left(\frac{z_{\mathrm{H}}}{z_{\mathrm{V}}}\rig
       <div class="zdr-summary-chart">
         <img src="../figures/population-zdr.png" alt="Paper Figure 13(c), Set 1: mean differential reflectivity decreases in initiation, then increases overall through the mature and dissipation stages. The complete mean, mode, percentile envelope, and original stage dividers are retained." />
         <svg viewBox="0 0 1066 467" aria-hidden="true">
-          <rect v-if="summaryStep === 1" x="153" y="7" width="158" height="435" />
-          <template v-if="summaryStep === 2">
-            <rect x="311" y="7" width="423" height="435" />
-            <rect x="734" y="7" width="264" height="435" />
+          <template v-if="summaryStep === 1">
+            <rect class="zdr-summary-muted-region" x="313" y="9" width="419" height="431" />
+            <rect class="zdr-summary-muted-region" x="736" y="9" width="261" height="431" />
           </template>
+          <rect v-if="summaryStep === 2" class="zdr-summary-muted-region" x="154" y="9" width="155" height="431" />
         </svg>
       </div>
       <figcaption>Set 1 · blue: mean · dashed green: mode · gray: 10th–90th percentile</figcaption>

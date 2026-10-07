@@ -1302,9 +1302,10 @@
   pointer-events: none;
 }
 
-.slidev-layout.population-zdr-summary .zdr-summary-chart rect {
-  fill: #cfb87c;
-  fill-opacity: 0.14;
+/* Mute only nonselected stages; inset rectangles leave the axes and dividers clear. */
+.slidev-layout.population-zdr-summary .zdr-summary-chart .zdr-summary-muted-region {
+  fill: #808080;
+  fill-opacity: 0.55;
 }
 
 .slidev-layout.population-zdr-summary .zdr-summary-observation figcaption {
