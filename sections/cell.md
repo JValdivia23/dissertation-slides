@@ -394,12 +394,26 @@ class: paper4-footprints
   <span>Layer maximum of <em>Z'</em></span><b>→</b><span>Average over the nine time steps</span><b>→</b><span>Upper 10% in each layer (p90)</span>
 </div>
 
-<div class="paper4-footprint-figure"><img src="../figures/time-mean-anomaly.png" alt="Chapter 5 Figure S2: time-mean column-maximum reflectivity anomaly maps, with black upper-decile contours in the rain layer at 1–1.5 km and snow layer at 2.5–3 km MSL; both footprints are southwest of the tracked cell" /></div>
+<Paper4Footprints />
 
 <p class="paper4-footprint-takeaway">Two layer-specific footprints: <strong>rain · 1–1.5 km</strong> and <strong>snow · 2.5–3 km MSL</strong>.</p>
 
+<script setup>
+import Paper4Footprints from '../components/Paper4Footprints.vue'
+</script>
+
 <!--
 About 45 seconds. To quantitatively evaluate the precipitation impact without requiring subjective manual contouring, we define objective footprints. For each height layer, we take the vertical maximum of Z' at each time, average those nine fields over time, and extract the upper decile (top 10%, p90) as the persistent footprint. Left: 1–1.5 km rain footprint. Right: 2.5–3 km snow footprint. Both sit southwest of the cell origin, matching the expected downwind fallout trajectory.
+
+Figure source: Chapter 5 Figure S2 (Appendix 5.A), gc3_anom_accum_1x2.pdf.
+The displayed quantity is A_mean: the time mean of the layer maximum of Z',
+not equivalent reflectivity in dBZ. The exact rain and snow p90 thresholds
+are 2.94 and 2.16 dB, rounded to the source panel labels' 2.9 and 2.2 dB.
+The two original colorbars have different ranges and are retained separately.
+The complete source maps, contours, GC markers, corridor and transect are
+preserved; only surrounding headings and axes are typeset at larger sizes.
+The source's small in-plot keys remain intact for fidelity; the readable
+contour key below the panels replaces the need to read those embedded keys.
 -->
 
 ---

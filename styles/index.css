@@ -2463,18 +2463,26 @@
   text-align: center;
 }
 
-.slidev-layout.paper4-footprints .paper4-footprint-figure {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  min-height: 0;
+.slidev-layout.paper4-footprints {
+  padding-top: 0.85rem;
 }
 
-.slidev-layout.paper4-footprints .paper4-footprint-figure img {
-  max-width: 100%;
-  max-height: 14rem;
-  object-fit: contain;
+.slidev-layout.paper4-footprints .paper4-footprint-steps {
+  grid-template-columns: minmax(0, 0.88fr) 1.4rem minmax(0, 1.15fr) 1.4rem minmax(0, 0.97fr);
+  margin: 0.15rem 0 0.45rem;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-steps span {
+  display: block;
+  min-height: 2.2rem;
+  padding: 0.35rem 0.45rem;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.slidev-layout.paper4-footprints .paper4-footprint-takeaway {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
 }
 
 .slidev-layout.paper4-estimation .paper4-estimation-flow {
