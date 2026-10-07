@@ -258,6 +258,27 @@ About 90 seconds. This click-stepped schematic explains the sampling and reducti
 -->
 
 ---
+class: population-video
+---
+
+# Horizontal evolution
+
+
+<div class="population-video-body">
+  <video class="population-video-player" muted autoplay loop playsinline controls poster="../figures/compsii-horizontal-poster.png">
+    <source src="../figures/compsii-horizontal-evolution.mp4" type="video/mp4" />
+  </video>
+  <div class="population-video-points">
+    <section><h2>Temporal evolution</h2><p>Detected anomalies emerge, intensify, and dissipate over the observed population sequence.</p></section>
+    <section><h2>Spatial distribution</h2><p>Two distinct CTGC groups are visible: the earlier Set 1 and the later Set 2.</p></section>
+  </div>
+</div>
+
+<!--
+About 40 seconds. This looping animation from COMPSII slide 26 shows the full-domain detected reflectivity anomaly evolving through the observed population sequence: anomalies emerge, intensify into coherent features, and dissipate. Two spatiotemporal groups are visible here: the earlier Set 1 and the later Set 2. This is the same detection field quantified later: the maps show where the count and area time series come from, and the color scale is anomaly in dB, not equivalent reflectivity in dBZ. Do not attribute individual low-level echoes to the selected cell. Next, place these groups within the broader storm; the subsequent structure maps and time series quantify their evolution.
+-->
+
+---
 class: population-storm
 ---
 
@@ -288,28 +309,7 @@ class: population-storm
 <!--
 About 45 seconds. These three enlarged panels from Paper 4 supporting Figure S1 show the broader precipitation system and connect the two observational papers: the storm and the selected cell are the same. Color is ECCC equivalent reflectivity in dBZ, not cloud-top reflectivity or the perturbation field from the previous slide. Small black dots are the DOW6-derived CTGC centroids from both sets, not separate color-coded set labels. The red marker follows the selected Set 1 cell northeast, and the red box is the moving 40-by-40-kilometer domain used later in Paper 4. The dashed circle marks DOW6's 75-kilometer range. Do not interpret every strong low-level echo as precipitation from this cell.
 
-The two groups began before this displayed sequence: Set 1 near 02:18 UTC west of DOW6, moving northeast; Set 2 near 02:48 UTC to the southwest, moving east. Those onset times come from Paper 3, not from these later S1 panels. Focus on Set 1 because its complete population sequence was observed; Set 2's dissipation was not fully captured. This is radar storm context, not a thermodynamic diagnosis or proof of wave-driven forcing. Next, watch the horizontal population evolution; the RHI sequence and soundings are retained in supporting material. Paper 4 is submitted to GRL, not published.
--->
-
----
-class: population-video
----
-
-# Horizontal evolution
-
-
-<div class="population-video-body">
-  <video class="population-video-player" muted autoplay loop playsinline controls poster="../figures/compsii-horizontal-poster.png">
-    <source src="../figures/compsii-horizontal-evolution.mp4" type="video/mp4" />
-  </video>
-  <div class="population-video-points">
-    <section><h2>Temporal evolution</h2><p>Detected anomalies emerge, intensify, and dissipate over the observed population sequence.</p></section>
-    <section><h2>Spatial distribution</h2><p>Two distinct CTGC groups are visible: the earlier Set 1 and the later Set 2.</p></section>
-  </div>
-</div>
-
-<!--
-About 40 seconds. This looping animation from COMPSII slide 26 shows the full-domain detected reflectivity anomaly evolving through the observed population sequence: anomalies emerge, intensify into coherent features, and dissipate. Both spatiotemporal groups from the previous storm-context slide are visible here: the earlier Set 1 and the later Set 2. This is the same detection field quantified next: the maps show where the count and area time series come from, and the color scale is anomaly in dB, not equivalent reflectivity in dBZ. Do not attribute individual low-level echoes to the selected cell. The still maps and time series next quantify what this animation shows qualitatively.
+The two groups began before this displayed sequence: Set 1 near 02:18 UTC west of DOW6, moving northeast; Set 2 near 02:48 UTC to the southwest, moving east. Those onset times come from Paper 3, not from these later S1 panels. Focus on Set 1 because its complete population sequence was observed; Set 2's dissipation was not fully captured. This is radar storm context, not a thermodynamic diagnosis or proof of wave-driven forcing. Next, quantify Set 1's structure evolution; the RHI sequence and soundings are retained in supporting material. Paper 4 is submitted to GRL, not published.
 -->
 
 ---
