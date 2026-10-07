@@ -369,126 +369,103 @@ class: population-trends
 </div>
 
 <!--
-About 25 seconds. Figure 13(c) shows the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. Pause on this observed trend before explaining the proposed microphysical mechanism. Introduce differential reflectivity on the next slide for audience members unfamiliar with the variable; its final two clicks return to this same curve. The population mean remains positive: the near-zero and negative examples next are teaching references, not values reached by this mean curve.
+About 25 seconds. Figure 13(c) shows the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. Pause on this observed trend before explaining the proposed microphysical mechanism. Introduce differential reflectivity on the next slide for audience members unfamiliar with the variable; its two clicks return to this same curve. The population mean remains positive: the near-zero example next is a teaching reference, not a value reached by this mean curve. The complete sign tutorial, including the negative example, is retained in supporting material.
 -->
 
 ---
-class: population-identification population-zdr
+class: population-zdr-summary
+clicks: 2
 ---
 
 # Differential reflectivity
 
-<div class="ctgc-stages" aria-label="Animation stages">
-  <span v-for="(label, index) in zdrStages" :key="label" :class="{ active: zdrStep === index }">{{ label }}</span>
-</div>
+<p class="zdr-summary-stage">{{ summaryStages[summaryStep] }}</p>
 
-<div class="ctgc-body" :data-step="zdrStep">
-  <div class="ctgc-visual">
-    <div class="ctgc-canvas" role="img" aria-label="Five-click differential-reflectivity illustration: horizontal and vertical returns, positive, near-zero, and negative reference cases, then aggregation and preferential sedimentation connected to the observed Set 1 evolution.">
-      <CuManim :steps="5" :width="1000" :height="310" :construct="zdrInterpretation" />
-      <svg v-if="zdrStep === 0" class="ctgc-first-frame" viewBox="0 0 1000 580" aria-hidden="true">
-        <path v-for="(item, i) in zdrPreview" :key="i" :d="item.d" :fill="item.color" :fill-opacity="item.fill" :stroke="item.color" :stroke-opacity="item.stroke" :stroke-width="item.width" />
+<div class="zdr-summary-body" :data-step="summaryStep">
+  <section class="zdr-summary-intro" :class="{ 'is-hidden': summaryStep > 0 }">
+    <div class="zdr-summary-examples">
+      <svg viewBox="0 0 500 290" role="img" aria-label="Independent positive-ZDR reference: an idealized horizontally oriented plate has a stronger horizontal than vertical return.">
+        <text x="250" y="40" text-anchor="middle" class="zdr-reference-title">Positive ZDR reference</text>
+        <ellipse cx="115" cy="145" rx="67" ry="17" fill="#edf2f7" fill-opacity="0.12" stroke="#edf2f7" stroke-width="3" />
+        <text x="115" y="207" text-anchor="middle">Horizontal plate</text>
+        <text x="229" y="133" class="zdr-horizontal">H</text>
+        <text x="229" y="176" class="zdr-vertical">V</text>
+        <rect x="265" y="113" width="180" height="25" rx="2" fill="#78baff" />
+        <rect x="265" y="156" width="70" height="25" rx="2" fill="#ef8f9b" />
+        <text x="350" y="253" text-anchor="middle" class="zdr-reference-value">H &gt; V · ZDR &gt; 0</text>
       </svg>
-      <svg class="zdr-labels" viewBox="0 0 1000 580" aria-hidden="true">
-        <g v-if="zdrStep <= 3">
-          <text x="93" y="166">Radar</text>
-          <text x="218" y="170" class="zdr-vertical">V</text>
-          <text x="218" y="325" class="zdr-horizontal">H</text>
-          <text x="430" y="68">Particle viewed along beam</text>
-          <text x="560" y="445" class="zdr-horizontal">Horizontal</text>
-          <text x="290" y="96" class="zdr-vertical">Vertical</text>
-          <text x="795" y="136">Relative reflectivity</text>
-          <text x="635" y="240" class="zdr-horizontal">H</text>
-          <text x="635" y="340" class="zdr-vertical">V</text>
-          <text x="795" y="425" class="zdr-comparison">{{ ['Compare H and V', 'H > V', 'H ≈ V', 'H < V'][zdrStep] }}</text>
-          <text x="795" y="465" class="zdr-comparison">{{ ['', 'ZDR > 0 dB', 'ZDR ≈ 0 dB', 'ZDR < 0 dB'][zdrStep] }}</text>
-          <text x="500" y="538" class="zdr-muted">{{ ['Two polarizations · the same radar sample', 'Idealized horizontally oriented plate', 'Idealized spherical particle', 'Idealized vertically elongated particle'][zdrStep] }}</text>
-        </g>
-        <g v-else>
-          <text x="500" y="48">Generating layer · 5.5–8 km MSL</text>
-          <text x="500" :y="zdrStep === 4 ? 475 : 83" class="zdr-gold">{{ zdrStep === 4 ? 'Aggregation: more isotropic particles' : 'Larger aggregates fall out faster' }}</text>
-          <text x="165" y="553" text-anchor="start" class="zdr-crystal">Oriented crystals</text>
-          <text x="603" y="553" text-anchor="start" class="zdr-gold">Aggregates</text>
-        </g>
+      <svg viewBox="0 0 500 290" role="img" aria-label="Independent near-zero-ZDR reference: an idealized spherical particle has approximately equal horizontal and vertical returns.">
+        <text x="250" y="40" text-anchor="middle" class="zdr-reference-title">Near-zero ZDR reference</text>
+        <circle cx="115" cy="145" r="42" fill="#edf2f7" fill-opacity="0.12" stroke="#edf2f7" stroke-width="3" />
+        <text x="115" y="207" text-anchor="middle">Spherical particle</text>
+        <text x="229" y="133" class="zdr-horizontal">H</text>
+        <text x="229" y="176" class="zdr-vertical">V</text>
+        <rect x="265" y="113" width="130" height="25" rx="2" fill="#78baff" />
+        <rect x="265" y="156" width="130" height="25" rx="2" fill="#ef8f9b" />
+        <text x="350" y="253" text-anchor="middle" class="zdr-reference-value">H ≈ V · ZDR ≈ 0</text>
       </svg>
     </div>
-    <p class="ctgc-view-caption">{{ zdrStep <= 3 ? 'Independent reference cases · idealized near-horizontal beam' : 'Conceptual particle sequence · sizes and fall speeds are schematic' }}</p>
-  </div>
-  <div class="ctgc-explanation">
-    <div class="ctgc-equation">
+    <div class="zdr-summary-equation">
 
 $$Z_{\mathrm{DR}} = 10\log_{10}\!\left(\frac{z_{\mathrm{H}}}{z_{\mathrm{V}}}\right)\;\mathrm{dB}$$
 
 </div>
-    <p class="ctgc-secondary zdr-definition">z<sub>H</sub> and z<sub>V</sub> are linear reflectivities for horizontal and vertical polarization.</p>
-    <div v-if="zdrStep === 0">
-      <h2>Compare two polarizations</h2>
-      <p>Radar compares the horizontal and vertical returns from the <strong>same sample</strong>.</p>
-      <p class="ctgc-secondary">Their ratio depends on particle shape, orientation, density, and the mixture of particles.</p>
-    </div>
-    <div v-else-if="zdrStep === 1">
-      <h2>Positive Z<sub>DR</sub></h2>
-      <p><strong>Horizontal return is stronger.</strong></p>
-      <p>Horizontally oriented plates can produce this signature.</p>
-      <p class="ctgc-secondary">The shape and bars illustrate the comparison; they do not assign an exact dB value.</p>
-    </div>
-    <div v-else-if="zdrStep === 2">
-      <h2>Z<sub>DR</sub> near zero</h2>
-      <p><strong>Horizontal and vertical returns are approximately equal.</strong></p>
-      <p>Zero does not mean no particles or no echo.</p>
-      <p class="ctgc-secondary">Spheres are one example, not a unique explanation: orientations and particle mixtures also matter.</p>
-    </div>
-    <div v-else-if="zdrStep === 3">
-      <h2>Negative Z<sub>DR</sub></h2>
-      <p><strong>Vertical return is stronger.</strong></p>
-      <p>A vertically elongated particle can produce this signature.</p>
-      <p class="ctgc-secondary">This is a reference case, not a negative population mean observed in this study.</p>
-    </div>
-    <div v-else-if="zdrStep === 4">
-      <h2>Early decrease in Set 1</h2>
-      <p>Consistent with aggregation increasing the contribution from <strong>more isotropic particles</strong>.</p>
-      <p class="ctgc-secondary">Aggregation is illustrated; riming can also reduce particle anisotropy. Neither is uniquely identified by Z<sub>DR</sub>.</p>
-    </div>
-    <div v-else>
-      <h2>Later increase in Set 1</h2>
-      <p>The later increase is consistent with differential sedimentation and particle sorting in the cloud-top layer.</p>
-      <p class="ctgc-secondary">Aggregates fall out faster; oriented crystals contribute relatively more aloft.</p>
-    </div>
-    <figure v-if="zdrStep >= 4" class="zdr-observed">
-      <div class="zdr-observed-frame">
-        <img src="../figures/population-zdr.png" alt="The same observed Paper Figure 13(c) from slide 35: Set 1 mean differential reflectivity decreases early and rises later; the highlighted interval connects to the conceptual particle animation." />
+  </section>
+
+  <div class="zdr-summary-results" :class="{ 'is-hidden': summaryStep === 0 }">
+    <figure class="zdr-summary-observation">
+      <div class="zdr-summary-chart">
+        <img src="../figures/population-zdr.png" alt="Paper Figure 13(c), Set 1: mean differential reflectivity decreases in initiation, then increases overall through the mature and dissipation stages. The complete mean, mode, percentile envelope, and original stage dividers are retained." />
         <svg viewBox="0 0 1066 467" aria-hidden="true">
-          <rect :x="zdrStep === 4 ? 153 : 365" y="7" :width="zdrStep === 4 ? 212 : 633" height="435" />
+          <rect v-if="summaryStep === 1" x="153" y="7" width="158" height="435" />
+          <template v-if="summaryStep === 2">
+            <rect x="311" y="7" width="423" height="435" />
+            <rect x="734" y="7" width="264" height="435" />
+          </template>
         </svg>
       </div>
-      <figcaption>Set 1 · {{ zdrStep === 4 ? 'early decrease' : 'later increase' }} · mean &gt; 0</figcaption>
+      <figcaption>Set 1 · blue: mean · dashed green: mode · gray: 10th–90th percentile</figcaption>
     </figure>
+    <aside class="zdr-summary-concept">
+      <p class="zdr-summary-layer-label">Generating layer · 5.5–8 km MSL</p>
+      <div class="zdr-summary-canvas" role="img" aria-label="Conceptual particle evolution: oriented crystals aggregate on the first click; larger aggregates preferentially leave the generating layer on the second click while oriented crystals remain.">
+        <CuManim :steps="2" :width="1000" :height="190" :construct="zdrLifecycleInterpretation" />
+        <svg v-if="summaryStep === 0" class="zdr-summary-preview" viewBox="0 0 1000 650" aria-hidden="true">
+          <path v-for="(shape, index) in zdrLifecyclePreview" :key="index" :d="shape.d" :fill="shape.color" :fill-opacity="shape.fill" :stroke="shape.color" :stroke-opacity="shape.stroke" :stroke-width="shape.width" />
+        </svg>
+      </div>
+      <div class="zdr-summary-legend">
+        <span><i aria-hidden="true"></i>Oriented crystals</span>
+        <span><i class="zdr-aggregate" aria-hidden="true"></i>Aggregates</span>
+      </div>
+    </aside>
   </div>
 </div>
 
-<p class="fine ctgc-source">{{ zdrStep <= 3 ? 'Illustrative scattering signatures, not a particle-identification key; real radar samples contain many particles.' : 'Paper Figure 13(c) and the proposed microphysical evolution · particle habits and mechanisms are inferred, not directly observed.' }}</p>
+<p class="zdr-summary-message">{{ summaryMessages[summaryStep] }}</p>
+<p class="fine zdr-summary-source">{{ summaryStep === 0 ? 'Independent idealized examples · bars show relative returned reflectivity' : 'Paper Figure 13(c) · schematic interpretation, not direct particle observations' }}</p>
 
 <script setup>
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-import { zdrInterpretation, zdrStages, zdrPreview } from '../scenes/zdr-interpretation'
+import { zdrLifecycleInterpretation, zdrLifecyclePreview } from '../scenes/zdr-lifecycle'
 
 const { clicks } = useNav()
-const zdrStep = computed(() => Math.max(0, Math.min(clicks.value, 5)))
+const summaryStep = computed(() => Math.max(0, Math.min(clicks.value, 2)))
+const summaryStages = ['Horizontal and vertical returns', 'Initiation', 'Mature → Dissipation']
+const summaryMessages = [
+  'ZDR compares horizontal and vertical returns.',
+  'Decreasing ZDR: consistent with aggregation.',
+  'Increasing ZDR: consistent with sedimentation and particle sorting.',
+]
 </script>
 
 <!--
-About 75–90 seconds, five clicks. Entry: the radar compares horizontal and vertical reflectivity from the same sampled volume. Define Z_DR as ten times the base-ten logarithm of the ratio of linear horizontal to vertical reflectivity. The horizontal and vertical arrows indicate electric-field directions in the plane perpendicular to propagation; the particle is shown as viewed along an idealized near-horizontal beam. Beside the radar, blue H and pink V wave arrows show the polarized transmitted signal in schematic perspective: both propagate toward the particle, while their electric fields oscillate in perpendicular horizontal and vertical planes. The wave glyphs are offset vertically only for legibility, not separate physical beam paths. Both have the same illustrative 3D amplitude; H looks flatter because its horizontal plane is foreshortened. Their amplitudes do not change with particle shape or explain differences in returned reflectivity. Wave crests advance briefly during the existing first three clicks and disappear with the radar on click four. The bars are qualitative relative linear reflectivity, not calculated scattering cross-sections or measured values. These first three cases are independent illustrations, not a time sequence of one observed crystal changing shape.
+About 45–60 seconds, two clicks. Entry: briefly define differential reflectivity as ten times the base-ten logarithm of the ratio of linear horizontal and vertical reflectivity from the same sample. H and V label relative returned reflectivity, not transmitted-wave amplitudes. The two cartoons are independent idealized reference cases viewed with a near-horizontal beam, not an observed particle changing shape: an oriented horizontal plate can give H > V, while a spherical particle gives H approximately equal to V. Particle mixtures, orientations, density, and beam elevation also influence measured Z_DR. A small Z_DR is neither an absence of particles nor a unique identification of spheres or aggregates. The observed Set 1 mean on the next builds stays positive; the near-zero reference does not imply that this population mean reaches zero. Keep the full sign tutorial, including the negative example, for the detailed supporting slide.
 
-[click] Positive Z_DR: the horizontal return is stronger. A horizontally oriented plate is an idealized example relevant to ice clouds. Real values depend on shape, orientation, density, wavelength, and the particle mixture; do not identify a particular crystal habit from Z_DR alone.
+[click] Initiation. Return to the same observed Set 1 Figure 13(c) as main slide 35, now enlarged and fixed in position. Blue is the mean, dashed green the mode, and gray the 10th–90th percentile. Highlight the initiation region using the original plotted stage divider, rather than treating the full interval before the Z_DR minimum as initiation: the decline briefly continues into the early mature stage. The stages were defined primarily from count and area evolution, not from Z_DR alone, and the first transition time is approximate. The compact animation illustrates oriented crystals joining into larger, more isotropic aggregates. The decreasing Z_DR is consistent with aggregation; riming can also reduce anisotropy and neither process is uniquely identified by this variable. The cartoon shapes and relative sizes are schematic, not particle counts or a scattering calculation.
 
-[click] Near-zero Z_DR: the horizontal and vertical returns are approximately equal. A sphere provides the simplest illustration, but less anisotropic particles, broad orientation distributions, or mixtures can also produce a small net difference. Zero is not no particles, no echo, or zero reflectivity. Aggregates and rimed crystals need not be spherical or have exactly zero Z_DR.
-
-[click] Negative Z_DR: the vertical return is stronger, illustrated by a vertically elongated particle. Spend only about five seconds here. This explains the sign convention; it is not a negative population mean in our observations. Beam elevation and propagation/calibration effects can also influence actual radar measurements.
-
-[click] Return explicitly to the same observed Figure 13(c) from the previous slide, with its early-decrease interval highlighted. The population mean remains positive; the teaching examples do not imply it reaches zero. The conceptual animation shows oriented crystals joining into larger, more isotropic aggregates. This is consistent with the paper's early aggregation interpretation; riming can also reduce anisotropy but is not separately animated or uniquely established. Shapes, counts, and sizes are schematic, and the radar ratio is reflectivity-weighted rather than a simple particle-number average. Reflectivity is relatively stable after initiation and rho_HV stays high; these additional plots remain in the full Figure 13. Do not call the contour-size increase growth of every individual cell.
-
-[click] Highlight the subsequent overall rise through maturity and dissipation. The interpretation is that larger, more isotropic particles sediment out, leaving a relatively greater contribution from slower-falling oriented crystals aloft. Keep the oriented crystals visibly distinct while the aggregates cross the lower boundary of the 5.5–8 km MSL generating layer: aggregates do not transform back into pristine crystals. Polarimetry supports this inference but does not directly identify particle habit. The animation shows the proposed differential sedimentation and sorting, not measured particle trajectories, a unique mechanism, or an exact scattering calculation. Continue to the one selected cell tracked through this sequence; its Z_DR evolution shows the same population trend in a single example, which then supports the conceptual population-life-cycle figure.
+[click] Mature and dissipation. Keep the complete plot at exactly the same size and position and highlight both named stages, retaining their original divider. The overall rise begins after the brief early-mature dip and continues through dissipation; it is not strictly monotonic at every sample. The accompanying animation illustrates larger aggregates preferentially falling below the generating layer while slower-falling oriented crystals remain aloft. This differential sedimentation and particle sorting is consistent with the observed increasing Z_DR, but particle habits and trajectories were not directly measured. Crystals remain crystals; aggregates do not turn back into pristine crystals. The population mean stays positive throughout. Next, use the selected-cell sequence on main slide 37 as a separate example supporting the population-level interpretation.
 -->
 
 ---

@@ -1182,6 +1182,206 @@
   text-align: center;
 }
 
+/* Short ZDR interpretation: the observed population curve stays dominant. */
+.slidev-layout.population-zdr-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.slidev-layout.population-zdr-summary h1 {
+  margin-bottom: 0.25rem;
+  font-size: 1.75rem;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-stage {
+  margin: 0 0 0.45rem;
+  color: var(--cu-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-intro,
+.slidev-layout.population-zdr-summary .zdr-summary-results {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-body .is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-intro {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--cu-bg);
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples svg {
+  width: 100%;
+  background: #101b2b;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples text {
+  fill: #edf2f7;
+  font-family: var(--slidev-font-sans, 'Noto Sans', Helvetica, Arial, sans-serif);
+  font-size: 22px;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples .zdr-reference-title {
+  font-size: 27px;
+  font-weight: 600;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples .zdr-reference-value {
+  font-size: 29px;
+  font-weight: 600;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples .zdr-horizontal {
+  fill: #78baff;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-examples .zdr-vertical {
+  fill: #ef8f9b;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-equation .katex-display {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-results {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-observation {
+  min-width: 0;
+  margin: 0;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-chart {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1066 / 467;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-chart img,
+.slidev-layout.population-zdr-summary .zdr-summary-chart svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-chart img {
+  object-fit: contain;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-chart svg {
+  pointer-events: none;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-chart rect {
+  fill: #cfb87c;
+  fill-opacity: 0.14;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-observation figcaption {
+  margin-top: 0.4rem;
+  color: var(--cu-text-muted);
+  font-size: 0.72rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-concept {
+  min-width: 0;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-layer-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-canvas,
+.slidev-layout.population-zdr-summary .cu-manim-frame {
+  position: relative;
+  background: #101b2b;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-legend {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 0.45rem;
+  font-size: 0.76rem;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-legend i {
+  display: inline-block;
+  width: 1rem;
+  height: 0.35rem;
+  border: 2px solid #85bec8;
+  border-radius: 50%;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-legend .zdr-aggregate {
+  width: 0.8rem;
+  height: 0.7rem;
+  border-color: #cfb87c;
+  border-radius: 35%;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-message {
+  margin: 0.45rem 0 0;
+  color: var(--cu-heading);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.slidev-layout.population-zdr-summary .zdr-summary-source {
+  margin-top: 0.25rem;
+  font-size: 0.67rem;
+}
+
 .slidev-layout.population-trends .population-trends-figure,
 .slidev-layout.population-trends .population-trends-message,
 .slidev-layout.population-trends .population-trends-source {

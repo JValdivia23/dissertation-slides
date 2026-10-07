@@ -173,6 +173,15 @@ function layerShapes(opacity: number, merge: number, fall: number): Shape[] {
   return shapes
 }
 
+// Reuse the detailed slide's particle geometry without its comparison tutorial
+// or two legend glyphs. The summary keeps a larger HTML legend beside the data.
+export function zdrLifecycleFrame(step: number, alpha = 1): Shape[] {
+  alpha = clamp(alpha)
+  const merge = step === 0 ? 0 : step === 1 ? alpha : 1
+  const fall = step === 2 ? alpha : 0
+  return layerShapes(1, merge, fall).slice(0, -2)
+}
+
 // Fixed shape order/count lets each frame update existing mobjects. The same
 // pure geometry supplies the first-frame SVG and regression checks on rewind.
 export function zdrFrame(step: number, alpha = 1): Shape[] {
