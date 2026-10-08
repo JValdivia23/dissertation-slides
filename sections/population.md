@@ -333,11 +333,6 @@ class: population-trends population-maps
 </div>
 
 <div class="population-trends-legend">
-  <div v-click.hide="1" class="population-legend-row" role="group" aria-label="Map inset centroid legend">
-    <span class="population-legend-context">Inset centroids:</span>
-    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><circle cx="24" cy="10" r="6" fill="#0000ff" /></svg><span>Set 1</span></span>
-    <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><circle cx="24" cy="10" r="6" fill="#ff0000" /></svg><span>Set 2</span></span>
-  </div>
   <div v-click="1" class="population-legend-row" role="group" aria-label="CTGC count and area legend">
     <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#ff0000" stroke-width="4" /><circle cx="24" cy="10" r="6" fill="#ff0000" /></svg><span>Count</span></span>
     <span class="population-legend-item"><svg class="population-legend-sample" viewBox="0 0 48 20" aria-hidden="true"><path d="M4 10H44" stroke="#0000ff" stroke-width="4" /></svg><span>Mean area</span></span>

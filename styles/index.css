@@ -1820,6 +1820,27 @@
   object-fit: contain;
 }
 
+/* Slide 34 only: maps freed by the removed inset-centroid legend grow to the
+   area-scale height. The legend collapses (its only row is click-hidden on the
+   first step) and the scale bar matches the map image height exactly, since
+   both subtract the 1.9rem caption row. Higher specificity beats the generic
+   population-trends rules below regardless of source order. */
+.slidev-layout.population-maps.population-trends .population-trends-legend {
+  min-height: 0;
+}
+
+.slidev-layout.population-maps.population-trends .population-trends-figure img {
+  max-height: 19.5rem;
+}
+
+.slidev-layout.population-maps.population-trends .population-area-scale {
+  height: calc(100% - 1.9rem);
+  max-height: none;
+  max-width: none;
+  align-self: start;
+  justify-self: center;
+}
+
 .slidev-layout.population-trends .population-map-pair figure {
   height: 100%;
 }
