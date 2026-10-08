@@ -531,7 +531,7 @@ title: "Project 3: Conclusions"
 ---
 
 # Project 3: Conclusions
-- The detected population progressed through initiation, maturity, and dissipation over approximately 1.7 hours.
+- A CTGC population progressed through initiation, maturity, and dissipation over approximately 1.7 hours.
 - During maturity, counts decreased while size area increased, supporting merging and clustering into larger features rather than simply growth of individual turrets.
 - The polarimetric signals are consistent with early aggregation and later preferential sedimentation and particle sorting within the generating layer.
 
