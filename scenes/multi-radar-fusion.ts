@@ -4,7 +4,7 @@ type Point = [number, number, number]
 type Shape = { points: Point[], color: string, opacity: number, width: number }
 type VolumeView = { center: Point, size: number }
 
-export const fusionStages = ['Three radars', 'Scan', 'Cell frame', 'Three grids', 'Anomalies', 'Weighted merge', 'VAD / section']
+export const fusionStages = ['Three radars', 'Scan', 'Cell frame', 'Three grids', 'Anomalies', 'Weighted merge']
 export const fusionColors = {
   radars: ['#78baff', '#85bec8', '#ef8f9b'],
   reflectivity: ['#244765', '#4c9b9f', '#ded6a0', '#eaa456', '#ef7476'],
@@ -35,40 +35,6 @@ const BOX_SIZE = 3.15
 const VIEWS: VolumeView[] = [-3.15, 0, 3.15].map(x => ({ center: [x, -.35, 0], size: 2.3 }))
 const MERGED_VIEW: VolumeView = { center: [-1.4, -.15, 0], size: 4.1 }
 
-// Observation-informed schematic, not a digitized retrieval or a particular
-// analysis time. Chapter 5 Figures 1(i) and 3(i) show winds FROM the southwest,
-// a speed minimum near 2–3 km, and stronger flow above the shear layer.
-// Restrict the illustration to the VAD's approximately 1–6.5-km coverage.
-export const fusionWindProfile = [
-  { z: 1, speed: 28, from: 230 },
-  { z: 1.5, speed: 27, from: 240 },
-  { z: 2.2, speed: 23, from: 250 },
-  { z: 2.5, speed: 25, from: 250 },
-  { z: 3.5, speed: 30, from: 245 },
-  { z: 4.5, speed: 34, from: 240 },
-  { z: 5.5, speed: 34, from: 235 },
-  { z: 6.5, speed: 35, from: 230 },
-]
-const WIND_COLOR = '#85bec8'
-const WIND_LEFT = 2.4
-const WIND_RIGHT = 4.05
-const WIND_VECTOR_SCALE = .015 // Same map-view length scale at every height.
-
-function windSpeedPoint(speed: number, z: number): Point {
-  return [WIND_LEFT + (WIND_RIGHT - WIND_LEFT) * speed / 40, sectionPoint(0, z)[1], 0]
-}
-export function fusionWindVectors() {
-  return fusionWindProfile.filter(p => p.z % 1 === .5).map(p => {
-    // Meteorological bearings describe where wind comes FROM. Negate both
-    // components so arrowheads show horizontal flow TOWARD (N up, E right).
-    const east = -p.speed * WIND_VECTOR_SCALE * Math.sin(p.from * RAD)
-    const north = -p.speed * WIND_VECTOR_SCALE * Math.cos(p.from * RAD)
-    const y = sectionPoint(0, p.z)[1]
-    return { ...p, start: [4.45 - east / 2, y - north / 2, 0] as Point,
-      end: [4.45 + east / 2, y + north / 2, 0] as Point }
-  })
-}
-
 function clamp(value: number) { return Math.max(0, Math.min(1, value)) }
 function mix(a: number, b: number, t: number) { return a + (b - a) * t }
 function mixPoint(a: Point, b: Point, t: number): Point { return a.map((value, i) => mix(value, b[i], t)) as Point }
@@ -89,11 +55,6 @@ function rect(x: number, y: number, w: number, h: number): Point[] {
 function ellipse(p: Point, rx: number, ry = rx): Point[] {
   return Array.from({ length: 33 }, (_, i) => [p[0] + rx * Math.cos(i * Math.PI / 16), p[1] + ry * Math.sin(i * Math.PI / 16), 0])
 }
-function arrow(a: Point, b: Point, tip = .12): Point[] {
-  const angle = Math.atan2(b[1] - a[1], b[0] - a[0])
-  return [a, b, [b[0] - tip * Math.cos(angle - .5), b[1] - tip * Math.sin(angle - .5), 0], b,
-    [b[0] - tip * Math.cos(angle + .5), b[1] - tip * Math.sin(angle + .5), 0]]
-}
 function boxAt(p: Point): Point[] {
   // The centroid is three quarters of the way across the box, not its center.
   return rect(p[0] - .75 * BOX_SIZE, p[1] - .75 * BOX_SIZE, BOX_SIZE, BOX_SIZE)
@@ -103,7 +64,6 @@ function volumePoint(x: number, y: number, z: number, view: VolumeView): Point {
     view.center[1] + view.size * (.20 * (y + 10) / 40 + .68 * (z - 5) / 8), 0]
 }
 function mapPoint(x: number, y: number): Point { return [CLOUD_END[0] + x * BOX_SIZE / 40, CLOUD_END[1] + y * BOX_SIZE / 40, 0] }
-function sectionPoint(x: number, z: number): Point { return [-4.25 + (x + 30) * 5.7 / 40, -1.8 + (z - 1) * 3.55 / 8, 0] }
 
 // All sites, scan tilts, beam widths, and values below are deliberately
 // schematic, not the observed radar geometry or a particle-trajectory model.
@@ -211,11 +171,10 @@ function volumeShapes(step: number, alpha: number): Shape[] {
   const reveal = step < 3 ? 0 : step === 3 ? alpha : 1
   const subtract = step < 4 ? 0 : step === 4 ? alpha : 1
   const merge = step < 5 ? 0 : step === 5 ? clamp((alpha - .28) / .65) : 1
-  const section = step === 6 ? alpha : 0
   const result: Shape[] = []
   VIEWS.forEach((view, r) => {
     const current: VolumeView = { center: mixPoint(view.center, MERGED_VIEW.center, merge), size: mix(view.size, MERGED_VIEW.size, merge) }
-    const fade = reveal * (r === 0 ? 1 : 1 - merge) * (1 - section)
+    const fade = reveal * (r === 0 ? 1 : 1 - merge)
     function point(x: number, y: number, z: number): Point {
       return mixPoint(mapPoint(x, y), volumePoint(x, y, z, current), reveal)
     }
@@ -245,7 +204,7 @@ function volumeShapes(step: number, alpha: number): Shape[] {
 }
 
 function weightShapes(step: number, alpha: number): Shape[] {
-  const opacity = step < 5 ? 0 : step === 5 ? clamp(alpha * 4) : 1 - alpha
+  const opacity = step < 5 ? 0 : clamp(alpha * 4)
   const result: Shape[] = []
   result.push(line(rect(1.9, -1.75, 2.75, 3.7), GRID, opacity, 1.5))
   fusionData.samples.forEach((p, r) => {
@@ -261,52 +220,11 @@ function weightShapes(step: number, alpha: number): Shape[] {
   return result
 }
 
-function sectionShapes(step: number, alpha: number): Shape[] {
-  const t = step === 6 ? alpha : 0
-  const tilt = clamp((t - .18) / .72)
-  const opacity = clamp(t * 3)
-  const result: Shape[] = []
-  function point(x: number, z: number) { return mixPoint(volumePoint(x, x, z, MERGED_VIEW), sectionPoint(x, z), tilt) }
-  HEIGHTS.forEach((z, zi) => COORDS.forEach((x, xi) => {
-    const value = merged[zi][xi][xi]
-    const bottom = Math.max(1, z - .46)
-    const top = Math.min(9, z + .46)
-    const points = [[x - 1.94, bottom], [x + 1.94, bottom], [x + 1.94, top], [x - 1.94, top], [x - 1.94, bottom]]
-      .map(([px, pz]) => point(px, pz))
-    result.push(fill(points, fieldColor(value ?? 0, true), (value === null ? .03 : value > 1.5 ? .95 : .30) * opacity))
-  }))
-  result.push(line([point(-30, 1), point(10, 1), point(10, 9), point(-30, 9), point(-30, 1)], GOLD, opacity, 2.5))
-  for (const z of [1, 3, 5, 7, 9]) result.push(line([point(-30, z), point(10, z)], GRID, .35 * opacity, 1))
-  const cell = point(0, 7.5)
-  result.push(line(ellipse(cell, .20, .12), WHITE, opacity, 2.5))
-  // Dashed corridor is an expected direction, NOT a simulated particle path.
-  for (let i = 0; i < 8; i++) {
-    const a = i / 8
-    const b = (i + .55) / 8
-    result.push(line([point(-17.5 * a, 7.5 - 5.4 * a), point(-17.5 * b, 7.5 - 5.4 * b)], GOLD, .85 * opacity, 2.5))
-  }
-  // Ground-relative horizontal wind speed and direction are separate from
-  // the cell-relative echo curtain. Direction glyphs are miniature PLAN views,
-  // not vectors in the height–speed plane and not a vertical-wind retrieval.
-  const top = fusionWindProfile.at(-1)!.z
-  result.push(line([windSpeedPoint(0, top), windSpeedPoint(0, 1), windSpeedPoint(40, 1)], GRID, opacity, 1.5))
-  for (const speed of [0, 20, 40]) result.push(line([windSpeedPoint(speed, 1), windSpeedPoint(speed, top)], GRID, .35 * opacity, 1))
-  for (const z of [1, 3, 5, top]) {
-    result.push(line([windSpeedPoint(0, z), windSpeedPoint(40, z)], GRID, .35 * opacity, 1))
-    const y = sectionPoint(0, z)[1]
-    result.push(line([[WIND_LEFT - .05, y, 0], [WIND_LEFT, y, 0]], WHITE, opacity, 1.5))
-  }
-  result.push(line(fusionWindProfile.map(p => windSpeedPoint(p.speed, p.z)), WIND_COLOR, opacity, 3))
-  fusionWindProfile.forEach(p => result.push(fill(ellipse(windSpeedPoint(p.speed, p.z), .035), WIND_COLOR, opacity)))
-  fusionWindVectors().forEach(p => result.push(line(arrow(p.start, p.end, .08), WIND_COLOR, opacity, 2.5)))
-  return result
-}
-
 // Pure, fixed-order frames make forward, rewind, direct entry, and interrupted
 // playback deterministic. The SVG entry preview comes from the same geometry.
 export function fusionFrame(step: number, alpha = 1): Shape[] {
   alpha = clamp(alpha)
-  return [...mapShapes(step, alpha), ...volumeShapes(step, alpha), ...weightShapes(step, alpha), ...sectionShapes(step, alpha)]
+  return [...mapShapes(step, alpha), ...volumeShapes(step, alpha), ...weightShapes(step, alpha)]
 }
 function svgPath(points: Point[]) {
   return `M${points.map(([x, y]) => `${((x / FRAME_W + .5) * WIDTH).toFixed(2)},${((.5 - y / FRAME_H) * HEIGHT).toFixed(2)}`).join(' L')}`
@@ -334,17 +252,6 @@ export const fusionLabels = {
     label(3.25, 2.28, 'Beam-center proximity'),
     ...fusionData.samples.map((p, r) => label(3.25, 1.52 - r * .92, `${['DOW6', 'COW', 'ECCC'][r]}: M = ${p.weight.toFixed(2)}`, fusionColors.radars[r])),
     label(3.25, -1.50, 'White point = same voxel')],
-  section: [label(-1.4, 2.28, 'Cell-relative Z′ section (dB)', GOLD),
-    ...[1, 5, 9].map(z => label(-4.42, sectionPoint(0, z)[1] - .08, String(z), WHITE, 'end')),
-    label(-4.25, 2.05, 'km MSL', WHITE, 'start'), label(-4.25, -2.2, 'SW'), label(1.45, -2.2, 'NE'),
-    label(sectionPoint(0, 1)[0], -2.2, 'cell (0, 0)', GOLD)],
-  wind: [label(3.35, 2.28, 'VAD winds'), label(3.35, 1.91, 'ground-relative'),
-    label(3.22, 1.26, 'Speed'), label(3.22, 1.00, '(m s⁻¹)'),
-    label(4.45, 1.26, 'Direction'), label(4.45, 1.00, 'N ↑  E →'),
-    label(2.21, 1.00, 'km', WHITE, 'end'),
-    ...[1, 3, 5, 6.5].map(z => label(2.21, sectionPoint(0, z)[1] - .07, String(z), WHITE, 'end')),
-    ...[0, 20, 40].map(speed => label(windSpeedPoint(speed, 1)[0], -2.11, String(speed))),
-    label(4.45, -2.11, 'NE', WIND_COLOR), label(3.35, -2.52, 'Flow: SW → NE', WIND_COLOR)],
 }
 
 export async function multiRadarFusion(getInitialClick: () => number = () => 0) {
@@ -353,7 +260,7 @@ export async function multiRadarFusion(getInitialClick: () => number = () => 0) 
   })
   const initial = fusionFrame(0)
   const objects = initial.map(s => new VMobject().setPointsAsCorners(s.points).setColor(s.color)
-    // Keep fill geometry alive even for initially hidden grid/section tiles.
+    // Keep fill geometry alive even for initially hidden grid tiles.
     .setFillOpacity(s.width === 0 ? 1 : 0).setStrokeOpacity(s.opacity).setStrokeWidth(s.width))
   // VGroup applies a small z offset per child. Chunk the tiles so 900 sibling
   // offsets cannot push the last grid through the 2D camera's near plane.
@@ -387,11 +294,10 @@ export async function multiRadarFusion(getInitialClick: () => number = () => 0) 
     })
     previous = frame
   }
-  // Six play calls = six Slidev clicks. All text/math stays in SVG/Slidev.
+  // Five play calls = five Slidev clicks. All text/math stays in SVG/Slidev.
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, a) => draw(1, a), { duration: duration(1, 4), rateFunc: linear }))
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, a) => draw(2, a), { duration: duration(2, 2.2) }))
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, a) => draw(3, a), { duration: duration(3, 2.4) }))
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, a) => draw(4, a), { duration: duration(4, 2) }))
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, a) => draw(5, a), { duration: duration(5, 3) }))
-  await scene.play(new UpdateFromAlphaFunc(illustration, (_, a) => draw(6, a), { duration: duration(6, 3.2) }))
 }

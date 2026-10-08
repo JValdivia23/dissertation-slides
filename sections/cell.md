@@ -51,19 +51,19 @@ About 35 seconds. The central challenge: particles generated in cloud-top turret
 
 ---
 class: paper4-fusion
-clicks: 6
+clicks: 5
 ---
 
 # 3D tracking methodology
 
 <div class="fusion-stages" aria-label="Methodology animation stages">
-  <span v-for="(label, index) in fusionStages" :key="label" :class="{ active: Math.min(clicks, 6) === index }">{{ label }}</span>
+  <span v-for="(label, index) in fusionStages" :key="label" :class="{ active: Math.min(clicks, 5) === index }">{{ label }}</span>
 </div>
 
 <div class="fusion-body">
   <div class="fusion-visual">
-    <div class="fusion-canvas" role="img" aria-label="Six-click methodological schematic: three radar sweeps sample a moving cloud, a box follows the selected cell, radar data are gridded independently, individual weighted backgrounds are subtracted, anomalies are merged with Gaussian beam-center weights, and VAD winds guide inspection of a southwestward fall-streak section. Illustrative fields, not observed data or exact particle trajectories.">
-      <CuManim v-if="fusionActive" :steps="6" :width="1000" :height="310" :construct="constructFusion" />
+    <div class="fusion-canvas" role="img" aria-label="Five-click methodological schematic: three radar sweeps sample a moving cloud, a box follows the selected cell, radar data are gridded independently, individual weighted backgrounds are subtracted, and anomalies are merged with Gaussian beam-center weights. Illustrative fields, not observed data or exact particle trajectories.">
+      <CuManim v-if="fusionActive" :steps="5" :width="1000" :height="310" :construct="constructFusion" />
       <div v-else class="fusion-inactive-frame" aria-hidden="true" />
       <svg v-if="clicks === 0 || !fusionActive" class="fusion-first-frame" viewBox="0 0 1000 580" aria-hidden="true">
         <path v-for="(item, i) in fusionPreview" :key="i" :d="item.d" :fill="item.color" :fill-opacity="item.fill" :stroke="item.color" :stroke-opacity="item.stroke" :stroke-width="item.width" />
@@ -89,14 +89,8 @@ clicks: 6
           </g>
           <text v-if="clicks === 3" x="500" y="525" class="fusion-muted">Same voxel coordinates · separate radar fields and coverage</text>
         </g>
-        <g v-else-if="clicks === 5">
-          <text v-for="(item, i) in fusionLabels.merge" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
-        </g>
         <g v-else>
-          <text v-for="(item, i) in fusionLabels.section" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
-          <g class="fusion-wind-labels">
-            <text v-for="(item, i) in fusionLabels.wind" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
-          </g>
+          <text v-for="(item, i) in fusionLabels.merge" :key="i" :x="item.x" :y="item.y" :fill="item.color" :text-anchor="item.anchor">{{ item.text }}</text>
         </g>
         <g v-if="clicks >= 3" class="fusion-scale">
           <rect x="360" y="545" width="245" height="10" fill="url(#fusion-field-scale)" />
@@ -105,7 +99,7 @@ clicks: 6
         </g>
       </svg>
     </div>
-    <p class="fusion-view-caption">{{ fusionCaptions[Math.min(clicks, 6)] }}</p>
+    <p class="fusion-view-caption">{{ fusionCaptions[Math.min(clicks, 5)] }}</p>
   </div>
   <div class="fusion-explanation">
     <div v-if="clicks === 0">
@@ -143,7 +137,7 @@ $$Z'_r(p)=\widetilde Z_{e,r}(p)-\mu_r(p)$$
       <p>Localized enhancements remain relative to that radar's own background.</p>
       <p class="fusion-secondary">Gold slabs illustrate the 2-km vertical window; μ values refer to the highlighted voxel.</p>
     </div>
-    <div v-else-if="clicks === 5">
+    <div v-else>
       <h2>Merge the anomalies</h2>
       <p><strong>Gaussian beam-center weights:</strong> nearer the beam center → greater weight.</p>
       <div class="fusion-equation">
@@ -153,13 +147,6 @@ $$Z'(p)=\frac{\sum_r M_r(p)Z'_r(p)}{\sum_r M_r(p)}$$
 </div>
       <p class="fusion-secondary">M = 0 where a radar does not sample the voxel. Merge anomalies, not raw cross-wavelength reflectivity.</p>
       <p class="fusion-result">One 3D enhancement field, in dB.</p>
-    </div>
-    <div v-else>
-      <h2>Inspect the expected fall streak</h2>
-      <p><strong>DOW6 VAD winds:</strong> mainly SW → NE, with stronger flow above the mid-level shear layer.</p>
-      <p>Slower winds below can leave falling particles southwest of the northeastward-moving cell.</p>
-      <p>Select a cell-relative section through the descending positive Z′.</p>
-      <p class="fusion-secondary">A narrowed view does not uniquely isolate this cell's particles. Quantitative footprints are defined separately later.</p>
     </div>
   </div>
 </div>
@@ -180,12 +167,11 @@ const fusionCaptions = [
   'Illustrative slices of 3D grids · displayed voxels are coarsened',
   'Illustrative fields · weighted backgrounds computed separately',
   'Computed weighted merge of the illustrative anomalies',
-  'Observation-informed schematic VAD · not a measured trajectory',
 ]
 </script>
 
 <!--
-About 90 seconds, six clicks. Chapter 5 Data and Methods. This is a methodological illustration, not the observed volume data. The radar locations, scan angles, beam widths, cloud, and deliberately coarse displayed voxels are schematic. The smooth synthetic fields represent independently gridded/smoothed radar reflectivity; the beam-weighted local backgrounds, individual anomalies, and normalized merge are numerically computed from those illustrative fields. The coarse example truncates and renormalizes background windows at its domain boundaries; it is not an implementation or validation of the papers' DCT operators. Text and equations remain in Slidev/SVG, matching the earlier Manim slides.
+About 75 seconds, five clicks. Chapter 5 Data and Methods. This is a methodological illustration, not the observed volume data. The radar locations, scan angles, beam widths, cloud, and deliberately coarse displayed voxels are schematic. The smooth synthetic fields represent independently gridded/smoothed radar reflectivity; the beam-weighted local backgrounds, individual anomalies, and normalized merge are numerically computed from those illustrative fields. The coarse example truncates and renormalizes background windows at its domain boundaries; it is not an implementation or validation of the papers' DCT operators. Text and equations remain in Slidev/SVG, matching the earlier Manim slides.
 
 Entry: identify the three instruments and wavelength bands. Different views help describe the same moving cell despite incomplete, range-dependent sampling. The paper analyzes nine synchronized volume sets, every six minutes, from 02:54 to 03:42 UTC.
 
@@ -197,9 +183,7 @@ Entry: identify the three instruments and wavelength bands. Different views help
 
 [click] Use the Paper 2 weighted-local-statistics framework to calculate each radar's own background. For a voxel, the background is the spatial mean of smoothed dBZ reflectivity with Gaussian beam weights over a 40-by-40-by-2-km boxcar window. The gold slabs show the 6–8-km example around the highlighted (0,0,7 km) voxel; repeat the window at other heights. Subtract the background separately for every radar. Z'_r is a logarithmic reflectivity difference, in dB. Different wavelengths can have different equivalent reflectivity because of scattering and attenuation; do not claim anomaly subtraction makes all wavelength effects vanish.
 
-[click] Use the same radar-beam weights in the normalized weighted average. Weight decreases with distance from the beam center according to a Gaussian, not simply with horizontal distance from the radar. The right-hand inset compares the same voxel relative to each radar's beam center; its M values come from the illustrative fields. No radar coverage means M=0, and a voxel with no contributing radar remains missing. The three independent anomaly grids become one common 3D Z-prime field, not a raw-reflectivity maximum or a wind retrieval.
-
-[click] Reveal the southwest–northeast cell-relative section and a separate ground-relative VAD wind profile. The speed curve and horizontal direction arrows are an observation-informed schematic based on Chapter 5 Figures 1(i) and 3(i), not digitized retrievals, a time mean, or a particular analysis time. Show the lower/mid-level speed minimum and stronger flow above the shear layer, with modest directional turning. Restrict the illustrated VAD to approximately 1–6.5 km MSL; do not extrapolate measured winds to the 7.5-km cell or the 9-km analysis-domain top. The speed axis is in m/s. The direction arrows use one common speed-to-length scale and N-up/E-right miniature plan views at the labeled heights; they do not show vertical velocity. The source polar figure reports meteorological direction FROM, mainly the southwest, so our arrowheads point TOWARD the northeast. The direction arrows and the echo cross-section are in different reference frames. Slower northeastward winds below can allow sedimenting particles to lag the northeastward-moving generating cell and form a southwestward trailing signature in its moving frame; do not claim the ground-relative VAD winds themselves point southwest. This is a qualitative shear explanation, not a calculation of cell-relative velocities from these illustrative numbers. The gold dashed corridor remains a qualitative expected extension, not integrated particle trajectories, a measured terminal velocity, or proof of exclusive particle origin. A cross-section/subvolume makes the structure easier to inspect without removing the physical ambiguity from neighboring cells and pre-existing precipitation. The quantitative snow and rain footprints are defined separately later from the upper decile of time-mean layer-maximum Z-prime, not from a VAD-only trajectory or this schematic curtain. Continue to the observed generating-layer maps and VAD context on the next slide.
+[click] Use the same radar-beam weights in the normalized weighted average. Weight decreases with distance from the beam center according to a Gaussian, not simply with horizontal distance from the radar. The right-hand inset compares the same voxel relative to each radar's beam center; its M values come from the illustrative fields. No radar coverage means M=0, and a voxel with no contributing radar remains missing. The three independent anomaly grids become one common 3D Z-prime field, not a raw-reflectivity maximum or a wind retrieval. Continue to the observed generating-layer maps and VAD context on the next slide.
 -->
 
 ---
