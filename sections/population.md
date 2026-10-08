@@ -220,7 +220,7 @@ $$Z'(r,\theta) = Z_{\max}(r,\theta) - \overline{Z_{\max}}_{\theta}(r)$$
   </div>
 </div>
 
-<p class="fine ctgc-source">{{ clicks >= 6 ? 'Gaussian smoothing and area screening (≥0.09 km²) yield coherent closed cell boundaries.' : 'Illustrative reflectivity field · maxima and azimuthal means computed from the example.' }}</p>
+<p class="fine ctgc-source">{{ clicks >= 6 ? '' : '' }}</p>
 
 <script setup>
 import { ref, watch } from 'vue'

@@ -118,8 +118,7 @@ class: ctgc-background
 <div class="ctgc-background-stages">
 
 <section class="ctgc-background-panel ctgc-gaps">
-  <h2>Observational gaps before this dissertation</h2>
-  <p class="ctgc-gap-lead">Established mechanisms and snapshots do not describe the complete evolution of a population and its precipitation.</p>
+
   <div class="ctgc-gap-cards">
     <div class="ctgc-gap-card">
       <h3>Population life cycle</h3>
