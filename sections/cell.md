@@ -338,33 +338,6 @@ between the selected CTGC and the existing mid-cloud echoes.
 -->
 
 ---
-class: paper4-map-evolution
----
-
-# Melting layer effects (1.5–2.5 km)
-
-<Paper4EvolutionMaps :src="rainMaps" alt="Chapter 5 Figure 5: lower-level (1–1.5 km MSL) equivalent reflectivity maps with p90 footprint contours across nine analysis times (02:54–03:42 UTC)">
-    <section><strong>Early melting layer enhancement</strong><p>Lower-level precipitation is already present before CTGC fall-streak arrival; it is not related to the cell alone.</p></section>
-    <section><strong>Horizontal precipitating bands</strong><p>Underlying stratiform bands produce significant background precipitation throughout the domain.</p></section>
-    <section><strong>A combined effect</strong><p>The CTGC fall streak and pre-existing precipitating bands overlap, producing localized precipitation enhancement.</p></section>
-</Paper4EvolutionMaps>
-
-<script setup>
-import Paper4EvolutionMaps from '../components/Paper4EvolutionMaps.vue'
-import rainMaps from '../figures/paper4-rain-full.png'
-</script>
-
-<!--
-About 50 seconds. Madison Slide 15 and Paper Figure 5. Looking below the melting level in the 1–1.5 km rain layer: At early times (02:54 UTC), substantial reflectivity is already observed below the melting level. The underlying precipitation field contains organized bands independent of the cell. As the cell matures and its fall streak descends, it overlaps these existing bands. The outcome is a combined effect: the cell reinforces and enriches an active precipitation system rather than initiating rainfall on dry ground.
-
-Figure metadata, retained here rather than as a visible caption: maximum-radar
-composite Z-e-max over 1–1.5 km MSL, in dBZ, at all nine times from 02:54 to
-03:42 UTC. This figure is below the melting layer named in the slide title,
-not a map of the 1.5–2.5 km melting layer itself. The original footprint legend,
-contours, time labels, distance axes, and colorbar remain part of the figure.
--->
-
----
 class: paper4-footprints
 ---
 
