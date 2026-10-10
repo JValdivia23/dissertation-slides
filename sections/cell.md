@@ -273,12 +273,8 @@ clicks: 1
     </section>
     <figure class="paper4-roll-photo">
       <img src="../figures/paper4-cloud-streets-cropped.png" alt="Photograph of boundary-layer cloud streets illustrating parallel convective roll structures" />
-      <figcaption>Boundary-layer roll clouds (analogous organization aloft)</figcaption>
+      <figcaption>Analogous organization aloft</figcaption>
     </figure>
-    <section>
-      <h2>Pre-existing precipitation trails</h2>
-      <p>These organized bands already produce their own precipitation trails prior to the arrival of CTGC ice.</p>
-    </section>
   </div>
 </div>
 
