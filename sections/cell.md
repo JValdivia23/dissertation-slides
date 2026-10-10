@@ -1,7 +1,8 @@
 ---
 layout: section
 class: paper-title paper4-title
-title: Tracking and Quantifying 3D Cloud-Top Generating-Cell Structure and Associated Precipitation
+title: Tracking and Quantifying 3D Cloud-Top Generating-Cell Structure and
+  Associated Precipitation
 ---
 
 <div class="paper-title-content">
@@ -12,7 +13,7 @@ title: Tracking and Quantifying 3D Cloud-Top Generating-Cell Structure and Assoc
     <p>Coauthors: Katja Friedrich · Troy Zaremba · Sarah Tessendorf</p>
   </div>
   <p class="paper-affiliation">Department of Atmospheric and Oceanic Sciences · University of Colorado Boulder</p>
-  <p class="paper-citation">Submitted to <em>Geophysical Research Letters</em>, 16 September 2026 · manuscript 2026GL126989</p>
+  <p class="paper-citation">Submitted to <em>Geophysical Research Letters</em> on 16 September 2026</p>
 </div>
 
 <!--
