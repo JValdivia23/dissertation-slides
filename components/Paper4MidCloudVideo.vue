@@ -54,13 +54,3 @@ function start() {
   outline-offset: 4px;
 }
 </style>
-
-<style>
-.slidev-layout.paper4-midcloud .paper4-midcloud-video {
-  transform: translateY(-3rem);
-}
-
-.slidev-layout.paper4-midcloud .paper4-video-points .paper4-roll-photo img {
-  max-height: 8.4rem;
-}
-</style>

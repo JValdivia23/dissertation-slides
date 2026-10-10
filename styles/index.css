@@ -2801,6 +2801,43 @@
   text-align: center;
 }
 
+/* Mid-cloud visuals above a full-width takeaway at the bottom. */
+.slidev-layout.paper4-midcloud .paper4-video-body {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  row-gap: 0.85rem;
+}
+
+.slidev-layout.paper4-midcloud .paper4-midcloud-takeaway {
+  grid-column: 1 / -1;
+  align-self: end;
+}
+
+.slidev-layout.paper4-midcloud .paper4-midcloud-video {
+  margin: 0;
+}
+
+.slidev-layout.paper4-midcloud .paper4-roll-photo {
+  margin: 0;
+}
+
+.slidev-layout.paper4-midcloud .paper4-roll-photo img {
+  max-height: 14rem;
+  object-fit: contain;
+}
+
+/* The held-video pose changes to end on the video's ended event or completed
+   slide entry. Hide supporting content without changing the reserved layout. */
+.slidev-layout.paper4-midcloud .paper4-roll-photo,
+.slidev-layout.paper4-midcloud .paper4-midcloud-takeaway {
+  visibility: hidden;
+}
+
+.slidev-layout.paper4-midcloud:has(.paper4-midcloud-video[data-pose="end"]) .paper4-roll-photo,
+.slidev-layout.paper4-midcloud:has(.paper4-midcloud-video[data-pose="end"]) .paper4-midcloud-takeaway {
+  visibility: visible;
+}
+
 /* Paper 4 full cross-section */
 .slidev-layout.paper4-cross-full {
   padding-top: 0.75rem;

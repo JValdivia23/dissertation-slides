@@ -267,15 +267,15 @@ clicks: 1
 
 <div class="paper4-video-body">
   <Paper4MidCloudVideo />
-  <div class="paper4-video-points">
+  <figure class="paper4-roll-photo">
+    <img src="../figures/paper4-cloud-streets-cropped.png" alt="Photograph of boundary-layer cloud streets illustrating parallel convective roll structures" />
+    <figcaption>Analogous organization aloft</figcaption>
+  </figure>
+  <div class="paper4-video-points paper4-midcloud-takeaway">
     <section>
       <h2>Horizontal convective rolls?</h2>
       <p>Mid-cloud echoes exhibit organized, elongated parallel bands aligned with the background shear.</p>
     </section>
-    <figure class="paper4-roll-photo">
-      <img src="../figures/paper4-cloud-streets-cropped.png" alt="Photograph of boundary-layer cloud streets illustrating parallel convective roll structures" />
-      <figcaption>Analogous organization aloft</figcaption>
-    </figure>
   </div>
 </div>
 
@@ -289,6 +289,9 @@ About 45 seconds. Madison Slide 13. Slicing through the 3.5–5 km mid-cloud lay
 [click] Play the original three-second elevation cutaway once, then hold its
 final view. Entry and rewind show the decoded first frame; direct entry at the
 completed click and return from the following slide show the final frame.
+The photograph, its caption, and the bottom takeaway appear together after
+playback ends, without another click. Their layout space stays reserved;
+rewind hides them, while completed entry shows them immediately.
 The cloud-street photograph uses Madison slide 13's original crop, exported
 without resampling by scripts/export-paper4-midcloud.py. It remains an analogy
 for the organization of the echoes aloft, not an observation of this storm.
