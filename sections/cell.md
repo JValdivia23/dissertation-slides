@@ -341,7 +341,7 @@ between the selected CTGC and the existing mid-cloud echoes.
 class: paper4-footprints
 ---
 
-# Defining fall-streak footprints
+# Precipitation: fall-streak footprints
 
 <div class="paper4-footprint-steps">
   <span>Layer maximum of <em>Z'</em></span><b>→</b><span>Average over the nine time steps</span><b>→</b><span>Upper 10% in each layer (p90)</span>
