@@ -381,7 +381,27 @@ class: paper4-contrast
     <section><span>Rain · 1–1.5 km MSL</span><strong>+72%</strong><p>rate below melting layer (<em>Z</em> = 200 <em>R</em><sup>1.6</sup>)</p></section>
     <p>Inside versus outside the footprint: snow <strong>+51%</strong>, rain <strong>+72%</strong>. Other cells and pre-existing precipitation exist in both regions.</p>
   </div>
-  <img src="../figures/paper4-rates-contrast.png" alt="Chapter 5 Figure S3(c): nine-time percent enhancement of radar-estimated rain rates in the rain-layer footprint and snow rates in the snow-layer footprint; time means are plus 72 percent and plus 51 percent" />
+  <div class="paper4-contrast-plot">
+    <img src="../figures/paper4-rates-contrast.png" alt="Chapter 5 Figure S3(c): nine-time percent enhancement of radar-estimated rain rates in the rain-layer footprint and snow rates in the snow-layer footprint; time means are plus 72 percent and plus 51 percent" />
+    <svg class="paper4-contrast-overlay" viewBox="0 0 1656 816" aria-hidden="true">
+      <defs>
+        <marker id="paper4-rain-arrow-tip" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 0L8 4L0 8Z" fill="#e67e22" />
+        </marker>
+        <marker id="paper4-snow-arrow-tip" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 0L8 4L0 8Z" fill="#1976d2" />
+        </marker>
+      </defs>
+      <g class="paper4-rain-annotation">
+        <text x="1095" y="116">Rain</text>
+        <path class="paper4-contrast-arrow" d="M1080 106L960 151" marker-end="url(#paper4-rain-arrow-tip)" />
+      </g>
+      <g class="paper4-snow-annotation">
+        <text x="960" y="420">Snow</text>
+        <path class="paper4-contrast-arrow" d="M943 392L800 313" marker-end="url(#paper4-snow-arrow-tip)" />
+      </g>
+    </svg>
+  </div>
 </div>
 
 <!--

@@ -302,10 +302,14 @@ class: smoothing-benchmark
     </div>
   </div>
   <div class="smoothing-benchmark-figures">
-    <img v-click.hide="1" src="../figures/dct-volume-benchmark.png" alt="Paper Figure 5(c): execution time versus number of pixels for a fixed five-pixel window on random-noise benchmark arrays" />
-    <img v-click="1" src="../figures/dct-window-benchmark.png" alt="Paper Figure 5(a): execution time versus window size on a fixed 474-by-1180-pixel RHI; analytical Gaussian and boxcar timings stay near 60 milliseconds while the tested spatial method rises" />
+    <SmoothingBenchmarkPlot v-click.hide="1" view="volume" />
+    <SmoothingBenchmarkPlot v-click="1" view="window" />
   </div>
 </div>
+
+<script setup>
+import SmoothingBenchmarkPlot from '../components/SmoothingBenchmarkPlot.vue'
+</script>
 
 <div class="smoothing-benchmark-source fine">
   <p v-click.hide="1">Paper Figure 5(c): fixed window width, varying data size. A full volume at the spatial method's 42-minute runtime becomes a task measured in seconds.</p>
