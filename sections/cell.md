@@ -309,12 +309,8 @@ class: paper4-map-evolution
       <p>North–south bands are already present at 02:54 UTC and become less distinct during 03:24–03:42 UTC.</p>
     </section>
     <section>
-      <h2>Modulation of mid-level echo</h2>
-      <p>As the cell passes overhead, its falling ice feeds into the updraft portion of the pre-existing rolls.</p>
-    </section>
-    <section>
-      <h2>Combined structure</h2>
-      <p>The resulting mid-level reflectivity anomaly reflects both the CTGC fall streak and roll updraft enhancement.</p>
+      <h2>CTGCs seed mid-level clouds</h2>
+      <p>As the cell passes overhead, its falling ice feeds into the pre-existing clouds.</p>
     </section>
 </Paper4EvolutionMaps>
 
