@@ -893,6 +893,34 @@
   object-fit: contain;
 }
 
+.slidev-layout.population-context .population-context-map {
+  position: relative;
+  width: 100%;
+  max-width: calc(23rem * 815 / 734);
+  min-width: 0;
+  justify-self: center;
+}
+
+.slidev-layout.population-context .population-context-study-map {
+  width: 100%;
+  height: auto;
+}
+
+/* Anchor inside the 815 × 734 map's lower-left axes, above the color bar. */
+.slidev-layout.population-context .population-context-locator {
+  position: absolute;
+  left: 3.2%;
+  bottom: 23%;
+  width: 24.3%;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  border: 2px solid white;
+  background: white;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 24%);
+  pointer-events: none;
+}
+
 .slidev-layout.population-context .population-context-story {
   display: flex;
   flex-direction: column;

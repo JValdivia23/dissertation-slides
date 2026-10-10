@@ -86,7 +86,10 @@ class: population-context
       <span>Operational S-band radar from Environment and Climate Change Canada (ECCC Blainville; 240 km range); radiosondes from Sorel, QC (02:00 &amp; 04:15 UTC); airborne NAX radar on the NRC Convair-580.</span>
     </div>
   </div>
-  <img src="../figures/wintremix-map.png" alt="Topographic study-area map locating DOW6, the ECCC S-band radar, the Sorel sounding site, and the DOW6 RHI scan path" />
+  <div class="population-context-map">
+    <img class="population-context-study-map" src="../figures/wintremix-map.png" alt="Topographic study-area map locating DOW6, the ECCC S-band radar, the Sorel sounding site, and the DOW6 RHI scan path" />
+    <img class="population-context-locator" src="../figures/wintremix-north-america-locator.svg" alt="North America locator: a red box marks the study region near Montréal in southern Québec and the adjoining northeastern United States" />
+  </div>
 </div>
 
 <p class="fine">Paper Figure 2. DOW6 supplies the repeated 6-minute volumetric scans for cell detection; ECCC radar, soundings, and airborne radar provide mesoscale context.</p>
