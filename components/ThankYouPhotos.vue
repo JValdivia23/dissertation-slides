@@ -4,6 +4,9 @@ import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vu
 import type { CSSProperties } from 'vue'
 import { createPhotoSimulation, photoHomes, photoOrder, photoRect, photoZoom, zoomOpacity, zoomRect, ZOOM_DURATION } from './thank-you-physics'
 import type { PhotoRect, PhotoZoom } from './thank-you-physics'
+import { fitPersonalThanksFontSize, parsePersonalThanks, personalThanksAt, personalThanksLineReveals, THANKS_LINE_HEIGHT, wrapPersonalThanks } from './personal-thanks'
+
+const props = withDefaults(defineProps<{ personalThanks?: string }>(), { personalThanks: '' })
 
 // Vite bundles the photographs with the correct base path for GitHub Pages.
 // Photographs and video-derived stills stay in pictures/; source videos are not bundled.
@@ -19,9 +22,9 @@ const photos = Object.entries(sources)
 const isActive = useIsSlideActive()
 const { isPrintMode } = useNav()
 const { $renderContext } = useSlideContext()
-const paused = ref(false)
 const reducedMotion = ref(false)
 const hidden = ref(false)
+const handwritingReady = ref(false)
 const ratios = ref<Record<number, number>>({})
 const settledCount = ref(0)
 const failed = ref(new Set<number>())
@@ -29,14 +32,48 @@ const settled = new Set<number>()
 const focus = shallowRef<(PhotoZoom & { started: number }) | undefined>()
 const focusAge = ref(0)
 const poses = shallowRef<{ rect: PhotoRect, backgroundScale: number }[]>([])
-const controlsVisible = ref(false)
+const messages = computed(() => parsePersonalThanks(props.personalThanks))
+const messageTime = ref(0)
+const messageState = computed(() => personalThanksAt(messageTime.value, messages.value.length))
 
 const staticMode = computed(() => isPrintMode.value
   || !['slide', 'presenter'].includes($renderContext.value)
   || reducedMotion.value)
 const running = computed(() => isActive.value && !staticMode.value
-  && !paused.value && !hidden.value && photos.length > 0
+  && !hidden.value && handwritingReady.value && (photos.length > 0 || messages.value.length > 0)
   && settledCount.value === photos.length)
+
+const messageIndex = computed(() => staticMode.value ? 0 : messageState.value.index)
+const currentMessage = computed(() => messages.value[messageIndex.value] ?? '')
+let measurement: CanvasRenderingContext2D | null | undefined
+const messageWidth = computed(() => slideWidth.value * 0.35 - 10)
+function measureMessage(text: string, size: number) {
+  measurement!.font = `500 ${size}px "Personal Thanks Handwriting", "Bradley Hand", cursive`
+  return measurement!.measureText(text).width
+}
+const messageFontSize = computed(() => {
+  const preferred = slideWidth.value * 0.0245
+  if (!handwritingReady.value || !measurement) return preferred
+  return fitPersonalThanksFontSize(currentMessage.value, messageWidth.value,
+    slideWidth.value * 0.0551, preferred, measureMessage)
+})
+const messageLines = computed(() => {
+  if (!handwritingReady.value || !measurement) return []
+  return wrapPersonalThanks(currentMessage.value, messageWidth.value, messageFontSize.value, measureMessage)
+    .map(text => ({ text, width: measureMessage(text, messageFontSize.value) }))
+})
+const messageReveals = computed(() => personalThanksLineReveals(
+  staticMode.value ? 1 : messageState.value.reveal, messageLines.value.map(line => line.width)))
+
+function messageLineStyle(index: number): CSSProperties {
+  const reveal = messageReveals.value[index] ?? 0
+  return {
+    visibility: reveal > 0 ? 'visible' : 'hidden',
+    // Include ink overhangs above, below, and left of each complete line.
+    // Only the right edge advances; no letters are inserted or repositioned.
+    clipPath: reveal >= 1 ? 'none' : `inset(-0.3em ${(1 - reveal) * 100}% -0.3em -0.3em)`,
+  }
+}
 
 const order = photoOrder(photos.length)
 const featureOrder = computed(() => order.filter(index => !failed.value.has(index)))
@@ -92,21 +129,6 @@ let frame: number | undefined
 let nextSpotlight = FIRST_ZOOM_SECONDS
 let pending: number[] = []
 let simulation: ReturnType<typeof createPhotoSimulation> | undefined
-let controlsTimer: ReturnType<typeof setTimeout> | undefined
-
-function showControls() {
-  if (!isActive.value || staticMode.value) return
-  controlsVisible.value = true
-  clearTimeout(controlsTimer)
-  controlsTimer = setTimeout(() => { controlsVisible.value = false }, 2000)
-}
-
-function togglePause(event: MouseEvent) {
-  paused.value = !paused.value
-  // Slidev suspends navigation shortcuts while a button has focus. Mouse users
-  // should be able to advance immediately; keyboard users retain their focus.
-  if (event.detail > 0) (event.currentTarget as HTMLButtonElement).blur()
-}
 
 function stop() {
   if (frame !== undefined) cancelAnimationFrame(frame)
@@ -116,6 +138,7 @@ function stop() {
 
 function resetSimulation() {
   elapsed = 0
+  messageTime.value = 0
   lastFrame = undefined
   nextSpotlight = FIRST_ZOOM_SECONDS
   focus.value = undefined
@@ -144,6 +167,7 @@ function tick(timestamp: number) {
   const dt = lastFrame === undefined ? 0 : Math.min((timestamp - lastFrame) / 1000, 1 / 30)
   lastFrame = timestamp
   elapsed += dt
+  messageTime.value = elapsed - INTRO_SECONDS
   if (focus.value && elapsed - focus.value.started >= ZOOM_DURATION) focus.value = undefined
   // The foreground enlargement is anchored, but its background body continues
   // breathing. Cross-fade back on return so freezing a card cannot jam contacts
@@ -158,15 +182,12 @@ function tick(timestamp: number) {
   frame = requestAnimationFrame(tick)
 }
 
-watch([homes, featureOrder], resetSimulation, { immediate: true })
+watch([homes, featureOrder, messages], resetSimulation, { immediate: true })
 
 // Slidev keeps inactive slides mounted. Do not run their clocks in the background.
 watch(isActive, () => {
   stop()
   resetSimulation()
-  paused.value = false
-  controlsVisible.value = false
-  clearTimeout(controlsTimer)
 })
 watch(staticMode, () => {
   stop()
@@ -190,10 +211,15 @@ onMounted(() => {
   syncVisibility()
   motionPreference.addEventListener('change', syncMotionPreference)
   document.addEventListener('visibilitychange', syncVisibility)
+  measurement = document.createElement('canvas').getContext('2d')
+  // Load the local font before starting either clock; no external font service
+  // or fallback-font reflow during the first message's entrance is required.
+  document.fonts.load('500 24px "Personal Thanks Handwriting"')
+    .finally(() => { handwritingReady.value = true })
+    .catch(() => {})
 })
 onBeforeUnmount(() => {
   stop()
-  clearTimeout(controlsTimer)
   motionPreference?.removeEventListener('change', syncMotionPreference)
   document.removeEventListener('visibilitychange', syncVisibility)
 })
@@ -202,13 +228,13 @@ onBeforeUnmount(() => {
 <template>
   <section
     class="thank-you-photos"
-    :class="{ 'is-playing': running, 'has-featured': !!focus, 'is-static': staticMode, 'show-controls': controlsVisible || paused }"
+    :class="{ 'is-playing': running, 'has-featured': !!focus, 'is-static': staticMode }"
     :data-photo-count="photos.length"
     :data-active="isActive"
     :data-ready="settledCount === photos.length"
+    :data-message-count="messages.length"
+    :data-handwriting-ready="handwritingReady"
     aria-label="Personal acknowledgments: family, friends, and colleagues"
-    @pointermove="showControls"
-    @pointerleave="controlsVisible = false"
   >
     <div class="thank-you-photo-field">
       <div
@@ -251,31 +277,42 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="thank-you-center">
-      <h1 :style="{ fontSize: `${slideWidth * 0.061}px` }">Thanks all</h1>
-      <p :style="{ fontSize: `${slideWidth * 0.02}px` }">for making this possible</p>
+      <h1 :style="{ fontSize: `${slideWidth * 0.049}px` }">Thanks all</h1>
+      <p class="thank-you-subtitle" :style="{ fontSize: `${slideWidth * 0.015}px` }">for making this possible</p>
+      <div class="thank-you-message-slot" :style="{ height: `${slideWidth * 0.0551}px` }" aria-hidden="true">
+        <p
+          class="thank-you-message"
+          :data-message-index="messageIndex"
+          :data-written-progress="staticMode ? 1 : messageState.reveal"
+          :style="{ fontSize: `${messageFontSize}px`, lineHeight: THANKS_LINE_HEIGHT, opacity: staticMode ? 1 : messageState.opacity }"
+        >
+          <span
+            v-for="(line, index) in messageLines"
+            :key="index"
+            class="thank-you-message-line"
+            :data-line-progress="messageReveals[index]"
+            :style="messageLineStyle(index)"
+          >{{ line.text }}</span>
+        </p>
+      </div>
     </div>
 
-    <button
-      v-if="isActive && !staticMode && photos.length"
-      class="thank-you-pause"
-      type="button"
-      :aria-label="paused ? 'Resume photo animation' : 'Pause photo animation'"
-      :aria-pressed="paused"
-      @click.stop="togglePause"
-      @keydown.space.stop
-      @keydown.enter.stop
-      @keyup.space.stop
-    >
-      <svg viewBox="0 0 16 16" aria-hidden="true">
-        <path v-if="paused" d="M5 3 L12 8 L5 13 Z" />
-        <path v-else d="M4 3 H6 V13 H4 Z M10 3 H12 V13 H10 Z" />
-      </svg>
-      {{ paused ? 'Resume' : 'Pause' }}
-    </button>
+    <!-- Expose every acknowledgment once, without announcing timed changes. -->
+    <ol v-if="messages.length" class="thank-you-message-list" aria-label="Personal thanks">
+      <li v-for="(message, index) in messages" :key="index">{{ message }}</li>
+    </ol>
   </section>
 </template>
 
 <style scoped>
+@font-face {
+  font-family: 'Personal Thanks Handwriting';
+  src: url('../assets/fonts/Caveat-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 .thank-you-photos {
   position: absolute;
   inset: 0;
@@ -346,15 +383,14 @@ onBeforeUnmount(() => {
 
 .thank-you-center {
   position: absolute;
-  inset: 39% 33% 39%;
+  inset: 38.5% 32.5% 37.5%;
   z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 4px;
   text-align: center;
-  transform: translateY(-14px);
   pointer-events: none;
 }
 
@@ -370,7 +406,7 @@ onBeforeUnmount(() => {
   text-shadow: 0 2px 20px rgb(0 0 0 / 25%);
 }
 
-.thank-you-center p {
+.thank-you-subtitle {
   margin: 0;
   padding: 0;
   color: rgb(255 255 255 / 85%);
@@ -379,43 +415,45 @@ onBeforeUnmount(() => {
   white-space: nowrap;
 }
 
-.thank-you-pause {
-  position: absolute;
-  top: calc(50% + 43px);
-  left: 50%;
-  z-index: 5;
+.thank-you-message-slot {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 9px;
-  border: 1px solid rgb(255 255 255 / 30%);
-  border-radius: 20px;
-  background: rgb(17 17 17 / 90%);
-  color: #fff;
-  font-size: 10px;
-  line-height: 1;
-  transform: translateX(-50%);
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 180ms ease;
+  justify-content: center;
+  flex: none;
+  width: 100%;
+  margin-top: 2px;
+  padding: 0 5px;
+  overflow: hidden;
 }
 
-.show-controls .thank-you-pause,
-.thank-you-pause:focus-visible {
-  opacity: 1;
+.thank-you-message {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: #eadbb8;
+  font-family: 'Personal Thanks Handwriting', 'Bradley Hand', cursive;
+  font-weight: 500;
 }
 
-.thank-you-pause svg {
-  width: 11px;
-  height: 11px;
-  fill: currentColor;
+.thank-you-message-line {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  white-space: pre;
 }
 
-.thank-you-pause:hover,
-.thank-you-pause:focus-visible {
-  border-color: var(--cu-gold, #cfb87c);
-  outline: 2px solid var(--cu-gold, #cfb87c);
-  outline-offset: 3px;
+.thank-you-message-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .is-static .thank-you-photo,
@@ -427,10 +465,6 @@ onBeforeUnmount(() => {
   .thank-you-photo,
   .thank-you-photo-frame {
     transition: none;
-  }
-
-  .thank-you-pause {
-    display: none;
   }
 }
 </style>

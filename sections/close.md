@@ -242,9 +242,18 @@ Transition to personal acknowledgments.
 ---
 layout: none
 title: Thanks all
+# One paragraph per message; keep two-space indentation and blank lines between people.
+personalThanks: |
+  To my mom, for always being there when I needed her...
+
+  To my advisor Katja, for her trust and guidance...
+
+  To Yamina Silva, for showing me how to be a scientist...
+
+  To my beautiful girlfriend Clairy, for being the loveliest person I ever met...
 ---
 
-<ThankYouPhotos />
+<ThankYouPhotos :personal-thanks="$frontmatter.personalThanks" />
 
 <script setup>
 import ThankYouPhotos from '../components/ThankYouPhotos.vue'
@@ -259,10 +268,15 @@ Individual photographs periodically zoom in from their current locations,
 expanding inward near the edges rather than moving to fixed spotlight positions.
 Every photograph is featured before the sequence repeats.
 
-Move the pointer to reveal Pause below the heading, or reach it with Tab, to hold
-the current photographs while speaking. Use Resume to continue. Moving to
-Questions stops the animation. Reduced-motion,
-overview, and print/export views use the static collage.
+Handwritten personal thanks appear below the subtitle, one paragraph at a time
+from the personalThanks frontmatter block above. Each writes on from left to
+right, one line at a time over 3.2 seconds, remains fully visible for seven
+seconds, and fades away before the next. Edit or add paragraphs in that block;
+their order is the playback order. There is no visible play/pause button.
+
+Moving to Questions stops both clocks. Reduced-motion, overview, and print-mode
+views use the static collage and the first acknowledgment. All messages remain
+available to screen readers without timed announcements.
 -->
 
 ---
