@@ -181,6 +181,28 @@ Keep detailed modeling references in discussion unless asked.
 -->
 
 ---
+layout: none
+title: Thank you
+---
+
+<ThankYouPhotos />
+
+<script setup>
+import ThankYouPhotos from '../components/ThankYouPhotos.vue'
+</script>
+
+<!--
+Personal acknowledgments. All photographs in pictures/ appear around a stationary
+“Thank you.” After a brief overview, pairs enlarge automatically on either side
+of the text; every photograph is featured before the sequence repeats.
+
+Move the pointer to reveal Pause below the heading, or reach it with Tab, to hold
+the current photographs while speaking. Use Resume to continue. Moving to
+Questions stops the animation. Reduced-motion,
+overview, and print/export views use the static collage.
+-->
+
+---
 class: dissertation-questions
 title: Questions
 ---
