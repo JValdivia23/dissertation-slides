@@ -181,6 +181,249 @@ Keep detailed modeling references in discussion unless asked.
 -->
 
 ---
+class: additional-research
+title: Additional research contributions
+---
+
+# Additional research contributions
+
+<p class="additional-research-scope"><span>2024–2026 · Outside this dissertation</span><span class="additional-research-selected">Selected journal-page headers</span></p>
+
+<div class="additional-research-body">
+  <div class="additional-research-counts">
+    <p class="additional-research-category">6 published journal articles</p>
+    <div class="additional-research-stat">
+      <strong>2</strong>
+      <span>First-author publications</span>
+      <small>Including 1 shared first authorship</small>
+    </div>
+    <div class="additional-research-stat">
+      <strong>4</strong>
+      <span>Other co-authored publications</span>
+    </div>
+    <p class="additional-research-preprint"><a href="https://doi.org/10.5194/egusphere-2026-2705" target="_blank" rel="noopener noreferrer"><strong>+1</strong> co-authored preprint</a></p>
+  </div>
+
+  <div class="additional-research-headers" aria-label="Selected publications">
+    <figure>
+      <figcaption><span>Atmospheric Measurement Techniques · 2024</span><span class="additional-research-role">First author</span></figcaption>
+      <a class="additional-research-header" href="https://amt.copernicus.org/articles/17/2295/2024/" target="_blank" rel="noopener noreferrer">
+        <img src="../figures/additional-publications/hailstorm-header.png" width="764" height="150" alt="Publisher-page header: Hailstorm events in the Central Andes of Peru: insights from historical data and radar microphysics. Jairo M. Valdivia is the first author." />
+        <svg viewBox="0 0 764 150" aria-hidden="true"><rect x="4" y="95.5" width="114.4" height="24.5" rx="2" /></svg>
+      </a>
+    </figure>
+    <figure>
+      <figcaption><span>Scientific Reports · 2024</span><span class="additional-research-role">Shared first author</span></figcaption>
+      <a class="additional-research-header" href="https://www.nature.com/articles/s41598-024-71840-2" target="_blank" rel="noopener noreferrer">
+        <img src="../figures/additional-publications/precipitation-types-header.png" width="795" height="141" alt="Publisher-page header: Future changes of precipitation types in the Peruvian Andes. Jairo Valdivia shares equal contribution with Valeria Llactayo and Christian Yarleque." />
+        <svg viewBox="0 0 795 141" aria-hidden="true"><rect x="146.2" y="82" width="98.9" height="23" rx="2" /></svg>
+      </a>
+    </figure>
+    <figure>
+      <figcaption><span>IEEE Access · 2026</span><span class="additional-research-role">Co-author</span></figcaption>
+      <a class="additional-research-header" href="https://ieeexplore.ieee.org/document/11595539" target="_blank" rel="noopener noreferrer">
+        <img src="../figures/additional-publications/sophy-header.png" width="900" height="192" alt="Publisher-page header: Toward Operational Use of the SOPHy X-Band Radar in Peru: A Bayesian Fuzzy Logic Approach for Ground Clutter Filtering in Complex Orography. Jairo M. Valdivia-Prado is a co-author." />
+        <svg viewBox="0 0 900 192" aria-hidden="true"><rect x="439.6" y="128.5" width="188.8" height="24.5" rx="2" /></svg>
+      </a>
+    </figure>
+  </div>
+</div>
+
+<style>
+.additional-research h1 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.additional-research-scope {
+  display: grid;
+  grid-template-columns: minmax(0, 0.45fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1.65rem;
+  margin: 0.3rem 0 0.7rem;
+  color: var(--cu-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.additional-research-selected {
+  font-size: 0.8rem;
+}
+
+.additional-research-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 0.45fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.65rem;
+  min-height: 0;
+  margin-bottom: 0.45rem;
+}
+
+.additional-research-counts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.3rem;
+  min-width: 0;
+}
+
+.additional-research-category {
+  margin: 0;
+  color: var(--cu-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.additional-research-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.additional-research-stat strong {
+  color: var(--cu-heading);
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.additional-research-stat span {
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.additional-research-stat small {
+  color: var(--cu-text-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.additional-research-preprint {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.additional-research-preprint a {
+  color: var(--cu-text);
+  border-bottom: 0;
+  text-decoration: none;
+}
+
+.additional-research-preprint strong {
+  margin-right: 0.3rem;
+  font-size: 1.35rem;
+}
+
+.additional-research-headers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: 100%;
+  max-width: 33.5rem;
+  min-width: 0;
+}
+
+.additional-research-headers figure {
+  margin: 0;
+}
+
+.additional-research-headers figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.15rem;
+  color: var(--cu-text-muted);
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
+
+.additional-research-role {
+  color: var(--cu-heading);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.additional-research-header {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--cu-border);
+  background: white;
+}
+
+.additional-research-header img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.additional-research-header svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.additional-research-header rect {
+  fill: none;
+  stroke: #8d7334;
+  stroke-width: 2.5;
+}
+
+.additional-research-header:focus-visible,
+.additional-research-preprint a:focus-visible {
+  outline: 2px solid var(--cu-gold-accessible);
+  outline-offset: 3px;
+}
+</style>
+
+<!--
+About 45–60 seconds, no clicks. These are additional research contributions,
+not additional dissertation chapters. The three publisher headers are selected
+examples, not the complete list counted on the left.
+
+Suggested delivery: “Alongside the dissertation, I contributed to six other
+journal articles published since 2024: two with first or shared first
+authorship, and four as a co-author. These include hailstorm observations in
+the Peruvian Andes, future changes in precipitation phase, and radar
+ground-clutter filtering. I also co-authored a disdrometer-evaluation preprint,
+which is reported separately from the published articles.”
+
+Shared authorship: the Scientific Reports Author notes state, “These authors
+contributed equally: Valeria Llactayo, Jairo Valdivia and Christian Yarleque.”
+Thus the two first-author publications comprise one sole-first-author article
+and one shared-first-author article, not two sole-first-author articles.
+
+The four other co-authored publications are the Journal of Earth System Science
+diurnal-cycle study (2024), the Agricultural and Forest Meteorology surface
+energy/stability study (2025), the Pure and Applied Geophysics extreme-rainfall
+case studies (2025), and the IEEE Access SOPHy clutter-filtering study (2026).
+Do not invent specific personal roles in these collaborative studies; explain
+them from your own experience if asked.
+
+The extra preprint is Pérez-Tello et al. (2026), “Evaluation and Correction of
+Precipitation Types Measured by a PARSIVEL2 Disdrometer in a Tropical Glacier
+Environment,” https://doi.org/10.5194/egusphere-2026-2705. It is not counted as
+a published journal article.
+
+Exclude the four thesis studies (DCT smoothing, spectral local statistics,
+CTGC population evolution, and 3D CTGC/fall-streak structure), the related
+2025 AMS conference abstract, and duplicate preprint/published versions.
+Inventory, DOI links, screenshot provenance, and counting rules:
+figures/additional-publications/sources.md. Verified 10 October 2026.
+
+Transition to personal acknowledgments.
+-->
+
+---
 layout: none
 title: Thank you
 ---
