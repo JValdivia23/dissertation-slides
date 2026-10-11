@@ -241,7 +241,7 @@ Transition to personal acknowledgments.
 
 ---
 layout: none
-title: Thank you
+title: Thanks all
 ---
 
 <ThankYouPhotos />
@@ -252,7 +252,8 @@ import ThankYouPhotos from '../components/ThankYouPhotos.vue'
 
 <!--
 Personal acknowledgments. All photographs in pictures/ appear around a stationary
-“Thank you.” Background photographs expand and contract from 0.5× to 2×, gently
+“Thanks all” with the smaller subtitle “for making this possible.”
+Background photographs expand and contract from 0.5× to 2×, gently
 pushing their neighbors while remaining tethered to their home positions.
 Individual photographs periodically zoom in from their current locations,
 expanding inward near the edges rather than moving to fixed spotlight positions.

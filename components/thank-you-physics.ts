@@ -128,7 +128,7 @@ export function photoHomes(aspects: number[], width: number, height: number, ord
 }
 
 export function titleObstacle(width: number, height: number): PhotoRect {
-  // Reserve space for both the heading and the keyboard-accessible pause button.
+  // Reserve space for the heading, subtitle, and keyboard-accessible pause button.
   return { left: width * 0.325, right: width * 0.675, top: height * 0.385, bottom: height * 0.625 }
 }
 

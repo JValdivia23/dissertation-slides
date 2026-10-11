@@ -251,7 +251,8 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="thank-you-center">
-      <h1 :style="{ fontSize: `${slideWidth * 0.061}px` }">Thank you</h1>
+      <h1 :style="{ fontSize: `${slideWidth * 0.061}px` }">Thanks all</h1>
+      <p :style="{ fontSize: `${slideWidth * 0.02}px` }">for making this possible</p>
     </div>
 
     <button
@@ -347,8 +348,13 @@ onBeforeUnmount(() => {
   position: absolute;
   inset: 39% 33% 39%;
   z-index: 4;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  text-align: center;
+  transform: translateY(-14px);
   pointer-events: none;
 }
 
@@ -362,6 +368,15 @@ onBeforeUnmount(() => {
   letter-spacing: -0.035em;
   white-space: nowrap;
   text-shadow: 0 2px 20px rgb(0 0 0 / 25%);
+}
+
+.thank-you-center p {
+  margin: 0;
+  padding: 0;
+  color: rgb(255 255 255 / 85%);
+  font-weight: 400;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 .thank-you-pause {
