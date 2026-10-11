@@ -1,10 +1,17 @@
 ---
 class: dissertation-synthesis
-title: Dissertation synthesis
+title: Dissertation contributions
+clicks: 1
 ---
 
 <div class="dissertation-synthesis-body">
-  <DissertationSynthesis />
+  <h1 v-click.hide="1" class="dissertation-synthesis-title">Dissertation contributions</h1>
+  <DissertationSynthesis>
+    <template #conclusion>
+      <p class="dissertation-conclusion">This dissertation developed an efficient spectral radar-processing framework and new CTGC observation techniques, characterized the population life cycle and inferred microphysical evolution, and resolved an evolving three-dimensional fall streak, providing new insight into how CTGCs enhance precipitation.</p>
+      <p class="dissertation-scope">One winter storm; one cell analyzed in 3D.</p>
+    </template>
+  </DissertationSynthesis>
 </div>
 
 <script setup>
@@ -13,15 +20,41 @@ import DissertationSynthesis from '../components/DissertationSynthesis.vue'
 
 <style>
 .dissertation-synthesis-body {
+  position: relative;
   display: flex;
   flex: 1;
   min-height: 0;
   margin: 0 0 1.8rem;
 }
+
+.dissertation-synthesis-title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding-bottom: 0.25rem;
+  font-size: 1.75rem;
+  visibility: visible;
+  pointer-events: none;
+  transition: opacity 160ms ease, visibility 0s linear;
+}
+
+.dissertation-synthesis-title.slidev-vclick-hidden {
+  visibility: hidden;
+  transition-delay: 0s, 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dissertation-synthesis-title {
+    transition: none;
+  }
+}
 </style>
 
 <!--
-About 40–45 seconds, no clicks. Navigation title only; no visible heading.
+About 60–75 seconds, one click. The title is visible on entry and fades out on
+the first click without shifting the diagram or changing the final frame.
 Chapter 6, Summary of Key Findings, explains this integration.
 
 Suggested delivery: “The four studies come together in the cell-relative
@@ -36,62 +69,18 @@ Papers 1–2 produced the Paper 3 population detection. The selected-cell track
 defines the moving reference frame; the methods provide the anomaly fields.
 Population evolution supplies context, not the radar measurements themselves.
 Do not introduce new numbers or imply particle trajectories were retrieved.
--->
 
----
-class: conclusions-bullets dissertation-conclusions
-title: General conclusions
----
+[click] The title fades out as the diagram moves upward and softens while a gold
+connector and compact conclusion card appear beneath it. Read the overall
+contribution as one sentence:
+“This dissertation developed an efficient spectral radar-processing framework and
+new CTGC observation techniques, characterized the population life cycle and
+inferred microphysical evolution, and resolved an evolving three-dimensional fall
+streak, providing new insight into how CTGCs enhance precipitation.”
 
-<div class="dissertation-conclusion-body">
-
-- Spectral methods provide efficient radar smoothing and missing-data-aware local statistics with explicit boundary treatment.
-- The observed population evolved over approximately 1.7 hours, with mature-stage merging and clustering into fewer, larger radar features.
-- Differential-reflectivity changes are consistent with early aggregation and later preferential fallout and particle sorting.
-- The selected cell’s fall streak extended below the melting layer within pre-existing precipitation, consistent with a seeder–feeder interaction.
-
-</div>
-
-<p class="dissertation-scope">The observational findings describe one winter storm, <br />with three-dimensional analysis of one selected cell.</p>
-
-<style>
-.dissertation-conclusion-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
-
-.dissertation-conclusion-body li {
-  text-wrap: pretty;
-}
-
-.dissertation-scope {
-  margin: 0.7rem 0 1.4rem 1.7rem;
-  padding: 0.45rem 0.75rem 0.45rem 0.95rem;
-  border-left: 4px solid var(--cu-gold);
-  color: var(--cu-text);
-  font-size: 1.05rem;
-  line-height: 1.4;
-  text-wrap: pretty;
-}
-</style>
-
-<!--
-About 55–60 seconds, no clicks. Four plain-text findings with no visible title
-or bold lead-in labels. They summarize Chapter 6 and answer the three
-dissertation objectives: methods; population organization and inferred
-particle properties; one cell's three-dimensional precipitation context.
-
-Suggested delivery: “First, the spectral methods make smoothing and local
-statistics efficient while treating boundaries and missing observations
-explicitly. In the observed storm, the population evolved over about
-1.7 hours, organizing through merging and clustering. The polarimetric
-evolution is consistent with early aggregation and later preferential
-fallout and sorting. Finally, the selected cell's fall streak continued
-below the melting layer within an existing precipitation field, consistent
-with a seeder–feeder interaction. The observational findings describe this
-storm and the selected cell, rather than universal CTGC behaviour.”
+The observational scope remains one winter storm and one cell analyzed in 3D.
+The animation links the studies to the overall contribution, not a physical
+particle pathway or a claim that the methods directly produced population detection.
 
 Supporting details for questions, not the timed delivery:
 
