@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { slideHeight, slideWidth, useIsSlideActive, useNav, useSlideContext } from '@slidev/client'
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import type { CSSProperties } from 'vue'
+import { createPhotoSimulation, photoHomes, photoOrder, photoRect, photoZoom, zoomOpacity, zoomRect, ZOOM_DURATION } from './thank-you-physics'
+import type { PhotoRect, PhotoZoom } from './thank-you-physics'
 
 // Vite bundles the photographs with the correct base path for GitHub Pages.
 // Photographs and video-derived stills stay in pictures/; source videos are not bundled.
@@ -24,7 +26,9 @@ const ratios = ref<Record<number, number>>({})
 const settledCount = ref(0)
 const failed = ref(new Set<number>())
 const settled = new Set<number>()
-const featured = ref<number[]>([])
+const focus = shallowRef<(PhotoZoom & { started: number }) | undefined>()
+const focusAge = ref(0)
+const poses = shallowRef<{ rect: PhotoRect, backgroundScale: number }[]>([])
 const controlsVisible = ref(false)
 
 const staticMode = computed(() => isPrintMode.value
@@ -34,140 +38,35 @@ const running = computed(() => isActive.value && !staticMode.value
   && !paused.value && !hidden.value && photos.length > 0
   && settledCount.value === photos.length)
 
-// Seeded ordering keeps the composition stable across reloads and exports.
-function random(seed: number) {
-  let state = seed
-  return () => {
-    state |= 0
-    state = state + 0x6D2B79F5 | 0
-    let value = Math.imul(state ^ state >>> 15, 1 | state)
-    value ^= value + Math.imul(value ^ value >>> 7, 61 | value)
-    return ((value ^ value >>> 14) >>> 0) / 4294967296
-  }
-}
-
-const nextRandom = random(20261015)
-const order = photos.map(photo => photo.index)
-for (let i = order.length - 1; i > 0; i--) {
-  const j = Math.floor(nextRandom() * (i + 1))
-  ;[order[i], order[j]] = [order[j], order[i]]
-}
+const order = photoOrder(photos.length)
 const featureOrder = computed(() => order.filter(index => !failed.value.has(index)))
+const homes = computed(() => photoHomes(photos.map(photo => ratios.value[photo.index] || 4 / 3),
+  slideWidth.value, slideHeight.value, order))
 
-const jitter = random(42)
-const motion = photos.map(() => ({
-  tilt: (jitter() - 0.5) * 2,
-  duration: 16 + jitter() * 12,
-  delay: -jitter() * 28,
-  offset: (jitter() - 0.5) * 2,
-}))
-
-function aspect(index: number) {
-  return ratios.value[index] || 4 / 3
+function rectStyle(index: number, rect: PhotoRect): CSSProperties {
+  const home = homes.value[index]
+  return {
+    width: `${home.width}px`,
+    height: `${home.height}px`,
+    '--photo-x': `${rect.left}px`,
+    '--photo-y': `${rect.top}px`,
+    '--photo-scale': (rect.right - rect.left) / home.width,
+  }
 }
-
-// Balance the total aspect ratios, not the photo counts. This gives mixed
-// portrait/landscape rows similar heights without cropping any photographs.
-function partitionRows(indices: number[], count: number): number[][] {
-  count = Math.min(count, indices.length)
-  if (!count) return []
-  const sums = [0]
-  indices.forEach(index => sums.push(sums[sums.length - 1] + aspect(index)))
-  const target = sums[indices.length] / count
-  const costs = Array.from({ length: count + 1 }, () => Array(indices.length + 1).fill(Infinity))
-  const breaks = Array.from({ length: count + 1 }, () => Array(indices.length + 1).fill(0))
-  costs[0][0] = 0
-  for (let row = 1; row <= count; row++) {
-    for (let end = row; end <= indices.length; end++) {
-      for (let start = row - 1; start < end; start++) {
-        const cost = costs[row - 1][start] + (sums[end] - sums[start] - target) ** 2
-        if (cost < costs[row][end]) {
-          costs[row][end] = cost
-          breaks[row][end] = start
-        }
-      }
-    }
-  }
-  const rows: number[][] = []
-  let end = indices.length
-  for (let row = count; row > 0; row--) {
-    const start = breaks[row][end]
-    rows.unshift(indices.slice(start, end))
-    end = start
-  }
-  return rows
-}
-
-const positions = computed(() => {
-  const width = slideWidth.value
-  const height = slideHeight.value
-  const marginX = width * 0.025
-  const marginY = height * 0.04
-  const gap = width * 0.0125
-  const centerHeight = height * 0.22
-  const bandHeight = (height - marginY * 2 - centerHeight - gap * 2) / 2
-  const rowHeight = (bandHeight - gap) / 2
-  const result: Record<number, { x: number, y: number, width: number, height: number }> = {}
-
-  function placeRow(indices: number[], left: number, centerY: number, availableWidth: number, maxHeight: number) {
-    if (!indices.length) return
-    const totalAspect = indices.reduce((sum, index) => sum + aspect(index), 0)
-    const photoHeight = Math.min(maxHeight, (availableWidth - gap * (indices.length - 1)) / totalAspect)
-    const usedWidth = photoHeight * totalAspect + gap * (indices.length - 1)
-    let x = left + (availableWidth - usedWidth) / 2
-    indices.forEach(index => {
-      const photoWidth = photoHeight * aspect(index)
-      result[index] = {
-        x: x + photoWidth / 2,
-        y: centerY + motion[index].offset,
-        width: photoWidth,
-        height: photoHeight,
-      }
-      x += photoWidth + gap
-    })
-  }
-
-  // Fill the corners and the full upper/lower bands. Eight portrait photographs
-  // occupy the sides of the central opening, where their height is useful.
-  const sideIndices = order.filter(index => aspect(index) < 1).slice(0, 8)
-  const sideSet = new Set(sideIndices)
-  const rows = partitionRows(photos.map(photo => photo.index).filter(index => !sideSet.has(index)), 4)
-  const centers = [
-    marginY + rowHeight / 2,
-    marginY + rowHeight * 1.5 + gap,
-    height - marginY - rowHeight * 1.5 - gap,
-    height - marginY - rowHeight / 2,
-  ]
-  rows.forEach((row, index) => placeRow(row, marginX, centers[index], width - marginX * 2, rowHeight))
-  const sideWidth = width * 0.313 - marginX
-  placeRow(sideIndices.filter((_, index) => index % 2 === 0), marginX, height / 2, sideWidth, centerHeight - gap)
-  placeRow(sideIndices.filter((_, index) => index % 2 === 1), width - marginX - sideWidth, height / 2, sideWidth, centerHeight - gap)
-  return result
-})
 
 function photoStyle(index: number): CSSProperties {
-  const position = positions.value[index]
-  const { width, height } = position
-  const drift = motion[index]
-  const side = featured.value.indexOf(index)
-  const scale = side === -1 ? 1 : Math.min(
-    slideWidth.value * 0.295 / width,
-    slideHeight.value * 0.59 / height,
-  )
-  const x = side === -1 ? position.x : slideWidth.value * (side === 0 ? 0.181 : 0.819)
-  const y = side === -1 ? position.y : slideHeight.value / 2
-
+  const rect = staticMode.value || !poses.value[index]
+    ? photoRect({ ...homes.value[index], scale: 1 }) : poses.value[index].rect
   return {
-    width: `${width}px`,
-    height: `${height}px`,
-    '--photo-x': `${x}px`,
-    '--photo-y': `${y}px`,
-    '--photo-scale': scale,
-    '--photo-tilt': `${side === -1 ? drift.tilt : 0}deg`,
-    '--float-duration': `${drift.duration}s`,
-    '--float-delay': `${drift.delay}s`,
+    ...rectStyle(index, rect),
+    opacity: focus.value?.index === index ? 1 - zoomOpacity(focusAge.value) : undefined,
   }
 }
+
+const spotlightStyle = computed<CSSProperties>(() => focus.value ? {
+  ...rectStyle(focus.value.index, zoomRect(focus.value, focusAge.value)),
+  opacity: zoomOpacity(focusAge.value),
+} : {})
 
 function settlePhoto(index: number, event?: Event) {
   if (event) {
@@ -184,14 +83,15 @@ function settlePhoto(index: number, event?: Event) {
   }
 }
 
-const INTRO_MS = 1800
-const CYCLE_MS = 4800
-const HOLD_MS = 3600
+const INTRO_SECONDS = 1.4
+const FIRST_ZOOM_SECONDS = 4.4
+const CYCLE_SECONDS = 5.2
 let elapsed = 0
 let lastFrame: number | undefined
 let frame: number | undefined
-let lastBatch = -1
-let lastSpotlight = false
+let nextSpotlight = FIRST_ZOOM_SECONDS
+let pending: number[] = []
+let simulation: ReturnType<typeof createPhotoSimulation> | undefined
 let controlsTimer: ReturnType<typeof setTimeout> | undefined
 
 function showControls() {
@@ -208,48 +108,69 @@ function togglePause(event: MouseEvent) {
   if (event.detail > 0) (event.currentTarget as HTMLButtonElement).blur()
 }
 
-function tick(timestamp: number) {
-  if (!running.value) return
-  if (lastFrame !== undefined) elapsed += timestamp - lastFrame
-  lastFrame = timestamp
-
-  const sequence = featureOrder.value
-  if (elapsed >= INTRO_MS && sequence.length) {
-    const phase = elapsed - INTRO_MS
-    const batch = Math.floor(phase / CYCLE_MS) % Math.ceil(sequence.length / 2)
-    const spotlight = phase % CYCLE_MS < HOLD_MS
-    if (batch !== lastBatch || spotlight !== lastSpotlight) {
-      featured.value = spotlight ? sequence.slice(batch * 2, batch * 2 + 2) : []
-      lastBatch = batch
-      lastSpotlight = spotlight
-    }
-  }
-  frame = requestAnimationFrame(tick)
-}
-
 function stop() {
   if (frame !== undefined) cancelAnimationFrame(frame)
   frame = undefined
   lastFrame = undefined
 }
 
+function resetSimulation() {
+  elapsed = 0
+  lastFrame = undefined
+  nextSpotlight = FIRST_ZOOM_SECONDS
+  focus.value = undefined
+  focusAge.value = 0
+  pending = [...featureOrder.value]
+  simulation = createPhotoSimulation(homes.value, slideWidth.value, slideHeight.value)
+  poses.value = homes.value.map(home => ({ rect: photoRect({ ...home, scale: 1 }), backgroundScale: 1 }))
+}
+
+function startSpotlight() {
+  if (!simulation || !featureOrder.value.length) return
+  pending = pending.filter(index => !failed.value.has(index))
+  if (!pending.length) pending = [...featureOrder.value]
+  const candidates = pending.map(index => photoZoom(simulation!.bodies[index], slideWidth.value, slideHeight.value))
+  // Prefer a photo with room for a clear enlargement. Large breathing photos
+  // stay in the queue and get their turn after they contract; none are omitted.
+  const chosen = candidates.find(zoom => zoom.targetScale >= 2 && zoom.targetScale / zoom.initialScale >= 1.7)
+    ?? candidates.reduce((best, zoom) => zoom.targetScale / zoom.initialScale > best.targetScale / best.initialScale ? zoom : best)
+  pending.splice(pending.indexOf(chosen.index), 1)
+  focus.value = { ...chosen, started: elapsed }
+  nextSpotlight = elapsed + CYCLE_SECONDS
+}
+
+function tick(timestamp: number) {
+  if (!running.value || !simulation) return
+  const dt = lastFrame === undefined ? 0 : Math.min((timestamp - lastFrame) / 1000, 1 / 30)
+  lastFrame = timestamp
+  elapsed += dt
+  if (focus.value && elapsed - focus.value.started >= ZOOM_DURATION) focus.value = undefined
+  // The foreground enlargement is anchored, but its background body continues
+  // breathing. Cross-fade back on return so freezing a card cannot jam contacts
+  // or cause a jump when the spotlight ends.
+  simulation.step(dt, elapsed - INTRO_SECONDS)
+  if (!focus.value && elapsed >= nextSpotlight) startSpotlight()
+  focusAge.value = focus.value ? elapsed - focus.value.started : 0
+  poses.value = simulation.bodies.map(body => ({
+    rect: photoRect(body),
+    backgroundScale: body.scale,
+  }))
+  frame = requestAnimationFrame(tick)
+}
+
+watch([homes, featureOrder], resetSimulation, { immediate: true })
+
 // Slidev keeps inactive slides mounted. Do not run their clocks in the background.
 watch(isActive, () => {
   stop()
-  elapsed = 0
-  lastBatch = -1
-  lastSpotlight = false
-  featured.value = []
+  resetSimulation()
   paused.value = false
   controlsVisible.value = false
   clearTimeout(controlsTimer)
 })
 watch(staticMode, () => {
   stop()
-  elapsed = 0
-  lastBatch = -1
-  lastSpotlight = false
-  featured.value = []
+  resetSimulation()
 })
 watch(running, (value) => {
   stop()
@@ -281,7 +202,7 @@ onBeforeUnmount(() => {
 <template>
   <section
     class="thank-you-photos"
-    :class="{ 'is-playing': running, 'has-featured': featured.length > 0, 'is-static': staticMode, 'show-controls': controlsVisible || paused }"
+    :class="{ 'is-playing': running, 'has-featured': !!focus, 'is-static': staticMode, 'show-controls': controlsVisible || paused }"
     :data-photo-count="photos.length"
     :data-active="isActive"
     :data-ready="settledCount === photos.length"
@@ -294,24 +215,37 @@ onBeforeUnmount(() => {
         v-for="photo in photos"
         :key="photo.path"
         class="thank-you-photo"
-        :class="{ 'is-featured': featured.includes(photo.index) }"
+        :class="{ 'is-zoom-source': focus?.index === photo.index }"
         :style="photoStyle(photo.index)"
         :data-photo-index="photo.index"
+        :data-background-scale="poses[photo.index]?.backgroundScale ?? 1"
       >
-        <div class="thank-you-photo-drift">
-          <div class="thank-you-photo-frame">
-            <img
-              v-if="!failed.has(photo.index)"
-              :src="photo.src"
-              :alt="`Personal acknowledgment photograph ${photo.index + 1} of ${photos.length}`"
-              draggable="false"
-              :loading="staticMode ? 'eager' : 'lazy'"
-              :decoding="staticMode ? 'sync' : 'async'"
-              @load="settlePhoto(photo.index, $event)"
-              @error="settlePhoto(photo.index)"
-            />
-            <span v-else class="thank-you-photo-unavailable">Photo unavailable</span>
-          </div>
+        <div class="thank-you-photo-frame">
+          <img
+            v-if="!failed.has(photo.index)"
+            :src="photo.src"
+            :alt="`Personal acknowledgment photograph ${photo.index + 1} of ${photos.length}`"
+            draggable="false"
+            :loading="staticMode ? 'eager' : 'lazy'"
+            :decoding="staticMode ? 'sync' : 'async'"
+            @load="settlePhoto(photo.index, $event)"
+            @error="settlePhoto(photo.index)"
+          />
+          <span v-else class="thank-you-photo-unavailable">Photo unavailable</span>
+        </div>
+      </div>
+
+      <div
+        v-if="focus && !staticMode"
+        class="thank-you-spotlight is-featured"
+        :style="spotlightStyle"
+        :data-photo-index="focus.index"
+        :data-zoom-anchor-x="focus.anchorX"
+        :data-zoom-anchor-y="focus.anchorY"
+        aria-hidden="true"
+      >
+        <div class="thank-you-photo-frame">
+          <img :src="photos[focus.index].src" alt="" draggable="false" />
         </div>
       </div>
     </div>
@@ -356,34 +290,30 @@ onBeforeUnmount(() => {
   inset: 0;
 }
 
-.thank-you-photo {
+.thank-you-photo,
+.thank-you-spotlight {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  transform: translate3d(var(--photo-x), var(--photo-y), 0) translate(-50%, -50%) scale(var(--photo-scale));
-  transform-origin: center;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 420ms ease;
+  transform: translate3d(var(--photo-x), var(--photo-y), 0) scale(var(--photo-scale));
+  transform-origin: top left;
+  transition: opacity 350ms ease;
   will-change: transform;
 }
 
-.thank-you-photo.is-featured {
+.thank-you-spotlight {
   z-index: 3;
+  pointer-events: none;
 }
 
-.has-featured .thank-you-photo:not(.is-featured) {
-  opacity: 0.9;
+.thank-you-spotlight,
+.thank-you-photo.is-zoom-source {
+  transition: none;
 }
 
-.thank-you-photo-drift {
-  width: 100%;
-  height: 100%;
-  animation: thank-you-float var(--float-duration) ease-in-out var(--float-delay) infinite;
-  animation-play-state: paused;
-}
-
-.is-playing .thank-you-photo:not(.is-featured) .thank-you-photo-drift {
-  animation-play-state: running;
+.has-featured .thank-you-photo:not(.is-zoom-source) {
+  opacity: 0.94;
 }
 
 .thank-you-photo-frame {
@@ -395,8 +325,6 @@ onBeforeUnmount(() => {
   border-radius: 2px;
   background: #252525;
   box-shadow: 0 3px 10px rgb(0 0 0 / 45%);
-  transform: rotate(var(--photo-tilt));
-  transition: transform 420ms ease;
 }
 
 .thank-you-photo-frame img {
@@ -475,29 +403,15 @@ onBeforeUnmount(() => {
   outline-offset: 3px;
 }
 
-@keyframes thank-you-float {
-  0%, 100% { transform: translate3d(-2px, 1px, 0); }
-  33% { transform: translate3d(2px, -2px, 0); }
-  66% { transform: translate3d(-1px, 2px, 0); }
-}
-
 .is-static .thank-you-photo,
 .is-static .thank-you-photo-frame {
   transition: none;
-}
-
-.is-static .thank-you-photo-drift {
-  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce), print {
   .thank-you-photo,
   .thank-you-photo-frame {
     transition: none;
-  }
-
-  .thank-you-photo-drift {
-    animation: none;
   }
 
   .thank-you-pause {

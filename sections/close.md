@@ -193,8 +193,11 @@ import ThankYouPhotos from '../components/ThankYouPhotos.vue'
 
 <!--
 Personal acknowledgments. All photographs in pictures/ appear around a stationary
-“Thank you.” After a brief overview, pairs enlarge automatically on either side
-of the text; every photograph is featured before the sequence repeats.
+“Thank you.” Background photographs expand and contract from 0.5× to 2×, gently
+pushing their neighbors while remaining tethered to their home positions.
+Individual photographs periodically zoom in from their current locations,
+expanding inward near the edges rather than moving to fixed spotlight positions.
+Every photograph is featured before the sequence repeats.
 
 Move the pointer to reveal Pause below the heading, or reach it with Tab, to hold
 the current photographs while speaking. Use Resume to continue. Moving to
