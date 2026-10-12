@@ -239,10 +239,17 @@ class: outlier-animation
     <p class="outlier-view-caption">{{ clicks === 3 ? 'Enlarged neighborhood · wind speed in arbitrary units' : 'Sparse 3D rendering · statistics use all 165,888 grid points' }}</p>
   </div>
   <div class="outlier-explanation">
-    <div class="outlier-equation">
+    <div v-if="clicks >= 3" class="outlier-equation">
 
 $$
 |\,\|v\| - \mu_{\|v\|}\,| > k\,\sigma_{\|v\|}
+$$
+
+</div>
+    <div v-else-if="clicks === 1" class="outlier-equation">
+
+$$
+\text{Global mean} = 0
 $$
 
 </div>
@@ -286,8 +293,8 @@ $$
   </div>
 </div>
 
-<p class="fine">Synthetic cyclone-like wind, 18 × 96 × 96, windows (3, 7, 7). At k = 3.0: precision 0.92, recall 0.77, F1 0.84, mean over 5 seeds.</p>
-<p class="fine outlier-vector-note">Velocity-vector scoring may improve sensitivity to directional anomalies; this was not evaluated here.</p>
+<p v-click="4" class="fine">Synthetic cyclone-like wind, 18 × 96 × 96, windows (3, 7, 7). At k = 3.0: precision 0.92, recall 0.77, F1 0.84, mean over 5 seeds.</p>
+<p v-click="4" class="fine outlier-vector-note">Velocity-vector scoring may improve sensitivity to directional anomalies; this was not evaluated here.</p>
 
 <script setup>
 import { useNav } from '@slidev/client'
