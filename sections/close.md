@@ -115,9 +115,9 @@ title: Future work
 # Future work
 
 <div class="dissertation-outlook-actions">
-  <section><p>Compare population evolution across storms <br />using faster scans and improved environmental sampling.</p></section>
-  <section><p>Constrain growth along fall streaks using three-dimensional winds, liquid-water and particle measurements, and geometry-aware polarimetric analysis.</p></section>
-  <section><p>Use observation-constrained simulations with and without CTGC ice supply <br />to estimate its effect on precipitation.</p></section>
+  <section><p>Analyze more CTGC cases using the large existing dataset.</p></section>
+  <section><p>Study microphysical evolution along fall streaks.</p></section>
+  <section><p>Improve estimates of CTGC contributions to precipitation.</p></section>
 </div>
 
 <style>
@@ -145,20 +145,20 @@ title: Future work
 </style>
 
 <!--
-About 50–55 seconds, no clicks. These three concrete research directions
+About 25–35 seconds, no clicks. These three concrete research directions
 follow Chapter 6's Outlook: population and dynamics, particle growth, and
 precipitation attribution. They are proposed work, not dissertation results.
 
-Suggested delivery: “The next step is to test which aspects of this evolution
-recur across storms, with faster radar scans and better sampling of the
-environment. We also need winds, liquid water, and particle measurements to
-constrain growth along the fall streak. Finally, observation-constrained
-simulations with and without the CTGC ice supply can estimate how that supply
-changes precipitation, rather than treating an observed rate contrast as a
-contribution estimate.”
+Suggested delivery: “The first step is to analyze more CTGC cases using the
+large dataset already available. We also want to study how particles evolve
+along fall streaks. Finally, we need to improve estimates of how CTGC ice
+supply changes precipitation. The observed precipitation enhancements do
+not yet quantify that contribution.”
 
 Supporting details for questions, not the timed delivery:
 
+Apply the identification and tracking approaches to additional CTGC cases
+in the existing dataset to test which aspects of the observed evolution recur.
 Across-storm comparison should separate collective population duration from
 individual-cell persistence. Rapid volumes, three-dimensional winds, and
 more frequent soundings would help relate initiation, merging, and decay to
