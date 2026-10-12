@@ -14,7 +14,7 @@ export const zdrLifecyclePreview = zdrLifecycleFrame(0).map(shape => ({
   width: shape.width,
 }))
 
-export async function zdrLifecycleInterpretation() {
+export async function zdrLifecycleInterpretation(getStep: () => number) {
   const scene = new Scene(document.getElementById('container'), {
     width: WIDTH, height: HEIGHT, frameWidth: FRAME_W, frameHeight: FRAME_H, backgroundColor: '#101b2b',
   })
@@ -31,5 +31,14 @@ export async function zdrLifecycleInterpretation() {
 
   // One click for aggregation; one for preferential fallout. No sign tutorial.
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, alpha) => draw(1, alpha), { duration: 2.2 }))
+  while (getStep() === 1) {
+    // Timestamped playback repeats forward without consuming another Slidev
+    // click. Finish the current aggregation cycle before starting fallout.
+    await scene.playWithTimestamps([{
+      animation: new UpdateFromAlphaFunc(illustration, (_, alpha) => draw(1, alpha)),
+      start: 0,
+      end: 2.2,
+    }])
+  }
   await scene.play(new UpdateFromAlphaFunc(illustration, (_, alpha) => draw(2, alpha), { duration: 2.2 }))
 }

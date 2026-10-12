@@ -444,7 +444,7 @@ $$Z_{\mathrm{DR}} = 10\log_{10}\!\left(\frac{z_{\mathrm{H}}}{z_{\mathrm{V}}}\rig
     <aside class="zdr-summary-concept">
       <p class="zdr-summary-layer-label">Generating layer · 5.5–8 km MSL</p>
       <div class="zdr-summary-canvas" role="img" aria-label="Conceptual particle evolution: oriented crystals aggregate on the first click; larger aggregates preferentially leave the generating layer on the second click while oriented crystals remain.">
-        <CuManim :steps="2" :width="1000" :height="190" :construct="zdrLifecycleInterpretation" />
+        <CuManim v-if="summaryActive" :steps="2" :width="1000" :height="190" :construct="constructZdrLifecycle" />
         <svg v-if="summaryStep === 0" class="zdr-summary-preview" viewBox="0 0 1000 650" aria-hidden="true">
           <path v-for="(shape, index) in zdrLifecyclePreview" :key="index" :d="shape.d" :fill="shape.color" :fill-opacity="shape.fill" :stroke="shape.color" :stroke-opacity="shape.stroke" :stroke-width="shape.width" />
         </svg>
@@ -462,11 +462,15 @@ $$Z_{\mathrm{DR}} = 10\log_{10}\!\left(\frac{z_{\mathrm{H}}}{z_{\mathrm{V}}}\rig
 
 <script setup>
 import { computed } from 'vue'
-import { useNav } from '@slidev/client'
+import { useIsSlideActive, useNav } from '@slidev/client'
 import { zdrLifecycleInterpretation, zdrLifecyclePreview } from '../scenes/zdr-lifecycle'
 
 const { clicks } = useNav()
+const summaryActive = useIsSlideActive()
 const summaryStep = computed(() => Math.max(0, Math.min(clicks.value, 2)))
+function constructZdrLifecycle() {
+  return zdrLifecycleInterpretation(() => summaryActive.value ? summaryStep.value : 0)
+}
 const summaryStages = ['Horizontal and vertical returns', 'Initiation', 'Mature → Dissipation']
 const summaryMessages = [
   'ZDR compares horizontal and vertical returns.',
