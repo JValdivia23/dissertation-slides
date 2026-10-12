@@ -4,8 +4,6 @@ layout: section
 
 # Backup
 
-Jump here only if asked.
-
 <!--
 Not part of the 40 minutes.
 -->

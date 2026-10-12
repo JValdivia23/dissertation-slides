@@ -398,8 +398,8 @@ title: Questions
 ---
 
 <div class="dissertation-questions-content">
-  <h1>Questions</h1>
-  <p>Thank you to the committee, the WINTRE-MIX participants, <br />and NSF awards AGS-2113995 and AGS-2114011.</p>
+  <h1>Questions?</h1>
+  <p>Thank you to my committee, the WINTRE-MIX participants, <br />and NSF awards AGS-2113995 and AGS-2114011.</p>
 </div>
 
 <style>
