@@ -181,6 +181,119 @@ Keep detailed modeling references in discussion unless asked.
 -->
 
 ---
+class: figure-slide mountain-albedo-experiment
+title: Side project
+---
+
+# Side project
+
+<p class="!mt-0 !mb-2 text-xl">Mountain albedo modification</p>
+
+<div class="flex flex-1 min-h-0 items-center gap-8">
+  <div class="w-1/4 flex-none">
+    <div class="mb-7">
+      <div class="text-5xl font-semibold">0.8</div>
+      <div class="text-base mt-1">Soil albedo</div>
+    </div>
+    <div class="mb-7">
+      <div class="text-3xl font-semibold">&gt;1,000 m</div>
+      <div class="text-base mt-1">Elevation threshold · Globally</div>
+    </div>
+    <div class="text-base">Vegetation unchanged</div>
+  </div>
+  <div class="flex flex-col flex-1 h-full min-h-0">
+    <div class="relative flex-1 min-h-0">
+      <img class="absolute inset-0 w-full h-full object-contain object-bottom" src="../figures/mountain-albedo/soil-modification.png" alt="Global soil-class map from reference slide 17: white regions indicate the synthetic soil class 21 assigned albedo 0.8 above 1,000 meters" />
+    </div>
+    <p class="!mt-1 !mb-0 !leading-snug text-center text-sm">White areas: modified soil</p>
+  </div>
+</div>
+
+<p class="fine !mt-1 !mb-0 !text-[13px] !leading-snug">Collaborators: Jen Kay · Aneesh Subramanian · Katja Friedrich<br />In preparation · Planned submission to GRL</p>
+
+<!--
+About 20–30 seconds, no clicks. This is a side project, not a dissertation
+chapter or a published article. Explain the experiment before showing results.
+The layout follows reference PowerPoint slide 17: two large parameter labels
+beside the global soil-modification map.
+
+The author confirmed soil albedo 0.8 above 1,000 m globally, with vegetation
+unchanged. White regions are the synthetic soil class 21 in the reference
+map. This modifies soil reflectivity, not the vegetation canopy or every
+component of surface albedo. The Spanish key is omitted from the map crop;
+the original image and PowerPoint remain unchanged.
+
+Collaborators are Jen Kay, Aneesh Subramanian, and Katja Friedrich. The
+manuscript is in preparation, with a planned submission to Geophysical
+Research Letters; it has not been submitted or accepted.
+Do not carry over the reference deck's older simulation period or temperature
+summary to the updated results on the next slide.
+Sources and presentation-only figure edits: figures/mountain-albedo/sources.md.
+-->
+
+---
+class: figure-slide mountain-albedo-results
+title: 'Side project: results'
+clicks: 1
+---
+
+# Side project: results
+
+<div class="relative flex-1 min-h-0">
+  <div v-show="$clicks < 1" class="absolute inset-0 grid grid-cols-[2fr_1fr] gap-7 min-h-0">
+    <div class="flex flex-col min-h-0">
+      <p class="!mt-0 !mb-1 text-sm text-center">Global temperature</p>
+      <div class="relative w-full" style="aspect-ratio: 2823 / 1088">
+        <img class="absolute inset-0 w-full h-full object-contain" src="../figures/mountain-albedo/global-temperature.png" alt="Global temperature anomaly time series; the experiment cools by almost one degree Celsius by 2030 relative to the ensemble reference, with gray shading showing ensemble spread" />
+      </div>
+      <p class="!mt-2 !mb-0 !leading-snug text-lg text-center">Temperature decrease:<br /><strong>almost 1°C by 2030</strong></p>
+    </div>
+    <div class="flex flex-col min-h-0">
+      <p class="!mt-0 !mb-1 text-sm text-center">Rocky Mountains · 2015–2029 time mean</p>
+      <div class="relative flex-1 min-h-0">
+        <img class="absolute inset-0 w-full h-full object-contain" src="../figures/mountain-albedo/rocky-mountains-snow.png" alt="Rocky Mountains snow-depth difference map with the original color scale in meters; local peak increases approach one foot, not the regional average" />
+      </div>
+      <p class="!mt-2 !mb-0 !leading-snug text-lg text-center">Peak snow-depth increase:<br /><strong>~1 foot</strong> in the Rocky Mountains</p>
+    </div>
+  </div>
+  <div v-show="$clicks >= 1" class="absolute inset-0 flex flex-col min-h-0 pt-3">
+    <div class="relative flex-1 min-h-0">
+      <img class="absolute inset-0 w-full h-full object-contain" src="../figures/mountain-albedo/global-precipitation.png" alt="Global precipitation difference in millimeters per day, showing changes in precipitation patterns beyond the modified mountain regions; stippling uses ensemble spread" />
+    </div>
+    <p class="!mt-2 !mb-0 text-xl text-center"><strong>Precipitation patterns change globally.</strong></p>
+  </div>
+</div>
+
+<p class="fine !mt-2 !mb-0 !text-xs !leading-snug">Experiment − CESM2-LE ensemble mean</p>
+
+<!--
+About 35–45 seconds, one click. First show cooling and local snow-depth
+increases together; then explain the downside of a global precipitation
+response. Keep delivery verbal rather than adding more slide text.
+
+The temperature callout is the author's approximate summary: almost 1°C
+cooling by 2030, not an exact annual-mean estimate calculated here. The gray
+band is ensemble spread (±1.96 standard deviations), not uncertainty in the
+ensemble mean; its source legend is corrected in the presentation image.
+
+The author clarified that the approximately one-foot snow-depth increase
+refers to peak local values, not the Rockies-wide average. One foot is
+0.3048 m, consistent with the upper end of the plotted regional color scale.
+The map is the 2015–2029 mean response. The source regional mean is +0.057 m;
+do not describe the one-foot peak as a regional average, snow-water equivalent,
+glacier mass balance, or evidence of glacier recovery.
+
+[click] Replace both result panels and their callouts with the global
+precipitation map and “Precipitation patterns change globally.” Stippling
+uses |Z| ≥ 1.96 relative to ensemble spread, as confirmed by the author;
+do not present it as confidence in the ensemble mean or field significance.
+
+This work remains in preparation and is separate from the publication counts
+on the next slide. Transition to the other additional research contributions.
+Sources and crop bounds: figures/mountain-albedo/sources.md.
+-->
+
+---
 class: additional-research
 title: Additional research contributions
 clicks: 1
