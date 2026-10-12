@@ -203,9 +203,8 @@ title: Side project
   </div>
   <div class="flex flex-col flex-1 h-full min-h-0">
     <div class="relative flex-1 min-h-0">
-      <img class="absolute inset-0 w-full h-full object-contain object-bottom" src="../figures/mountain-albedo/soil-modification.png" alt="Global soil-class map from reference slide 17: white regions indicate the synthetic soil class 21 assigned albedo 0.8 above 1,000 meters" />
+      <img class="absolute inset-0 w-full h-full object-contain object-bottom" src="../figures/mountain-albedo/soil-modification-mask.svg" alt="Prescribed soil-modification mask from the actual CESM surface input: gold marks 2,061 native grid cells assigned soil class 21 and albedo 0.8; other land is muted gray, and polar regions are unmodified" />
     </div>
-    <p class="!mt-1 !mb-0 !leading-snug text-center text-sm">White areas: modified soil</p>
   </div>
 </div>
 
@@ -215,20 +214,29 @@ title: Side project
 About 20–30 seconds, no clicks. This is a side project, not a dissertation
 chapter or a published article. Explain the experiment before showing results.
 The layout follows reference PowerPoint slide 17: two large parameter labels
-beside the global soil-modification map.
+beside the global soil-modification map. The map itself is now generated from
+the actual surface input, not the old presentation's categorical image.
 
-The author confirmed soil albedo 0.8 above 1,000 m globally, with vegetation
-unchanged. White regions are the synthetic soil class 21 in the reference
-map. This modifies soil reflectivity, not the vegetation canopy or every
-component of surface albedo. The Spanish key is omitted from the map crop;
-the original image and PowerPoint remain unchanged.
+The author confirmed prescribed soil albedo 0.8 and unchanged vegetation.
+Gold cells are SOIL_COLOR == 21 in the experiment's actual surface dataset:
+2,061 cells on its native 192 × 288 grid. Other land is a muted Natural Earth
+background for geographic context, not another model variable.
+
+The input contains no modified cell centers at or poleward of 60° latitude.
+No extra latitude filter was applied when plotting: the figure shows the
+assignments already present in the source file. “Globally” describes their distribution
+across mountain regions, not modification of every mountain or polar region.
+Full grid cells are displayed, not a subgrid land-area footprint. The 0.8
+label is the prescribed soil parameter, not effective surface/canopy albedo.
+The input data, original PowerPoint, and remote MAE project remain unchanged.
 
 Collaborators are Jen Kay, Aneesh Subramanian, and Katja Friedrich. The
 manuscript is in preparation, with a planned submission to Geophysical
 Research Letters; it has not been submitted or accepted.
 Do not carry over the reference deck's older simulation period or temperature
 summary to the updated results on the next slide.
-Sources and presentation-only figure edits: figures/mountain-albedo/sources.md.
+Source, data snapshot, checksums, and regeneration steps:
+figures/mountain-albedo/sources.md.
 -->
 
 ---

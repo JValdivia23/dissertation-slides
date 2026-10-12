@@ -1,0 +1,64 @@
+{
+  "generated_utc": "2026-10-12T21:38:02.869884+00:00",
+  "generator": "scripts/generate-mountain-albedo-mask.py",
+  "generator_sha256": "c1ebfd23c67b7b8e285058e75c89f1b76874bf5db0a9c959a9a3d1eefb679744",
+  "source": {
+    "path": "/glade/u/home/jairovp/my_cesm_mods/surfdata_0.9x1.25_hist_78pfts_CMIP6_simyr1850_c190214_whitemodified.nc",
+    "size_bytes": 1911632032,
+    "mtime_utc": "2025-11-25T21:05:55.063437+00:00",
+    "field_sha256": {
+      "SOIL_COLOR": "3fd7a88656c26d07e4be603f3670939460c0a9111c896ea15f082ff835ecd242",
+      "LANDFRAC_PFT": "72df8e20ec7e24bf727ba4b557666e516acc78eca8bfe597dd53bd27ae4222c6",
+      "LATIXY": "ef2d8c2455d511a8bd36846df70122da3f2b9f1b1d7a380a6de1319619c24ac0",
+      "LONGXY": "7fdd0423b10fc2285292c721a682477812596254b4cb142690dc7c0d5be6f6a4"
+    },
+    "field_attributes": {
+      "SOIL_COLOR": {
+        "long_name": "soil color",
+        "units": "unitless"
+      },
+      "LANDFRAC_PFT": {
+        "long_name": "land fraction from pft dataset",
+        "units": "unitless"
+      },
+      "LATIXY": {
+        "long_name": "latitude",
+        "units": "degrees north"
+      },
+      "LONGXY": {
+        "long_name": "longitude",
+        "units": "degrees east"
+      }
+    }
+  },
+  "statistics": {
+    "modified_cells": 2061,
+    "land_support_cells": 22648,
+    "modified_latitude_min": -41.93717277486909,
+    "modified_latitude_max": 59.842931937172736,
+    "modified_cells_at_or_poleward_of_60_degrees": 0
+  },
+  "mask_sha256": "ef19df88d0e26d1e2cffd2d24db7a32cedfe0d22b8499a2617ba9fbaabe63667",
+  "plot": {
+    "projection": "Robinson",
+    "central_longitude": 0,
+    "coordinate_transform": "PlateCarree",
+    "modified_color": "#CFB87C",
+    "other_land_color": "#E7E9EC",
+    "ocean_color": "#FFFFFF",
+    "native_cells_without_interpolation": true,
+    "extra_latitude_filter_applied": false,
+    "coastline": "Natural Earth 110m physical coastline (public domain)",
+    "coastline_shapefile_sha256": "a1f8285d0e0a4858392cd78fc74fa3ee4cd9088947cf6e3693729dc852d70b60",
+    "land_background": "Natural Earth 110m physical land (cartographic context, not the model land mask)",
+    "land_shapefile_sha256": "8689e6932b8e370e2ca4587cf3ba21e460b1235db37b6ed3c172c35b4a6088de",
+    "prescribed_albedo": 0.8,
+    "albedo_value_source": "Author-confirmed experiment parameter, not inferred from SOIL_COLOR"
+  },
+  "software": {
+    "numpy": "2.3.4",
+    "xarray": "2025.10.1",
+    "matplotlib": "3.10.7",
+    "cartopy": "0.25.0"
+  }
+}
