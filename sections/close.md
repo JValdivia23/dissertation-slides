@@ -266,7 +266,7 @@ clicks: 1
   </div>
   <div v-show="$clicks >= 1" class="absolute inset-0 flex flex-col min-h-0 pt-3">
     <div class="relative flex-1 min-h-0">
-      <img class="absolute inset-0 w-full h-full object-contain" src="../figures/mountain-albedo/global-precipitation.png" alt="Global precipitation difference in millimeters per day, showing changes in precipitation patterns beyond the modified mountain regions; stippling uses ensemble spread" />
+      <img class="absolute inset-0 w-full h-full object-contain" src="../figures/mountain-albedo/global-precipitation.svg" alt="Revised global precipitation-difference map in millimeters per day, with the author's orange–purple color scale from minus 3 to plus 3 and cross markers based on ensemble spread" />
     </div>
     <p class="!mt-2 !mb-0 text-xl text-center"><strong>Precipitation patterns change globally.</strong></p>
   </div>
@@ -295,6 +295,9 @@ glacier mass balance, or evidence of glacier recovery.
 precipitation map and “Precipitation patterns change globally.” Stippling
 uses |Z| ≥ 1.96 relative to ensemble spread, as confirmed by the author;
 do not present it as confidence in the ensemble mean or field significance.
+The revised author-supplied PDF is displayed intact as SVG, retaining its
+orange–purple scale (−3 to +3 mm/day), cross markers, and original labels.
+No old title crop or retyped colorbar annotations are applied to this figure.
 
 This work remains in preparation and is separate from the publication counts
 on the next slide. Transition to the other additional research contributions.

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Prepare the mountain-albedo experiment map and presentation figure crops.
 
-Requires PyMuPDF. Run from this checkout:
+Requires PyMuPDF and Poppler's pdftocairo. Run from this checkout:
   python3 scripts/export-mountain-albedo.py
+  python3 scripts/export-mountain-albedo.py --precipitation-only
   python3 scripts/export-mountain-albedo.py --presentation /path/to/presentacion-20min.pptx
 
-The source files remain unchanged. Result annotations are enlarged, the
-temperature spread legend is corrected, and presentation crops omit titles.
+The source files remain unchanged. Temperature/snow annotations are enlarged;
+the revised precipitation figure is converted intact, without label edits.
 """
 
 from __future__ import annotations
@@ -14,6 +15,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 import posixpath
+import shutil
+import subprocess
 from xml.etree import ElementTree as ET
 from zipfile import ZipFile
 
@@ -24,7 +27,6 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_FONT = Path("/System/Library/Fonts/Supplemental/Arial.ttf")
 FIGURES = (
     ("30_trefht_anomaly_spaghetti_global.pdf", "global-temperature.png", 20),
-    ("60_prect_ensemble_map_abs_delta_global.pdf", "global-precipitation.png", 22),
     ("50_snow_ensemble_map_regional.pdf", "regional-snow.png", 95),
     ("50_snow_ensemble_map_regional.pdf", "rocky-mountains-snow.png", 95),
 )
@@ -67,6 +69,25 @@ def render(page: pymupdf.Page, crop: pymupdf.Rect, target: Path, scale: float) -
     page.get_pixmap(
         matrix=pymupdf.Matrix(scale, scale), clip=crop, alpha=False,
     ).save(target)
+
+
+def export_precipitation(source: Path, output: Path, scale: float) -> None:
+    """Preserve the revised PDF's full extent, native images, and vector content."""
+    converter = shutil.which("pdftocairo")
+    if not converter:
+        raise RuntimeError("Poppler's pdftocairo is required for the precipitation SVG")
+    pdf = source / "60_prect_ensemble_map_abs_delta_global.pdf"
+    output.mkdir(parents=True, exist_ok=True)
+    with pymupdf.open(pdf) as document:
+        if len(document) != 1:
+            raise ValueError("The precipitation figure must be a single-page PDF")
+        render(document[0], document[0].rect, output / "global-precipitation.png", scale)
+    subprocess.run(
+        [converter, "-svg", "-r", "300", str(pdf), str(output / "global-precipitation.svg")],
+        check=True,
+    )
+    print(output / "global-precipitation.svg")
+    print(output / "global-precipitation.png")
 
 
 def enlarge_labels(page: pymupdf.Page, target: str, font_path: Path) -> None:
@@ -128,12 +149,6 @@ def enlarge_labels(page: pymupdf.Page, target: str, font_path: Path) -> None:
             text(span["text"], (span["bbox"][0] + span["bbox"][2]) / 2, 402)
         text("0", 340.76, 373)
         text("Snow-depth difference (m)", 393.84, 417)
-    elif target == "global-precipitation.png":
-        cover((95, 293, 420, page.rect.height))
-        for index in range(11):
-            value = (index - 5) / 2
-            text(f"{value:.1f}".replace("-", "−"), 113.048 + index * 29.0304, 305)
-        text("PRECT Change (mm/day)", 258.2, 320)
 
 
 def export(source: Path, output: Path, font: Path, scale: float) -> None:
@@ -178,9 +193,12 @@ if __name__ == "__main__":
     parser.add_argument("--font", type=Path, default=DEFAULT_FONT)
     parser.add_argument("--presentation", type=Path, help="Reference PPTX containing the experiment map on slide 17")
     parser.add_argument("--scale", type=float, default=4)
+    parser.add_argument("--precipitation-only", action="store_true", help="Update only the revised precipitation assets")
     args = parser.parse_args()
     if args.scale <= 0:
         parser.error("--scale must be positive")
-    export(args.source, args.output, args.font, args.scale)
+    if not args.precipitation_only:
+        export(args.source, args.output, args.font, args.scale)
+    export_precipitation(args.source, args.output, args.scale)
     if args.presentation:
         export_experiment_map(args.presentation, args.output)

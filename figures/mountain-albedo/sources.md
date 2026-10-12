@@ -1,6 +1,7 @@
 # Mountain albedo modification: presentation figures
 
-Result figures prepared 11 October 2026 from the author's PDFs in `MAE_figures/`.
+Result figures prepared 11 October 2026 from the author's PDFs in `MAE_figures/`;
+slide 55's precipitation frame was updated from the revised PDF on 12 October 2026.
 Slide 54's experiment map was regenerated from its native surface input on
 12 October 2026; see the source and regeneration instructions below. This side
 project is outside the dissertation chapters and published-article counts.
@@ -27,8 +28,9 @@ regions, not modification of every high-elevation or polar cell.
 
 ## Presentation-only derivatives
 
-The original PDFs are not modified. PNGs are rendered at four pixels per PDF
-point using `scripts/export-mountain-albedo.py` and PyMuPDF. Crop coordinates
+The original PDFs are not modified by the export scripts. Temperature/snow
+PNGs are rendered at four pixels per PDF point using
+`scripts/export-mountain-albedo.py` and PyMuPDF. Crop coordinates
 are PDF points measured from the upper-left corner. The Rocky Mountains crop
 retains only its regional map and color bar; the other result crops retain
 the source width.
@@ -36,21 +38,52 @@ the source width.
 | Slide asset | Source PDF in `MAE_figures/` | Crop top | Annotation changes |
 | --- | --- | --- | --- |
 | `global-temperature.png` | `30_trefht_anomaly_spaghetti_global.pdf` | 20 | Omit the original title; correct the gray-band key to `Spread (±1.96σ)`; enlarge axis and legend text |
-| `global-precipitation.png` | `60_prect_ensemble_map_abs_delta_global.pdf` | 22 | Omit the title containing a literal `\n`; enlarge colorbar tick and unit labels; the slide notes explain stippling |
+| `global-precipitation.svg` / `.png` | Revised `60_prect_ensemble_map_abs_delta_global.pdf` | 0 | Preserve the entire figure, orange–purple palette, cross markers, −3 to +3 mm/day scale, and original labels; SVG is displayed on click 1 |
 | `rocky-mountains-snow.png` | `50_snow_ensemble_map_regional.pdf` | 95 | Crop `(270, 95, 523, 421)` to retain the Rocky Mountains map and its original color bar; enlarge colorbar text; omit regional-average and threshold-area summaries |
 | `regional-snow.png` | `50_snow_ensemble_map_regional.pdf` | 95 | Omit the original title and panel-header rows; prepend one compact row with region names and the same means in meters; the slide supplies the period and reference |
 
 Annotation-only masks and retyped 12-point Arial labels improve readability
 when the temperature and snow figures share one slide. Temperature axis text
 is replaced outside the plot frame; its legend swatches and line samples are
-retained. The precipitation and snow colorbar numbers and units are retyped
-below their bars, preserving the original scales and tick positions. All
+retained. Snow colorbar numbers and units are retyped below their bars,
+preserving the original scales and tick positions. All
 mask bounds and label coordinates are recorded in the exporter. Curves,
 gridded map values, stippling, contours, and color gradients are unchanged.
 Pixel comparisons against fresh renders of the supplied PDFs confirmed that
-the temperature data field below the legend and the main snow/precipitation
-map fields are unchanged by the annotation edits.
+the temperature data field below the legend and the main snow-map field are
+unchanged by these annotation edits.
 On another platform, pass an available Unicode TrueType font with `--font`.
+
+### Slide 55, click 1: revised precipitation figure
+
+The author's revised `MAE_figures/60_prect_ensemble_map_abs_delta_global.pdf`
+is converted directly with Poppler's `pdftocairo -svg -r 300`. The full PDF
+page is retained. Existing vector paths/glyphs remain scalable, and raster
+layers are embedded in the SVG rather than flattening the entire figure.
+The 300 dpi setting is for any conversion fallback; it does not create detail
+absent from the source. The accompanying PNG is a full-page 288 dpi rendering
+(four pixels per PDF point), with no annotation masks or retyped labels.
+
+Updated source PDF SHA-256:
+`ca0fb36fef35369be92532c8cf2d6a68128cbf77300d1779b401261e40ad2a3d`.
+The SVG viewBox matches the source's 516.4 × 325.9026-point page. Its embedded
+raster dimensions retain the source sizes: 2092 × 1061, 2074 × 1056,
+2069 × 1036, and 1368 × 45 pixels (with additional embedded alpha masks).
+The 2066 × 1304-pixel PNG was compared pixel-for-pixel with a fresh full-page
+render of the PDF and matched exactly. These are image-conversion checks,
+not recalculation or validation of the scientific analysis.
+
+The old 22-point title crop and hardcoded −2.5 to +2.5 colorbar overlay have
+been removed from this figure's export path. The new source has no title to
+crop and uses −3 to +3 mm/day, so applying the old edits would alter its content.
+The temperature/snow opening frame, the click count, and the existing
+“Precipitation patterns change globally.” callout are unchanged.
+
+Regenerate just this figure, without touching the other slide assets:
+
+```bash
+python3 scripts/export-mountain-albedo.py --precipitation-only
+```
 
 The retained full-region context image `regional-snow.png`, not displayed in
 the revised slides, is placed below a 30-point header row. Its 14-point Arial
