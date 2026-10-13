@@ -25,11 +25,18 @@ No deployment workflow is configured yet. The planned path is GitHub Actions bui
 
 ## Personal acknowledgments
 
-Edit the `personalThanks: |` frontmatter block under `title: Thanks all` in
-[`sections/close.md`](sections/close.md) to add, change, or reorder the handwritten
-messages. Keep each text line indented by two spaces and leave a blank line
-between people. Soft-wrapped lines belong to the same message; HTML comments
-and Markdown headings are ignored. There is no need to edit the Vue component.
+All center text on the photo acknowledgment slide is editable in its frontmatter
+in [`sections/close.md`](sections/close.md), just above `<ThankYouPhotos>`:
+
+- `title`: the big stationary heading.
+- `subtitle`: the smaller stationary line beneath it.
+- `personalThanks: |`: the rotating handwritten messages, in paragraph order.
+
+Keep the title and subtitle brief so each fits on one line. To add, change, or
+reorder people, edit the `personalThanks` block: indent each text line by two
+spaces and leave a blank line between people. Soft-wrapped lines belong to the
+same message; HTML comments and Markdown headings are ignored. There is no
+need to edit the Vue component.
 
 Messages follow the file order and loop: a 3.2-second left-to-right write-on,
 one line at a time, seven seconds fully visible, a 0.65-second fade out, and

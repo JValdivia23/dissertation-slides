@@ -366,9 +366,10 @@ Transition to personal acknowledgments.
 ---
 layout: none
 title: Gracias a todos
+subtitle: for making this possible
 # One paragraph per message; keep two-space indentation and blank lines between people.
 personalThanks: |
-  A mi mamá, por siempre estar ahí cuando la necesité...
+  A mi mamá, por siempre estar ahí cuando la necesito...
 
   To my advisor Katja, for her trust and guidance...
 
@@ -377,7 +378,11 @@ personalThanks: |
   To my beautiful girlfriend Clairy, for being the loveliest person I ever met...
 ---
 
-<ThankYouPhotos :personal-thanks="$frontmatter.personalThanks" />
+<ThankYouPhotos
+  :title="$frontmatter.title"
+  :subtitle="$frontmatter.subtitle"
+  :personal-thanks="$frontmatter.personalThanks"
+/>
 
 <script setup>
 import ThankYouPhotos from '../components/ThankYouPhotos.vue'
@@ -385,7 +390,7 @@ import ThankYouPhotos from '../components/ThankYouPhotos.vue'
 
 <!--
 Personal acknowledgments. All photographs in pictures/ appear around a stationary
-“Thanks all” with the smaller subtitle “for making this possible.”
+heading and smaller subtitle, set by title and subtitle in the frontmatter above.
 Background photographs expand and contract from 0.5× to 2×, gently
 pushing their neighbors while remaining tethered to their home positions.
 Individual photographs periodically zoom in from their current locations,

@@ -69,7 +69,8 @@ test('every message appears in file order before the sequence repeats', () => {
 
 const closePath = fileURLToPath(new URL('../sections/close.md', import.meta.url))
 const closeSlides = parseSync(readFileSync(closePath, 'utf8'), closePath).slides
-const thanksSlide = closeSlides.find(slide => slide.frontmatter.title === 'Thanks all')
+// The heading is author-editable; locate the slide by its component instead.
+const thanksSlide = closeSlides.find(slide => /<ThankYouPhotos\b/.test(slide.content))
 
 test('the closing slide supplies messages without a hardcoded list or count', () => {
   assert.ok(thanksSlide)
@@ -81,12 +82,24 @@ test('the closing slide supplies messages without a hardcoded list or count', ()
 
 test('the acknowledgment component receives the closing slide frontmatter directly', () => {
   assert.ok(thanksSlide)
+  assert.equal(typeof thanksSlide.frontmatter.title, 'string')
+  assert.equal(typeof thanksSlide.frontmatter.subtitle, 'string')
+  assert.match(thanksSlide.content, /<ThankYouPhotos\b[^>]*:title=["']\$frontmatter\.title["']/)
+  assert.match(thanksSlide.content, /<ThankYouPhotos\b[^>]*:subtitle=["']\$frontmatter\.subtitle["']/)
   assert.match(thanksSlide.content, /<ThankYouPhotos\b[^>]*:personal-thanks=["']\$frontmatter\.personalThanks["']/)
+})
+
+test('the visible heading and subtitle use passed text rather than hardcoded copy', () => {
+  const component = readFileSync(new URL('../components/ThankYouPhotos.vue', import.meta.url), 'utf8')
+  assert.match(component, /<h1\b[^>]*>\s*\{\{\s*props\.title\s*\}\}\s*<\/h1>/)
+  assert.match(component, /<p\b[^>]*class="thank-you-subtitle"[^>]*>\s*\{\{\s*props\.subtitle\s*\}\}\s*<\/p>/)
 })
 
 test('Slidev literal frontmatter preserves paragraphs, soft wraps, and personal wording', () => {
   const slide = parseSlide(`---
 layout: none
+title: Gracias a todos
+subtitle: for making this possible
 personalThanks: |
   To José, for always
   being there...
@@ -94,7 +107,9 @@ personalThanks: |
   To Katja: thank you for your guidance...
 ---
 
-<ThankYouPhotos :personal-thanks="$frontmatter.personalThanks" />`)
+<ThankYouPhotos :title="$frontmatter.title" :subtitle="$frontmatter.subtitle" :personal-thanks="$frontmatter.personalThanks" />`)
+  assert.equal(slide.frontmatter.title, 'Gracias a todos')
+  assert.equal(slide.frontmatter.subtitle, 'for making this possible')
   assert.deepEqual(parsePersonalThanks(slide.frontmatter.personalThanks), [
     'To José, for always being there...',
     'To Katja: thank you for your guidance...',

@@ -6,7 +6,11 @@ import { createPhotoSimulation, photoHomes, photoOrder, photoRect, photoZoom, zo
 import type { PhotoRect, PhotoZoom } from './thank-you-physics'
 import { fitPersonalThanksFontSize, parsePersonalThanks, personalThanksAt, personalThanksLineReveals, THANKS_LINE_HEIGHT, wrapPersonalThanks } from './personal-thanks'
 
-const props = withDefaults(defineProps<{ personalThanks?: string }>(), { personalThanks: '' })
+const props = withDefaults(defineProps<{
+  title?: string
+  subtitle?: string
+  personalThanks?: string
+}>(), { title: '', subtitle: '', personalThanks: '' })
 
 // Vite bundles the photographs with the correct base path for GitHub Pages.
 // Photographs and video-derived stills stay in pictures/; source videos are not bundled.
@@ -277,8 +281,8 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="thank-you-center">
-      <h1 :style="{ fontSize: `${slideWidth * 0.049}px` }">Thanks all</h1>
-      <p class="thank-you-subtitle" :style="{ fontSize: `${slideWidth * 0.015}px` }">for making this possible</p>
+      <h1 :style="{ fontSize: `${slideWidth * 0.049}px` }">{{ props.title }}</h1>
+      <p class="thank-you-subtitle" :style="{ fontSize: `${slideWidth * 0.015}px` }">{{ props.subtitle }}</p>
       <div class="thank-you-message-slot" :style="{ height: `${slideWidth * 0.0551}px` }" aria-hidden="true">
         <p
           class="thank-you-message"
