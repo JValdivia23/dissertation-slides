@@ -9,7 +9,7 @@ clicks: 1
   <DissertationSynthesis>
     <template #conclusion>
       <p class="dissertation-conclusion">This dissertation developed an efficient spectral radar-processing framework and new CTGC observation techniques, characterized the population life cycle and inferred microphysical evolution, and resolved an evolving three-dimensional fall streak, providing new insight into how CTGCs enhance precipitation.</p>
-      <p class="dissertation-scope">One winter storm; one cell analyzed in 3D.</p>
+      <p class="dissertation-scope"></p>
     </template>
   </DissertationSynthesis>
 </div>
@@ -365,10 +365,10 @@ Transition to personal acknowledgments.
 
 ---
 layout: none
-title: Thanks all
+title: Gracias a todos
 # One paragraph per message; keep two-space indentation and blank lines between people.
 personalThanks: |
-  To my mom, for always being there when I needed her...
+  A mi mamá, por siempre estar ahí cuando la necesité...
 
   To my advisor Katja, for her trust and guidance...
 
