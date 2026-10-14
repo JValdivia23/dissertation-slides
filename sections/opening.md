@@ -91,6 +91,25 @@ clicks: 1
       <figcaption>Idealized plan views · Keeler et al. (2016b), Fig. 18.<br>7.5 km · <i>t</i> = 180 min · 50.1 × 50.1 km domain.</figcaption>
     </figure>
   </div>
+  <svg class="ctgc-formation-connectors" viewBox="0 0 884 404" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <marker id="ctgc-formation-arrowhead" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="4" markerHeight="4" orient="auto">
+        <path d="M0 0 L8 4 L0 8 Z" />
+      </marker>
+    </defs>
+    <g v-click.hide="1" class="ctgc-shear-connector">
+      <path class="ctgc-formation-connector" d="M100 98 H376 Q384 98 384 90 V40 Q384 32 392 32 H481" marker-end="url(#ctgc-formation-arrowhead)" />
+    </g>
+    <g v-click="1" class="ctgc-radiation-connector">
+      <path class="ctgc-formation-connector" d="M231 175 H376 Q384 175 384 167 V40 Q384 32 392 32 H481" marker-end="url(#ctgc-formation-arrowhead)" />
+    </g>
+    <g class="ctgc-instability-connectors">
+      <path class="ctgc-formation-connector-halo" d="M166 21 H390 Q400 21 400 31 V297 Q400 309 412 309 H437" />
+      <path class="ctgc-formation-connector" d="M166 21 H390 Q400 21 400 31 V297 Q400 309 412 309 H437" marker-end="url(#ctgc-formation-arrowhead)" />
+      <path class="ctgc-formation-connector" d="M400 85 Q400 97 412 97 H437" marker-end="url(#ctgc-formation-arrowhead)" />
+      <path class="ctgc-formation-connector" d="M400 189 Q400 201 412 201 H437" marker-end="url(#ctgc-formation-arrowhead)" />
+    </g>
+  </svg>
 </section>
 
 </div>
