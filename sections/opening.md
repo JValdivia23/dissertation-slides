@@ -32,13 +32,13 @@ class: ctgc-intro
 <p class="fine">WINTRE-MIX observation. Concept adapted from Kumjian et al. (2014); schematic is not to scale.</p>
 
 <!--
-About 45 seconds, no clicks. Start with the AMS radar definition: a small region of locally high reflectivity from which a trail of hydrometeors originates. The glossary defines a generating cell in general; here we focus on cells near the tops of winter clouds.
+Start with the AMS radar definition.
 
-Point to the boxed feature in the DOW6 range-height scan. These cloud-top reflectivity enhancements are typically about one to two kilometers across. The schematic is deliberately outside the radar image so the underlying precipitation remains visible. It is a conceptual interpretation, not an enlarged radar image, and is not to scale.
+Point to the boxed feature in the DOW6 range-height scan. These cloud-top reflectivity enhancements are typically about one to two kilometers width.
 
-Point to the conceptual core and surrounding shroud, then follow the descending particles. Ice particles form and grow in the cells and descend in fall streaks; they can continue growing in the cloud below. This is a seeder–feeder interaction. Do not put a percentage on the precipitation contribution.
+Point to the conceptual core and surrounding shroud, then follow the descending particles. Ice particles form and grow in the cells and descend in fall streaks; they can continue growing in the cloud below.
 
-Transition: prior observations and simulations have established several processes that influence these cells. What remained less clear was their evolution as a population and their three-dimensional precipitation relationships. Sampling limitations follow on slide 5.
+Due to their scale this process is typically not resolved in numerical models. And some research suggest that CTGCs are present in every winter precipitation.
 -->
 
 ---
@@ -46,13 +46,13 @@ class: ctgc-background
 clicks: 1
 ---
 
-# CTGC Processes
+# CTGC Formation
 
 <div class="ctgc-background-stages">
 
 <section class="ctgc-background-panel ctgc-known">
   <div class="ctgc-known-copy">
-    <h2>Established processes</h2>
+    <h2></h2>
     <dl class="ctgc-processes">
       <div>
         <dt>Potential instability</dt>
@@ -96,17 +96,16 @@ clicks: 1
 </div>
 
 <!--
-About 60 seconds, one click. Present the established physical processes first. These figures are idealized simulations, not observations of the WINTRE-MIX event.
+Through simulations we know that there are 3 main processes that control CTGCs formation.
 
-Initially show the nighttime shear–stability comparison from Keeler et al. (2017), Figure 9, at 7.5 km and 180 minutes. Rows vary initial stability and columns vary the imposed wind shear. Lifting potentially unstable cloud-top air can initiate convection. Shear influences cell shape and organization and can support shear-driven initiation; the simulations develop different cellular and roll-like patterns. Longwave cloud-top cooling helps sustain convection. These mechanisms are established from previous observations and simulations, although their relative roles in a particular storm require evidence. The shear figure was labeled 2016 in COMPSII; its verified source is the 2017 Part III paper, doi:10.1175/JAS-D-16-0314.1.
+Keeler on 2017 evaluated how different combination of these factors can form and organize CTGC.
 
-Both figures show ice precipitation mixing ratio, not vertical velocity, over the 50.1 × 50.1 km model domain. The black lines in panels (a) and (b) of the shear figure locate the cross sections analyzed in Figures 11 and 12 of the source paper; they do not depict cell motion.
+On this figure, in the vertical axis we have the potential stability.
+And in the horizontal axis we have the wind shear.
+We observe that unstable conditions can trigger CTGC even when no shear is present, but wind shear can make the them bigger and shape them in horizontal roll-like structures. 
 
-[click] Replace the shear comparison with Keeler et al. (2016b), Figure 18, also at 7.5 km and 180 minutes. Columns compare nighttime, daytime, and no radiative forcing; rows vary initial stability. Highlight the initially stable row: cells develop with radiative forcing, whereas no cells are present in the stable, no-radiation simulation. Cooling changes the initially stable environment, rather than demonstrating convection in an environment that remains stable. Latent heating from depositional growth matters, but was insufficient by itself to maintain cells under some simulated conditions. doi:10.1175/JAS-D-15-0127.1.
 
-The blank panel (i) is not missing data: the stable, no-radiation simulation produced no GCs, and ice precipitation mixing ratio did not exceed 0.01 g kg−1 at 7.5 km. The arrow in panel (f) is the 6.3–7.8 km shear vector; the bands there were interpreted as gravity waves, not buoyancy-driven CTGCs. This snapshot illustrates the comparison; the persistence claim comes from the source paper's time-evolution analysis, not from this image alone.
-
-Transition: the next slide distinguishes these established processes from the observational gaps that motivated the dissertation.
+[click] In other hand, radiative cooling can destabilize the layer below it.
 -->
 
 ---
