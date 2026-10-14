@@ -94,7 +94,12 @@ class: local-math local-intro
 
 <!--
 What is the problem?
-Sometimes our data has missing values
+Sometimes our data has missing values or just data that looks suspicious and you don't want to include it on your calculations.
+
+What we want in this project is to just use the valid observations.
+If we are smoothing using the mean and we have a reliable estimate, then why not compute the variance, or the standard deviation.
+
+If the method is fast enough then why only use it for polar coordinates.
 -->
 
 ---
@@ -196,7 +201,16 @@ $$
 </div>
 
 <!--
-About 60 seconds. We use the same spectral convolution. To exclude missing or suspicious values we build a mask and perform normalized convolution: filter the masked data and the mask, then divide by the filtered mask so excluded locations carry zero weight. Applying the same procedure to squared values gives the second moment, hence variance and standard deviation. For boundaries we use RFFT where periodic behavior is wanted and DCT where reflective behavior is wanted; this distinction is particularly useful on Cartesian grids. The same local mean can also estimate missing values if a downstream operation needs a complete field—for example, a dual-Doppler wind retrieval. That is a use case, not a validation in this paper. Where neighbors provide support, use the normalized mean; where support is insufficient, iterative smoothing and nearest completion provide the prefilled-field fallback. Filled cells do not become observations: the original mask still records support. The workflow follows; the estimator equations are in backup.
+And the way we solve this, I actually the same as we will do it in the spacial domain.
+
+This is what is know as normalized convolution. But we want to do this normalized convolution in the spectral domain.
+
+Once we have a definition of the mean, we can compute the second moment of our data and get the variance, therefore the standard deviation. 
+And you can keep going, if you compute the 3th moment you'll get the skewness and the 4th moment the kurtosis. 
+
+The way we make the the boundaries periodic instead of reflective is using the FFT instead of DCT.
+
+We can also use the our local statistic to do the gap filling and even filter our data.
 -->
 
 ---
@@ -217,7 +231,12 @@ class: local-math local-workflow
 <p class="fine convolution-demo-caption">See the preprint <a href="https://doi.org/10.48550/arXiv.2604.22721" target="_blank" rel="noopener noreferrer">Valdivia et al. (arXiv:2604.22721)</a> for the mathematical formulation and implementation.</p>
 
 <!--
-About 45 seconds. Putting these pieces together gives this workflow. We apply spectral filtering to the masked values, their squares, and the mask. From those filtered fields we obtain the local mean, standard deviation, and effective support. The figure is a two-dimensional reflective Cartesian example with DCT-II and a Gaussian response; missing values are gray. The framework also covers N-dimensional Cartesian arrays and polar grids with mixed boundaries. Relative to the prior DCT smoothing work, this generalizes mean-only interpolation-first smoothing by deriving normalized statistics beyond the mean, unifying Cartesian and polar forms under explicit boundary modes, formalizing stability and support diagnostics, and adding threshold-based 3D outlier validation. Takeaway: from retained values only, local statistics on polar and Cartesian grids, extending to N-dimensional grids with per-dimension kernels and boundaries. Next: validation in a synthetic 3D wind field.
+The way that this works, is...
+
+What are we doing in the paper is turn this concept into the an N-dimensional space.
+And for some property of the transfer function we can control our kernel type per dimension.
+
+And you can also control your boundary conditions per dimensions.
 -->
 
 ---
@@ -309,15 +328,7 @@ const { clicks } = useNav()
 </script>
 
 <!--
-About 70 seconds. This is the original synthetic 3D cyclone-wind experiment, regenerated with the paper's code and random-number sequence, using dct_toolkit at commit 9d3b60e. The displayed realization uses seed 20260414. The animation depicts processing stages of one static field, not a time-evolving storm. Arrows are sparsely sampled for visibility; all statistics and detection counts use the full 18 × 96 × 96 grid. The projection compresses height for legibility, and the enlarged neighborhood is a display crop, not a truncated kernel.
-
-[click] Add the original Gaussian perturbations, sigma 0.14 per component, and sparse injected vector anomalies with random 3D direction and amplitude 1.25 to 2.25. Injection probability is 0.3%; this realization contains 526 injected points. Red indicates known injection locations at this stage.
-
-[click] Show the local-mean vector field estimated with reflective DCT normalized convolution and Gaussian widths (3, 7, 7), in z, y, x order. The detector separately computes the mean and standard deviation of wind SPEED. The mean speed is not the magnitude of the mean vector. In this complete-data experiment the support mask is all ones. The estimates include the noisy observations and injected anomalies; this is the original single-pass detector, not an iterative re-masking experiment.
-
-[click] Enlarge a neighborhood and inspect two actual grid points. At the red-ringed injected anomaly, speed is 2.29, local mean 1.41, and local standard deviation 0.20: the residual is 4.48 local standard deviations, exceeding the threshold of 3. At the white-ringed ordinary point, speed is 1.27 and the score is only 0.17, so it is retained. Each horizontal shaded interval is mean plus or minus three local standard deviations, with a center tick at the mean and a marker at observed speed. Here k is the detection-threshold multiplier, distinct from the earlier spectral bin index.
-
-[click] Return to the full volume. Red denotes true detections, orange false alarms, and blue missed injections. This realization has 406 true positives, 39 false positives, and 120 false negatives. The precision 0.92, recall 0.77, and F1 0.84 in the fine text are averages across five realizations, not scores from the displayed subset of arrows. Velocity-vector scoring could add sensitivity to direction changes, but its performance has not been evaluated in this experiment. Next: the same framework on a real polar radar scan.
+I'm gonna do a quick demo to showcase what local statistics can do.
 -->
 
 ---
@@ -333,7 +344,7 @@ class: figure-slide polar-figure
 <p class="fine">DOW6 X-band, WINTRE-MIX, 23 Feb 2022. Top: full domain. Bottom: 20 km central zoom. Missing sectors carry zero weight.</p>
 
 <!--
-About 50 seconds. Real-radar polar demonstration on uncorrected DOW6 reflectivity from the same 23 February 2022 event, following the dct_toolkit notebook workflow. W sets both the range width and the azimuth target width. Panels (a)–(c) are full-domain raw, W = 5, and W = 15; panels (d)–(f) are the matching 20 km central zooms. The operator uses mixed boundaries: periodic azimuth with reflective range. Despite extensive beam-blockage sectors, normalized convolution gives coherent local-mean estimates without obvious gap-driven artifacts, and no evident center-of-grid distortion appears even at W = 15. As expected, W = 5 preserves sharper gradients while W = 15 suppresses more small-scale variability; this is a tuning trade-off, not evidence for one globally optimal width. The evidence here is qualitative and dataset-specific. Next: where to find the implementation.
+But minding my own business, this is how my radar ppi looks like with this method.
 -->
 
 ---
@@ -363,7 +374,7 @@ class: toolkit-availability
 </div>
 
 <!--
-About 30 seconds. The spectral-statistics implementation is packaged as dct-toolkit, installable from conda-forge or PyPI with the commands shown. The screenshot is the conda-forge page listing version 0.6.0. Results in this talk used version 0.5.0 at commit 9d3b60e. The QR code links to the GitHub repository for source, documentation, and notebooks. Then go to the takeaways.
+The code implementation was accepted in conda!
 -->
 
 ---
@@ -373,10 +384,10 @@ class: smoothing-conclusions conclusions-bullets
 # Project 2: Conclusions
 
 - Compute local statistics in incomplete fields.
-- Work in N-dimensional Cartesian or 2D polar coordinates.
+- Work in N-dimensional Cartesian or polar coordinates.
 - Combine boundary conditions across dimensions, and mix kernel types per dimension.
 - Potential applications go beyond radar: satellite observations, numerical simulations, even medical 3D-flow measurements.
 
 <!--
-About 45 seconds. Suggested delivery: “So what are the conclusions of this work? With the current implementation of dct-toolkit you can do the following.” First, compute local statistics in incomplete fields. Second, work in N-dimensional Cartesian or 2D polar coordinates. Third, combine boundary conditions across dimensions — periodic or reflective azimuth with reflective range in polar — and mix kernel types per dimension. Fourth, these potential applications go beyond radar signal processing: satellite observations, numerical simulations, even medical studies measuring 3D flows inside the body. Results in this talk used version 0.5.0 at commit 9d3b60e; per-axis kernel types are a 0.6.0 feature. This work is under review; cite the arXiv preprint, not a publication. The dissertation use of these statistics is the weighted background mean in Z-prime, used in the Paper 4 fall-streak analysis. Then go to the population: the observational studies begin with how a cloud-top generating-cell population evolves.
+We have this framework to compute local statistics...
 -->

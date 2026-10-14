@@ -17,7 +17,7 @@ title: Tracking and Quantifying 3D Cloud-Top Generating-Cell Structure and
 </div>
 
 <!--
-About 20 seconds. This fourth paper is submitted to Geophysical Research Letters, 16 September 2026. It uses the selected Set 1 cell track introduced in Paper 3. Papers 1 and 2 enter this analysis through polar smoothing and the weighted local background. Credit Katja Friedrich, Troy Zaremba, and Sarah Tessendorf. Start with the physical questions of tracking in 3D and precipitation connection.
+This fourth paper is submitted to Geophysical Research Letters.
 -->
 
 ---
@@ -172,19 +172,7 @@ const fusionCaptions = [
 </script>
 
 <!--
-About 75 seconds, five clicks. Chapter 5 Data and Methods. This is a methodological illustration, not the observed volume data. The radar locations, scan angles, beam widths, cloud, and deliberately coarse displayed voxels are schematic. The smooth synthetic fields represent independently gridded/smoothed radar reflectivity; the beam-weighted local backgrounds, individual anomalies, and normalized merge are numerically computed from those illustrative fields. The coarse example truncates and renormalizes background windows at its domain boundaries; it is not an implementation or validation of the papers' DCT operators. Text and equations remain in Slidev/SVG, matching the earlier Manim slides.
-
-Entry: identify the three instruments and wavelength bands. Different views help describe the same moving cell despite incomplete, range-dependent sampling. The paper analyzes nine synchronized volume sets, every six minutes, from 02:54 to 03:42 UTC.
-
-[click] The three beams start at zero-degree azimuth (north) and rotate clockwise together at constant speed while the cloud translates northeast. This equal-speed, common-phase rotation demonstrates synchronized sampling; it is not a claim that the actual antennas used identical azimuth starts, angular speeds, or elevation schedules. The observed synchronization is at the volume level. This plan view stands in for repeated multi-elevation sweeps, not a full reconstruction from one PPI.
-
-[click] Draw the asymmetric 40-by-40-km box and move it with the selected cell. The Paper 3 centroid track supplies the origin, x=y=0; the horizontal bounds are -30 to +10 km, so the cell is not centered in the box. Altitude spans 1–9 km MSL. Retaining more of the southwest region anticipates the expected downwind signature. This is the common analysis domain, not an exclusive particle-source mask.
-
-[click] Map each radar separately into that common frame. The actual pipeline smooths reflectivity in polar coordinates using Paper 1, grids independently, fills gaps, and applies beam-weighted 500-m smoothing in all Cartesian directions. Grid spacing is 100 m in all directions; grid spacing is not the native or effective resolution. The animation shows three horizontal slices at 3, 5, and 7 km to make the 3D grids legible, not three layers replacing the full vertical volume. Dim tiles indicate that a radar does not sample a voxel; they are not zero reflectivity. Preserve each radar's own field and sampling weights through this stage.
-
-[click] Use the Paper 2 weighted-local-statistics framework to calculate each radar's own background. For a voxel, the background is the spatial mean of smoothed dBZ reflectivity with Gaussian beam weights over a 40-by-40-by-2-km boxcar window. The gold slabs show the 6–8-km example around the highlighted (0,0,7 km) voxel; repeat the window at other heights. Subtract the background separately for every radar. Z'_r is a logarithmic reflectivity difference, in dB. Different wavelengths can have different equivalent reflectivity because of scattering and attenuation; do not claim anomaly subtraction makes all wavelength effects vanish.
-
-[click] Use the same radar-beam weights in the normalized weighted average. Weight decreases with distance from the beam center according to a Gaussian, not simply with horizontal distance from the radar. The right-hand inset compares the same voxel relative to each radar's beam center; its M values come from the illustrative fields. No radar coverage means M=0, and a voxel with no contributing radar remains missing. The three independent anomaly grids become one common 3D Z-prime field, not a raw-reflectivity maximum or a wind retrieval. Continue to the observed generating-layer maps and VAD context on the next slide.
+For this work we are using 3 radars.
 -->
 
 ---
@@ -212,7 +200,12 @@ class: paper4-layer-slide
 </div>
 
 <!--
-About 50 seconds. Madison Slide 9 and Paper Figure 1. Left: 5.5–9 km layer maximum of Z' across nine analysis times (02:54–03:42 UTC). The dashed circle marks the selected cell at the origin. Right: the polar VAD wind profile showing upper-tropospheric shear directing sedimenting ice southwestward relative to the cell, motivating the asymmetric -30 to +10 km analysis domain.
+This is how the CTGC layer looks like. We can see more details compared to the single radar method.
+Our cell is in the dashed circle.
+
+And the dashed rectangle is where we would expect to find the fall streak based on the wind direction.
+
+So we are going to focus the analysis in that area.
 -->
 
 ---
@@ -228,16 +221,9 @@ import Paper4Evolution from '../components/Paper4Evolution.vue'
 </script>
 
 <!--
-About 50 seconds. Madison Slide 10. This 12-second 3D animation (Paper 4 hero sequence in continuous time) renders Z' isosurfaces at 5 and 7 dB in the moving frame. Note three immediate physical observations: First, other generating cells continuously form and dissipate in the vicinity of the tracked cell. Second, tracing a continuous fall streak in 3D isosurfaces alone is challenging because turbulent eddies, shear, and evaporation create patchy signatures aloft. Third, notice the large, persistent red feature in the lowest layer: a strong melting-layer enhancement is present throughout the entire sequence.
+This is how the 3D evolution looks like. Many things are happening at the same time...
 
-The original twelve-second evolution is preserved. It now plays once, then
-explicitly returns to the Madison reference volume and camera pose in a short
-crossfade and holds that frame. This reset is not additional storm evolution
-or a new observed time. The original movies did not join because the evolution's last volume
-differs from the camera-rotation clip's first volume. This reference ending is
-the same image, crop, scale, and position used on entry to the next slide.
-The scientific statements above are unchanged; their text is now on the left
-so the volume can remain at the right across both slides. Motion is web-only.
+If take a lateral view
 -->
 
 ---
@@ -255,7 +241,13 @@ class: figure-slide paper4-cross-full
 </div>
 
 <!--
-About 50 seconds. Madison Slide 12 and Paper Figure 3. Vertical cross sections along the southwestward fall-streak azimuth across all nine times (02:54 to 03:42 UTC). Two critical takeaways: First, a persistent trail and melting-layer enhancement exist at 02:54 UTC, even before the selected generating cell reaches peak intensity. Second, a coherent downward connection from the cloud-top cell into the mid-cloud layer is not fully established until time step 5 (03:18 UTC, panel e, indicated by the black arrow). By 03:36–03:42 UTC, the southwestward enhancement extends downward through the mid-cloud layer into the melting layer.
+The mid cloud appears patched, 
+
+and it is not until the mature stage of the cell at 03:18 (middle panel) that we see a clear fall streak connected to the CTGC.
+
+SO what is happening here is that the mid cloud structure is creating its own fall streak.
+
+So let's isolate that area to see what is happening
 -->
 
 ---
@@ -284,17 +276,9 @@ import Paper4MidCloudVideo from '../components/Paper4MidCloudVideo.vue'
 </script>
 
 <!--
-About 45 seconds. Madison Slide 13. Slicing through the 3.5–5 km mid-cloud layer reveals elongated, quasi-parallel reflectivity enhancements oriented roughly north–south. These structures resemble horizontal convective rolls or shear-parallel precipitation bands (conceptually analogous to visible cloud streets). Importantly, these rolls already produce their own precipitation trails, establishing that mid-cloud echoes are not created in a vacuum by cloud-top turrets alone.
+If we separate that mid cloud we find horizontal organization.
 
-[click] Play the original three-second elevation cutaway once, then hold its
-final view. Entry and rewind show the decoded first frame; direct entry at the
-completed click and return from the following slide show the final frame.
-The photograph, its caption, and the bottom takeaway appear together after
-playback ends, without another click. Their layout space stays reserved;
-rewind hides them, while completed entry shows them immediately.
-The cloud-street photograph uses Madison slide 13's original crop, exported
-without resampling by scripts/export-paper4-midcloud.py. It remains an analogy
-for the organization of the echoes aloft, not an observation of this storm.
+We don't really know that are those rolls, but they look like horizontal convective rolls.
 -->
 
 ---
@@ -320,21 +304,11 @@ import midCloudMaps from '../figures/paper4-mid-full.png'
 </script>
 
 <!--
-About 45 seconds. Paper Figure 4, replacing Madison slide 14's cutaway video.
-These are column-maximum reflectivity-anomaly maps over 3.5–5 km MSL at all
-nine analysis times from 02:54 to 03:42 UTC, in the moving cell-relative frame.
-The plotted quantity is Z-prime-max in dB, not equivalent reflectivity in dBZ.
-Keep the original time labels, distance axes, colorbar, corridor, transect,
-and selected-cell circle visible; the figure caption is omitted on the slide
-so the complete nine-panel figure can fill the left-hand space.
+If observe how this mid cloud structure evolves.
+We see how initially is well defined.
+And the on the last minutes we only see what it should be our CTGC fall streak
 
-North–south elongated structures are already present at 02:54 UTC and persist,
-but become less distinct during 03:24–03:42 UTC. Changes in shear and the
-increasing prominence of CTGC precipitation may both contribute to this
-evolution. The roll-updraft and seeder–feeder mechanisms remain interpretations:
-these anomaly maps do not retrieve vertical velocity or exclusive particle
-origin. Use the preceding vertical sections when discussing the connection
-between the selected CTGC and the existing mid-cloud echoes.
+So what is happening is that out CTGC is seeding this mid cloud, that is already producing precipitation.
 -->
 
 ---
@@ -356,17 +330,15 @@ import Paper4Footprints from '../components/Paper4Footprints.vue'
 </script>
 
 <!--
-About 45 seconds. To quantitatively evaluate the precipitation impact without requiring subjective manual contouring, we define objective footprints. For each height layer, we take the vertical maximum of Z' at each time, average those nine fields over time, and extract the upper decile (top 10%, p90) as the persistent footprint. Left: 1–1.5 km rain footprint. Right: 2.5–3 km snow footprint. Both sit southwest of the cell origin, matching the expected downwind fallout trajectory.
+If we analyze the precipitation itself. We have 2 ways to do it.
 
-Figure source: Chapter 5 Figure S2 (Appendix 5.A), gc3_anom_accum_1x2.pdf.
-The displayed quantity is A_mean: the time mean of the layer maximum of Z',
-not equivalent reflectivity in dBZ. The exact rain and snow p90 thresholds
-are 2.94 and 2.16 dB, rounded to the source panel labels' 2.9 and 2.2 dB.
-The two original colorbars have different ranges and are retained separately.
-The complete source maps, contours, GC markers, corridor and transect are
-preserved; only surrounding headings and axes are typeset at larger sizes.
-The source's small in-plot keys remain intact for fidelity; the readable
-contour key below the panels replaces the need to read those embedded keys.
+Below the melting layer were we should only observe rain, and and right above the melting layer were everything should be snow.
+
+These figures are showing the average anomaly of all our time-steps.
+
+And we defining the fall streak footprint as the 90 percentile of the values. 
+
+We do this because we can use this footprint to quantify the precipitation enhancement.
 -->
 
 ---
@@ -405,7 +377,9 @@ class: paper4-contrast
 </div>
 
 <!--
-About 55 seconds. Here is the quantitative synthesis from Chapter 5. Converting maximum equivalent reflectivity to precipitation rates using standard relations (Z = 2000 S^2 for snow aloft, Z = 200 R^1.6 for rain below), we compare the spatially averaged rates inside versus outside each footprint across the 9 analysis times. Liquid-equivalent snow rates average 51% higher inside the snow footprint; rain rates average 72% higher inside the rain footprint. Crucial attribution caveat: "outside" is the rest of the 40x40 km domain, not a zero-cloud control. This confirms a substantial localized enhancement consistent with seeder–feeder growth, but cannot be claimed as 100% created by the single cell alone.
+And we convert reflectivity into precipitation. We see that snow and rain are both enhanced by the fall streak. 
+
+Inside the footprint the rain is in average 72% higher than outside, but it reach peaks over than 100%.
 -->
 
 ---
@@ -414,10 +388,13 @@ class: smoothing-conclusions paper4-conclusions conclusions-bullets
 
 # Project 4: Conclusions
 
-- Multi-radar 3D voxel resolves the evolving three-dimensional structure and fall streak of a tracked CTGC.
-- The fall streak interacts and merges with pre-existing mid-level cloud (horizontal rolls) and underlying precipitation.
+- Multi-radar analysis resolves the evolving three-dimensional structure and fall streak of a tracked CTGC.
+- The fall streak interacts and merges with the mid-level cloud (horizontal rolls) and underlying precipitation.
 - Persistent fall-streak footprints show 51% higher snow and 72% higher rain rates, consistent with seeder–feeder enhancement.
 
 <!--
-About 30 seconds. In summary: By combining three research radars into a cell-relative moving framework, we followed a single cloud-top generating cell in 3D through its life cycle. Rather than acting in isolation, the cell's fall streak interacted with pre-existing mid-level rolls and melting-layer precipitation. While we cannot isolate this cell's exclusive mass contribution, persistent footprints show 51% higher snow and 72% higher rain rates, providing strong radar observational evidence for localized precipitation enhancement by cloud-top generating cells.
+In summary: 
+By combining 3 radars we were able to resolve the 3D structure of CTGC and its fallstreak.
+
+This fall streak interacts with the mid level clouds.
 -->

@@ -17,7 +17,7 @@ title: Temporal Evolution of Cloud-Top Generating Cells
 </div>
 
 <!--
-About 20 seconds. The first two papers addressed radar analysis methods. This third paper is an observational case study, published in the Journal of the Atmospheric Sciences. Credit Katja Friedrich, Troy Zaremba, and Sarah Tessendorf. Do not imply that the spectral methods of Papers 1 and 2 produced this study's population results: the Chapter 4 identification procedure uses its own quality control, polar-coordinate smoothing, azimuthal-mean perturbation, and contouring. The fourth paper later combines the methodological work with the cell track from this study. Next, outline the core problem and three research objectives.
+Now let's jump into CTGC itself.
 -->
 
 ---
@@ -40,7 +40,7 @@ class: population-objectives
 
 <div class="limit-card">
   <h3>Microphysical progression</h3>
-  <p class="ask">How do particle signatures change across stages?</p>
+  <p class="ask">How do particle signatures change?</p>
   <p>Examine systematic trends in polarimetric radar variables (<em>Z</em><sub>e</sub>, <em>Z</em><sub>DR</sub>, <em>ρ</em><sub>HV</sub>) and infer crystal habit evolution.</p>
 </div>
 
@@ -53,16 +53,13 @@ class: population-objectives
 </div>
 
 <!--
-About 45 seconds. The first two papers developed radar analysis methods. This third paper applies high-resolution radar observations to address an open physical problem: following an entire CTGC population through time.
+As I mentioned in the introduction. The complete lifecycle of CTGC was not documented before. Not from the observational perspective.
 
-While past studies revealed the instantaneous 1–2 km structure of generating cells using isolated RHI sweeps or aircraft passes, the complete life cycle of a population—from first appearance through organization to decay—has remained uncharacterized observationally.
+We want to explore how CTGCs organize and evolve through time?
 
-We address three questions:
-First, macrostructure: how do cell count, size, and clustering change over time?
-Second, microphysics: what do polarimetric variables reveal about particle sorting and habit changes as cells mature?
-And third, environment: what thermodynamic and shear conditions support each stage?
+Is the microphysic of the particles also evolving?
 
-To answer these, we analyze repeated volumetric radar scans from one winter storm during WINTRE-MIX.
+We also explored a lil bit about what environmental conditions are related to this evolution.
 -->
 
 ---
@@ -95,13 +92,12 @@ class: population-context
 <p class="fine">Paper Figure 2. DOW6 supplies the repeated 6-minute volumetric scans for cell detection; ECCC radar, soundings, and airborne radar provide mesoscale context.</p>
 
 <!--
-About 45 seconds. Introduce the observational framework. The dataset comes from the Winter Precipitation Type Research Multi-scale Experiment (WINTRE-MIX), conducted in late winter 2022 across the US–Canada border in the St. Lawrence and Champlain valleys.
+For this study we are using data from WINTRE-MIX field campaign.
+That its being collected during the night of feb 22 and 23 in the US Canada border.
 
-Point to the map: DOW6 was deployed near the valley confluence to sample winter storm IOP05. The primary platform is the Doppler on Wheels 6 from the NSF-supported CSWR facility: an X-band dual-polarization radar sampling 17 PPI sweeps every six minutes between 02:00 and 04:00 UTC, with 75-meter range resolution. CTGCs were observed between 5.5 and 8 km MSL.
+Our main instrument is the DOW6 an x-band radar.
 
-Supporting context came from Environment and Climate Change Canada's operational S-band radar at Blainville for storm-scale coverage, two radiosondes launched at Sorel for vertical thermodynamics, and a flight pass by the NRC Convair-580 with the NAX cloud radar.
-
-Next, I will explain how we identify CTGC features from these volumetric scans.
+But we also have information of an S band and some soundings.
 -->
 
 ---
@@ -245,19 +241,11 @@ watch(clicks, (next, prev) => {
 </script>
 
 <!--
-About 90 seconds. This click-stepped schematic explains the sampling and reduction behind the Paper 3 detection method. It uses the 17 nominal elevations from Paper Figure 3: 0.4–50 degrees. The coarse reflectivity values and cell locations are illustrative, with actual maxima and azimuthal means calculated from that same schematic volume. One initial azimuth is shown in a range–height view. The straight beam centerlines have exaggerated vertical scale; gates are schematic samples, not the radar's actual 75-m spacing. The volume scan repeats every six minutes. Standard quality control and initial reflectivity smoothing precede the operations illustrated here.
+How do we do to detect the CTGCs?
 
-[click] Select only observations in the 5.5–8 km MSL cloud-top layer identified in RHI scans. At a particular range, only a few of the 17 elevations intersect the layer. Missing coverage stays missing; the animation does not fill these gaps.
+We know CTGC
 
-[click] At each polar range–azimuth gate, take the largest of the sampled in-layer reflectivities. The highlighted example at 36.25 km has two contributing elevations, marked by white rings, and the selected maxima move into a common radial strip. The maximum is over available observations, not a reconstructed continuous vertical profile.
-
-[click] Each of these elevations is a PPI sweep around the radar. Rotate the same strip into plan view, and repeat the reduction over all azimuths to obtain Z_max(r, theta). The sweep is a reveal of this one schematic volume, not a simultaneous scan or a time-evolving storm. The PPI volume samples height; reducing the elevations to one layer maximum produces the two-dimensional horizontal footprint. Gray rings have no in-layer samples.
-
-[click] Highlight one range ring and average its valid Z_max values over azimuth. The small profile plots those exact values; the gold dashed line is their mean in dBZ. Each range has its own background value.
-
-[click] Subtract the range-dependent mean from every gate to obtain Z-prime. The profile is now centered on zero, with peaks marking enhancements above the range-ring background. This logarithmic reflectivity difference has units of dB. Localized enhancements remain prominent as the broad background weakens.
-
-[click] Now switch explicitly from the schematic to the observed 03:18 UTC example, Paper Figure 5(e). Apply the paper's two-dimensional Gaussian filter to Z-prime (sigma 1 gate in each direction, 9-by-9 window), contour at a 5-dB enhancement, remove nested contours, and discard regions smaller than 0.09 square kilometers. These are coherent horizontal boundaries for the population analysis. A connected boundary can encompass more than one turret.
+From the countours we can compute the centroids, area, number, etc.
 -->
 
 ---
@@ -278,7 +266,7 @@ class: population-video
 </div>
 
 <!--
-About 40 seconds. This looping animation from COMPSII slide 26 shows the full-domain detected reflectivity anomaly evolving through the observed population sequence: anomalies emerge, intensify into coherent features, and dissipate. Two spatiotemporal groups are visible here: the earlier Set 1 and the later Set 2. This is the same detection field quantified later: the maps show where the count and area time series come from, and the color scale is anomaly in dB, not equivalent reflectivity in dBZ. Do not attribute individual low-level echoes to the selected cell. Next, place these groups within the broader storm; the subsequent structure maps and time series quantify their evolution.
+We observe how CTGC evolve, from many small cells
 -->
 
 ---
@@ -310,9 +298,9 @@ class: population-storm
 <p class="fine">ECCC reflectivity (dBZ) with DOW6-derived CTGC centroids; dashed circle = DOW6's 75-km range.</p>
 
 <!--
-About 45 seconds. These three enlarged panels from Paper 4 supporting Figure S1 show the broader precipitation system and connect the two observational papers: the storm and the selected cell are the same. Color is ECCC equivalent reflectivity in dBZ, not cloud-top reflectivity or the perturbation field from the previous slide. Small black dots are the DOW6-derived CTGC centroids from both sets, not separate color-coded set labels. The red marker follows the selected Set 1 cell northeast, and the red box is the moving 40-by-40-kilometer domain used later in Paper 4. The dashed circle marks DOW6's 75-kilometer range. Do not interpret every strong low-level echo as precipitation from this cell.
+This cells are embeded in a big precipitation system.
 
-The two groups began before this displayed sequence: Set 1 near 02:18 UTC west of DOW6, moving northeast; Set 2 near 02:48 UTC to the southwest, moving east. Those onset times come from Paper 3, not from these later S1 panels. Focus on Set 1 because its complete population sequence was observed; Set 2's dissipation was not fully captured. This is radar storm context, not a thermodynamic diagnosis or proof of wave-driven forcing. Next, quantify Set 1's structure evolution; the RHI sequence and soundings are retained in supporting material. Paper 4 is submitted to GRL, not published.
+Those black dots are our CTGCs. And the red dot is the same cell at different time steps. It will become the main character later.
 -->
 
 ---
@@ -350,11 +338,19 @@ class: population-trends population-maps
 </div>
 
 <!--
-About 1 minute. The two Figure 12 maps show initiation at 02:30 and mid-maturity at 03:12, 42 minutes apart. The black star marks DOW6; the scale at right gives the contour-area classes in square kilometers, with warmer colors indicating larger contiguous areas. Many small, separate enhancements become fewer, larger patches, some tens of square kilometers. The insets classify centroids into Set 1 (blue) and Set 2 (red); focus on the northern/earlier Set 1. Contiguous complexes up to approximately 60 km² do not mean an isolated 1–2 km turret grew to 60 km². A contour can connect multiple adjacent cells, so the maps show population organization and merging, with sensitivity to segmentation.
+This is an example of how the size evolve.
+Initially, most of them are 1 or 2 km2, then a few of them get bigger than 20 km2.
+For reference the city of Boulder is around 14 km2.
 
-[click] Figure 13(a), cropped to Set 1, quantifies this evolution. The red curve is detected feature count and the blue curve is mean contour area; the dashed green is the area mode and gray shading the 10th–90th percentile. Set 1 begins near 02:18 UTC; count rises sharply around 02:30–02:36, then declines during the mature stage while mean area grows, consistent with merging or clustering. During dissipation from roughly 03:24 to 04:00 the count and total coverage fall, although the mean area of surviving features does not necessarily decline monotonically because smaller features disappear. The stages are defined mainly from the count/area evolution. The chapter text and table place the first transition near 02:30, while the plotted dashed divider appears closer to 02:36; avoid presenting its minute as exact. Dissipation begins near 03:24. The chart's last plotted label is 03:54, while the study period extends to 04:00. This is about 1.7 hours of collective activity, not a mean individual-cell lifetime. Polarimetry next adds the microphysical dimension.
+If we looks at the number with more detail, we notice something interesting...
 
-Figure sources: Paper Figure 12(a, c) (map view; 42 minutes apart) and Paper Figure 13(a) (count/area view).
+Here the red is the number of cells, and blue is the area.
+
+Initially, the area and the number increase, that is what we call the initiation stage.
+
+Then, the area keep increasing but the number decrease.
+
+And later the area and the number decrease.
 -->
 
 ---
@@ -382,9 +378,13 @@ class: population-trends
 </div>
 
 <!--
-About 25 seconds. Figure 13(c) shows the mean and mode of differential reflectivity Z_DR with its 10th–90th percentile envelope. Mean Z_DR decreases early, then rises significantly through the mature and dissipation stages, passing about 1 dB late in the record. Pause on this observed trend before explaining the proposed microphysical mechanism. Introduce differential reflectivity on the next slide for audience members unfamiliar with the variable; its two clicks return to this same curve. The population mean remains positive: the near-zero example next is a teaching reference, not a value reached by this mean curve. The complete sign tutorial, including the negative example, is retained in supporting material.
+It is even more interesting we look at the ZDR.
 
-Figure source: Paper Figure 13(c), Set 1, 02:18–03:54 UTC.
+During the initiation stage, the ZDR decrease.
+
+But once in the mature stage it keeps increasing even during dissipation.
+
+We interpret this signal as
 -->
 
 ---
@@ -480,11 +480,10 @@ const summaryMessages = [
 </script>
 
 <!--
-About 45–60 seconds, two clicks. Entry: briefly define differential reflectivity as ten times the base-ten logarithm of the ratio of linear horizontal and vertical reflectivity from the same sample. H and V label relative returned reflectivity, not transmitted-wave amplitudes. The two cartoons are independent idealized reference cases viewed with a near-horizontal beam, not an observed particle changing shape: an oriented horizontal plate can give H > V, while a spherical particle gives H approximately equal to V. Particle mixtures, orientations, density, and beam elevation also influence measured Z_DR. A small Z_DR is neither an absence of particles nor a unique identification of spheres or aggregates. The observed Set 1 mean on the next builds stays positive; the near-zero reference does not imply that this population mean reaches zero. Keep the full sign tutorial, including the negative example, for the detailed supporting slide.
+And I am gonna make a pause here, because this is a big claim.
 
-[click] Initiation. Return to the same observed Set 1 Figure 13(c) as main slide 35, now enlarged and fixed in position. Blue is the mean, dashed green the mode, and gray the 10th–90th percentile. Highlight the initiation region using the original plotted stage divider, rather than treating the full interval before the Z_DR minimum as initiation: the decline briefly continues into the early mature stage. The stages were defined primarily from count and area evolution, not from Z_DR alone, and the first transition time is approximate. The compact animation illustrates oriented crystals joining into larger, more isotropic aggregates. The decreasing Z_DR is consistent with aggregation; riming can also reduce anisotropy and neither process is uniquely identified by this variable. The cartoon shapes and relative sizes are schematic, not particle counts or a scattering calculation.
 
-[click] Mature and dissipation. Keep the complete plot at exactly the same size and position and highlight both named stages, retaining their original divider. The overall rise begins after the brief early-mature dip and continues through dissipation; it is not strictly monotonic at every sample. The accompanying animation illustrates larger aggregates preferentially falling below the generating layer while slower-falling oriented crystals remain aloft. This differential sedimentation and particle sorting is consistent with the observed increasing Z_DR, but particle habits and trajectories were not directly measured. Crystals remain crystals; aggregates do not turn back into pristine crystals. The population mean stays positive throughout. Next, use the selected-cell sequence on main slide 37 as a separate example supporting the population-level interpretation.
+But is a population signal.
 -->
 
 ---
@@ -510,7 +509,7 @@ clicks: 1
 </div>
 
 <!--
-About 60 seconds, one click. Show the complete reflectivity sequence first: the dashed circle follows one selected Set 1 feature from 02:55 to 03:43 UTC, nearly 50 minutes, sampled at nine times. The middle panels near 03:25 show a stronger and larger signature (the paper estimates a maximum contour area of roughly 45 km²), then the signature weakens. The elevation angle printed above each panel changes to continue sampling the moving cell; the gray dashed arcs indicate altitude. Click once to swap to the full Z_DR sequence for the same cell and times: Z_DR decreases to near zero during maturity and exceeds 2 dB late in the track, consistent with the population trend but subject to the same interpretive caveats. This is a manually followed, long-lived example, not evidence that typical cells live 50 minutes. The track is also the starting point for the cell-relative three-dimensional analysis in Paper 4. Continue to the conceptual population-life-cycle figure, where this individual case supports the population synthesis.
+If our interpretation is true we should also see the same signal in a single CTGC.
 -->
 
 ---
@@ -524,7 +523,7 @@ class: figure-slide population-schematic
 </div>
 
 <!--
-About 40 seconds. This is the complete Paper Figure 19 schematic, synthesizing the observed boundary evolution and inferred microphysics across initiation, mature, and dissipation stages. Read the bottom row first: many small boundaries, then merging into contiguous features, then fewer detected boundaries. This part summarizes the count, area, and maps just shown. The top row is a conceptual interpretation, not a camera view of crystal habits: less organized particles initially; a mature core of more isotropic aggregates or rimed crystals and a surrounding shroud of oriented pristine crystals; then preferential fallout of larger particles, consistent with higher Z_DR remaining in the generating layer. The bottom legend defines the pristine crystal, aggregate/rimed crystal, and the 5-dBZ perturbation CTGC boundary. The selected cell just shown grounds this synthesis in one tracked example. Do not say every cell displayed this exact geometry or that direct in situ particles were measured here. Candidate influences discussed in the paper include shear-related organization and decreasing moisture, but the observations do not isolate the forcing mechanism. This closes the population results; the conclusions follow.
+That take us to the conceptual population life cycle.
 -->
 
 ---
@@ -534,15 +533,13 @@ title: "Project 3: Conclusions"
 
 # Project 3: Conclusions
 - A CTGC population progressed through initiation, maturity, and dissipation over approximately 1.7 hours.
-- During maturity, counts decreased while size area increased, supporting merging and clustering into larger features rather than simply growth of individual turrets.
+- Cell went from small and numerous to fewer and big, before dissipate.
 - The polarimetric signals are consistent with early aggregation and later preferential sedimentation and particle sorting within the generating layer.
 
 <p class="population-handoff">One selected cell showed a similar structural and polarimetric progression.</p>
 
 <!--
-About 40 seconds, no clicks. This conclusion slide has no visible title or labeled lead-ins; the title in frontmatter is only for navigation. Present three findings and their significance, then the selected-cell connection to the next paper. Suggested delivery: “Set 1's detected population evolved through initiation, maturity, and dissipation over about 1.7 hours. During maturity, fewer but larger radar features indicated organization through merging and clustering, rather than only growth of individual turrets. The early decrease and later increase in differential reflectivity are consistent with early aggregation and later preferential fallout and particle sorting in the generating layer. One selected cell showed a similar progression; we next follow its three-dimensional structure and fall streak.”
+The conclusions of this project are:
 
-Keep the approximately 1.7-hour observed population sequence distinct from individual-cell lifetimes. Counts and boundary areas describe the detected radar features, not a one-to-one census of updrafts. The structural result is population organization, not a claim that all area growth is an artifact or that individual turrets cannot grow. The microphysical statement remains an interpretation consistent with the radar signatures: early aggregation, potentially riming, produces more isotropic particles; later preferential fallout of larger aggregates or rimed particles leaves a greater relative contribution from slower-falling oriented pristine crystals. Do not describe aggregates transforming back into pristine crystals or imply that every cell follows an identical sequence. The selected nearly 50-minute track provides cell-scale support within this case and the moving reference for Paper 4, not a typical lifetime estimate. Leave shear relaxation and layer-specific drying as accompanying environmental context rather than introduce a causal conclusion here; the detailed limitations are in the supporting slides.
-
-Paper 3 is published in JAS (2026); Paper 4 is submitted to GRL, not yet accepted. Do not say Papers 1 and 2 directly generated the Paper 3 identification; Paper 4 integrates their methods with this track.
+We were able to analyze a population of CTGC and we identify 3 stages.
 -->

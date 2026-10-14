@@ -53,58 +53,12 @@ import DissertationSynthesis from '../components/DissertationSynthesis.vue'
 </style>
 
 <!--
-About 60–75 seconds, one click. The title is visible on entry and fades out on
-the first click without shifting the diagram or changing the final frame.
-Chapter 6, Summary of Key Findings, explains this integration.
+To conclude.
+We have seen those for projects. 
 
-Suggested delivery: “The four studies come together in the cell-relative
-analysis. The smoothing and local-statistics methods supply the reflectivity
-anomalies. The population study supplies the selected-cell track and its
-temporal context. Together with observations from three radars, these allow
-us to follow the fall streak through the surrounding precipitation field.”
-
-Trace the two inputs separately before pointing to Paper 4. This is an
-analysis-dependency diagram, not a physical pathway or a sequence in which
-Papers 1–2 produced the Paper 3 population detection. The selected-cell track
-defines the moving reference frame; the methods provide the anomaly fields.
-Population evolution supplies context, not the radar measurements themselves.
-Do not introduce new numbers or imply particle trajectories were retrieved.
-
-[click] The title fades out as the diagram moves upward and softens while a gold
-connector and compact conclusion card appear beneath it. Read the overall
-contribution as one sentence:
-“This dissertation developed an efficient spectral radar-processing framework and
-new CTGC observation techniques, characterized the population life cycle and
-inferred microphysical evolution, and resolved an evolving three-dimensional fall
-streak, providing new insight into how CTGCs enhance precipitation.”
-
-The observational scope remains one winter storm and one cell analyzed in 3D.
-The animation links the studies to the overall contribution, not a physical
-particle pathway or a claim that the methods directly produced population detection.
-
-Supporting details for questions, not the timed delivery:
-
-The method contribution is broader than this case. Paper 1 maintained an
-approximately consistent physical smoothing scale across range; Paper 2
-extended the framework to normalized local statistics with support and
-explicit boundary assumptions. Do not treat its estimated gap values as
-measurements or claim that sparse observational support creates information.
-The benchmark was not a timing of the complete multi-radar volume workflow.
-
-The 1.7-hour sequence describes collective population activity, not a typical
-individual-cell lifetime. Contours can contain several turrets; fewer, larger
-features support merging and clustering, not only individual-cell growth.
-The early decrease and later increase in differential reflectivity are
-microphysical interpretations, not unique measurements of particle habits.
-
-The fall-streak connection is consistent with seeder–feeder growth; particle
-growth along the streak and roll circulations were not directly measured.
-The 51% snow and 72% rain enhancements remain in the preceding paper section.
-They are spatial contrasts, not the cell's share of precipitation. Do not
-repeat these numbers here or claim a measured storm-total contribution.
-
-Transition to future work: the methods provide a way to test these observed
-relationships across storms and to constrain the unresolved mechanisms.
+On the first 2 papers we created an efficient spectral domain processing framework. 
+On the paper 3 we characterized a CTGC population and its microphysical evolution.
+Finally, on the paper 4 we resolved the 3D structure of a single CTGC and its fall streak, proving new insight into how CTGC enhance precipitation.
 -->
 
 ---
@@ -145,39 +99,17 @@ title: Future work
 </style>
 
 <!--
-About 25–35 seconds, no clicks. These three concrete research directions
-follow Chapter 6's Outlook: population and dynamics, particle growth, and
-precipitation attribution. They are proposed work, not dissertation results.
+As a future work, there 3 main paths that I would like to highlight
 
-Suggested delivery: “The first step is to analyze more CTGC cases using the
-large dataset already available. We also want to study how particles evolve
-along fall streaks. Finally, we need to improve estimates of how CTGC ice
-supply changes precipitation. The observed precipitation enhancements do
-not yet quantify that contribution.”
+We have a massive dataset collection. 
 
-Supporting details for questions, not the timed delivery:
+We also want to analyze the microphysical evolution of fall streaks
 
-Apply the identification and tracking approaches to additional CTGC cases
-in the existing dataset to test which aspects of the observed evolution recur.
-Across-storm comparison should separate collective population duration from
-individual-cell persistence. Rapid volumes, three-dimensional winds, and
-more frequent soundings would help relate initiation, merging, and decay to
-the environment. Shear, cloud-top cooling, moisture supply, and horizontal
-convective rolls are mechanisms to test, not established causes in this case.
+And improve the estimates of CTGC contributions, maybe analyzing the CTGC population contribution.
 
-Particle growth along the streak remains unresolved. Spatially separated
-radars view different angles, wavelengths, sampling volumes, and propagation
-paths. A geometry-aware extension must consider scattering, attenuation,
-calibration, and beam mismatch rather than directly merging polarimetric
-values. Liquid-water and ice-particle measurements, winds, and trajectories
-would provide complementary constraints; trajectories are future work here.
-
-The attribution experiment must compare transport, growth, and precipitation
-under controlled changes in CTGC ice supply. It should distinguish mass
-acquired in feeder clouds from the change relative to precipitation without
-the generating-cell ice. Observations should constrain and evaluate the
-simulations; neither the 51% nor the 72% is already that contribution.
-Keep detailed modeling references in discussion unless asked.
+I have a couple of side projects that didn't see the light yet.
+One is the dual doppler analysis
+The other other one is the TMatrix simulations for PID with non-collocated radars.
 -->
 
 ---
@@ -211,32 +143,7 @@ title: Side project
 <p class="fine !mt-1 !mb-0 !text-[13px] !leading-snug">Collaborators: Jen Kay · Aneesh Subramanian · Katja Friedrich<br />In preparation · Planned submission to GRL</p>
 
 <!--
-About 20–30 seconds, no clicks. This is a side project, not a dissertation
-chapter or a published article. Explain the experiment before showing results.
-The layout follows reference PowerPoint slide 17: two large parameter labels
-beside the global soil-modification map. The map itself is now generated from
-the actual surface input, not the old presentation's categorical image.
-
-The author confirmed prescribed soil albedo 0.8 and unchanged vegetation.
-Gold cells are SOIL_COLOR == 21 in the experiment's actual surface dataset:
-2,061 cells on its native 192 × 288 grid. Other land is a muted Natural Earth
-background for geographic context, not another model variable.
-
-The input contains no modified cell centers at or poleward of 60° latitude.
-No extra latitude filter was applied when plotting: the figure shows the
-assignments already present in the source file. “Globally” describes their distribution
-across mountain regions, not modification of every mountain or polar region.
-Full grid cells are displayed, not a subgrid land-area footprint. The 0.8
-label is the prescribed soil parameter, not effective surface/canopy albedo.
-The input data, original PowerPoint, and remote MAE project remain unchanged.
-
-Collaborators are Jen Kay, Aneesh Subramanian, and Katja Friedrich. The
-manuscript is in preparation, with a planned submission to Geophysical
-Research Letters; it has not been submitted or accepted.
-Do not carry over the reference deck's older simulation period or temperature
-summary to the updated results on the next slide.
-Source, data snapshot, checksums, and regeneration steps:
-figures/mountain-albedo/sources.md.
+But I have other side project that is being more successful.
 -->
 
 ---
@@ -275,33 +182,8 @@ clicks: 1
 <p class="fine !mt-2 !mb-0 !text-xs !leading-snug">Experiment − CESM2-LE ensemble mean</p>
 
 <!--
-About 35–45 seconds, one click. First show cooling and local snow-depth
-increases together; then explain the downside of a global precipitation
-response. Keep delivery verbal rather than adding more slide text.
-
-The temperature callout is the author's approximate summary: almost 1°C
-cooling by 2030, not an exact annual-mean estimate calculated here. The gray
-band is ensemble spread (±1.96 standard deviations), not uncertainty in the
-ensemble mean; its source legend is corrected in the presentation image.
-
-The author clarified that the approximately one-foot snow-depth increase
-refers to peak local values, not the Rockies-wide average. One foot is
-0.3048 m, consistent with the upper end of the plotted regional color scale.
-The map is the 2015–2029 mean response. The source regional mean is +0.057 m;
-do not describe the one-foot peak as a regional average, snow-water equivalent,
-glacier mass balance, or evidence of glacier recovery.
-
-[click] Replace both result panels and their callouts with the global
-precipitation map and “Precipitation patterns change globally.” Stippling
-uses |Z| ≥ 1.96 relative to ensemble spread, as confirmed by the author;
-do not present it as confidence in the ensemble mean or field significance.
-The revised author-supplied PDF is displayed intact as SVG, retaining its
-orange–purple scale (−3 to +3 mm/day), cross markers, and original labels.
-No old title crop or retyped colorbar annotations are applied to this figure.
-
-This work remains in preparation and is separate from the publication counts
-on the next slide. Transition to the other additional research contributions.
-Sources and crop bounds: figures/mountain-albedo/sources.md.
+Temperature, snow in other areas
+Precipitation globally.
 -->
 
 ---
@@ -395,23 +277,21 @@ import ThankYouPhotos from '../components/ThankYouPhotos.vue'
 </script>
 
 <!--
-Personal acknowledgments. All photographs in pictures/ appear around a stationary
-heading and smaller subtitle, set by title and subtitle in the frontmatter above.
-Background photographs expand and contract from 0.5× to 2×, gently
-pushing their neighbors while remaining tethered to their home positions.
-Individual photographs periodically zoom in from their current locations,
-expanding inward near the edges rather than moving to fixed spotlight positions.
-Every photograph is featured before the sequence repeats.
+I cannot finish this defense without saying how thankful I am with all the people that was part of this long journey.
 
-Handwritten personal thanks appear below the subtitle, one paragraph at a time
-from the personalThanks frontmatter block above. Each writes on from left to
-right, one line at a time over 3.2 seconds, remains fully visible for seven
-seconds, and fades away before the next. Edit or add paragraphs in that block;
-their order is the playback order. There is no visible play/pause button.
+To my mom for always being there when I need her
 
-Moving to Questions stops both clocks. Reduced-motion, overview, and print-mode
-views use the static collage and the first acknowledgment. All messages remain
-available to screen readers without timed announcements.
+To my advisor Katja for give me the opportunity to work with her, for all the trust and guidance she put into me
+
+To Yamina Silva, Danny Scipion and all the awesome people from Geophysical institute of Peru, I am so lucky so have had the opportunity to work with the most outstanding earth scientists of Peru, and learn a lot of them, I would be here if it wasn't for them
+
+To my girlfriend Clairy, for being the loveliest person I ever met
+
+To all my familly, specially my aunts that always treated me as another son
+
+To my brother, my cousins and all my friends who I have shared dreams and experiences
+
+To all people in ATOC, atoc is jsut a great place to be
 -->
 
 ---
@@ -453,15 +333,5 @@ title: Questions
 </style>
 
 <!--
-Pause.
-
-Likely questions, and where to go:
-
-- Williams: boundary conditions, Neff, why the anomaly is not a raw composite. Backup: boundary, polar gaps, DCT comparison.
-- Winters: why two bands, shear, soundings. Backup: synoptic and sounding. Do not claim rolls.
-- Zaremba: sampling versus airborne volumes, overlap of the fall streak. Backup: mid-level anomaly and the nine-time context.
-- Tessendorf: how general is one storm, seeder–feeder. Stay on the attribution limit.
-- Friedrich: where Chapter 2 and 3 enter Chapter 5. The bridge slide is the answer.
-
-Backup starts on the next slide.
+Finally, I want to thanks to my committee members and all the people that make research projects possible.
 -->
