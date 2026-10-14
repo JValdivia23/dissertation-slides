@@ -105,7 +105,7 @@ And in the horizontal axis we have the wind shear.
 We observe that unstable conditions can trigger CTGC even when no shear is present, but wind shear can make the them bigger and shape them in horizontal roll-like structures. 
 
 
-[click] In other hand, radiative cooling can destabilize the layer below it.
+[click] In other hand, radiative cooling can destabilize the layer below it. As you all know, all the bodies emit radiation, when there's no sun to warm up the clouds, the top of the clouds get colder faster than the layer below it. This can create small scale dynamic than can become CTGC. We think this explain why CTGC are so common specially during nighttime.
 -->
 
 ---
