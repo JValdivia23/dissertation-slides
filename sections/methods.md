@@ -17,7 +17,11 @@ title: Spectral-Domain Local Statistics with Missing-Data Support
 </div>
 
 <!--
-About 20 seconds. This is the second of four paper talks. Name the paper and its status once: under review at Computers and Geosciences, with an arXiv preprint. Do not call it published. Credit Will Chapman and Katja Friedrich. Handoff from Paper 1: Paper 1 gave a fast way to smooth radar data with a kernel average, but gaps were filled before filtering and those filled values then entered the average. Paper 2 asks whether that average can use valid observations directly and account for missing data.
+The second paper is titled:
+
+Again this is with the collaboration of Will Chapman and Katja Friedrich.
+
+It is under review at Computer and Geosciences.
 -->
 
 ---
@@ -66,7 +70,7 @@ class: local-math local-intro
 </svg>
 <ul class="local-kernel-legend">
   <li><span class="sw k-valid" aria-hidden="true"></span>Valid observation</li>
-  <li><span class="sw k-missing" aria-hidden="true"></span>Missing gate</li>
+  <li><span class="sw k-missing" aria-hidden="true"></span>Missing value</li>
   <li><span class="sw k-cross-sw" aria-hidden="true">×</span>Suspicious, masked</li>
 </ul>
 </div>
@@ -89,7 +93,8 @@ class: local-math local-intro
 <p class="local-math-lead">How can the kernel average use retained values only, while also reporting variability, and suitable boundaries?</p>
 
 <!--
-About 55 seconds. Paper 1 smooths with a kernel-weighted average, but gaps are filled before filtering and those filled values then contribute to the average. Once we are computing a local average, we can also compute variance and standard deviation to describe spread within the same neighborhood, and extend the method beyond a two-dimensional polar scan to Cartesian and N-dimensional grids. The problem is that inside the kernel some locations are missing and others were excluded by quality control as suspicious. We want local statistics from retained values, a measure of available support, and boundary handling suited to each grid. Normalized convolution is the established foundation; the spectral integration and safeguards are the extension.
+What is the problem?
+Sometimes our data has missing values
 -->
 
 ---

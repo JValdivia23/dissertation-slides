@@ -178,23 +178,22 @@ class: ctgc-background
         </g><g fill="currentColor" font-size="12"><text x="128" y="16" text-anchor="end">Motion</text><text x="53" y="64">Cloud</text></g></svg>
         <span>Cell → fall streak → precipitation</span>
       </div>
-      <p class="ask">How does precipitation evolve below a moving cell?</p>
+      <p class="ask">How does precipitation evolve below the cell?</p>
       <p>Three-dimensional connections and enhancement relative to surrounding precipitation remained uncertain.</p>
     </div>
   </div>
-  <p class="ctgc-gap-history">Precipitation-growth studies: Hobbs et al. (1980); Houze et al. (1981); Plummer et al. (2015). Individual-cell attribution remains unresolved.</p>
+  <p class="ctgc-gap-history">Precipitation-growth studies: Hobbs et al. (1980); Houze et al. (1981).</p>
 </section>
 
 </div>
 
 <!--
-About 30 seconds, no clicks. Present the three observational gaps, framed as the state of knowledge before this dissertation. First, the full population life cycle: how the number, size, and inferred particle properties of cells change from formation through dissipation. Population duration is not the lifetime of an individual cell. Second, time-resolved horizontal morphology and organization: the changing cell shapes, spatial distributions, and merging processes. Prior observations had documented instantaneous structure and organization; do not claim that no plan views existed before this work. The diagrams are illustrative questions, not the dissertation's results.
+Outside the simulations there are many observational gaps.
 
-Third, the evolving three-dimensional connection between moving cells, their fall streaks, and precipitation relative to the surrounding field. Early work by Hobbs et al. (1980) and Houze et al. (1981) quantified precipitation growth; later studies, including Plummer et al. (2015), also provide quantitative evidence. Do not claim that no quantification occurred after the 1980s or equate the fraction of mass growth inside a cell with its contribution to total precipitation. The dissertation measures precipitation contrasts associated with a tracked fall streak, not the causal fraction produced by one cell or the storm-total contribution.
+The population life cycle was not documented before.
+If the simulation showed what to expect in term of horizontal organization, this wasn't observed either.
 
-The slide's final attribution statement is a continuing limitation, not a gap claimed to have been closed by this dissertation.
-
-Transition: addressing these gaps requires sustained observations of moving cells and their precipitation. The next slide explains why previous sampling rarely provided that view. Keep the observational limitations and the event-based dissertation objectives distinct from the broader scientific questions.
+There are estimates from the 80s about how precipitation is coming from CTGCs layer. What that wasn't really updated since then.
 -->
 
 ---
@@ -252,17 +251,13 @@ class: observation-limits
 </div>
 
 <!--
-These questions have stayed open because of how the cells are observed.
+The reason we haven't study the most basic aspects of CTGC is because they are really hard to observe.
 
-Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI or PPI scan, or a vertically pointing radar. Kumjian et al. (2014, J. Appl. Meteor. Climatol.) distinguished this kind of snapshot from a sequence intended to follow evolution. FROST, PLOWS, SNOWIE, and SOCRATES were not designed specifically to follow these cells.
+Most published observations are single snapshots, often collected while the study focused on the broader storm: an aircraft pass, an RHI or PPI scan, or a vertically pointing radar.
 
-The cells move with the flow. Kumjian et al. steered range–height scans along the mean cell motion, and still noted a motion component out of the scan plane.
+Even if you have operational instruments working 24/7 the cells are constantly moving, so you still have a snapshot.
 
-Kumjian et al. followed one vigorous cell for about 10 minutes and reported lifetimes of at least 10 minutes. An older scanning-radar study inferred lifetimes of several hours; that was not a continuous track of one cell.
-
-Populations are common in winter storms sampled closely enough to resolve them. Kumjian et al. found generating cells in every FROST case and described them as very common, if not ubiquitous. Rosenow et al. (2014) described them as ubiquitous in the PLOWS dataset. Tessendorf et al. (2024) described them as fairly ubiquitous in winter orographic clouds. Do not say every winter storm.
-
-This dissertation does not try to close those three questions for winter storms in general. For one observed storm, it asks what the radar observations can show. Do not open the range-dependent radar window here; that begins the methods.
+If you track a cell there's still the difference between a single cell and its population.
 -->
 
 ---
@@ -316,9 +311,15 @@ class: dissertation-objectives
 </div>
 
 <!--
-These are the objectives this dissertation addresses, not the three broader questions. The first is addressed by two methodological studies. The second concerns the population in one WINTRE-MIX event; the third concerns a cell selected from that population. The fall-streak analysis examines structure and precipitation contrasts, not the cell's individual contribution to precipitation.
+In this dissertation we trying to close a bit those observational gaps. Using standard project observation. 
+The data I am analyzing is not meant to be CTGC specific. Instead, I am using once again, incidental observations of CTGC.
+But if we want to take advantage of this data, we need new processing methods for the radar analysis. 
 
-Transition from the limits: those sampling limits define what can be claimed. This dissertation develops tools to analyze the available radar data, then uses one observed storm to study a population and one selected cell. Do not imply that the methods in Chapters 2 and 3 produced the Chapter 4 results; Chapter 5 combines those methods with the track from Chapter 4.
+This includes efficient denoising techniques and be able to compute stats in the native radar's polar coordinates.
+
+We these techniques we are going to analyze the population evolution and it microphysics. 
+
+Then we are gonna analyze the 3D structure of a single CTGC and it's fall streak.
 -->
 
 ---
@@ -370,16 +371,5 @@ class: presentation-roadmap
 <p class="roadmap-legend fine"><span class="roadmap-status published">★</span> Published&nbsp;&nbsp;&nbsp;<span class="roadmap-status review">◷</span> Under review</p>
 
 <!--
-These four boxes represent the four papers in talk order. Paper 1 develops physical-scale smoothing for radar data; Paper 2 extends that spectral framework to local statistics with missing data. Paper 3 follows a population of cells in one storm and identifies a persistent cell. Paper 4 brings the methods from Papers 1 and 2 together with that cell track to examine three-dimensional structure, the fall streak, and precipitation context. I will close with a synthesis and limitations.
-
-The arrows summarize the narrative, not every direct methodological input: Paper 1 leads to Paper 2, while Papers 2 and 3 connect to Paper 4. Paper 4 also draws directly on Paper 1's smoothing. The methods studies are Chapters 2 and 3, the population study is Chapter 4, and the selected-cell study is Chapter 5. Do not imply that the methods in Chapters 2 and 3 produced the Chapter 4 results. The precipitation contrasts do not attribute an individual contribution to the selected cell.
-
-Status, if asked:
-
-- Valdivia, Chapman, and Friedrich, AMT, 2026. doi:10.5194/amt-19-5211-2026
-- Valdivia, Chapman, and Friedrich, arXiv:2604.22721. Under review. Not accepted.
-- Valdivia, Friedrich, Zaremba, and Tessendorf, JAS, 2026. doi:10.1175/JAS-D-25-0088.1
-- Same author team, GRL manuscript 2026GL126989, submitted 16 September 2026. Not accepted.
-
-Transition: I will begin with the radar-analysis problem: smoothing at a consistent physical scale without repeatedly applying an expensive, range-dependent spatial window. Advance to Paper 1's title slide, then begin its independent introduction.
+My thesis is composed by 4 papers. 2 of them are already published and 2 are under review.
 -->
