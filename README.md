@@ -8,6 +8,8 @@ Slidev presentation source for the dissertation defense. Built with Slidev 53 an
 Department of Atmospheric and Oceanic Sciences, University of Colorado
 Boulder, presented 15 October 2026.
 
+![Title slide](./cover.png)
+
 ## Local development
 
 Requires Node.js 22.12+ (24 LTS recommended) and npm.
